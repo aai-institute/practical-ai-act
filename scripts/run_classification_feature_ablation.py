@@ -17,14 +17,16 @@ from sensai.tracking.mlflow_tracking import MLFlowExperiment
 
 
 from config import FILE_NAME_ADULT, RESULT_SUBFOLDER, MLFLOW_SUBFOLDER
-from adult.data import AdultData, CLASS_POSITIVE
+from adult.data import AdultData
 from adult.model_factory import ModelFactory
-from adult.features import FeatureName, PERSONAL_FEATURES
+from adult.features import AdultFeatureRegistry
 
 
 def create_feature_combinations(
-    model_factory: Callable[[Sequence[FeatureName]], VectorClassificationModel],
-    features: Sequence[FeatureName],
+    model_factory: Callable[
+        [Sequence[AdultFeatureRegistry.FeatureName]], VectorClassificationModel
+    ],
+    features: Sequence[AdultFeatureRegistry.FeatureName],
 ) -> list[VectorClassificationModel]:
     """
     Create all possible feature combinations for the given features and create a model for each combination.
@@ -39,7 +41,9 @@ def create_feature_combinations(
 
 
 def create_experiment_tag(
-    ablation_feat: Sequence[FeatureName] = PERSONAL_FEATURES,
+    ablation_feat: Sequence[
+        AdultFeatureRegistry.FeatureName
+    ] = AdultFeatureRegistry.FeatureName.personal_features(),
     prefix: str = "feature_ablation_study_",
 ) -> str:
     """
@@ -69,7 +73,8 @@ def main(
     logging.add_file_logger(result_writer.path("log.txt"))
 
     eval_params = ClassificationEvaluatorParams(
-        fractional_split_test_fraction=0.2, binary_positive_label=CLASS_POSITIVE
+        fractional_split_test_fraction=0.2,
+        binary_positive_label=AdultData.CLASS_POSITIVE,
     )
     cross_eval_params = VectorModelCrossValidatorParams(evaluator_params=eval_params)
     adult_data = AdultData(FILE_NAME_ADULT)
@@ -91,16 +96,19 @@ def main(
 
 if __name__ == "__main__":
     ablation_features = (
-        FeatureName.SEX,
-        FeatureName.AGE,
-        FeatureName.RACE,
-        FeatureName.MARITAL_STATUS,
-        FeatureName.NATIVE_COUNTRY,
-        FeatureName.RELATIONSHIP,
+        AdultFeatureRegistry.FeatureName.SEX,
+        AdultFeatureRegistry.FeatureName.AGE,
+        AdultFeatureRegistry.FeatureName.RACE,
+        AdultFeatureRegistry.FeatureName.MARITAL_STATUS,
+        AdultFeatureRegistry.FeatureName.NATIVE_COUNTRY,
+        AdultFeatureRegistry.FeatureName.RELATIONSHIP,
     )
     experiment_name = create_experiment_tag(ablation_feat=ablation_features)
     xgb_models = create_feature_combinations(
         lambda x: ModelFactory.create_xgb(add_features=x), ablation_features
     )
-    callable_main = partial(main, xgb_models, name=experiment_name)
+    lgbm_models = create_feature_combinations(
+        lambda x: ModelFactory.create_lightgbm(add_features=x), ablation_features
+    )
+    callable_main = partial(main, xgb_models + lgbm_models, name=experiment_name)
     logging.run_main(callable_main, level=logging.INFO)

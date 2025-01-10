@@ -3,15 +3,7 @@ from typing import Any
 import pandas as pd
 from sensai.data_transformation import RuleBasedDataFrameTransformer
 
-from adult.data import (
-    COL_MARITAL_STATUS,
-    COL_WORKCLASS,
-    COL_EDUCATION,
-    COL_OCCUPATION,
-    COL_RELATIONSHIP,
-    COL_RACE,
-    COL_NATIVE_COUNTRY,
-)
+from adult.data import AdultData
 
 
 class DFTFillNA(RuleBasedDataFrameTransformer):
@@ -68,7 +60,7 @@ class WorkClassMapping(ColumnValueMapping):
 
     def __init__(self, fill_na: bool = False):
         super().__init__(
-            COL_WORKCLASS,
+            AdultData.Column.WORK_CLASS,
             self.WORKCLASS_MAPPING,
             fill_value=self.UNKNOWN_DEFAULT if fill_na else None,
         )
@@ -95,7 +87,7 @@ class EducationMapping(ColumnValueMapping):
     }
 
     def __init__(self):
-        super().__init__(COL_EDUCATION, self.EDUCATION_MAPPING)
+        super().__init__(AdultData.Column.EDUCATION, self.EDUCATION_MAPPING)
 
 
 class MaritalStatusMapping(ColumnValueMapping):
@@ -110,7 +102,7 @@ class MaritalStatusMapping(ColumnValueMapping):
     }
 
     def __init__(self):
-        super().__init__(COL_MARITAL_STATUS, self.MARITAL_STATUS_MAPPING)
+        super().__init__(AdultData.Column.MARITAL_STATUS, self.MARITAL_STATUS_MAPPING)
 
 
 class OccupationMapping(ColumnValueMapping):
@@ -136,7 +128,7 @@ class OccupationMapping(ColumnValueMapping):
 
     def __init__(self, fill_na: bool = False):
         super().__init__(
-            COL_OCCUPATION,
+            AdultData.Column.EDUCATION,
             self.OCCUPATION_MAPPING,
             fill_value=self.UNKNOWN_DEFAULT if fill_na else None,
         )
@@ -153,7 +145,7 @@ class RelationShipMapping(ColumnValueMapping):
     }
 
     def __init__(self):
-        super().__init__(COL_RELATIONSHIP, self.RELATIONSHIP_MAPPING)
+        super().__init__(AdultData.Column.RELATIONSHIP, self.RELATIONSHIP_MAPPING)
 
 
 class RaceMapping(ColumnValueMapping):
@@ -166,7 +158,7 @@ class RaceMapping(ColumnValueMapping):
     }
 
     def __init__(self):
-        super().__init__(COL_RACE, self.RACE_MAPPING)
+        super().__init__(AdultData.Column.RACE, self.RACE_MAPPING)
 
 
 class NativeCountryMapping(RuleBasedDataFrameTransformer):
@@ -181,26 +173,30 @@ class NativeCountryMapping(RuleBasedDataFrameTransformer):
 
             return self.COUNTRY_MAPPING.get(country, self.OTHER_DEFAULT)
 
-        df.loc[:, COL_NATIVE_COUNTRY] = df[COL_NATIVE_COUNTRY].apply(
-            reduce_native_country
-        )
+        df.loc[:, AdultData.Column.NATIVE_COUNTRY] = df[
+            AdultData.Column.NATIVE_COUNTRY
+        ].apply(reduce_native_country)
         return df
 
 
 default_preprocessing = [
     WorkClassMapping(),
-    DFTFillNA(fill_value=WorkClassMapping.UNKNOWN_DEFAULT, column_subset=COL_WORKCLASS),
+    DFTFillNA(
+        fill_value=WorkClassMapping.UNKNOWN_DEFAULT,
+        column_subset=AdultData.Column.WORK_CLASS,
+    ),
     EducationMapping(),
     MaritalStatusMapping(),
     OccupationMapping(),
     DFTFillNA(
-        fill_value=OccupationMapping.UNKNOWN_DEFAULT, column_subset=COL_OCCUPATION
+        fill_value=OccupationMapping.UNKNOWN_DEFAULT,
+        column_subset=AdultData.Column.OCCUPATION,
     ),
     RelationShipMapping(),
     RaceMapping(),
     NativeCountryMapping(),
     DFTFillNA(
         fill_value=NativeCountryMapping.UNKNOWN_DEFAULT,
-        column_subset=COL_NATIVE_COUNTRY,
+        column_subset=AdultData.Column.NATIVE_COUNTRY,
     ),
 ]

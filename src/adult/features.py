@@ -1,7 +1,9 @@
 from __future__ import annotations
 from enum import Enum
 from functools import partial
+from typing import Union, Sequence
 
+import numpy as np
 import pandas as pd
 from sensai.data_transformation import (
     DFTNormalisation,
@@ -10,150 +12,118 @@ from sensai.data_transformation import (
 from sensai.featuregen import (
     FeatureGeneratorRegistry,
     FeatureGeneratorTakeColumns,
-    RuleBasedFeatureGenerator,
 )
+from sensai.columngen import ColumnGenerator
 
-from adult.data import (
-    COL_CAPITAL_GAIN,
-    COL_CAPITAL_LOSS,
-    COL_WORKCLASS,
-    COL_OCCUPATION,
-    COL_RACE,
-    COL_SEX,
-    COL_AGE,
-    COL_RELATIONSHIP,
-    COL_NATIVE_COUNTRY,
-    COL_MARITAL_STATUS,
-    COL_EDUCATION,
-    COL_EDUCATION_NUM,
-    COL_HOURS_PER_WEEK,
-)
+from adult.data import AdultData
 
 
-class FeatureName(Enum):
-    NET_CAPITAL = "net-capital"
-    WORK_CLASS = COL_WORKCLASS
-    OCCUPATION = COL_OCCUPATION
-    RACE = COL_RACE
-    SEX = COL_SEX
-    AGE = COL_AGE
-    RELATIONSHIP = COL_RELATIONSHIP
-    NATIVE_COUNTRY = COL_NATIVE_COUNTRY
-    MARITAL_STATUS = COL_MARITAL_STATUS
-    EDUCATION = COL_EDUCATION
-    EDUCATION_NUM = COL_EDUCATION_NUM
-    HOURS_PER_WEEK = COL_HOURS_PER_WEEK
+class AdultFeatureRegistry(FeatureGeneratorRegistry):
+    class FeatureName(Enum):
+        NET_CAPITAL = "net-capital"
+        WORK_CLASS = AdultData.Column.WORK_CLASS
+        OCCUPATION = AdultData.Column.OCCUPATION
+        RACE = AdultData.Column.RACE
+        SEX = AdultData.Column.SEX
+        AGE = AdultData.Column.AGE
+        RELATIONSHIP = AdultData.Column.RELATIONSHIP
+        NATIVE_COUNTRY = AdultData.Column.NATIVE_COUNTRY
+        MARITAL_STATUS = AdultData.Column.MARITAL_STATUS
+        EDUCATION = AdultData.Column.EDUCATION
+        EDUCATION_NUM = AdultData.Column.EDUCATION_NUM
+        HOURS_PER_WEEK = AdultData.Column.HOURS_PER_WEEK
 
-    @classmethod
-    def standard_scaled_feature(cls, col_name: "FeatureName"):
-        return partial(
-            FeatureGeneratorTakeColumns,
-            col_name,
-            normalisation_rule_template=DFTNormalisation.RuleTemplate(
-                transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
+        @staticmethod
+        def personal_features() -> Sequence[AdultFeatureRegistry.FeatureName]:
+            return (
+                AdultFeatureRegistry.FeatureName.SEX,
+                AdultFeatureRegistry.FeatureName.AGE,
+                AdultFeatureRegistry.FeatureName.RACE,
+                AdultFeatureRegistry.FeatureName.MARITAL_STATUS,
+                AdultFeatureRegistry.FeatureName.NATIVE_COUNTRY,
+                AdultFeatureRegistry.FeatureName.RELATIONSHIP,
+            )
+
+        @classmethod
+        def default_features(cls) -> Sequence[AdultFeatureRegistry.FeatureName]:
+            return tuple(
+                [
+                    feat
+                    for feat in AdultFeatureRegistry.FeatureName
+                    if feat not in cls.personal_features()
+                ]
+            )
+
+    def __init__(self):
+        super().__init__()
+        self._register_column_features()
+        self.register_factory(
+            self.FeatureName.NET_CAPITAL,
+            lambda: _NetCapital().to_feature_generator(
+                normalisation_rule_template=DFTNormalisation.RuleTemplate(
+                    transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
+                ),
             ),
         )
 
-    @classmethod
-    def min_max_scaled_feature(cls, col_name: "FeatureName"):
-        return partial(
-            FeatureGeneratorTakeColumns,
+    @staticmethod
+    def _is_categorical_column(member: AdultFeatureRegistry.FeatureName):
+        cat_cols = [m.value for m in AdultData.COLS_CATEGORICAL]
+        return member.value in cat_cols
+
+    @staticmethod
+    def _is_numeric_column(member: AdultFeatureRegistry.FeatureName):
+        num_cols = [m.value for m in AdultData.COLS_NUMERIC]
+        return member.value in num_cols
+
+    def _register_column_features(self):
+        for member in self.FeatureName:
+            if self._is_categorical_column(member):
+                self.register_categorical(AdultData.Column(member.value))
+            elif self._is_numeric_column(member):
+                self.register_standard_scaled(AdultData.Column(member.value))
+
+    def register_standard_scaled(self, col_name: AdultData.Column):
+        self.register_factory(
             col_name,
-            normalisation_rule_template=DFTNormalisation.RuleTemplate(
-                transformer_factory=SkLearnTransformerFactoryFactory.MinMaxScaler()
+            partial(
+                FeatureGeneratorTakeColumns,
+                col_name.value,
+                normalisation_rule_template=DFTNormalisation.RuleTemplate(
+                    transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
+                ),
             ),
         )
 
-    @classmethod
-    def categorical_feature(cls, col_name: "FeatureName"):
-        return partial(
-            FeatureGeneratorTakeColumns,
+    def register_min_max_scaled(self, col_name: AdultData.Column):
+        self.register_factory(
             col_name,
-            categorical_feature_names=col_name,
+            partial(
+                FeatureGeneratorTakeColumns,
+                col_name.value,
+                normalisation_rule_template=DFTNormalisation.RuleTemplate(
+                    transformer_factory=SkLearnTransformerFactoryFactory.MinMaxScaler()
+                ),
+            ),
+        )
+
+    def register_categorical(self, col_name: AdultData.Column):
+        self.register_factory(
+            col_name,
+            partial(
+                FeatureGeneratorTakeColumns,
+                col_name.value,
+                categorical_feature_names=col_name.value,
+            ),
         )
 
 
-class NetCapital(RuleBasedFeatureGenerator):
-    COL_NET_CAPITAL = "net-capital"
+class _NetCapital(ColumnGenerator):
+    def __init__(self):
+        super().__init__(AdultFeatureRegistry.FeatureName.NET_CAPITAL.value)
 
-    def _generate(self, df: pd.DataFrame, ctx=None) -> pd.DataFrame:
-        values = df[COL_CAPITAL_GAIN] - df[COL_CAPITAL_LOSS]
-        return pd.DataFrame({self.COL_NET_CAPITAL: values}, index=df.index)
+    def _generate_column(self, df: pd.DataFrame) -> Union[pd.Series, list, np.ndarray]:
+        return df[AdultData.Column.CAPITAL_GAIN] - df[AdultData.Column.CAPITAL_LOSS]
 
 
-feature_registry = FeatureGeneratorRegistry()
-
-feature_registry.register_factory(
-    FeatureName.RACE, FeatureName.categorical_feature(COL_RACE)
-)
-
-feature_registry.register_factory(
-    FeatureName.SEX, FeatureName.categorical_feature(COL_SEX)
-)
-
-feature_registry.register_factory(
-    FeatureName.NET_CAPITAL,
-    partial(
-        NetCapital,
-        normalisation_rule_template=DFTNormalisation.RuleTemplate(
-            transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
-        ),
-    ),
-)
-
-feature_registry.register_factory(
-    FeatureName.WORK_CLASS,
-    FeatureName.categorical_feature(COL_WORKCLASS),
-)
-
-feature_registry.register_factory(
-    FeatureName.OCCUPATION,
-    FeatureName.categorical_feature(COL_OCCUPATION),
-)
-
-feature_registry.register_factory(
-    FeatureName.AGE,
-    FeatureName.standard_scaled_feature(COL_AGE),
-)
-
-feature_registry.register_factory(
-    FeatureName.RELATIONSHIP,
-    FeatureName.categorical_feature(COL_RELATIONSHIP),
-)
-
-feature_registry.register_factory(
-    FeatureName.NATIVE_COUNTRY,
-    FeatureName.categorical_feature(COL_NATIVE_COUNTRY),
-)
-
-feature_registry.register_factory(
-    FeatureName.MARITAL_STATUS,
-    FeatureName.categorical_feature(COL_MARITAL_STATUS),
-)
-
-feature_registry.register_factory(
-    FeatureName.EDUCATION,
-    FeatureName.categorical_feature(COL_EDUCATION),
-)
-
-feature_registry.register_factory(
-    FeatureName.EDUCATION_NUM,
-    FeatureName.standard_scaled_feature(COL_EDUCATION_NUM),
-)
-
-feature_registry.register_factory(
-    FeatureName.HOURS_PER_WEEK,
-    FeatureName.standard_scaled_feature(COL_HOURS_PER_WEEK),
-)
-PERSONAL_FEATURES = (
-    FeatureName.SEX,
-    FeatureName.AGE,
-    FeatureName.RACE,
-    FeatureName.MARITAL_STATUS,
-    FeatureName.NATIVE_COUNTRY,
-    FeatureName.RELATIONSHIP,
-)
-
-DEFAULT_FEATURES = tuple(
-    [feat for feat in FeatureName if feat not in PERSONAL_FEATURES]
-)
+adult_feature_registry = AdultFeatureRegistry()

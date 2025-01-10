@@ -1,63 +1,11 @@
+from __future__ import annotations
+from enum import Enum
 from pathlib import Path
 
 import pandas as pd
 from sensai import InputOutputData
 from ucimlrepo import fetch_ucirepo
 from sensai.util.cache import pickle_cached
-
-
-COL_AGE = "age"
-COL_WORKCLASS = "workclass"
-COL_FNLWGT = "fnlwgt"
-COL_EDUCATION = "education"
-COL_EDUCATION_NUM = "education-num"
-COL_MARITAL_STATUS = "marital-status"
-COL_OCCUPATION = "occupation"
-COL_RELATIONSHIP = "relationship"
-COL_RACE = "race"
-COL_SEX = "sex"
-COL_CAPITAL_GAIN = "capital-gain"
-COL_CAPITAL_LOSS = "capital-loss"
-COL_HOURS_PER_WEEK = "hours-per-week"
-COL_NATIVE_COUNTRY = "native-country"
-COL_INCOME = "income"
-
-COL_TARGET = COL_INCOME
-
-COLS_ALL = (
-    COL_AGE,
-    COL_WORKCLASS,
-    COL_FNLWGT,
-    COL_EDUCATION,
-    COL_EDUCATION_NUM,
-    COL_MARITAL_STATUS,
-    COL_OCCUPATION,
-    COL_RELATIONSHIP,
-    COL_RACE,
-    COL_SEX,
-    COL_CAPITAL_GAIN,
-    COL_CAPITAL_LOSS,
-    COL_HOURS_PER_WEEK,
-    COL_NATIVE_COUNTRY,
-    COL_INCOME,
-)
-
-COLS_FEATURE_ALL = tuple([col for col in COLS_ALL if col != COL_TARGET])
-COLS_FEATURE_NUMERIC = (
-    COL_AGE,
-    COL_EDUCATION_NUM,
-    COL_CAPITAL_GAIN,
-    COL_CAPITAL_LOSS,
-    COL_HOURS_PER_WEEK,
-)
-COLS_FEATURE_CATEGORICAL = tuple(
-    [
-        col
-        for col in COLS_FEATURE_ALL
-        if col not in COLS_FEATURE_NUMERIC and col != COL_FNLWGT
-    ]
-)
-CLASS_POSITIVE = ">50K"
 
 
 class AdultData:
@@ -70,6 +18,47 @@ class AdultData:
         data_path: Optional directory to cache the downloaded result.
             If not provided, the data will be downloaded from the UCI repository directly.
     """
+
+    class Column(str, Enum):
+        """
+        Enum representing the column names in the original data
+        """
+
+        AGE = "age"
+        WORK_CLASS = "workclass"
+        FNLWGT = "fnlwgt"
+        EDUCATION = "education"
+        EDUCATION_NUM = "education-num"
+        MARITAL_STATUS = "marital-status"
+        OCCUPATION = "occupation"
+        RELATIONSHIP = "relationship"
+        SEX = "sex"
+        RACE = "race"
+        CAPITAL_GAIN = "capital-gain"
+        CAPITAL_LOSS = "capital-loss"
+        HOURS_PER_WEEK = "hours-per-week"
+        NATIVE_COUNTRY = "native-country"
+        INCOME = "income"
+
+    TARGET = Column.INCOME
+    CLASS_POSITIVE = ">50K"
+    COLS_CATEGORICAL = (
+        Column.EDUCATION,
+        Column.MARITAL_STATUS,
+        Column.NATIVE_COUNTRY,
+        Column.RELATIONSHIP,
+        Column.SEX,
+        Column.RACE,
+        Column.WORK_CLASS,
+        Column.OCCUPATION,
+    )
+    COLS_NUMERIC = (
+        Column.HOURS_PER_WEEK,
+        Column.EDUCATION_NUM,
+        Column.AGE,
+        Column.CAPITAL_GAIN,
+        Column.CAPITAL_LOSS,
+    )
 
     def __init__(self, data_path: str | Path | None = None):
         self._data_path = data_path
@@ -86,7 +75,7 @@ class AdultData:
         Load the data as a pandas DataFrame.
         """
         df = self._data.data.original
-        df.loc[:, COL_TARGET] = df[COL_TARGET].map(lambda x: x.rstrip("."))
+        df.loc[:, self.TARGET] = df[self.TARGET].map(lambda x: x.rstrip("."))
         return df
 
     def load_input_output_data(self) -> InputOutputData:
@@ -95,4 +84,6 @@ class AdultData:
         [`sensai`](https://github.com/opcode81/sensAI) package.
         """
         all_df = self.load_data_frame()
-        return InputOutputData(all_df.drop(columns=[COL_TARGET]), all_df[[COL_TARGET]])
+        return InputOutputData(
+            all_df.drop(columns=[self.TARGET]), all_df[[self.TARGET]]
+        )

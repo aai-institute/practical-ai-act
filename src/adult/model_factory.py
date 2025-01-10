@@ -8,21 +8,27 @@ from sensai.sklearn.sklearn_classification import (
 )
 from sensai.xgboost import XGBGradientBoostedVectorClassificationModel
 
-from .data import COLS_FEATURE_CATEGORICAL
-from .features import feature_registry, FeatureName, DEFAULT_FEATURES
+from .data import AdultData
+from .features import adult_feature_registry, AdultFeatureRegistry
 from .preprocessing import default_preprocessing
 
 
 class ModelFactory:
     @staticmethod
     def _create_feature_collector(
-        features: Sequence[FeatureName] = DEFAULT_FEATURES,
-        add_features: Sequence[FeatureName] = (),
+        features: Sequence[
+            AdultFeatureRegistry.FeatureName
+        ] = AdultFeatureRegistry.FeatureName.default_features(),
+        add_features: Sequence[AdultFeatureRegistry.FeatureName] = (),
     ):
-        return FeatureCollector(*features, *add_features, registry=feature_registry)
+        return FeatureCollector(
+            *features, *add_features, registry=adult_feature_registry
+        )
 
     @staticmethod
-    def _create_name_suffix(add_features: Sequence[FeatureName]) -> str:
+    def _create_name_suffix(
+        add_features: Sequence[AdultFeatureRegistry.FeatureName],
+    ) -> str:
         if len(add_features) == 0:
             return ""
         return "_with_" + "_".join([f.value for f in add_features])
@@ -30,14 +36,17 @@ class ModelFactory:
     @classmethod
     def create_logistic_regression(
         cls,
-        features: Sequence[FeatureName] = DEFAULT_FEATURES,
-        add_features: Sequence[FeatureName] = (),
+        features: Sequence[
+            AdultFeatureRegistry.FeatureName
+        ] = AdultFeatureRegistry.FeatureName.default_features(),
+        add_features: Sequence[AdultFeatureRegistry.FeatureName] = (),
+        **kwargs,
     ):
         fc = cls._create_feature_collector(features, add_features)
         name_suffix = cls._create_name_suffix(add_features)
 
         return (
-            SkLearnLogisticRegressionVectorClassificationModel()
+            SkLearnLogisticRegressionVectorClassificationModel(**kwargs)
             .with_raw_input_transformers(default_preprocessing)
             .with_feature_collector(fc)
             .with_feature_transformers(fc.create_feature_transformer_one_hot_encoder())
@@ -47,15 +56,18 @@ class ModelFactory:
     @classmethod
     def create_lightgbm(
         cls,
-        features: Sequence[FeatureName] = DEFAULT_FEATURES,
-        add_features: Sequence[FeatureName] = (),
+        features: Sequence[
+            AdultFeatureRegistry.FeatureName
+        ] = AdultFeatureRegistry.FeatureName.default_features(),
+        add_features: Sequence[AdultFeatureRegistry.FeatureName] = (),
+        **kwargs,
     ):
         fc = cls._create_feature_collector(features, add_features)
         name_suffix = cls._create_name_suffix(add_features)
 
         return (
             LightGBMVectorClassificationModel(
-                categorical_feature_names=COLS_FEATURE_CATEGORICAL
+                categorical_feature_names=AdultData.COLS_CATEGORICAL, **kwargs
             )
             .with_raw_input_transformers(default_preprocessing)
             .with_feature_collector(fc)
@@ -65,16 +77,16 @@ class ModelFactory:
     @classmethod
     def create_xgb(
         cls,
-        features: Sequence[FeatureName] = DEFAULT_FEATURES,
-        add_features: Sequence[FeatureName] = (),
-        min_child_weight: float | None = None,
+        features: Sequence[
+            AdultFeatureRegistry.FeatureName
+        ] = AdultFeatureRegistry.FeatureName.default_features(),
+        add_features: Sequence[AdultFeatureRegistry.FeatureName] = (),
         **kwargs,
     ):
         fc = cls._create_feature_collector(features, add_features)
         name_suffix = cls._create_name_suffix(add_features)
         return (
             XGBGradientBoostedVectorClassificationModel(
-                min_child_weight=min_child_weight,
                 **kwargs,
             )
             .with_raw_input_transformers(default_preprocessing)
@@ -86,14 +98,17 @@ class ModelFactory:
     @classmethod
     def create_random_forest(
         cls,
-        features: Sequence[FeatureName] = DEFAULT_FEATURES,
-        add_features: Sequence[FeatureName] = (),
+        features: Sequence[
+            AdultFeatureRegistry.FeatureName
+        ] = AdultFeatureRegistry.FeatureName.default_features(),
+        add_features: Sequence[AdultFeatureRegistry.FeatureName] = (),
+        **kwargs,
     ):
         fc = cls._create_feature_collector(features, add_features)
         name_suffix = cls._create_name_suffix(add_features)
 
         return (
-            SkLearnRandomForestVectorClassificationModel()
+            SkLearnRandomForestVectorClassificationModel(**kwargs)
             .with_raw_input_transformers(default_preprocessing)
             .with_feature_collector(fc)
             .with_feature_transformers(fc.create_feature_transformer_one_hot_encoder())
