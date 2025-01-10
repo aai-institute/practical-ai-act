@@ -3,8 +3,15 @@ from typing import Any
 import pandas as pd
 from sensai.data_transformation import RuleBasedDataFrameTransformer
 
-from adult.data import COL_MARITAL_STATUS, COL_WORKCLASS, COL_EDUCATION, COL_OCCUPATION, \
-    COL_RELATIONSHIP, COL_RACE, COL_NATIVE_COUNTRY
+from adult.data import (
+    COL_MARITAL_STATUS,
+    COL_WORKCLASS,
+    COL_EDUCATION,
+    COL_OCCUPATION,
+    COL_RELATIONSHIP,
+    COL_RACE,
+    COL_NATIVE_COUNTRY,
+)
 
 
 class DFTFillNA(RuleBasedDataFrameTransformer):
@@ -15,7 +22,9 @@ class DFTFillNA(RuleBasedDataFrameTransformer):
 
     def _apply(self, df: pd.DataFrame) -> pd.DataFrame:
         if self.column_subset:
-            df.loc[:, self.column_subset] = df[self.column_subset].fillna(self.fill_value)
+            df.loc[:, self.column_subset] = df[self.column_subset].fillna(
+                self.fill_value
+            )
         else:
             df.fillna(self.fill_value, inplace=True)
         return df
@@ -29,6 +38,7 @@ class ColumnValueMapping(RuleBasedDataFrameTransformer):
         column: The column to apply the mapping to
         mapping: A dictionary mapping the original values to the new values
     """
+
     def __init__(self, column: str, mapping: dict, fill_value: Any | None = None):
         self.fill_value = fill_value
         self.column = column
@@ -57,7 +67,12 @@ class WorkClassMapping(ColumnValueMapping):
     }
 
     def __init__(self, fill_na: bool = False):
-        super().__init__(COL_WORKCLASS, self.WORKCLASS_MAPPING, fill_value=self.UNKNOWN_DEFAULT if fill_na else None)
+        super().__init__(
+            COL_WORKCLASS,
+            self.WORKCLASS_MAPPING,
+            fill_value=self.UNKNOWN_DEFAULT if fill_na else None,
+        )
+
 
 class EducationMapping(ColumnValueMapping):
     EDUCATION_MAPPING = {
@@ -99,7 +114,6 @@ class MaritalStatusMapping(ColumnValueMapping):
 
 
 class OccupationMapping(ColumnValueMapping):
-
     UNKNOWN_DEFAULT = "Unknown"
 
     OCCUPATION_MAPPING = {
@@ -121,9 +135,11 @@ class OccupationMapping(ColumnValueMapping):
     }
 
     def __init__(self, fill_na: bool = False):
-        super().__init__(COL_OCCUPATION, self.OCCUPATION_MAPPING, fill_value=self.UNKNOWN_DEFAULT if fill_na else None)
-
-
+        super().__init__(
+            COL_OCCUPATION,
+            self.OCCUPATION_MAPPING,
+            fill_value=self.UNKNOWN_DEFAULT if fill_na else None,
+        )
 
 
 class RelationShipMapping(ColumnValueMapping):
@@ -153,24 +169,22 @@ class RaceMapping(ColumnValueMapping):
         super().__init__(COL_RACE, self.RACE_MAPPING)
 
 
-class NativeCountryMapping(ColumnValueMapping):
-
+class NativeCountryMapping(RuleBasedDataFrameTransformer):
     UNKNOWN_DEFAULT = "Unknown"
     OTHER_DEFAULT = "Other"
-    COUNTRY_MAPPING = {"United-States": "US", "?": UNKNOWN_DEFAULT, "US": "US"}
+    COUNTRY_MAPPING = {"United-States": "US", "?": UNKNOWN_DEFAULT}
 
     def _apply(self, df: pd.DataFrame) -> pd.DataFrame:
         def reduce_native_country(country):
-            if country == "United-States":
-                return "US"
-            elif country == "?":
-                return self.UNKNOWN_DEFAULT
-            else:
-                return "Other"
+            if country in {self.UNKNOWN_DEFAULT, self.OTHER_DEFAULT, "US"}:
+                return country
 
-        df.loc[:, COL_NATIVE_COUNTRY] = df[COL_NATIVE_COUNTRY].apply(reduce_native_country)
+            return self.COUNTRY_MAPPING.get(country, self.OTHER_DEFAULT)
+
+        df.loc[:, COL_NATIVE_COUNTRY] = df[COL_NATIVE_COUNTRY].apply(
+            reduce_native_country
+        )
         return df
-
 
 
 default_preprocessing = [
@@ -179,9 +193,14 @@ default_preprocessing = [
     EducationMapping(),
     MaritalStatusMapping(),
     OccupationMapping(),
-    DFTFillNA(fill_value=OccupationMapping.UNKNOWN_DEFAULT, column_subset=COL_OCCUPATION),
+    DFTFillNA(
+        fill_value=OccupationMapping.UNKNOWN_DEFAULT, column_subset=COL_OCCUPATION
+    ),
     RelationShipMapping(),
     RaceMapping(),
-    #NativeCountryMapping(),
-    DFTFillNA(fill_value=NativeCountryMapping.UNKNOWN_DEFAULT, column_subset=COL_NATIVE_COUNTRY),
+    NativeCountryMapping(),
+    DFTFillNA(
+        fill_value=NativeCountryMapping.UNKNOWN_DEFAULT,
+        column_subset=COL_NATIVE_COUNTRY,
+    ),
 ]
