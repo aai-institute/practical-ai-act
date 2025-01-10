@@ -50,14 +50,18 @@ COLS_FEATURE_NUMERIC = (
     COL_HOURS_PER_WEEK,
 )
 COLS_FEATURE_CATEGORICAL = tuple(
-    [col for col in COLS_FEATURE_ALL if col not in COLS_FEATURE_NUMERIC and col != COL_FNLWGT]
+    [
+        col
+        for col in COLS_FEATURE_ALL
+        if col not in COLS_FEATURE_NUMERIC and col != COL_FNLWGT
+    ]
 )
 CLASS_POSITIVE = ">50K"
 
+
 class AdultData:
-    def __init__(self, data_path: str | Path | None = None, dropna: bool = True):
+    def __init__(self, data_path: str | Path | None = None):
         self._data_path = data_path
-        self._dropna = dropna
 
         loading_func = fetch_ucirepo
 
@@ -68,8 +72,6 @@ class AdultData:
 
     def load_data_frame(self):
         df = self._data.data.original
-        if self._dropna:
-            df = df.dropna()
         df.loc[:, COL_TARGET] = df[COL_TARGET].map(lambda x: x.rstrip("."))
         return df
 
