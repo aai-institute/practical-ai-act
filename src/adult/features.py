@@ -71,9 +71,9 @@ class AdultFeatureRegistry(FeatureGeneratorRegistry):
     def _register_column_features(self):
         for member in self.FeatureName:
             if self._is_categorical_column(member):
-                self.register_categorical(AdultData.Column(member.value))
+                self.register_categorical(AdultData.Column(member.value).value)
             elif self._is_numeric_column(member):
-                self.register_standard_scaled(AdultData.Column(member.value))
+                self.register_standard_scaled(AdultData.Column(member.value).value)
 
     def register_standard_scaled(self, col_name: str):
         self.register_factory(
