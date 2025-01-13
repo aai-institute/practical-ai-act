@@ -57,14 +57,6 @@ class AdultFeatureRegistry(FeatureGeneratorRegistry):
     def __init__(self):
         super().__init__()
         self._register_column_features()
-        self.register_factory(
-            self.FeatureName.NET_CAPITAL,
-            lambda: _NetCapital().to_feature_generator(
-                normalisation_rule_template=DFTNormalisation.RuleTemplate(
-                    transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
-                ),
-            ),
-        )
 
     @staticmethod
     def _is_categorical_column(member: AdultFeatureRegistry.FeatureName):
@@ -83,37 +75,37 @@ class AdultFeatureRegistry(FeatureGeneratorRegistry):
             elif self._is_numeric_column(member):
                 self.register_standard_scaled(AdultData.Column(member.value))
 
-    def register_standard_scaled(self, col_name: AdultData.Column):
+    def register_standard_scaled(self, col_name: str):
         self.register_factory(
-            col_name,
+            self.FeatureName(col_name),
             partial(
                 FeatureGeneratorTakeColumns,
-                col_name.value,
+                col_name,
                 normalisation_rule_template=DFTNormalisation.RuleTemplate(
                     transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
                 ),
             ),
         )
 
-    def register_min_max_scaled(self, col_name: AdultData.Column):
+    def register_min_max_scaled(self, col_name: str):
         self.register_factory(
-            col_name,
+            self.FeatureName(col_name),
             partial(
                 FeatureGeneratorTakeColumns,
-                col_name.value,
+                col_name,
                 normalisation_rule_template=DFTNormalisation.RuleTemplate(
                     transformer_factory=SkLearnTransformerFactoryFactory.MinMaxScaler()
                 ),
             ),
         )
 
-    def register_categorical(self, col_name: AdultData.Column):
+    def register_categorical(self, col_name: str):
         self.register_factory(
-            col_name,
+            self.FeatureName(col_name),
             partial(
                 FeatureGeneratorTakeColumns,
-                col_name.value,
-                categorical_feature_names=col_name.value,
+                col_name,
+                categorical_feature_names=col_name,
             ),
         )
 
@@ -127,3 +119,12 @@ class _NetCapital(ColumnGenerator):
 
 
 adult_feature_registry = AdultFeatureRegistry()
+
+adult_feature_registry.register_factory(
+    AdultFeatureRegistry.FeatureName.NET_CAPITAL,
+    lambda: _NetCapital().to_feature_generator(
+        normalisation_rule_template=DFTNormalisation.RuleTemplate(
+            transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
+        ),
+    ),
+)
