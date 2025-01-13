@@ -103,12 +103,24 @@ if __name__ == "__main__":
         AdultFeatureRegistry.FeatureName.NATIVE_COUNTRY,
         AdultFeatureRegistry.FeatureName.RELATIONSHIP,
     )
+    default_features = (
+        AdultFeatureRegistry.FeatureName.NET_CAPITAL,
+        AdultFeatureRegistry.FeatureName.WORK_CLASS,
+        AdultFeatureRegistry.FeatureName.HOURS_PER_WEEK,
+        AdultFeatureRegistry.FeatureName.EDUCATION,
+        AdultFeatureRegistry.FeatureName.EDUCATION_NUM,
+        AdultFeatureRegistry.FeatureName.OCCUPATION,
+    )
     experiment_name = create_experiment_tag(ablation_feat=ablation_features)
     xgb_models = create_feature_combinations(
-        lambda x: ModelFactory.create_xgb(add_features=x), ablation_features
+        lambda x: ModelFactory.create_xgb(features=default_features, add_features=x),
+        ablation_features,
     )
     lgbm_models = create_feature_combinations(
-        lambda x: ModelFactory.create_lightgbm(add_features=x), ablation_features
+        lambda x: ModelFactory.create_lightgbm(
+            features=default_features, add_features=x
+        ),
+        ablation_features,
     )
     callable_main = partial(main, xgb_models + lgbm_models, name=experiment_name)
     logging.run_main(callable_main, level=logging.INFO)
