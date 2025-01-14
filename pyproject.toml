@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "adult"
 version = "0.1.0"
@@ -29,7 +33,3 @@ docs = [
     "mkdocs-include-dir-to-nav",
     "mike",
 ]
-
-[build-system]
-requires = ["setuptools>=45", "setuptools-scm[toml]>=7.1"]
-build-backend = "setuptools.build_meta"
