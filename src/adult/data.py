@@ -1,11 +1,16 @@
 from __future__ import annotations
+
+import urllib
+import urllib.request
+import zipfile
 from enum import Enum
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pandas as pd
 from sensai import InputOutputData
-from ucimlrepo import fetch_ucirepo
 from sensai.util.cache import pickle_cached
+from ucimlrepo import fetch_ucirepo
 
 
 class AdultData:
@@ -86,4 +91,99 @@ class AdultData:
         all_df = self.load_data_frame()
         return InputOutputData(
             all_df.drop(columns=[self.TARGET]), all_df[[self.TARGET]]
+        )
+
+
+def _fetch_asec_data(
+    data_path: str | Path,
+    year: int = 2024,
+) -> pd.DataFrame:
+    """Return the US Census CPS ASEC supplemental dataset for a given year as a DataFrame."""
+    url = f"https://www2.census.gov/programs-surveys/cps/datasets/{year}/march/asecpub{year % 2000}csv.zip"
+    data_file = f"pppub{year % 2000}.csv"
+
+    with TemporaryDirectory() as temp_dir:
+        archive_file = temp_dir + "/data.zip"
+        urllib.request.urlretrieve(url, archive_file)
+        zipfile.ZipFile(archive_file).extract(data_file, data_path)
+        df = pd.read_csv(data_path / data_file)
+        return df
+
+
+class AdultASECData:
+    """
+    Data provider for the US Census CPS ASEC supplemental dataset.
+
+    2024 dataset data dictionary: https://www2.census.gov/programs-surveys/cps/datasets/2024/march/asec2024_ddl_pub_full.pdf
+
+    The provider loads the data from the US Census web server and optionally caches the data using the `pickle` module.
+
+    Args:
+        data_path: Optional directory to cache the downloaded result.
+            If not provided, the data will be downloaded from the US Census web server.
+    """
+
+    class Column(str, Enum):
+        """
+        Enum representing the column names in the original data
+        """
+
+        # FIXME: This is a very small subset of the original data
+        AGE = "A_AGE"
+        HOURS_PER_WEEK = "HRSWK"
+        MARITAL_STATUS = "A_MARITL"
+        EDUCATION = "A_HGA"
+        FNLWGT = "A_FNLWGT"
+        SEX = "A_SEX"
+        RACE = "PRDTRACE"
+        INCOME = "AGI"
+
+    TARGET = Column.INCOME
+
+    COLS_CATEGORICAL = (
+        Column.EDUCATION,
+        Column.MARITAL_STATUS,
+        Column.SEX,
+        Column.RACE,
+    )
+    COLS_NUMERIC = (
+        Column.HOURS_PER_WEEK,
+        Column.AGE,
+        Column.FNLWGT,
+    )
+    COLS_ORDINAL = ()
+
+    def __init__(self, data_path: str | Path | None = None, year: int = 2024):
+        self._data_path = data_path
+
+        loading_func = _fetch_asec_data
+        if data_path is not None:
+            loading_func = pickle_cached(data_path)(loading_func)
+
+        self._data = loading_func(year=year, data_path=data_path)
+
+    def load_data_frame(self) -> pd.DataFrame:
+        df = self._data
+
+        # Apply subsetting from original UCI Adult Income dataset
+        df = df[
+            (df["A_AGE"] >= 16)
+            & (df["AGI"] > 100)
+            & (df["HRSWK"] > 0)
+            & (df["A_FNLWGT"] > 0)
+        ]
+        return df
+
+    def load_input_output_data(self) -> InputOutputData:
+        df = self.load_data_frame()
+        return InputOutputData(
+            inputs=df[
+                [
+                    col
+                    for col in self.COLS_CATEGORICAL
+                    + self.COLS_NUMERIC
+                    + self.COLS_ORDINAL
+                ]
+            ],
+            outputs=df[[self.TARGET]],
         )
