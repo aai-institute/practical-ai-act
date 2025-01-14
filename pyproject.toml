@@ -1,5 +1,5 @@
 [project]
-name = "twai-pipeline"
+name = "adult"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -18,7 +18,17 @@ dependencies = [
 
 [dependency-groups]
 docs = [
-    "mkdocs>=1.6.1",
-    "mkdocstrings-python>=1.13.0",
+    "mkdocs",
+    "mkdocs-callouts",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-section-index",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-include-dir-to-nav",
 ]
-dev = []
+
+[build-system]
+requires = ["setuptools>=45", "setuptools-scm[toml]>=7.1"]
+build-backend = "setuptools.build_meta"
