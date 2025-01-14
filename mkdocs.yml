@@ -1,6 +1,7 @@
 site_name: twai-pipeline
 site_dir: public/docs
-repo_uri: https://github.com/aai-institute/twai-pipeline
+repo_url: https://github.com/aai-institute/twai-pipeline
+edit_uri: edit/main/docs/
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
@@ -16,21 +17,18 @@ nav:
   - Getting Started:
       - getting-started/index.md
       - getting-started/first-steps.md
+  - How-to:
+      - how-to/index.md
   - Explanations:
       - explanations/index.md
       - explanations/uncertainty-quantification.md
       - explanations/explainability.md
       - explanations/bias.md
+      - explanations/fairness.md
       - explanations/data-governance.md
 
 plugins:
   - callouts
-  - gen-files:
-      scripts:
-        - docs/_scripts/gen_api_ref_pages.py
-        - docs/_scripts/jupytext_convert.py
-  - literate-nav:
-      nav_file: SUMMARY.md
   - section-index
   - mkdocstrings:
       handlers:
@@ -47,21 +45,6 @@ plugins:
             signature_crossrefs: true
             merge_init_into_class: false
             filters: ["!^_{1,2}"]
-  - mknotebooks:
-      execute: true
-      # https://github.com/greenape/mknotebooks/blob/master/examples/cell_tag_remove/mkdocs.yml
-      # See the following for how to add the tags to cells: https://jupyterbook.org/en/stable/content/metadata.html#jupyter-cell-tags
-      tag_remove_configs:
-        remove_cell_tags:
-          - Remove_cell
-        remove_all_outputs_tags:
-          - Remove_all_output
-        remove_single_output_tags:
-          - Remove_single_output
-        remove_input_tags:
-          - Remove_input
-  - mike:
-      canonical_version: latest
   - privacy
   - search:
   - git-revision-date-localized:
@@ -72,7 +55,6 @@ plugins:
       file_pattern: '.*\.(md|ipynb)$'
 
 markdown_extensions:
-  - neoteroi.cards  # https://www.neoteroi.dev/mkdocs-plugins/cards/
   # python-markdown extensions: https://python-markdown.github.io/extensions/
   - admonition
   - attr_list
@@ -102,7 +84,7 @@ theme:
   logo: _images/aai-logo-cropped.png
   favicon: _images/lakefs-spec-favicon.png
   font:
-    text: IBM Plex Sans  # Arial replacement
+    text: IBM Plex Sans # Arial replacement
     code: Source Code Pro
   icon:
     logo: _images/aai-favicon.png
