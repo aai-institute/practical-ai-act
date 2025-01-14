@@ -26,6 +26,13 @@ nav:
       - explanations/bias.md
       - explanations/fairness.md
       - explanations/data-governance.md
+      - explanations/accuracy.md
+      - explanations/cybersecurity.md
+      - explanations/interoperability.md
+      - explanations/privacy-and-data-security.md
+      - explanations/robustness.md
+      - explanations/technical-documentation.md
+      - explanations/traceability.md
 
 plugins:
   - callouts
