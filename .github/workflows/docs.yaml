@@ -1,0 +1,31 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docs:
+    name: Build mkdocs documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Set up Python 3.12 and dependencies
+        uses: ./.github/actions/python-deps
+        with:
+          pythonVersion: "3.12"
+      - name: Build documentation using mike
+        uses: ./.github/actions/mike-docs
+        with:
+          version: development
+          pre_release: true # include pre-release notification banner
+          push: ${{ github.ref == 'refs/heads/main' }} # build always, publish on 'main' only to prevent version clutter

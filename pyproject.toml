@@ -27,6 +27,7 @@ docs = [
     "mkdocstrings[python]",
     "mkdocs-git-revision-date-localized-plugin",
     "mkdocs-include-dir-to-nav",
+    "mike",
 ]
 
 [build-system]
