@@ -1,0 +1,16 @@
+name: Install Python version using uv
+description: Install uv and a target Python interpreter
+inputs:
+  pythonVersion:
+    description: Python version to set up using uv
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        python-version: ${{ inputs.pythonVersion }}
+    - name: Install the project
+      run: uv sync --frozen --all-groups
+      shell: bash

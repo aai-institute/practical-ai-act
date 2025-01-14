@@ -45,6 +45,8 @@ plugins:
             signature_crossrefs: true
             merge_init_into_class: false
             filters: ["!^_{1,2}"]
+  - mike:
+      canonical_version: latest
   - privacy
   - search:
   - git-revision-date-localized:
