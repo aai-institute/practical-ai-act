@@ -1,1 +1,146 @@
 site_name: twai-pipeline
+site_dir: public/docs
+repo_uri: https://github.com/aai-institute/twai-pipeline
+
+# To validate all internal links exist. Does not work in ipynb files
+strict: true
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+copyright: Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a><br>The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn gGmbH.
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - getting-started/first-steps.md
+  - Explanations:
+      - explanations/index.md
+      - explanations/uncertainty-quantification.md
+      - explanations/explainability.md
+      - explanations/bias.md
+      - explanations/data-governance.md
+
+plugins:
+  - callouts
+  - gen-files:
+      scripts:
+        - docs/_scripts/gen_api_ref_pages.py
+        - docs/_scripts/jupytext_convert.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            docstring_section_style: spacy
+            line_length: 100
+            show_bases: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+            merge_init_into_class: false
+            filters: ["!^_{1,2}"]
+  - mknotebooks:
+      execute: true
+      # https://github.com/greenape/mknotebooks/blob/master/examples/cell_tag_remove/mkdocs.yml
+      # See the following for how to add the tags to cells: https://jupyterbook.org/en/stable/content/metadata.html#jupyter-cell-tags
+      tag_remove_configs:
+        remove_cell_tags:
+          - Remove_cell
+        remove_all_outputs_tags:
+          - Remove_all_output
+        remove_single_output_tags:
+          - Remove_single_output
+        remove_input_tags:
+          - Remove_input
+  - mike:
+      canonical_version: latest
+  - privacy
+  - search:
+  - git-revision-date-localized:
+      type: iso_date
+      strict: false
+      fallback_to_build_date: true
+  - include_dir_to_nav:
+      file_pattern: '.*\.(md|ipynb)$'
+
+markdown_extensions:
+  - neoteroi.cards  # https://www.neoteroi.dev/mkdocs-plugins/cards/
+  # python-markdown extensions: https://python-markdown.github.io/extensions/
+  - admonition
+  - attr_list
+  - sane_lists
+  - toc:
+      permalink: true
+      toc_depth: 3
+  # pymdown-extensions: https://facelessuser.github.io/pymdown-extensions/
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      url_download: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+theme:
+  name: "material"
+  custom_dir: docs/_theme_overrides
+  logo: _images/aai-logo-cropped.png
+  favicon: _images/lakefs-spec-favicon.png
+  font:
+    text: IBM Plex Sans  # Arial replacement
+    code: Source Code Pro
+  icon:
+    logo: _images/aai-favicon.png
+    repo: fontawesome/brands/github
+  features:
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+  palette:
+    # Palette toggle for light mode
+    - scheme: aai-light
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra:
+  copyright_link: https://appliedai-institute.de
+  generator: false
+  pre_release: !ENV [DOCS_PRERELEASE, false]
+  version:
+    provider: mike
+    default: latest
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/aai-institute/twai-pipeline
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/appliedai-institute-for-europe-ggmbh/
+    - icon: fontawesome/solid/section
+      link: https://appliedai-institute.de/impressum
+      name: Impressum / Imprint
+
+extra_css:
+  - _styles/extra.css
+  - _styles/theme.css
