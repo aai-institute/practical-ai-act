@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../bias/">
+        <link rel="prev" href="../data-governance/">
       
       
-        <link rel="next" href="../data-governance/">
+        <link rel="next" href="../cybersecurity/">
       
       
       <link rel="icon" href="../../_images/aai-favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Fairness - twai-pipeline</title>
+        <title>Accuracy - twai-pipeline</title>
       
     
     
@@ -76,6 +76,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#accuracy" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -162,7 +167,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Fairness</strong>
+              twai-pipeline &mdash; <strong>Accuracy</strong>
             
           </span>
         </div>
@@ -534,17 +539,10 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -553,7 +551,6 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
-      
     </li>
   
 
@@ -584,10 +581,19 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../accuracy/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -596,6 +602,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
+      
     </li>
   
 
@@ -751,6 +758,8 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -765,7 +774,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
                   
 
   
-    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/fairness.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/accuracy.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -773,9 +782,60 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
 
-  <h1>Fairness</h1>
-
-
+<h1 id="accuracy">Accuracy<a class="headerlink" href="#accuracy" title="Permanent link">&para;</a></h1>
+<p>This article requires that high-risk AI systems be designed to achieve appropriate levels of accuracy, robustness, and cybersecurity. Systems should perform consistently throughout their lifecycle, be resilient to errors and faults, and have measures in place to mitigate risks associated with cybersecurity threats. The accuracy of AI systems should be declared in their instructions, and systems should be designed to minimize risks of producing biased outputs.</p>
+<h1 id="continuous-testing-and-benchmarking-of-models">Continuous testing and benchmarking of models<a class="headerlink" href="#continuous-testing-and-benchmarking-of-models" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Regularly test datasets to validate their quality, accuracy, and relevance to the AI system's intended use.<ul>
+<li><strong>Data quality:</strong><ul>
+<li><strong>Missing Values Analysis:</strong> Identify and handle missing or incomplete data using imputation, removal, or domain-specific methods.</li>
+<li><strong>Outlier Detection:</strong> Use statistical or machine learning techniques to detect and address outliers (e.g., Z-scores).</li>
+<li><strong>Duplicate Records:</strong> Regularly check for and remove duplicate entries to maintain dataset integrity.</li>
+<li><strong>Noise Reduction:</strong> Identify noisy or erroneous data points using heuristics, domain knowledge, or automated tools.</li>
+</ul>
+</li>
+<li><strong>Relevance:</strong><ul>
+<li><strong>Feature Relevance Analysis:</strong> Perform feature selection or importance ranking to ensure all features contribute meaningfully to the AI model. (SHAP)</li>
+<li><strong>Temporal Relevance:</strong> Test datasets periodically to ensure they remain current and relevant (e.g., avoid outdated information).</li>
+</ul>
+</li>
+<li><strong>Drift detection:</strong><ul>
+<li><strong>Concept Drift:</strong> Regularly test for shifts in the relationship between input features and target labels over time.</li>
+<li><strong>Data Distribution Drift:</strong> Monitor changes in feature distributions compared to baseline distributions<ul>
+<li>Kolmogorov-Smirnov test</li>
+<li>Earth Mover’s Distance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Metrics:</strong><ul>
+<li><strong><em>Regression:</em></strong><ul>
+<li>Mean Absolute Error (MAE)</li>
+<li>Median Absolute Error (MedAE)</li>
+<li>Mean Squared Error (MSE)</li>
+<li>Root Mean Squared Error (RMSE)</li>
+<li>R-Squared</li>
+</ul>
+</li>
+<li><strong><em>Classification:</em></strong><ul>
+<li>Accuracy (Balanced accuracy)</li>
+<li>Logarithmic Loss</li>
+<li>Precision</li>
+<li>Recall</li>
+<li>F1-score</li>
+<li>Area Under the ROC Curve (AUC-ROC)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>T<strong>ools:</strong><ul>
+<li>Great Expectations, Pandas, Evidently AI, NannyML</li>
+</ul>
+</li>
+<li>Ensure that datasets are updated as necessary to reflect current conditions or contexts.</li>
+</ul>
 
 
 

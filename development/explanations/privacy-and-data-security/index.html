@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../bias/">
+        <link rel="prev" href="../interoperability/">
       
       
-        <link rel="next" href="../data-governance/">
+        <link rel="next" href="../robustness/">
       
       
       <link rel="icon" href="../../_images/aai-favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Fairness - twai-pipeline</title>
+        <title>Privacy and data security - twai-pipeline</title>
       
     
     
@@ -76,6 +76,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#privacy-and-data-security" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -162,7 +167,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Fairness</strong>
+              twai-pipeline &mdash; <strong>Privacy and data security</strong>
             
           </span>
         </div>
@@ -534,17 +539,10 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -553,7 +551,6 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
-      
     </li>
   
 
@@ -647,10 +644,19 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../privacy-and-data-security/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -659,6 +665,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
+      
     </li>
   
 
@@ -751,6 +758,8 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -765,7 +774,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
                   
 
   
-    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/fairness.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/privacy-and-data-security.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -773,9 +782,23 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
 
-  <h1>Fairness</h1>
-
-
+<h1 id="privacy-and-data-security">Privacy and data security<a class="headerlink" href="#privacy-and-data-security" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p>Use anonymization or pseudonymization techniques where personal data is involved</p>
+<ul>
+<li><strong>Masking:</strong> Replace sensitive information with placeholder characters or symbols.</li>
+<li><strong>Generalization:</strong> Replace specific data values with more general ones to reduce specificity.</li>
+<li><strong>Suppression:</strong> Remove sensitive data fields entirely or omit certain records to ensure privacy.</li>
+<li><strong>Pseudonymization:</strong> Replace identifiable information with pseudonyms or tokens.</li>
+<li><strong>Noise:</strong> Add random noise to numerical data to obscure exact values while preserving overall patterns.</li>
+<li><strong>Differential Privacy:</strong> Introduce carefully calibrated noise to data or query results to ensure privacy guarantees (Laplace)</li>
+</ul>
+</li>
+<li>
+<p>Protect datasets against unauthorized access, breaches, and other security risks.</p>
+</li>
+</ul>
 
 
 

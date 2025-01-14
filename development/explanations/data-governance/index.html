@@ -12,13 +12,15 @@
         <link rel="prev" href="../fairness/">
       
       
+        <link rel="next" href="../accuracy/">
+      
       
       <link rel="icon" href="../../_images/aai-favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
     
     
       
-        <title>Data governance - twai-pipeline</title>
+        <title>Data Governance - twai-pipeline</title>
       
     
     
@@ -74,6 +76,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#data-governance" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -160,7 +167,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Data governance</strong>
+              twai-pipeline &mdash; <strong>Data Governance</strong>
             
           </span>
         </div>
@@ -518,7 +525,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         
   
   <span class="md-ellipsis">
-    Bias
+    Mitigate Bias
   </span>
   
 
@@ -562,17 +569,166 @@ released. For the most accurate information, please <strong><a href="../../..">a
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Data governance
+    Data Governance
   </span>
   
 
       </a>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accuracy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accuracy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cybersecurity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cybersecurity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interoperability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interoperability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-and-data-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy and data security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../robustness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Robustness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Technical Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traceability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ensure traceability and documentation
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -602,6 +758,8 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
   
   
+    
+  
   
 </nav>
                   </div>
@@ -624,9 +782,75 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
 
-  <h1>Data governance</h1>
-
-
+<h1 id="data-governance">Data Governance<a class="headerlink" href="#data-governance" title="Permanent link">&para;</a></h1>
+<ul>
+<li>
+<p>Establish a <strong>data management system</strong></p>
+<ul>
+<li>Centralize data storage (e.g., in a Data Lake or Data Warehouse)<ul>
+<li>Implement access control and restrict access to data to authorized personal and systems only</li>
+<li>Avoid storing data on developer machines. Provide discovery tooling. Provide centralized compute with high-speed data access.</li>
+</ul>
+</li>
+<li>Establish a organization-wide glossary index<ul>
+<li>Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Document data sources</strong> (in a Data Catalog or in a Data Card):</p>
+<ul>
+<li>Data selection process</li>
+<li>Quality improvement measures</li>
+<li>Data owners</li>
+<li>Description</li>
+<li>Classification (applicable glossary terms)</li>
+<li>Fields (name, type, description, classification) for tabular data</li>
+<li>Data properties (e.g., format, resolution) for non-tabular data</li>
+</ul>
+</li>
+<li>
+<p><strong>Establish data lineage</strong> (i.e., define upstream or downstream data sets) on data set level or on column level for tabular data.</p>
+<ul>
+<li>Define lineage in a data catalog, or have it automatically represented in a workflow/data orchestrator<ul>
+<li>Keep records of the data lifecycle, including the sources of data, selection criteria, and preprocessing steps (all steps to model training).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Data versioning:</strong></p>
+<ul>
+<li>Automation:🍏<ul>
+<li>Version datasets on data processing pipelines</li>
+<li>Generate logs on each update</li>
+<li>Execute pipelines on data changes</li>
+</ul>
+</li>
+<li>Depending on the use case and data set properties:<ul>
+<li>Store complete versions (suitable for small data sets only)</li>
+<li>Store increments (new image objects, new partitions in time series, etc)</li>
+<li>Store differences (deltas) between data set versions</li>
+</ul>
+</li>
+<li><strong>Rule of thumb:</strong> You should version data whenever changes to the dataset occur that could impact its use, reproducibility, or compatibility with downstream systems.<ul>
+<li>Initial data set creation</li>
+<li>Data updates (new data, corrections, expansions)</li>
+<li>Data processing: after applying preprocessing steps (evaluate based on compute vs. storage requirements)</li>
+<li>Model training: maintain a version of the data for each trained model</li>
+<li>Performance: after subsampling or aggregating</li>
+<li>Experiments: when experimenting with different versions, including different features, etc.</li>
+<li>Collaboration: track contributions per team/person</li>
+<li>Decommissioning: store the last version of the data</li>
+<li>Scheduled: hourly, daily, weekly, etc.</li>
+</ul>
+</li>
+<li><strong>Tools:</strong> LakeFS, DVC, Delta Lake, Git LFS🍏</li>
+<li>🍏What would the user have to think about when choosing between them ( thinking about the methodlodies that define and separate them)</li>
+</ul>
+</li>
+</ul>
 
 
 

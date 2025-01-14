@@ -20,7 +20,7 @@
     
     
       
-        <title>Bias - twai-pipeline</title>
+        <title>Mitigate Bias - twai-pipeline</title>
       
     
     
@@ -76,6 +76,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#mitigate-bias" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -162,7 +167,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Bias</strong>
+              twai-pipeline &mdash; <strong>Mitigate Bias</strong>
             
           </span>
         </div>
@@ -522,16 +527,57 @@ released. For the most accurate information, please <strong><a href="../../..">a
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mitigate Bias
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Bias
+    Mitigate Bias
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#freestyle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Freestyle
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -570,7 +616,154 @@ released. For the most accurate information, please <strong><a href="../../..">a
         
   
   <span class="md-ellipsis">
-    Data governance
+    Data Governance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accuracy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Accuracy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cybersecurity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cybersecurity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interoperability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Interoperability
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy-and-data-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Privacy and data security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../robustness/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Robustness
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../technical-documentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Technical Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traceability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ensure traceability and documentation
   </span>
   
 
@@ -604,6 +797,25 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#freestyle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Freestyle
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -626,8 +838,77 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
 
-  <h1>Bias</h1>
-
+<h1 id="mitigate-bias">Mitigate Bias<a class="headerlink" href="#mitigate-bias" title="Permanent link">&para;</a></h1>
+<ul>
+<li>Implement measures to identify, monitor, and mitigate potential biases in datasets that could lead to discriminatory outcomes.</li>
+<li><strong>Conduct Exploratory Data Analysis (EDA):</strong> Analyze the dataset for imbalances or patterns that may suggest bias, such as over-representation or under-representation of certain groups.</li>
+<li>
+<p><strong>Fairness Metrics:</strong> Use fairness metrics like demographic parity, equalized odds, and disparate impact to quantify bias in datasets and model outputs.</p>
+<ul>
+<li><strong>Demographic Parity (Statistical Parity):</strong>
+  Ensures that all groups have equal probabilities of receiving a positive outcome.</li>
+</ul>
+<p>$P(Outcome=Positive∣Group=A)=P(Outcome=Positive∣Group=B)$
+- <strong>Equalized Odds:</strong>
+  Requires equal true positive rates (TPRs) and false positive rates (FPRs) across groups.</p>
+<p>$P(Predicted Positive∣Actual Positive,Group=A)=P(Predicted Positive∣Actual Positive,Group=B)$
+- <strong>Disparate Impact:</strong>
+  Compares the ratio of favorable outcomes for different groups. Often used to detect discrimination.</p>
+<p>$Disparate Impact=P(Positive Outcome∣Group=B) / P(Positive Outcome∣Group=A)$</p>
+</li>
+<li>
+<p><strong>Diversity Analysis:</strong> Evaluate the dataset's demographic diversity, ensuring it represents all relevant populations appropriately.</p>
+</li>
+<li><strong>Group Representation:</strong>
+    Checks whether groups are proportionally represented in the dataset (calculate as fraction of the total dataset size)</li>
+<li>
+<p><strong>Overall Accuracy Equality:</strong>
+    Ensures that accuracy rates are equal across groups.</p>
+</li>
+<li>
+<p><strong>Open-Source Tools:</strong></p>
+</li>
+<li>IBM AI Fairness 360</li>
+<li>Microsoft's Fairlearn</li>
+<li>
+<p>Google's What-If Tool</p>
+</li>
+<li>
+<p><strong>Resampling Techniques:</strong> Use oversampling (e.g., SMOTE) or undersampling to balance the representation of different demographic groups.</p>
+</li>
+<li>
+<p><code>imblearn</code> package</p>
+</li>
+<li>
+<p>Synthetic Data Generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.</p>
+</li>
+<li>
+<p>Reweighting: Adjust the weights of data instances to ensure fair representation across groups.</p>
+</li>
+<li>
+<p>Bias-Corrected Features: Transform features to reduce correlations with sensitive attributes (e.g., gender, race).</p>
+</li>
+<li>
+<p>Fair Representations: Use fairness-aware models that explicitly optimize for fairness metrics alongside predictive accuracy.
+  -Learning Fair Representations (LFR): Produces a transformed dataset with minimal bias.</p>
+</li>
+<li>
+<p><strong>Outcome Adjustments:</strong> Adjust decision thresholds or outputs to ensure equitable outcomes across demographic groups.</p>
+</li>
+<li>
+<p><strong>Equalized Odds Postprocessing:</strong> Modifies predictions to satisfy equalized odds constraints.</p>
+</li>
+<li>
+<p>Bias Mitigation Strategies: Apply fairness postprocessing methods, such as calibration by group or equalized odds adjustments.</p>
+</li>
+<li>
+<p>Regularly audit data to ensure it is free from systemic errors or biases.</p>
+</li>
+<li><strong>Segmentation Analysis:</strong> Partition the dataset based on sensitive attributes and assess performance metrics for each segment to detect disparities.</li>
+<li><strong>Subgroup Fairness Checks:</strong> Compare outcomes for different demographic subgroups to identify discrepancies.</li>
+<li><strong>Drift Detection:</strong> Use tools to detect data or model drift that may reintroduce bias over time.</li>
+</ul>
+<h2 id="freestyle">Freestyle<a class="headerlink" href="#freestyle" title="Permanent link">&para;</a></h2>
 <ul>
 <li>interpretation of AI Act regarding bias (referencing Annexes)</li>
 <li>definition we use in the project and why</li>

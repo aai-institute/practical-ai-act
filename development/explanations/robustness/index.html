@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../bias/">
+        <link rel="prev" href="../privacy-and-data-security/">
       
       
-        <link rel="next" href="../data-governance/">
+        <link rel="next" href="../technical-documentation/">
       
       
       <link rel="icon" href="../../_images/aai-favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Fairness - twai-pipeline</title>
+        <title>Robustness - twai-pipeline</title>
       
     
     
@@ -76,6 +76,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#robustness" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -162,7 +167,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Fairness</strong>
+              twai-pipeline &mdash; <strong>Robustness</strong>
             
           </span>
         </div>
@@ -534,17 +539,10 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../fairness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -553,7 +551,6 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
-      
     </li>
   
 
@@ -668,10 +665,30 @@ released. For the most accurate information, please <strong><a href="../../..">a
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../robustness/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Robustness
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -680,6 +697,62 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#robust-model-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robust Model Design
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-feedback-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Feedback Loops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-updating-and-retraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Updating and Retraining
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -751,6 +824,52 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#robust-model-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robust Model Design
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-feedback-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Feedback Loops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-updating-and-retraining" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Updating and Retraining
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -765,7 +884,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
                   
 
   
-    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/fairness.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/aai-institute/twai-pipeline/edit/main/docs/explanations/robustness.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -773,9 +892,28 @@ released. For the most accurate information, please <strong><a href="../../..">a
   
 
 
-  <h1>Fairness</h1>
-
-
+<h1 id="robustness">Robustness<a class="headerlink" href="#robustness" title="Permanent link">&para;</a></h1>
+<h3 id="robust-model-design"><strong>Robust Model Design</strong><a class="headerlink" href="#robust-model-design" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Regularization Techniques:</strong> Apply L1/L2 regularization or dropout to prevent overfitting and improve generalization.</li>
+<li><strong>Ensemble Learning:</strong> Combine predictions from multiple models to improve robustness against errors in individual models. Know when certain models in the ensemble are not suitable.</li>
+<li><strong>Adversarial Training:</strong> Train the model on adversarial examples to enhance its resilience to malicious inputs.</li>
+</ul>
+<h3 id="testing"><strong>Testing</strong><a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Boundary Testing:</strong> Test the AI system with inputs near decision boundaries to evaluate its behavior under edge cases.</li>
+<li><strong>Scenario-Based Testing:</strong> Simulate real-world scenarios, including extreme conditions, to assess system stability.</li>
+</ul>
+<h3 id="monitoring-and-feedback-loops"><strong>Monitoring and Feedback Loops</strong><a class="headerlink" href="#monitoring-and-feedback-loops" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Performance Monitoring:</strong> Continuously monitor the AI system’s performance in production to detect deviations or degradation over time.</li>
+<li><strong>Feedback Mechanisms:</strong> Implement systems that allow end-users to report issues or anomalies.</li>
+</ul>
+<h3 id="model-updating-and-retraining"><strong>Model Updating and Retraining</strong><a class="headerlink" href="#model-updating-and-retraining" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Continuous Learning:</strong> Periodically retrain the model with updated data to adapt to changes in the operating environment.</li>
+<li><strong>Version Control:</strong> Maintain and document model versions, including performance evaluations for each update.</li>
+</ul>
 
 
 
