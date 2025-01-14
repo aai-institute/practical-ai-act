@@ -1,5 +1,5 @@
 [project]
-name = "twai-pipeline"
+name = "adult"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -21,4 +21,8 @@ docs = [
     "mkdocs>=1.6.1",
     "mkdocstrings-python>=1.13.0",
 ]
-dev = []
+
+[build-system]
+requires = ["setuptools>=45", "setuptools-scm[toml]>=7.1"]
+build-backend = "setuptools.build_meta"
+
