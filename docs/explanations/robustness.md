@@ -20,3 +20,8 @@
 
 - **Continuous Learning:** Periodically retrain the model with updated data to adapt to changes in the operating environment.
 - **Version Control:** Maintain and document model versions, including performance evaluations for each update.
+
+
+## Reading
+From the book [Trustworthy Machine Learning](https://trustworthyml.io/)
+* Chapter 2.10 - 2.15

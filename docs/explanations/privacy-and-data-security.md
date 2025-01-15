@@ -9,3 +9,8 @@
     - **Differential Privacy:** Introduce carefully calibrated noise to data or query results to ensure privacy guarantees (Laplace)
     
 - Protect datasets against unauthorized access, breaches, and other security risks.
+
+
+# Reading
+* [When Machine Learning Meets Privacy: A Survey and
+  Outlook](https://arxiv.org/pdf/2011.11819)

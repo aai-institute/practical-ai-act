@@ -69,3 +69,8 @@
   * Methods for Activity Y
   * Selected methods and tools for Activity Y
   * Findings
+
+
+## Reading
+From the book [Trustworthy Machine Learning](https://trustworthyml.io/)
+* Chapter 2.8 - 2.9 (and previous chapter as mentioned in the text) 

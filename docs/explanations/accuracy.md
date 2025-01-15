@@ -36,3 +36,9 @@ This article requires that high-risk AI systems be designed to achieve appropria
 - T**ools:**
     - Great Expectations, Pandas, Evidently AI, NannyML
 - Ensure that datasets are updated as necessary to reflect current conditions or contexts.
+
+
+
+## Reading
+From the book [Trustworthy Machine Learning](https://trustworthyml.io/)
+* Chapter 5.1
