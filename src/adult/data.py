@@ -252,10 +252,10 @@ class AdultASECData:
 
         # Apply subsetting from original UCI Adult Income dataset
         df = df[
-            (df["A_AGE"] >= 16)
-            & (df["AGI"] > 100)
-            & (df["HRSWK"] > 0)
-            & (df["A_FNLWGT"] > 0)
+            (df[self.Column.AGE] >= 16)
+            & (df[self.Column.TOTAL_INCOME] > 100)
+            & (df[self.Column.HOURS_PER_WEEK] > 0)
+            & (df[self.Column.FNLWGT] > 0)
         ]
         return df
 
