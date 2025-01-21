@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from tkinter import W
 import urllib
 import urllib.request
 import zipfile
@@ -192,7 +193,6 @@ class AdultASECData:
         UNION_MEMBERSHIP = "A_UNMEM"
         UNEMPLOYMENT_TYPE = "A_UNTYPE"
         USUAL_HOURS_PER_WEEK = "A_USLHRS"
-        EARNINGS_WEEKLY = "A_WERNTF"
         UNEMPLOYMENT_DURATION = "A_WKSLK"
         FULL_TIME_PART_TIME_STATUS = "A_WKSTAT"
         MAJOR_LABOR_FORCE = "PEMLR"
@@ -226,17 +226,56 @@ class AdultASECData:
     TARGET = Column.TOTAL_INCOME
 
     COLS_CATEGORICAL = (
-        Column.EDUCATION,
+        Column.ENROL_STATUS,
+        Column.ENROL_FULL_TIME_PART_TIME,
+        Column.ENROL_SCHOOL,
         Column.MARITAL_STATUS,
         Column.SEX,
+        Column.PERSON_STATUS,
+        Column.PROFESSIONAL_CERTIFICATION,
+        Column.SPANISH_HISPANIC_LATINO,
+        Column.BIRTH_COUNTRY,
+        Column.CITIZENSHIP_GROUP,
+        Column.ASIAN_SUBGROUP,
+        Column.DISABILITY_CONDITIONS,
+        Column.HISPANIC_SUBGROUP,
         Column.RACE,
+        Column.MAJOR_INDUSTRY,
+        Column.MAJOR_OCCUPATION,
+        Column.UNEMPLOYMENT_REASON,
+        Column.WORKER_CLASS,
+        Column.FULL_TIME_LABOR_FORCE,
+        Column.LABOR_FORCE_STATUS,
+        Column.UNION_MEMBERSHIP,
+        Column.UNEMPLOYMENT_TYPE,
+        Column.FULL_TIME_PART_TIME_STATUS,   
+        Column.MAJOR_LABOR_FORCE,
+        Column.LONGEST_JOB_CLASS,
+        Column.INDUSTRY,
+        Column.LONGEST_JOB_EARNINGS_SOURCE,
+        Column.OTHER_EMPLOYERS_WAGE,
+        Column.HEALTH_INSURANCE_COVERAGE,
+        Column.HEALTH_STATUS,
     )
     COLS_NUMERIC = (
-        Column.HOURS_PER_WEEK,
         Column.AGE,
+        Column.HOURS_PER_WEEK_EDITED,
+        Column.EARNINGS_GROSS_PER_WEEK,
+        Column.HOURLY_PAY,
+        Column.USUAL_HOURS_PER_WEEK,
+        Column.UNEMPLOYMENT_DURATION,
+        Column.HOURS_PER_WEEK,
+        Column.WEEKS_WORKED,
+        Column.LONGEST_JOB_EARNINGS,
+        Column.TOTAL_EARNINGS,
+        Column.SELF_EMPLOYED_EARNINGS,
+        Column.ADJUSTED_GROSS_INCOME,
         Column.FNLWGT,
     )
-    COLS_ORDINAL = ()
+    COLS_ORDINAL = (
+        Column.EDUCATION,
+        Column.NUMBER_OF_EMPLOYEES,
+    )
 
     def __init__(self, data_path: str | Path | None = None, year: int = 2024):
         self._data_path = data_path
