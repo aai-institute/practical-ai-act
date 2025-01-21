@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tkinter import W
 import urllib
 import urllib.request
 import zipfile
@@ -9,7 +8,6 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import pandas as pd
-from sensai import InputOutputData
 from sensai.util.cache import pickle_cached
 from ucimlrepo import fetch_ucirepo
 
@@ -84,15 +82,13 @@ class AdultData:
         df.loc[:, self.TARGET] = df[self.TARGET].map(lambda x: x.rstrip("."))
         return df
 
-    def load_input_output_data(self) -> InputOutputData:
+    def load_input_output_data(self) -> tuple[pd.DataFrame, pd.Series]:
         """
         Load the data as an `InputOutputData` object used in the
         [`sensai`](https://github.com/opcode81/sensAI) package.
         """
         all_df = self.load_data_frame()
-        return InputOutputData(
-            all_df.drop(columns=[self.TARGET]), all_df[[self.TARGET]]
-        )
+        return all_df.drop(columns=[self.TARGET]), all_df[[self.TARGET]]
 
 
 def _fetch_asec_data(
@@ -298,16 +294,15 @@ class AdultASECData:
         ]
         return df
 
-    def load_input_output_data(self) -> InputOutputData:
+    def load_input_output_data(self) -> tuple[pd.DataFrame, pd.Series]:
         df = self.load_data_frame()
-        return InputOutputData(
-            inputs=df[
-                [
+        inputs: pd.DataFrame = df[
+            [
                     col
                     for col in self.COLS_CATEGORICAL
                     + self.COLS_NUMERIC
                     + self.COLS_ORDINAL
                 ]
-            ],
-            outputs=df[[self.TARGET]],
-        )
+            ]
+        outputs: pd.Series = df[[self.TARGET]]
+        return inputs, outputs
