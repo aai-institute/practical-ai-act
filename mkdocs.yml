@@ -34,6 +34,7 @@ nav:
       - explanations/robustness.md
       - explanations/technical-documentation.md
       - explanations/traceability.md
+      - explanations/transparency.md
 
 plugins:
   - callouts
