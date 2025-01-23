@@ -1,4 +1,5 @@
 import re
+import warnings
 import xml.etree.ElementTree as etree
 
 from markdown.extensions import Extension
@@ -46,7 +47,8 @@ class AIAReferenceProcessor(InlineProcessor):
     AIA_EXPLORER_URL = "https://artificialintelligenceact.eu/{type}/{number}"
 
     def handleMatch(self, m, data):
-        el = etree.Element("a", {"class": "aia-ref"})
+        el = etree.Element("a")
+        el.text = m.group(1)
 
         href = None
         if match := re.match(self.ARTICLE_PATTERN, m.group(1)):
@@ -64,11 +66,16 @@ class AIAReferenceProcessor(InlineProcessor):
                 type="recital", number=match.group("number")
             )
 
-        el.text = m.group(1)
         if href:
             el.set("href", href)
             el.set("target", "_blank")
-        print(href)
+            el.set("rel", "noopener noreferrer")
+            el.set("class", "aia-ref")
+        else:
+            # Unparsed reference - fallback to plain text
+            el.tag = "span"
+            el.set("class", "aia-ref-unparsed")
+            warnings.warn(f"Unparsed AIA reference: {m.group(1)}")
 
         return el, m.start(0), m.end(0)
 

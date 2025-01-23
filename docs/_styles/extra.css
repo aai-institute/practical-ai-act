@@ -49,3 +49,14 @@ table {
 .aia-ref {
     text-decoration: underline dotted;
 }
+
+.aia-ref-unparsed {
+    padding: 2px;
+    border: 1px red solid;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.aia-ref-unparsed::after {
+    content: " (invalid ref!)";
+    color: red;
+}
