@@ -31,6 +31,7 @@ nav:
       - explanations/cybersecurity.md
       - explanations/interoperability.md
       - explanations/privacy-and-data-security.md
+      - explanations/record-keeping.md
       - explanations/robustness.md
       - explanations/technical-documentation.md
       - explanations/traceability.md
@@ -62,8 +63,6 @@ plugins:
       type: iso_date
       strict: false
       fallback_to_build_date: true
-  - include_dir_to_nav:
-      file_pattern: '.*\.(md|ipynb)$'
 
 markdown_extensions:
   # python-markdown extensions: https://python-markdown.github.io/extensions/
