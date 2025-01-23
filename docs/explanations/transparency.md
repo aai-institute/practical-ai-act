@@ -1,25 +1,25 @@
 # Transparency and Provision of Information
 
-To get a more hands-on reading of article 13, we shall assume, that there
+To get a more hands-on reading of Article 13, we shall assume, that there
 is a fix use-case to solve and the input data have a specified format
 (does this makes sense?).
 
 The first thing to notice is, that information
 must be provided to the user even on an event level. This means, that there
 must be an identifier for each event (inference call, failure, ...), which can be used to trace back the
-collected information. This is tightly connected to article 12, which
+collected information. This is tightly connected to Article 12, which
 handles the requirements regarding record-keeping. We can elaborate on this
 by showing a simple event-based architecture using databases
 to persist the information and make them available to the user via an API.
 
-Let's talk about which kind of information must be provided to the user (in the context of the AI act this is the deployer).
-The requirements described in article 13 of the EU AI Act can be broadly
+Let's consider which kind of information must be provided to the user (in the context of the AI act this is the deployer).
+The requirements described in Article 13 of the EU AI Act can be broadly
 seperated into two categories. The first category is static information
 about the system, which is not input dependent. The second category is the
 information about the output for a specific input (this is a point of discussion!).
 
 
-## Static information about system
+## Static information about the system
 
 This includes all information about the system, which is not input dependent.
 There seem to be quite an overlap with
@@ -43,7 +43,7 @@ a long time:
     * A still vague definition is given in article 3.12.
 
 * input data scheme; How to get an output of the model?
-    * 13.2
+    * 13.2, 13.3 b(vi)
     * Although this is not mentioned explicitly, it belongs to the general instructions of use; it has to be clear and accessible to the user, how the input schema has to look like to run inference of the model.
     * Again, this information can be made accessible via an API, which provides the schema of the input data, and we can easily showcase this.
 
@@ -69,12 +69,14 @@ a long time:
     * This is a point of discussion. We should explain in which scenario an isolated
       view on a specific subgroup (may it be a group having a specific feature or
       in a binary problem looking only at the positive labeled group, i.e. precision and recall) makes sense.
+    * We should make the connection to Article 11 and Annex IV
 
 * information about the training data;
     * 13.3 b(vi)
     * this information might be about the data collection process, any data transformation, basically the information collected from the data governance view point. Here it might be more challenging to find a good format for providing it
       to the user, but maybe it also makes sense to make it available via an API?
-
+    * We should make the connection to Article 11 and Annex IV
+    
 
 ## Information about the output for a specific input
 
@@ -102,12 +104,25 @@ which is specific to a single input.
 * the term "**reasonably foreseeable misuse**" is used in article 13.b (iii) and defined in article 3.13.
     * In short, any possible not intended use due to the fact that humans are humans. E.g. they are lacking skills to use the system appropriately, I think of the typical it-support scenario or the user has evil intentions.
     * Still, it is unclear how to include it in our showcase. Besides the explainability part, this will is the biggest open question.
+* Art. 13(3), (b)(iv): Get a sense for "technical characteristics and capabilities" - what's the intention and rationale behind this phrasing?
+* What is the connection between Article 11, Annex IV and Article 13.3 b(v, vi)? Is it instruction for use vs. technical documentation (what is the difference)?
+* The meaning and intention of Article 13.3 c is completely unclear (is this something like a "diff")
+* What is the difference between the terms "misuse", "abuse" and "attack" in the context of the AI act?  
 
 ## Potential tasks
-
+* Set up an event logging system and document its architecture in line with Art. 13(3), (f) and Art. 12
 * starting from our use-case, think about potential misuses.
     * e.g. use the model for a different age span than in the training,
       so the model will still give an output, but it is not semantically meaning full.
-* set up an automatic way to extract the information about the model, preprocessing and training data.
+* set up an automatic way to build the (provenance) information about the model, preprocessing and training data.
+  * the goal should be to create transparency and traceability about the complete processing pipeline
+  * e.g. sklearn pipeline steps documented included parameterization
 * implement a basic API to provide the static information about the system.
 * implement the usage of intrinsically explainable models and/or usage of post-hoc methods, have a look at the [interpret](https://github.com/interpretml/interpret) package.
+
+
+Related Norms:
+* [ISO/IEC FDIS 12792 (Transparency taxonomy of AI systems)](https://www.iso.org/standard/84111.html)
+* [ISO/IEC TS 4213](https://www.iso.org/standard/79799.html)
+* [ISO/IEC AWI 4213](https://www.iso.org/standard/89455.html)
+* [ISO/IEC DTS 6254](https://www.iso.org/standard/82148.html)
