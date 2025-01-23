@@ -66,6 +66,8 @@ plugins:
       file_pattern: '.*\.(md|ipynb)$'
 
 markdown_extensions:
+  # Render textual references to AI Act as links
+  - markdown_ex
   # python-markdown extensions: https://python-markdown.github.io/extensions/
   - admonition
   - attr_list
