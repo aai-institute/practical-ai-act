@@ -17,6 +17,7 @@ nav:
   - Getting Started:
       - getting-started/index.md
       - getting-started/first-steps.md
+      - getting-started/ai-act-in-a-nutshell.md
   - How-to:
       - how-to/index.md
   - Explanations:
@@ -33,6 +34,7 @@ nav:
       - explanations/robustness.md
       - explanations/technical-documentation.md
       - explanations/traceability.md
+      - explanations/transparency.md
 
 plugins:
   - callouts
