@@ -65,6 +65,8 @@ plugins:
       fallback_to_build_date: true
 
 markdown_extensions:
+  # Render textual references to AI Act as links
+  - markdown_ex
   # python-markdown extensions: https://python-markdown.github.io/extensions/
   - admonition
   - attr_list
