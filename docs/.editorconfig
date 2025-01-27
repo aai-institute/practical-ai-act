@@ -1,0 +1,4 @@
+; Explicitly set the indent size to prevent problems with nested lists in Markdown
+[*.md]
+indent_size = 4
+indent_style = space
