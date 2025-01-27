@@ -39,14 +39,14 @@ uv run --group docs mkdocs serve
 The local build is served at port [8000](http://127.0.0.1:8000/).
 
 When you would like to cite a specific part of the AI Act, you can use the 
-following format in MarkDown:
+following format in Markdown:
 
-```MarkDown
+```md
 |Art. 6|, |Article 13.3 (ii)|, |Annex II|, |Recital 23|
 ```
 
 In case there is a wrong format in the citation 
-(e.g. missing a whitespace |Art.6|). The console will log a UserWarning
+(e.g., missing a whitespace |Art.6|). The console will log a UserWarning
 
 ![ai_act_cite_user_warning.png](docs/assets/ai_act_cite_user_warning.png)
 
