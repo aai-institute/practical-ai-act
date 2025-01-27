@@ -14,3 +14,12 @@ It contains a large number of columns encoding information about households, fam
 
 Our goal is to create a machine learning system that predicts household income as a function of a curated set of input features from the ASEC data.
 It is formulated as a regression problem, i.e., we want to obtain a system modelling the mathematical relationship between socio-economic data and the expected income of a person.
+
+## Risks and obstacles associated with the project
+
+This project showcases a machine learning task subject to the EU AI Act, meaning that it carries a certain *risk* associated to it.
+For reference, the term *risk* here "means the combination of the probability of an occurrence of harm and the severity of that harm", as per |Article 3(2)| of the AI Act.
+
+The most glaring risk here is the introduction of systematic errors in income prediction due to undetected biases in the data.
+For example, a downstream user of the system, who might use it to create salary bands matching applicants to an open position, might systematically discriminate people of certain ethnic backgrounds, if those ethnic groups tend to have lower incomes due to socio-economic factors.
+Then, uncritical use might help to perpetuate these systematics, and lead to discrimination of certain ethnicities or sexes, which is prohibited by law.
