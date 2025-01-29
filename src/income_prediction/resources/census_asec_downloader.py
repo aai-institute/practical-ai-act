@@ -6,8 +6,6 @@ from tempfile import TemporaryDirectory
 import pandas as pd
 from dagster import ConfigurableResource
 
-from income_prediction.census_asec_data_description import CensusASECDataDescription
-
 _LB, _UB = 1994, 2024
 
 
@@ -20,6 +18,7 @@ class CensusASECDownloader(ConfigurableResource):
     year: int
         The year to download the data for.
     """
+
     year: int
 
     def download(self) -> pd.DataFrame:
@@ -28,7 +27,7 @@ class CensusASECDownloader(ConfigurableResource):
             raise ValueError(f"only years between {_LB} and {_UB} are available")
 
         shortyear = str(self.year)[-2:]
-        url = f"https://www2.census.gov/programs-surveys/cps/datasets/{shortyear}/march/asecpub{shortyear}csv.zip"
+        url = f"https://www2.census.gov/programs-surveys/cps/datasets/{self.year}/march/asecpub{shortyear}csv.zip"
         data_file = f"pppub{shortyear}.csv"
 
         with TemporaryDirectory() as temp_dir:
@@ -38,13 +37,5 @@ class CensusASECDownloader(ConfigurableResource):
             zipfile.ZipFile(archive_file).extract(data_file, temp_dir)
 
             df = pd.read_csv(temp_path / data_file)
-
-            # Apply subsetting from original UCI Adult Income dataset
-            df = df[
-                (df[CensusASECDataDescription.Column.AGE] >= 16)
-                & (df[CensusASECDataDescription.Column.TOTAL_INCOME] > 100)
-                & (df[CensusASECDataDescription.Column.HOURS_PER_WEEK] > 0)
-                & (df[CensusASECDataDescription.Column.FNLWGT] > 0)
-            ]
 
             return df
