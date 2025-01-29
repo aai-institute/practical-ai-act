@@ -176,3 +176,6 @@ cython_debug/
 
 # MkDocs output folder
 public/
+
+# Model predictions log from FastAPI app
+predictions.jsonl
