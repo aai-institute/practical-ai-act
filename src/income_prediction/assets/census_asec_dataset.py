@@ -5,7 +5,7 @@ from income_prediction.census_asec_data_description import CensusASECDataDescrip
 from income_prediction.resources.census_asec_downloader import CensusASECDownloader
 
 
-@asset()
+@asset(io_manager_key="csv_io_manager")
 def census_asec_dataset(census_data_downloader: CensusASECDownloader) -> pd.DataFrame:
     df = census_data_downloader.download()
 

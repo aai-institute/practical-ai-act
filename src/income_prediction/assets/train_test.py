@@ -7,8 +7,8 @@ from income_prediction.config import RANDOM_STATE
 
 @multi_asset(
     outs={
-        "train_data": AssetOut(),
-        "test_data": AssetOut(),
+        "train_data": AssetOut(io_manager_key="csv_io_manager"),
+        "test_data": AssetOut(io_manager_key="csv_io_manager"),
     }
 )
 def train_test_data(census_asec_features: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:

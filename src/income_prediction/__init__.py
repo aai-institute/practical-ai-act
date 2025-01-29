@@ -4,6 +4,7 @@ from income_prediction.assets.census_asec_dataset import census_asec_dataset
 from income_prediction.assets.census_asec_features import census_asec_features
 from income_prediction.assets.income_prediction_model import income_prediction_model
 from income_prediction.assets.train_test import train_test_data
+from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
 from income_prediction.resources.census_asec_downloader import CensusASECDownloader
 from income_prediction.resources.configuraton import Config
 from income_prediction.resources.mlflow_session import MlflowSession
@@ -23,5 +24,6 @@ definitions = Definitions(
         "mlflow_session": MlflowSession(
             tracking_url=config.mlflow_tracking_url, experiment=config.mlflow_experiment
         ),
+        "csv_io_manager": CSVFSIOManager(base_dir=config.data_dir),
     },
 )

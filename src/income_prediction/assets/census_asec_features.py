@@ -16,7 +16,7 @@ def get_salary_band(row: pd.Series) -> int:
     return bisect.bisect(SALARY_BANDS, total_income)
 
 
-@asset
+@asset(io_manager_key="csv_io_manager")
 def census_asec_features(census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
     census_asec_dataset["SALARY_BAND"] = census_asec_dataset.apply(get_salary_band, axis=1)
 
