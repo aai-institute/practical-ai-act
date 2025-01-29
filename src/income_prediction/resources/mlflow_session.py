@@ -86,7 +86,9 @@ class MlflowSession(ConfigurableResource):
         mlflow.set_tracking_uri(self.tracking_url)
         mlflow.set_experiment(self.experiment)
 
-    def _get_run_name_from_context(self, context: AssetExecutionContext, run_name_prefix: Optional[str]) -> str:
+    def _get_run_name_from_context(
+        self, context: AssetExecutionContext, run_name_prefix: Optional[str]
+    ) -> str:
         """Generates a run name based on the asset key and Dagster run ID.
 
         Parameters
@@ -115,7 +117,7 @@ class MlflowSession(ConfigurableResource):
         self,
         context: AssetExecutionContext,
         run_name_prefix: Optional[str] = None,
-        tags: dict[str, str] | None = None,
+        tags: dict[str, str] | None = {},
     ) -> mlflow.ActiveRun:
         """Retrieves an existing MLflow run or starts a new one with the specified run name and tags.
 
