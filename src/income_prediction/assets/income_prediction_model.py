@@ -1,6 +1,6 @@
 import mlflow
 import pandas as pd
-from dagster import asset
+from dagster import asset, AssetExecutionContext
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
@@ -8,12 +8,18 @@ from xgboost import XGBClassifier
 
 from income_prediction.census_asec_data_description import CensusASECDataDescription
 from income_prediction.config import RANDOM_STATE
+from income_prediction.resources.mlflow_session import MlflowSession
 
 ALL_TRAINING_COLS = list(CensusASECDataDescription.COLS_NUMERIC + CensusASECDataDescription.COLS_CATEGORICAL + CensusASECDataDescription.COLS_ORDINAL)
 
 
-@asset()
-def income_prediction_model(train_data: pd.DataFrame, test_data: pd.DataFrame) -> None:
+@asset
+def income_prediction_model(
+    context: AssetExecutionContext,
+    mlflow_session: MlflowSession,
+    train_data: pd.DataFrame,
+    test_data: pd.DataFrame,
+) -> None:
     train_input = train_data[ALL_TRAINING_COLS].copy()
     train_output = train_data[CensusASECDataDescription.TARGET]
 
@@ -44,14 +50,10 @@ def income_prediction_model(train_data: pd.DataFrame, test_data: pd.DataFrame) -
         ]
     )
 
-    # TODO: Port needs to be configured somehow
-    mlflow.set_tracking_uri("http://localhost:4040")
-    mlflow.set_experiment("Income Prediction")
+    with mlflow_session.get_run(context):
+        mlflow.sklearn.autolog()
+        mlflow.xgboost.autolog()
 
-    mlflow.sklearn.autolog()
-    mlflow.xgboost.autolog()
-
-    with mlflow.start_run():
         pipeline.fit(train_input, train_output)
 
         mlflow.evaluate(
