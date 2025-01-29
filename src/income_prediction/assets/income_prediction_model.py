@@ -9,14 +9,13 @@ from xgboost import XGBClassifier
 from income_prediction.census_asec_data_description import CensusASECDataDescription
 from income_prediction.config import RANDOM_STATE
 
+ALL_TRAINING_COLS = list(CensusASECDataDescription.COLS_NUMERIC + CensusASECDataDescription.COLS_CATEGORICAL + CensusASECDataDescription.COLS_ORDINAL)
+
 
 @asset()
 def income_prediction_model(train_data: pd.DataFrame, test_data: pd.DataFrame) -> None:
-    train_input = train_data.drop([CensusASECDataDescription.Column.TARGET], axis=1)
-    train_output = train_data[CensusASECDataDescription.Column.TARGET]
-
-    # test_input = test_data.drop(CensusASECDataDescription.TARGET, axis=1)
-    # test_outout = test_data[CensusASECDataDescription.TARGET]
+    train_input = train_data[ALL_TRAINING_COLS].copy()
+    train_output = train_data[CensusASECDataDescription.TARGET]
 
     categorical_pipeline = Pipeline([("encoder", OneHotEncoder(handle_unknown="ignore"))])
 
@@ -24,15 +23,17 @@ def income_prediction_model(train_data: pd.DataFrame, test_data: pd.DataFrame) -
 
     ordinal_pipeline = Pipeline([("encoder", OrdinalEncoder())])
 
+    # Column sets given to Pipeline objects need to be `pd.Index`es, so we go indirectly over
+    # df[list(COLS)].columns, for different sets of COLS.
     column_transformer = ColumnTransformer(
         [
             (
                 "categorical_pipeline",
                 categorical_pipeline,
-                CensusASECDataDescription.COLS_CATEGORICAL,
+                train_input[list(CensusASECDataDescription.COLS_CATEGORICAL)].columns,
             ),
-            ("numerical_pipeline", numerical_pipeline, CensusASECDataDescription.COLS_NUMERIC),
-            ("ordinal_pipeline", ordinal_pipeline, CensusASECDataDescription.COLS_ORDINAL),
+            ("numerical_pipeline", numerical_pipeline, train_input[list(CensusASECDataDescription.COLS_NUMERIC)].columns),
+            ("ordinal_pipeline", ordinal_pipeline, train_input[list(CensusASECDataDescription.COLS_ORDINAL)].columns),
         ]
     )
 
@@ -43,6 +44,7 @@ def income_prediction_model(train_data: pd.DataFrame, test_data: pd.DataFrame) -
         ]
     )
 
+    # TODO: Port needs to be configured somehow
     mlflow.set_tracking_uri("http://localhost:4040")
     mlflow.set_experiment("Income Prediction")
 

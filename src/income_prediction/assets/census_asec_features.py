@@ -30,8 +30,6 @@ def census_asec_features(census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
         ]
     ]
 
-    df.to_csv("data/features.csv")
-
     return df
 
 
