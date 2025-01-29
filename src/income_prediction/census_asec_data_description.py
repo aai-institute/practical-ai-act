@@ -1,0 +1,157 @@
+from enum import Enum
+
+
+class CensusASECDataDescription:
+    class Column(str, Enum):
+        """
+        Enum representing the column names in the original data
+        """
+
+        AGE = "A_AGE"
+        ENROL_STATUS = "A_ENRLW"
+        ENROL_FULL_TIME_PART_TIME = "A_FTPT"
+        EDUCATION = "A_HGA"
+        ENROL_SCHOOL = "A_HSCOL"
+        MARITAL_STATUS = "A_MARITL"
+        SEX = "A_SEX"
+        PERSON_STATUS = "P_STAT"
+        PROFESSIONAL_CERTIFICATION = "PECERT1"
+        SPANISH_HISPANIC_LATINO = "PEHSPNON"
+        BIRTH_COUNTRY = "PENATVTY"
+        CITIZENSHIP_GROUP = "PRCITSHP"
+        ASIAN_SUBGROUP = "PRDASIAN"
+        DISABILITY_CONDITIONS = "PRDISFLG"
+        HISPANIC_SUBGROUP = "PRDTHSP"
+        RACE = "PRDTRACE"
+
+        # Allocation flags
+        # ALLOCATED_AGE = "AXAGE"
+        # ALLOCATED_ENROL_STATUS = "AXENRLW"
+        # ALLOCATED_ENROL_FULL_TIME_PART_TIME = "AXFTPT"
+        # ALLOCATED_EDUCATION = "AXHGA"
+        # ALLOCATED_ENROL_SCHOOL = "AXHSCOL"
+        # ALLOCATED_MARITAL_STATUS = "PXMARITL"
+        # ALLOCATED_SEX = "AXSEX"
+        # ALLOCATED_PROFESSIONAL_CERTIFICATION = "PXCERT1"
+        # ALLOCATED_SPANISH_HISPANIC_LATINO = "PXHSPNON"
+        # ALLOCATED_BIRTH_COUNTRY = "PXNATVTY"
+        # ALLOCATED_CITIZENSHIP_GROUP = "PRCITFLG"
+        # ALLOCATED_RACE = "PXRACE1"
+        # ALLOCATED_EARNINGS_GROSS_PER_WEEK = "PRWERNAL"
+        # ALLOCATED_CLASS_OF_WORKER = "AXCLSWKR"
+        # ALLOCATED_HOURS_PER_WEEK_EDITED = "AXHRS"
+        # ALLOCATED_LABOR_FORCE_STATUS = "AXLFSR"
+        # ALLOCATED_UNION_MEMBERSHIP = "AXUNMEM"
+        # ALLOCATED_HOURS_PER_WEEK = "I_HRSWK"
+        # ALLOCATED_INDUSTRY = "I_INDUS"
+        # ALLOCATED_LONGEST_JOB_CLASS = "I_LJCW"
+        # ALLOCATED_NUMBER_OF_EMPLOYEES = "I_NOEMP"
+        # ALLOCATED_WEEKS_WORKED = "I_WKSWK"
+        # ALLOCATED_LONGEST_JOB_EARNINGS_SOURCE = "I_ERNSRC"
+        # ALLOCATED_LONGEST_JOB_EARNINGS = "I_ERNVAL"
+        # ALLOCATED_TOTAL_EARNINGS = "I_PEARN"
+        # ALLOCATED_HEALTH_STATUS = "I_HEA"
+
+        # FIXME: Add topcode flags
+
+        # Edited labor force items
+        HOURS_PER_WEEK_EDITED = "A_HRS1"
+        MAJOR_INDUSTRY = "A_MJIND"
+        MAJOR_OCCUPATION = "A_MJOCC"
+        UNEMPLOYMENT_REASON = "PRUNTYPE"
+
+        # Edited earnings items
+        EARNINGS_GROSS_PER_WEEK = "A_GRSWK"
+        HOURLY_PAY = "A_HRSPAY"
+
+        # Labor force person recodes
+        WORKER_CLASS = "A_CLSWKR"
+        FULL_TIME_LABOR_FORCE = "A_FTLF"
+        LABOR_FORCE_STATUS = "A_LFSR"
+        UNION_MEMBERSHIP = "A_UNMEM"
+        UNEMPLOYMENT_TYPE = "A_UNTYPE"
+        USUAL_HOURS_PER_WEEK = "A_USLHRS"
+        UNEMPLOYMENT_DURATION = "A_WKSLK"
+        FULL_TIME_PART_TIME_STATUS = "A_WKSTAT"
+        MAJOR_LABOR_FORCE = "PEMLR"
+
+        # Work experience
+        LONGEST_JOB_CLASS = "CLWK"
+        HOURS_PER_WEEK = "HRSWK"
+        INDUSTRY = "INDUSTRY"
+        NUMBER_OF_EMPLOYEES = "NOEMP"
+        WEEKS_WORKED = "WKSWORK"
+
+        # Income
+        LONGEST_JOB_EARNINGS_SOURCE = "ERN_SRCE"
+        LONGEST_JOB_EARNINGS = "ERN_VAL"
+        TOTAL_EARNINGS = "PEARNVAL"
+        SELF_EMPLOYED_EARNINGS = "SEMP_VAL"
+        OTHER_EMPLOYERS_WAGE = "WAGEOTR"
+        TOTAL_INCOME = "PTOTVAL"
+        SALARY_BAND = "SALARY_BAND"
+
+        # Tax model items
+        ADJUSTED_GROSS_INCOME = "AGI"
+
+        # Health Insurance
+        HEALTH_INSURANCE_COVERAGE = "COV"
+
+        # Health status
+        HEALTH_STATUS = "HEA"
+
+        FNLWGT = "A_FNLWGT"
+
+    TARGET = Column.SALARY_BAND
+
+    COLS_CATEGORICAL = (
+        Column.ENROL_STATUS,
+        Column.ENROL_FULL_TIME_PART_TIME,
+        Column.ENROL_SCHOOL,
+        Column.MARITAL_STATUS,
+        Column.SEX,
+        Column.PERSON_STATUS,
+        Column.PROFESSIONAL_CERTIFICATION,
+        Column.SPANISH_HISPANIC_LATINO,
+        Column.BIRTH_COUNTRY,
+        Column.CITIZENSHIP_GROUP,
+        Column.ASIAN_SUBGROUP,
+        Column.DISABILITY_CONDITIONS,
+        Column.HISPANIC_SUBGROUP,
+        Column.RACE,
+        Column.MAJOR_INDUSTRY,
+        Column.MAJOR_OCCUPATION,
+        Column.UNEMPLOYMENT_REASON,
+        Column.WORKER_CLASS,
+        Column.FULL_TIME_LABOR_FORCE,
+        Column.LABOR_FORCE_STATUS,
+        Column.UNION_MEMBERSHIP,
+        Column.UNEMPLOYMENT_TYPE,
+        Column.FULL_TIME_PART_TIME_STATUS,
+        Column.MAJOR_LABOR_FORCE,
+        Column.LONGEST_JOB_CLASS,
+        Column.INDUSTRY,
+        Column.LONGEST_JOB_EARNINGS_SOURCE,
+        Column.OTHER_EMPLOYERS_WAGE,
+        Column.HEALTH_INSURANCE_COVERAGE,
+        Column.HEALTH_STATUS,
+    )
+    COLS_NUMERIC = (
+        Column.AGE,
+        Column.HOURS_PER_WEEK_EDITED,
+        Column.EARNINGS_GROSS_PER_WEEK,
+        Column.HOURLY_PAY,
+        Column.USUAL_HOURS_PER_WEEK,
+        Column.UNEMPLOYMENT_DURATION,
+        Column.HOURS_PER_WEEK,
+        Column.WEEKS_WORKED,
+        Column.LONGEST_JOB_EARNINGS,
+        Column.TOTAL_EARNINGS,
+        Column.SELF_EMPLOYED_EARNINGS,
+        Column.ADJUSTED_GROSS_INCOME,
+        Column.FNLWGT,
+    )
+    COLS_ORDINAL = (
+        Column.EDUCATION,
+        Column.NUMBER_OF_EMPLOYEES,
+    )
