@@ -5,6 +5,7 @@ from dagster import asset
 
 from income_prediction.census_asec_data_description import CensusASECDataDescription
 from income_prediction.config import SalaryBand
+from income_prediction.resources.census_asec_downloader import CensusASECDownloader
 
 SALARY_BANDS = [band.value for band in SalaryBand]
 
@@ -16,11 +17,12 @@ def get_salary_band(row: pd.Series) -> int:
     return bisect.bisect(SALARY_BANDS, total_income)
 
 
-@asset()
-def census_asec_features(census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
-    census_asec_dataset["SALARY_BAND"] = census_asec_dataset.apply(get_salary_band, axis=1)
+@asset
+def census_asec_features(census_data_downloader: CensusASECDownloader) -> pd.DataFrame:
+    census_data = census_data_downloader.download()
+    census_data["SALARY_BAND"] = census_data.apply(get_salary_band, axis=1)
 
-    df = census_asec_dataset[
+    df = census_data[
         [
             col
             for col in CensusASECDataDescription.COLS_CATEGORICAL
