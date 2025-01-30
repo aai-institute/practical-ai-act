@@ -1,0 +1,29 @@
+# MLflow deployment with local SQLite database and local artifact storage in Docker volumes
+
+services:
+  mlflow:
+    build:
+      context: mlflow
+      dockerfile: Dockerfile
+    develop:
+      watch:
+        - path: mlflow
+          action: rebuild
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_artifacts:/mlartifacts
+      - mlflow_db:/mlruns
+    command:
+      - "mlflow"
+      - "server"
+      - "--host"
+      - "0.0.0.0"
+      - "--backend-store-uri"
+      - "sqlite:///mlruns/mlflow.db"
+      - "--default-artifact-root"
+      - "/mlartifacts"
+
+volumes:
+  mlflow_artifacts:
+  mlflow_db:
