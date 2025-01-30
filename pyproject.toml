@@ -32,9 +32,11 @@ dependencies = [
 
 [dependency-groups]
 docs = [
+    "mike",
     "mkdocs",
     "mkdocs-callouts",
     "mkdocs-gen-files",
+    "mkdocs-include-dir-to-nav",
     "mkdocs-literate-nav",
     "mkdocs-section-index",
     "mkdocs-material",
