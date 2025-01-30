@@ -24,6 +24,6 @@ if __name__ == "__main__":
     census_data_downloader = CensusASECDownloader(year=2024)
 
     df = census_asec_dataset(census_data_downloader)
-    df.to_csv("data/census_acec_dataset.csv")
+    df.to_csv("data/census_asec_dataset.csv")
 
     print(df.head())

@@ -10,6 +10,7 @@ from income_prediction.resources.configuraton import Config
 from income_prediction.resources.mlflow_session import MlflowSession
 
 config = Config()
+mlflow_session = MlflowSession(tracking_url=config.mlflow_tracking_url, experiment=config.mlflow_experiment)
 
 definitions = Definitions(
     assets=[
@@ -21,9 +22,7 @@ definitions = Definitions(
     resources={
         "config": config,
         "census_data_downloader": CensusASECDownloader(year=config.census_asec_dataset_year),
-        "mlflow_session": MlflowSession(
-            tracking_url=config.mlflow_tracking_url, experiment=config.mlflow_experiment
-        ),
+        "mlflow_session": mlflow_session,
         "csv_io_manager": CSVFSIOManager(base_dir=config.data_dir),
     },
 )

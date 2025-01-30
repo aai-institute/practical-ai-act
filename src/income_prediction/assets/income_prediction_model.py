@@ -65,7 +65,11 @@ def income_prediction_model(
 
 
 if __name__ == "__main__":
+    from dagster import build_asset_context
+    from income_prediction import mlflow_session
     train_data = pd.read_csv("data/train_data.csv", index_col=0)
     test_data = pd.read_csv("data/test_data.csv", index_col=0)
 
-    income_prediction_model(train_data, test_data)
+    # TODO: This won't run, since the context is missing a `run` attribute.
+    ctx = build_asset_context()
+    income_prediction_model(ctx, mlflow_session, train_data, test_data)
