@@ -179,3 +179,4 @@ public/
 
 # Model predictions log from FastAPI app
 predictions.jsonl
+predictions.db
