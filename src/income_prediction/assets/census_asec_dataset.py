@@ -1,29 +1,41 @@
 import pandas as pd
 from dagster import asset
 
-from income_prediction.census_asec_data_description import CensusASECDataDescription
+from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
 from income_prediction.resources.census_asec_downloader import CensusASECDownloader
 
 
 @asset(io_manager_key="csv_io_manager")
-def census_asec_dataset(census_data_downloader: CensusASECDownloader) -> pd.DataFrame:
-    df = census_data_downloader.download()
+def census_asec_dataset(downloader: CensusASECDownloader) -> pd.DataFrame:
+    """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria.
 
-    # Apply subsetting from original UCI Adult Income dataset
-    df = df[
-        (df[CensusASECDataDescription.Column.AGE] >= 16)
-        & (df[CensusASECDataDescription.Column.TOTAL_INCOME] > 100)
-        & (df[CensusASECDataDescription.Column.HOURS_PER_WEEK] > 0)
-        & (df[CensusASECDataDescription.Column.FNLWGT] > 0)
-    ]
+    This function retrieves the US Census ASEC supplemental dataset from the US Census webserver. It applies filtering
+    to align with the characteristics of the UCI Adult dataset (https://archive.ics.uci.edu/dataset/2/adult).
 
-    return df
+    Filtering criteria:
+     - Age must be at least 16 years.
+     - Total income must be greater than 100.
+     - Hours worked per week non-zero.
+     - Final weight must be greater non-zero.
 
+    Parameters
+    ----------
+    downloader : CensusASECDownloader
+        The downloader used to fetch the raw Census ASEC dataset.
 
-if __name__ == "__main__":
-    census_data_downloader = CensusASECDownloader(year=2024)
+    Returns
+    -------
+    pd.DataFrame
+        A filtered dataframe containing the Census ASEC dataset that meets the specified criteria.
+    """
+    census_data = downloader.download()
 
-    df = census_asec_dataset(census_data_downloader)
-    df.to_csv("data/census_asec_dataset.csv")
+    query = (
+        f"{CensusASECMetadata.Fields.AGE_YEARS} >= 16 &"
+        f"{CensusASECMetadata.Fields.ANNUAL_INCOME} > 100 &"
+        f"{CensusASECMetadata.Fields.HOURS_PER_WEEK} > 0 &"
+        f"{CensusASECMetadata.Fields.FINAL_WEIGHT} > 0"
+    )
+    census_data = census_data.query(query)
 
-    print(df.head())
+    return census_data

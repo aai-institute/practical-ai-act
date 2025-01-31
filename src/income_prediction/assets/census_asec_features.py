@@ -1,42 +1,43 @@
-import bisect
-
+import numpy as np
 import pandas as pd
 from dagster import asset
 
-from income_prediction.census_asec_data_description import CensusASECDataDescription
-from income_prediction.config import SalaryBand
-
-SALARY_BANDS = [band.value for band in SalaryBand]
-
-
-def get_salary_band(row: pd.Series) -> int:
-    # bisect.bisect returns the index of the right interval bound that the total income
-    # falls into, which equals our desired salary band cutoff.
-    total_income = row[CensusASECDataDescription.Column.TOTAL_INCOME]
-    return bisect.bisect(SALARY_BANDS, total_income)
+from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
+from income_prediction.resources.configuration import Config
 
 
 @asset(io_manager_key="csv_io_manager")
-def census_asec_features(census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
-    census_asec_dataset["SALARY_BAND"] = census_asec_dataset.apply(get_salary_band, axis=1)
+def census_asec_features(config: Config, census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
+    """Pre-processes the Census ASEC dataset for income prediction.
 
-    df = census_asec_dataset[
-        [
-            col
-            for col in CensusASECDataDescription.COLS_CATEGORICAL
-            + CensusASECDataDescription.COLS_NUMERIC
-            + CensusASECDataDescription.COLS_ORDINAL
-            + (CensusASECDataDescription.TARGET,)
-        ]
-    ]
+    - Assigns each individual a salary band based on their total income.
+    - Selects relevant categorical, numerical, and ordinal features, and the target value.
 
-    return df
+    Parameters
+    ----------
+    config : Config
+        The pipeline configuration, containing the salary band thresholds.
+    census_asec_dataset : pd.DataFrame
+        The raw Census ASEC supplementary dataset.
 
+    Returns
+    -------
+    pd.DataFrame
+        The preprocessed dataframe containing selected features and salary band classifications.
+    """
 
-if __name__ == "__main__":
-    census_asec_dataset = pd.read_csv("data/census_asec_dataset.csv", index_col=0)
+    # Assign salary band classification
+    census_asec_dataset[CensusASECMetadata.TARGET] = np.searchsorted(
+        config.salary_bands,
+        census_asec_dataset[CensusASECMetadata.Fields.ANNUAL_INCOME],
+        side="right",
+    )
 
-    df = census_asec_features(census_asec_dataset)
-    df.to_csv("data/census_asec_features.csv")
-
-    print(df.head())
+    # Select relevant features
+    selected_features = (
+        CensusASECMetadata.CATEGORICAL_FEATURES
+        + CensusASECMetadata.NUMERIC_FEATURES
+        + CensusASECMetadata.ORDINAL_FEATURES
+        + [CensusASECMetadata.TARGET]
+    )
+    return census_asec_dataset[selected_features]

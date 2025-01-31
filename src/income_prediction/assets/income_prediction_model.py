@@ -1,27 +1,55 @@
 import mlflow
 import pandas as pd
-from dagster import asset, AssetExecutionContext
+from dagster import AssetExecutionContext, asset
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from xgboost import XGBClassifier
 
-from income_prediction.census_asec_data_description import CensusASECDataDescription
-from income_prediction.config import RANDOM_STATE
+from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
+from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
 
-ALL_TRAINING_COLS = list(CensusASECDataDescription.COLS_NUMERIC + CensusASECDataDescription.COLS_CATEGORICAL + CensusASECDataDescription.COLS_ORDINAL)
+ALL_FEATURES = list(
+    CensusASECMetadata.CATEGORICAL_FEATURES
+    + CensusASECMetadata.NUMERIC_FEATURES
+    + CensusASECMetadata.ORDINAL_FEATURES
+)
 
 
 @asset
 def income_prediction_model(
     context: AssetExecutionContext,
+    config: Config,
     mlflow_session: MlflowSession,
     train_data: pd.DataFrame,
     test_data: pd.DataFrame,
 ) -> None:
-    train_input = train_data[ALL_TRAINING_COLS].copy()
-    train_output = train_data[CensusASECDataDescription.TARGET]
+    """Trains and evaluates an income prediction model using an XGBoost classifier.
+
+    Experiment metrics and artifacts are logged to MLflow.
+
+    Parameters
+    ----------
+    context : AssetExecutionContext
+        Dagster execution context.
+    config : Config
+        Pipeline configuration settings.
+    mlflow_session : MlflowSession
+        MLflow session manager for experiment tracking.
+    train_data : pd.DataFrame
+        Training dataset containing features and target values.
+    test_data: pd.DataFrame
+        Test dataset for model evaluation.
+
+    Returns
+    -------
+    None
+        Saves model artifacts to MLflow.
+    """
+
+    train_input = train_data[ALL_FEATURES]
+    train_output = train_data[CensusASECMetadata.TARGET]
 
     categorical_pipeline = Pipeline([("encoder", OneHotEncoder(handle_unknown="ignore"))])
 
@@ -29,24 +57,30 @@ def income_prediction_model(
 
     ordinal_pipeline = Pipeline([("encoder", OrdinalEncoder())])
 
-    # Column sets given to Pipeline objects need to be `pd.Index`es, so we go indirectly over
-    # df[list(COLS)].columns, for different sets of COLS.
     column_transformer = ColumnTransformer(
         [
             (
                 "categorical_pipeline",
                 categorical_pipeline,
-                train_input[list(CensusASECDataDescription.COLS_CATEGORICAL)].columns,
+                CensusASECMetadata.CATEGORICAL_FEATURES,
             ),
-            ("numerical_pipeline", numerical_pipeline, train_input[list(CensusASECDataDescription.COLS_NUMERIC)].columns),
-            ("ordinal_pipeline", ordinal_pipeline, train_input[list(CensusASECDataDescription.COLS_ORDINAL)].columns),
+            (
+                "numerical_pipeline",
+                numerical_pipeline,
+                CensusASECMetadata.NUMERIC_FEATURES,
+            ),
+            (
+                "ordinal_pipeline",
+                ordinal_pipeline,
+                CensusASECMetadata.ORDINAL_FEATURES,
+            ),
         ]
     )
 
     pipeline = Pipeline(
         [
             ("preprocessor", column_transformer),
-            ("classifier", XGBClassifier(random_state=RANDOM_STATE)),
+            ("classifier", XGBClassifier(random_state=config.random_state)),
         ]
     )
 
@@ -59,17 +93,6 @@ def income_prediction_model(
         mlflow.evaluate(
             model=pipeline.predict,
             data=test_data,
-            targets=CensusASECDataDescription.TARGET,
+            targets=CensusASECMetadata.TARGET,
             model_type="classifier",
         )
-
-
-if __name__ == "__main__":
-    from dagster import build_asset_context
-    from income_prediction import mlflow_session
-    train_data = pd.read_csv("data/train_data.csv", index_col=0)
-    test_data = pd.read_csv("data/test_data.csv", index_col=0)
-
-    # TODO: This won't run, since the context is missing a `run` attribute.
-    ctx = build_asset_context()
-    income_prediction_model(ctx, mlflow_session, train_data, test_data)
