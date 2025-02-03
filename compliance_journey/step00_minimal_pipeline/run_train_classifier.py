@@ -30,6 +30,10 @@ def main():
     y_train["income"] = y_train["income"].apply(lambda x: 1 if x == ">50K" else 0)
     y_test["income"] = y_test["income"].apply(lambda x: 1 if x == ">50K" else 0)
 
+
+    pipeline = make_pipeline(default_preprocessing, XGBClassifier())
+
+    """
     pipeline = Pipeline([
         (
             "scale",
@@ -43,6 +47,7 @@ def main():
         ),
         ("model", XGBClassifier()),
     ])
+    """
 
     pipeline.fit(X_train, y_train)
 
