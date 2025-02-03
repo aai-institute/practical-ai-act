@@ -93,7 +93,7 @@ class MappedColumn(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        return X[self.column].map(lambda x: self.mapping_dict.get(x, x)).to_frame()
+        return X[self.column].map(self.mapping_dict).to_frame()
 
 
 class WorkClass(OneHotEncoded):
