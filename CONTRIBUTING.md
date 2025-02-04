@@ -36,7 +36,9 @@ To build the documentation locally, run the following command:
 ```
 uv run --group docs mkdocs serve
 ```
-The local build is served at port [8000](http://127.0.0.1:8000/).
+The local build is served on port [8000](http://127.0.0.1:8000/).
+
+Mkdocs will automatically rebuild the page when any file inside the `docs/` folder is modified.
 
 When you would like to cite a specific part of the AI Act, you can use the 
 following format in Markdown:
