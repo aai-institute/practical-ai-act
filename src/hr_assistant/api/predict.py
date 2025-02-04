@@ -16,18 +16,23 @@ def predict(
 ):
     """Run the prediction model on the given input data."""
 
-    input_data = np.array([query])
-    output = model.predict(input_data)
+    input_data = np.array(query)
+    proba = model.predict_proba([input_data])
+    prediction = float(np.argmax(proba))
 
     data = {
         "input": input_data.tolist(),
-        "output": output.tolist(),
+        "output": {
+            "class": prediction,
+            "probabilities": proba.tolist(),
+        },
     }
 
     logger.log(
-        data["input"],
-        data["output"],
-        metadata={"model_uuid": model.metadata.model_uuid},
+        input_data=data["input"],
+        output_data=data["output"],
+        # FIXME: mlflow.sklearn.Model does not expose tracking metadata
+        metadata={"model_version": str(model)},
     )
 
     return data
@@ -42,5 +47,5 @@ def info(model: dependencies.models.ModelDependency) -> dict[str, Any]:
 @router.post("/flush-logs")
 def flush_logs(logger: dependencies.logging.PredictionLoggerDependency):
     """Flush the prediction log buffer to disk."""
-    logger._buffer.flush()
+    logger.flush()
     return {"status": "success"}

@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import mlflow
-import mlflow.pyfunc
+import mlflow.sklearn
 from fastapi import FastAPI
 
 from hr_assistant import api, dependencies
@@ -14,8 +14,9 @@ MLFLOW_MODEL_NAME = "tracking-quickstart"
 MLFLOW_MODEL_VERSION = 1
 
 
-def _load_model(model_name: str, model_version: int) -> mlflow.pyfunc.PyFuncModel:
-    return mlflow.pyfunc.load_model(f"models:/{model_name}/{model_version}")
+def _load_model(model_name: str, model_version: int) -> mlflow.sklearn.Model:
+    # return mlflow.pyfunc.load_model(f"models:/{model_name}/{model_version}")
+    return mlflow.sklearn.load_model(f"models:/{model_name}/{model_version}")
 
 
 @asynccontextmanager
@@ -25,8 +26,11 @@ async def lifespan(app: FastAPI):
     # logger = dependencies.logging.OpenSearchPredictionLogger(
     #     "https://localhost:9200", "predictions"
     # )
-    logger = dependencies.logging.DuckDBPredictionLogger(
-        Path("predictions.db"), "predictions"
+    # logger = dependencies.logging.DuckDBPredictionLogger(
+    #     Path("predictions.db"), "predictions"
+    # )
+    logger = dependencies.logging.SQLitePredictionLogger(
+        "predictions.sqlite3", table_name="predictions", capacity=100
     )
     app.state.request_logger = logger
 
