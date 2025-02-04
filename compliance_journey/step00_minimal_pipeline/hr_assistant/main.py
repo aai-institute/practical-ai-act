@@ -19,7 +19,7 @@ app = FastAPI()
 # MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
 # MODEL_URI = os.getenv("MODEL_URI", "models:/my_model/Production")
 
-MODEL_URI = "runs:/f8c2ee138df645e7a3a0a8b29510361b/asec_model"
+MODEL_URI = "runs:/d9eb179e44324ecc9446b51e612f78c7/asec_model"
 MLFLOW_TRACKING_URI = "/Users/kristof/Projects/twai-pipeline/compliance_journey/step00_minimal_pipeline/mlruns"
 print(MLFLOW_TRACKING_URI)
 
@@ -36,5 +36,9 @@ def model_info():
 @app.post("/predict/")
 async def predict(request: Request):
     data = pd.DataFrame.from_records([await request.json()])
-    prediction = model.predict(data)
-    return prediction.tolist()
+    prediction = model.predict(data).tolist()
+
+    # This is the only way to do this, thanks sklearn
+    label_map = {0: "<=50k", 1: ">50k"}
+    original_labels = [label_map[val] for val in prediction]
+    return original_labels
