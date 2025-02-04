@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from tkinter import W
 import urllib
 import urllib.request
 import zipfile
