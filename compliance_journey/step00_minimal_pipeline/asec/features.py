@@ -4,12 +4,13 @@ from enum import Enum
 from typing import Literal, Any, Callable
 
 import pandas as pd
-from sklearn.base import BaseEstimator, TransformerMixin
 
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import make_pipeline, FeatureUnion, make_union, Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import make_column_transformer, ColumnTransformer
-from adult.data import AdultData
+
+from .data import AdultData
 
 
 class MappedColumn(BaseEstimator, TransformerMixin):
