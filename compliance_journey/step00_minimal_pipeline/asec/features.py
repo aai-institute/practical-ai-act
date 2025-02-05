@@ -11,9 +11,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import make_column_transformer, ColumnTransformer
 from adult.data import AdultData
 
-__all__ = ["collect_features", "make_standardized", "make_one_hot_encoded"]
 
-class _MappedColumn(BaseEstimator, TransformerMixin):
+class MappedColumn(BaseEstimator, TransformerMixin):
     def __init__(self, column: str, mapping: dict, unknown_default: Any = pd.NA):
         """
         Parameters:
@@ -46,7 +45,7 @@ class _MappedColumn(BaseEstimator, TransformerMixin):
         return [self.column]
 
 
-class _ColumnDifference(BaseEstimator, TransformerMixin):
+class ColumnDifference(BaseEstimator, TransformerMixin):
     def __init__(self, col1: str, col2: str, resulting_col_name: str):
         self.resulting_col_name = resulting_col_name
         self.col1 = col1
@@ -61,6 +60,7 @@ class _ColumnDifference(BaseEstimator, TransformerMixin):
 
 def _encoded_name(name: str) -> str:
     return f"{name}-encoded"
+
 
 def _standardized_name(name: str) -> str:
     return f"{name}-standardized"
@@ -80,11 +80,12 @@ class FeatureName(Enum):
     EDUCATION_NUM_STANDARDIZED = _standardized_name(AdultData.Column.EDUCATION_NUM)
     HOURS_PER_WEEK_STANDARDIZED = _standardized_name(AdultData.Column.HOURS_PER_WEEK)
 
+
 def make_one_hot_encoded(
     column: AdultData.Column,
     mapping_dict: dict | None = None,
     unknown_value: Any | None = None,
-    categories: list[str] | Literal["auto"] = "auto"
+    categories: list[str] | Literal["auto"] = "auto",
 ) -> Pipeline | ColumnTransformer:
     if mapping_dict is None and unknown_value is not None:
         raise ValueError("Must specify mapping when providing unknown default value")
@@ -99,20 +100,25 @@ def make_one_hot_encoded(
 
     encoder = OneHotEncoder(categories=categories)
     if mapping_dict is not None:
-        return make_pipeline(_MappedColumn(column.value, mapping_dict, unknown_default=unknown_value), encoder)
+        return make_pipeline(
+            MappedColumn(column.value, mapping_dict, unknown_default=unknown_value),
+            encoder,
+        )
 
     return make_column_transformer((encoder, [column.value]))
 
 
 def make_standardized(
-        column: AdultData.Column,
+    column: AdultData.Column,
 ):
     return make_column_transformer((StandardScaler(), [column.value]))
 
 
 _all_features: dict[FeatureName, ColumnTransformer | Pipeline] = {}
 
-_all_features[FeatureName.SEX_ENCODED] = make_one_hot_encoded(AdultData.Column.SEX, categories=["Female", "Male"])
+_all_features[FeatureName.SEX_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.SEX, categories=["Female", "Male"]
+)
 
 
 _RACE_MAPPING = {
@@ -123,7 +129,9 @@ _RACE_MAPPING = {
     "Other": "Other",
 }
 
-_all_features[FeatureName.RACE_ENCODED] = make_one_hot_encoded(AdultData.Column.RACE, mapping_dict=_RACE_MAPPING)
+_all_features[FeatureName.RACE_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.RACE, mapping_dict=_RACE_MAPPING
+)
 
 
 _MARITAL_STATUS_MAPPING = {
@@ -136,12 +144,18 @@ _MARITAL_STATUS_MAPPING = {
     "Widowed": "Previously Married",
 }
 
-_all_features[FeatureName.MARITAL_STATUS_ENCODED] = make_one_hot_encoded(AdultData.Column.MARITAL_STATUS, _MARITAL_STATUS_MAPPING)
+_all_features[FeatureName.MARITAL_STATUS_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.MARITAL_STATUS, _MARITAL_STATUS_MAPPING
+)
 
 _COUNTRY_MAPPING = {"United-States": "US", "?": "Unknown"}
 _OTHER_COUNTRY_DEFAULT = "Other"
 
-_all_features[FeatureName.NATIVE_COUNTRY_ENCODED] = make_one_hot_encoded(AdultData.Column.NATIVE_COUNTRY, _COUNTRY_MAPPING, unknown_value=_OTHER_COUNTRY_DEFAULT)
+_all_features[FeatureName.NATIVE_COUNTRY_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.NATIVE_COUNTRY,
+    _COUNTRY_MAPPING,
+    unknown_value=_OTHER_COUNTRY_DEFAULT,
+)
 
 
 _EDUCATION_MAPPING = {
@@ -163,7 +177,9 @@ _EDUCATION_MAPPING = {
     "Assoc-voc": "Assoc-voc",
 }
 
-_all_features[FeatureName.EDUCATION_ENCODED] = make_one_hot_encoded(AdultData.Column.EDUCATION, _EDUCATION_MAPPING)
+_all_features[FeatureName.EDUCATION_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.EDUCATION, _EDUCATION_MAPPING
+)
 
 _RELATIONSHIP_MAPPING = {
     "Wife": "Spouse",
@@ -175,7 +191,9 @@ _RELATIONSHIP_MAPPING = {
     "Unmarried": "Not family",
 }
 
-_all_features[FeatureName.RELATIONSHIP_ENCODED] = make_one_hot_encoded(AdultData.Column.RELATIONSHIP, _RELATIONSHIP_MAPPING)
+_all_features[FeatureName.RELATIONSHIP_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.RELATIONSHIP, _RELATIONSHIP_MAPPING
+)
 
 
 _OCCUPATION_UNKNOWN_DEFAULT = "Unknown"
@@ -197,7 +215,11 @@ _OCCUPATION_MAPPING = {
     "?": _OCCUPATION_UNKNOWN_DEFAULT,
 }
 
-_all_features[FeatureName.OCCUPATION_ENCODED] = make_one_hot_encoded(AdultData.Column.OCCUPATION, mapping_dict=_OCCUPATION_MAPPING, unknown_value=_OCCUPATION_UNKNOWN_DEFAULT)
+_all_features[FeatureName.OCCUPATION_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.OCCUPATION,
+    mapping_dict=_OCCUPATION_MAPPING,
+    unknown_value=_OCCUPATION_UNKNOWN_DEFAULT,
+)
 
 
 _WORK_CLASS_UNKNOWN_DEFAULT = "Unknown"
@@ -214,23 +236,30 @@ _WORK_CLASS_MAPPING = {
 }
 
 
-_all_features[FeatureName.WORK_CLASS_ENCODED] = make_one_hot_encoded(AdultData.Column.WORK_CLASS, mapping_dict=_WORK_CLASS_MAPPING, unknown_value=_WORK_CLASS_UNKNOWN_DEFAULT)
+_all_features[FeatureName.WORK_CLASS_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.WORK_CLASS,
+    mapping_dict=_WORK_CLASS_MAPPING,
+    unknown_value=_WORK_CLASS_UNKNOWN_DEFAULT,
+)
 
 
 _all_features[FeatureName.NET_CAPITAL_STANDARDIZED] = make_pipeline(
-    _ColumnDifference(
+    ColumnDifference(
         AdultData.Column.CAPITAL_GAIN,
         AdultData.Column.CAPITAL_LOSS,
-        FeatureName.NET_CAPITAL_STANDARDIZED.value
+        FeatureName.NET_CAPITAL_STANDARDIZED.value,
     ),
     StandardScaler(),
 )
 
 
-_all_features[FeatureName.EDUCATION_NUM_STANDARDIZED] = make_standardized(AdultData.Column.EDUCATION_NUM)
-_all_features[FeatureName.HOURS_PER_WEEK_STANDARDIZED] = make_standardized(AdultData.Column.HOURS_PER_WEEK)
+_all_features[FeatureName.EDUCATION_NUM_STANDARDIZED] = make_standardized(
+    AdultData.Column.EDUCATION_NUM
+)
+_all_features[FeatureName.HOURS_PER_WEEK_STANDARDIZED] = make_standardized(
+    AdultData.Column.HOURS_PER_WEEK
+)
 _all_features[FeatureName.AGE_STANDARDIZED] = make_standardized(AdultData.Column.AGE)
-
 
 
 def collect_features(
