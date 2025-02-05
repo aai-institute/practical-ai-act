@@ -10,7 +10,6 @@ from tempfile import TemporaryDirectory
 import pandas as pd
 from sensai.util.cache import pickle_cached
 from ucimlrepo import fetch_ucirepo
-from sklearn.base import ClassifierMixin
 
 
 class AdultData:
