@@ -85,10 +85,9 @@ class AdultData:
     def load_input_output_data(self) -> tuple[pd.DataFrame, pd.Series]:
         """
         Load the data as an `InputOutputData` object used in the
-        [`sensai`](https://github.com/opcode81/sensAI) package.
         """
         all_df = self.load_data_frame()
-        return all_df.drop(columns=[self.TARGET]), all_df[[self.TARGET]]
+        return all_df.drop(columns=[self.TARGET]), all_df[self.TARGET]
 
 
 def _fetch_asec_data(
