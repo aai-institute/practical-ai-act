@@ -4,16 +4,12 @@ import mlflow
 from mlflow.models import infer_signature
 from sklearn.model_selection import train_test_split
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.pipeline import make_pipeline
-from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
+from compliance_journey.step00_minimal_pipeline.asec.model_factory import ModelFactory
 from compliance_journey.step00_minimal_pipeline.asec.data import AdultData
 
-from compliance_journey.step00_minimal_pipeline.asec.preprocessing import (
-    default_preprocessing,
-)
 from config import MLFLOW_SUBFOLDER, FILE_NAME_ADULT
 
 
@@ -34,16 +30,13 @@ def main():
     label_encoder.fit(y_train)
     y_test = label_encoder.transform(y_test)
 
-    pipeline = make_pipeline(default_preprocessing, XGBClassifier())
+    pipeline = ModelFactory.create_xgb()
     pipeline.fit(X_train, label_encoder.transform(y_train))
 
     y_pred = pipeline.predict(X_test)
 
     # Calculate metrics
     accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)
 
     mlflow.set_tracking_uri(MLFLOW_SUBFOLDER)
     mlflow.set_experiment(name)
