@@ -1202,6 +1202,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "sensai" },
+    { name = "sensai-utils" },
     { name = "ucimlrepo" },
     { name = "xgboost" },
 ]
@@ -1241,6 +1242,7 @@ requires-dist = [
     { name = "numpy", specifier = ">2" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "sensai", specifier = ">=1.3.0" },
+    { name = "sensai-utils", specifier = ">=1.4.0" },
     { name = "ucimlrepo", specifier = ">=0.0.7" },
     { name = "xgboost", specifier = ">=2.1.3" },
 ]
@@ -3517,6 +3519,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/b3/5b/eecf6deebfad801e69b78b54480a9ad7e2a51300d57adbf72824d8992d66/sensai-1.3.0.tar.gz", hash = "sha256:d439051ce6b91586a6a21fdd94049d2180cef2bd6103e0b4a701e787cb0f5ec5", size = 250457 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/c9/553f57f839f3045233809d4af2d3a9d9274d736dca82a8f531ffff563e78/sensai-1.3.0-py3-none-any.whl", hash = "sha256:076a8964ebb26830ab620d4b1d26b7f876c35c24d9909c48c325e3ded105ffd7", size = 294828 },
+]
+
+[[package]]
+name = "sensai-utils"
+version = "1.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e9/b1/9dba08e2d8ea739b58d1ac393c066169f1ca6506c86f0322d6e56e600ae2/sensai_utils-1.4.0.tar.gz", hash = "sha256:2d32bdcc91fd1428c5cae0181e98623142d2d5f7e115e23d585a842dd9dc59ba", size = 56317 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c6/df/49cc942b653427df0bbd3b9a2fb1e85652df3d4c1d9f6dcbfce1b6155716/sensai_utils-1.4.0-py3-none-any.whl", hash = "sha256:ed6fc57552620e43b33cf364ea0bc0fd7df39391069dd7b621b113ef55547507", size = 63214 },
 ]
 
 [[package]]
