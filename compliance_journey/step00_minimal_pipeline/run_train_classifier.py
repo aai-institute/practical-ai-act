@@ -4,8 +4,7 @@ import mlflow
 from mlflow.models import infer_signature
 from sklearn.model_selection import train_test_split
 
-from sklearn.metrics import accuracy_score
-
+from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from compliance_journey.step00_minimal_pipeline.asec.model_factory import ModelFactory
 from compliance_journey.step00_minimal_pipeline.asec.data import AdultData
 
@@ -29,11 +28,17 @@ def main():
 
     # Calculate metrics
     accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
+    recall = recall_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
+    precision = precision_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
 
     mlflow.set_tracking_uri(MLFLOW_SUBFOLDER)
     mlflow.set_experiment(name)
     with mlflow.start_run():
         mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("f1", f1)
+        mlflow.log_metric("recall", recall)
+        mlflow.log_metric("precision", precision)
 
         mlflow.set_tag("Training Info", "Basic LR model for iris data")
 
