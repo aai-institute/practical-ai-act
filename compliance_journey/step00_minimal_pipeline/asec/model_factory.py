@@ -7,6 +7,7 @@ from lightgbm import LGBMClassifier
 
 from .features import collect_features, FeatureName
 
+
 class ModelFactory:
     @classmethod
     def create_xgb(
@@ -21,22 +22,22 @@ class ModelFactory:
 
     @classmethod
     def create_lightgbm(
-            cls,
-            include_only: list[FeatureName] | None = None,
-            exclude: list[FeatureName] | None = None,
-            add: list[Pipeline | ColumnTransformer] | None = None,
-            **lgbm_kwargs,
+        cls,
+        include_only: list[FeatureName] | None = None,
+        exclude: list[FeatureName] | None = None,
+        add: list[Pipeline | ColumnTransformer] | None = None,
+        **lgbm_kwargs,
     ):
         feature_union = cls._create_feature_union(include_only, exclude, add)
         return make_pipeline(feature_union, LGBMClassifier(**lgbm_kwargs))
 
     @classmethod
     def create_mlp(
-            cls,
-            include_only: list[FeatureName] | None = None,
-            exclude: list[FeatureName] | None = None,
-            add: list[Pipeline | ColumnTransformer] | None = None,
-            **mlp_kwargs,
+        cls,
+        include_only: list[FeatureName] | None = None,
+        exclude: list[FeatureName] | None = None,
+        add: list[Pipeline | ColumnTransformer] | None = None,
+        **mlp_kwargs,
     ):
         feature_union = cls._create_feature_union(include_only, exclude, add)
         return make_pipeline(feature_union, MLPClassifier(**mlp_kwargs))
