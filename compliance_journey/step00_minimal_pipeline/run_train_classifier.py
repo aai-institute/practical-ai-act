@@ -5,7 +5,6 @@ from mlflow.models import infer_signature
 from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import LabelEncoder
 
 from compliance_journey.step00_minimal_pipeline.asec.model_factory import ModelFactory
 from compliance_journey.step00_minimal_pipeline.asec.data import AdultData
@@ -23,15 +22,8 @@ def main():
         X, y, test_size=0.2, random_state=31
     )
 
-    y_train = y_train[AdultData.TARGET]
-    y_test = y_test[AdultData.TARGET]
-
-    label_encoder = LabelEncoder()
-    label_encoder.fit(y_train)
-    y_test = label_encoder.transform(y_test)
-
     pipeline = ModelFactory.create_xgb()
-    pipeline.fit(X_train, label_encoder.transform(y_train))
+    pipeline.fit(X_train, y_train)
 
     y_pred = pipeline.predict(X_test)
 
