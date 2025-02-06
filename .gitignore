@@ -188,3 +188,6 @@ predictions.sqlite3
 # MLflow
 /mlruns
 /mlartifacts
+
+# sqlite files
+*.sqlite3-journal
