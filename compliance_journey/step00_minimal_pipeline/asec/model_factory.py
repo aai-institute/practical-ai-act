@@ -10,12 +10,21 @@ from lightgbm import LGBMClassifier
 
 from .features import collect_features, FeatureName
 
+
 class LabelEncodedClassifier(ClassifierMixin, BaseEstimator):
     """
-    https://github.com/scikit-learn/scikit-learn/pull/29952
-    https://github.com/gtauzin/scikit-learn/blob/transformed_target_clf/sklearn/compose/_target.py
+    A simple wrapper for a given classifier that automatically encodes target labels
+    before fitting and decodes predictions. There is an ongoing
+    [issue](https://github.com/scikit-learn/scikit-learn/pull/29952)
+    at the sklearn repository and a
+    [preliminary implementation](https://github.com/gtauzin/scikit-learn/blob/transformed_target_clf/sklearn/compose/_target.py)
+
+    Attributes:
+        classifier (ClassifierMixin): The base classifier.
+        encoder (LabelEncoder): The encoder for transforming target labels.
     """
-    def __init__(self, classifier, encoder):
+
+    def __init__(self, classifier, encoder: LabelEncoder):
         self.classifier = classifier
         self.encoder = encoder
 
@@ -36,6 +45,15 @@ class LabelEncodedClassifier(ClassifierMixin, BaseEstimator):
 
 
 class ModelFactory:
+    """
+    Factory class for creating machine learning models using specified features.
+    By default, all features registered in [asec.features][asec.features]
+    are used for training the models. You can customize by using the kwargs
+    include_only (only choose a subset of registered features),
+    exclude (exclude specific registered features) and add (add custom estimators to
+    the feature union).
+    """
+
     @classmethod
     def create_xgb(
         cls,
@@ -57,7 +75,9 @@ class ModelFactory:
         **lgbm_kwargs,
     ):
         feature_union = cls._create_feature_union(include_only, exclude, add)
-        classifier = LabelEncodedClassifier(LGBMClassifier(**lgbm_kwargs), LabelEncoder())
+        classifier = LabelEncodedClassifier(
+            LGBMClassifier(**lgbm_kwargs), LabelEncoder()
+        )
         return make_pipeline(feature_union, classifier)
 
     @classmethod
