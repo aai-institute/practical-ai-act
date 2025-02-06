@@ -1,60 +1,43 @@
 import logging
 
-import mlflow
-from mlflow.models import infer_signature
-from sklearn.model_selection import train_test_split
+from asec.evaluation import (
+    ClassificationEvaluation,
+    ClassificationEvaluationParams,
+)
+from asec.features import FeatureName
+from asec.tracking import mlflow_track
 
-from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from compliance_journey.step00_minimal_pipeline.asec.model_factory import ModelFactory
 from compliance_journey.step00_minimal_pipeline.asec.data import AdultData
 
-from config import MLFLOW_SUBFOLDER, FILE_NAME_ADULT
-
-
-def main():
-    name = "train_classifier"
-    model_id = "xgb_classifier"
-
-    adult_data = AdultData(FILE_NAME_ADULT)
-    X, y = adult_data.load_input_output_data()
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=31
-    )
-
-    pipeline = ModelFactory.create_xgb()
-    pipeline.fit(X_train, y_train)
-
-    y_pred = pipeline.predict(X_test)
-
-    # Calculate metrics
-    accuracy = accuracy_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
-    recall = recall_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
-    precision = precision_score(y_test, y_pred, pos_label=AdultData.CLASS_POSITIVE)
-
-    mlflow.set_tracking_uri(MLFLOW_SUBFOLDER)
-    mlflow.set_experiment(name)
-    with mlflow.start_run():
-        mlflow.log_metric("accuracy", accuracy)
-        mlflow.log_metric("f1", f1)
-        mlflow.log_metric("recall", recall)
-        mlflow.log_metric("precision", precision)
-
-        mlflow.set_tag("Training Info", "Basic LR model for iris data")
-
-        signature = infer_signature(X_train, pipeline.predict(X_train))
-
-        model_info = mlflow.sklearn.log_model(
-            sk_model=pipeline,
-            artifact_path="asec_model",
-            signature=signature,
-            input_example=X_train,
-            registered_model_name="xgb_classifier",
-        )
-        print(model_info)
-        print(model_info.model_uri)
-
+from config import FILE_NAME_ADULT
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    main()
+
+    test_size = 0.2
+    random_seed = 31
+    exp_name = "income_classification"
+    art_path = "models"
+    model_name = "xgboost-classifier"
+
+    # create model
+    pipeline = ModelFactory.create_xgb(exclude=[FeatureName.RELATIONSHIP_ENCODED])
+
+    # load data
+    adult_data = AdultData(FILE_NAME_ADULT)
+    X, y = adult_data.load_input_output_data()
+
+    # evaluate the model
+    evaluation_params = ClassificationEvaluationParams(
+        test_size=test_size,
+        random_seed=random_seed,
+        binary_positive_class=AdultData.CLASS_POSITIVE,
+    )
+    evaluation = ClassificationEvaluation(X, y, evaluation_params, fit_models=True)
+    evaluation_result = evaluation.evaluate(pipeline)
+
+    # track result
+    model_uri = mlflow_track(
+        pipeline, evaluation_result, exp_name, model_name, art_path
+    )
