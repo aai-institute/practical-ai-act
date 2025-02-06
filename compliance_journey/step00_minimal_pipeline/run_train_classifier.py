@@ -7,8 +7,8 @@ from asec.evaluation import (
 from asec.features import FeatureName
 from asec.tracking import mlflow_track
 
-from compliance_journey.step00_minimal_pipeline.asec.model_factory import ModelFactory
-from compliance_journey.step00_minimal_pipeline.asec.data import AdultData
+from asec.model_factory import ModelFactory
+from asec.data import AdultData
 
 from config import FILE_NAME_ADULT
 
