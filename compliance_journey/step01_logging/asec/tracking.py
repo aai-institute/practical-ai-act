@@ -1,0 +1,45 @@
+import logging
+
+import mlflow
+from asec.evaluation import ClassificationEvaluationResult
+from config import MLFLOW_SUBFOLDER
+from mlflow.models import infer_signature
+from mlflow.models.model import ModelInfo
+from sklearn.pipeline import Pipeline
+
+
+def mlflow_track(
+    model: Pipeline,
+    result: ClassificationEvaluationResult,
+    experiment_name: str,
+    model_name: str,
+    artifact_path: str,
+    tags: dict[str, str] = None,
+) -> ModelInfo:
+    test_metrics = result.tests_metrics
+
+    mlflow.set_tracking_uri(MLFLOW_SUBFOLDER)
+    mlflow.set_experiment(experiment_name)
+    with mlflow.start_run():
+        mlflow.log_metric("accuracy", test_metrics.acc)
+        mlflow.log_metric("f1", test_metrics.f1)
+        mlflow.log_metric("recall", test_metrics.recall)
+        mlflow.log_metric("precision", test_metrics.precision)
+
+        if tags is not None:
+            for key, val in tags.items():
+                mlflow.set_tag(key, val)
+
+        signature = infer_signature(
+            result.input_example, model.predict(result.input_example)
+        )
+
+        model_info = mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path=artifact_path,
+            signature=signature,
+            input_example=result.input_example,
+            registered_model_name=model_name,
+        )
+        logging.info(f"Registered {str(model_info)}")
+        return model_info
