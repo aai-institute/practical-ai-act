@@ -1,11 +1,12 @@
 from dagster import Definitions
 
-from income_prediction.assets.census_asec_dataset import census_asec_dataset
-from income_prediction.assets.census_asec_features import census_asec_features
-from income_prediction.assets.income_prediction_model import income_prediction_model
-from income_prediction.assets.train_test import train_test_data
+from income_prediction.assets import (
+    census_asec_dataset,
+    income_prediction_features,
+    income_prediction_model_xgboost,
+    train_test_data,
+)
 from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
-from income_prediction.resources.census_asec_downloader import CensusASECDownloader
 from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
 
@@ -17,13 +18,12 @@ mlflow_session = MlflowSession(
 definitions = Definitions(
     assets=[
         census_asec_dataset,
-        census_asec_features,
+        income_prediction_features,
         train_test_data,
-        income_prediction_model,
+        income_prediction_model_xgboost,
     ],
     resources={
         "config": config,
-        "downloader": CensusASECDownloader(year=config.census_asec_dataset_year),
         "mlflow_session": mlflow_session,
         "csv_io_manager": CSVFSIOManager(base_dir=config.data_dir),
     },
