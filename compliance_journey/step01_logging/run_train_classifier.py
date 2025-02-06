@@ -38,6 +38,7 @@ if __name__ == "__main__":
     evaluation_result = evaluation.evaluate(pipeline)
 
     # track result
-    model_uri = mlflow_track(
+    model_info = mlflow_track(
         pipeline, evaluation_result, exp_name, model_name, art_path
     )
+    print(model_info.model_uri)

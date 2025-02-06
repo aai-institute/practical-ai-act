@@ -1,7 +1,9 @@
 import pandas as pd
 from fastapi import APIRouter
-from hr_assistant.dependencies.models import ModelDependency
-from pydantic import BaseModel, ConfigDict, alias_generators, AliasGenerator
+from pydantic import BaseModel, ConfigDict
+
+from ..dependencies.models import ModelDependency
+from ..dependencies.logging import PredictionLoggerDependency
 
 
 def to_kebab(field: str) -> str:
@@ -32,8 +34,32 @@ router = APIRouter(tags=["model"])
 
 
 @router.post("/predict")
-def predict(model_input: ModelInput | list[ModelInput], model: ModelDependency):
+def predict(
+    model_input: ModelInput | list[ModelInput],
+    model: ModelDependency,
+    logger: PredictionLoggerDependency,
+):
     if not isinstance(model_input, list):
         model_input = [model_input]
-    data = pd.DataFrame.from_records(m.model_dump(by_alias=True) for m in model_input)
-    return model.predict(data).tolist()
+    input_data = pd.DataFrame.from_records(
+        m.model_dump(by_alias=True) for m in model_input
+    )
+    prediction = model.predict(input_data)
+    proba = model.predict_proba(input_data)
+
+    data = {
+        "input": input_data.to_json(),
+        "output": {
+            "class": prediction.tolist(),
+            "probabilities": proba.tolist(),
+        },
+    }
+
+    logger.log(
+        input_data=data["input"],
+        output_data=data["output"],
+        # FIXME: mlflow.sklearn.Model does not expose tracking metadata
+        metadata={"model_version": str(model)},
+    )
+
+    return data
