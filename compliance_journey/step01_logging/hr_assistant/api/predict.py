@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 from ..dependencies.models import ModelDependency
 from ..dependencies.logging import PredictionLoggerDependency
+from ..config import MODEL_URI
 
 
 def to_kebab(field: str) -> str:
@@ -48,7 +49,7 @@ def predict(
     proba = model.predict_proba(input_data)
 
     data = {
-        "input": input_data.to_json(),
+        "input": input_data.to_dict(orient="records"),
         "output": {
             "class": prediction.tolist(),
             "probabilities": proba.tolist(),
@@ -58,8 +59,8 @@ def predict(
     logger.log(
         input_data=data["input"],
         output_data=data["output"],
-        # FIXME: mlflow.sklearn.Model does not expose tracking metadata
-        metadata={"model_version": str(model)},
+        # FIXME: Model version could contain an alias, must resolve to a definitive version before logging to keep traceability
+        metadata={"model_version": MODEL_URI},
     )
 
     return data

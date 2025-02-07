@@ -6,7 +6,7 @@ from .api.predict import router as predict_router
 from .api.info import router as info_router
 
 
-MODEL_URI = "runs:/f16960448b834c1a8682a7cc0623b0ca/asec_model"
+MODEL_URI = "models:/xgboost-classifier/latest"
 MLFLOW_TRACKING_URI = "/Users/kristof/Projects/twai-pipeline/compliance_journey/step00_minimal_pipeline/mlruns"
 
 

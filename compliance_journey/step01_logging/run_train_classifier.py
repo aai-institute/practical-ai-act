@@ -1,5 +1,10 @@
 import logging
+from tempfile import TemporaryDirectory
+from typing import Protocol
 
+import mlflow
+import os.path
+import pandas as pd
 from asec.evaluation import (
     ClassificationEvaluation,
     ClassificationEvaluationParams,
@@ -11,6 +16,21 @@ from asec.model_factory import ModelFactory
 from asec.data import AdultData
 
 from config import FILE_NAME_ADULT
+#
+class ProbabilisticPredictor(Protocol):
+    def predict(self, X, **params):
+        ...
+    def predict_proba(self, X, **params):
+        ...
+
+
+def build_reference_data(model: ProbabilisticPredictor, X: pd.DataFrame, y_true: pd.DataFrame) -> pd.DataFrame:
+    reference_df = pd.DataFrame(X)
+    reference_df["target"] = y_true
+    reference_df["prediction"] = model.predict(X)
+    reference_df["prediction_probability"] = model.predict_proba(X).tolist()
+
+    return reference_df
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -37,8 +57,12 @@ if __name__ == "__main__":
     evaluation = ClassificationEvaluation(X, y, evaluation_params, fit_models=True)
     evaluation_result = evaluation.evaluate(pipeline)
 
+    X_test, y_test = evaluation.get_test_data()
+
+    # Prepare a reference dataset for post-hoc performance evaluation
+    reference_df = build_reference_data(pipeline, X_test, y_test)
+
     # track result
-    model_info = mlflow_track(
-        pipeline, evaluation_result, exp_name, model_name, art_path
+    model_uri = mlflow_track(
+        pipeline, evaluation_result, exp_name, model_name, art_path, reference_data = reference_df,
     )
-    print(model_info.model_uri)

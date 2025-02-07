@@ -25,7 +25,7 @@ def fetch_test_data(model_uri: str) -> pd.DataFrame:
         (
             a.path
             for a in client.list_artifacts(run.info.run_id)
-            if a.path.endswith("reference.parquet")
+            if a.path.endswith("reference_data.parquet")
         ),
         None,
     )
@@ -42,18 +42,18 @@ def predictions_to_dataset(predictions: list, columns: list[str]) -> pd.DataFram
 
     records = []
     for row in predictions:
-        input_data = json.loads(row[0])
+        input_data = json.loads(row[0])[0]
 
         output_data = json.loads(row[1])
         if isinstance(output_data, dict):
             # Predictions with probabilities
-            prediction_data = int(output_data["class"])
+            prediction_data = output_data["class"][0]
             proba = output_data["probabilities"][0]
         else:
             # Simple argmax predictions
             prediction_data = int(output_data)
             proba = []
-        records.append(input_data + [prediction_data, proba])
+        records.append(input_data | {"prediction": prediction_data, "prediction_probability": proba})
 
     return pd.DataFrame.from_records(records, columns=columns)
 
@@ -63,7 +63,7 @@ def expand_predict_proba(
 ) -> pd.DataFrame:
     pred_proba_expanded = pd.DataFrame(
         df[col].tolist(),
-        columns=[f"prob_{idx}" for idx in range(3)],
+        columns=[f"prob_{idx}" for idx in range(NUM_CLASSES)],
         index=df.index,
     )
     df = pd.concat(
@@ -73,10 +73,12 @@ def expand_predict_proba(
     return df
 
 
-PREDICTIONS_DB_FILE = Path("predictions.sqlite3")
+PREDICTIONS_DB_FILE = Path(__file__).parents[1] / "predictions.sqlite3"
 PREDICTIONS_TABLE = "predictions"
+NUM_CLASSES = 2
 
-mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_tracking_uri("/Users/kristof/Projects/twai-pipeline/compliance_journey/step01_logging/mlruns"
+                            )
 
 db = sqlite3.connect(PREDICTIONS_DB_FILE)
 
@@ -94,8 +96,10 @@ reference_df = fetch_test_data(model_versions[0])
 predictions = db.execute(f"SELECT input, output from {PREDICTIONS_TABLE}").fetchall()
 analysis_df = predictions_to_dataset(
     predictions,
-    columns=list(reference_df.columns)[:4] + ["prediction", "prediction_probability"],
+    columns=list(reference_df.drop("target", axis=1).columns),
 )
+
+reference_df["prediction_probability"] = reference_df["prediction_probability"].map(lambda arr: [float(v) for v in arr])
 
 analysis_df = expand_predict_proba(analysis_df)
 reference_df = expand_predict_proba(reference_df)
@@ -107,10 +111,18 @@ print("Reference:", reference_df.columns)
 # NannyML reporting
 import nannyml as nml
 
-chunk_size = 100
+CLASSES = ["<=50K", ">50K"]
+label_map = {cls: idx for idx, cls in enumerate(CLASSES)}
+
+reference_df["prediction"] = reference_df["prediction"].map(label_map)
+reference_df["target"] = reference_df["target"].map(label_map)
+
+analysis_df["prediction"] = analysis_df["prediction"].map(label_map)
+
+chunk_size = 500
 estimator = nml.CBPE(
-    problem_type="classification_multiclass",
-    y_pred_proba={idx: f"prob_{idx}" for idx in range(3)},
+    problem_type="classification_binary",
+    y_pred_proba="prob_1",
     y_pred="prediction",
     y_true="target",
     metrics=["roc_auc", "f1"],

@@ -4,10 +4,9 @@ import mlflow
 
 from .api.predict import router as predict_router
 from .api.info import router as info_router
+from .config import MODEL_URI
 from .dependencies.logging import SQLitePredictionLogger
 
-
-MODEL_URI = "runs:/b09f88d57fc24af0ab243522122a8a08/models"
 MLFLOW_TRACKING_URI = (
     "/Users/kristof/Projects/twai-pipeline/compliance_journey/step01_logging/mlruns"
 )

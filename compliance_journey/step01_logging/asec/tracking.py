@@ -1,6 +1,10 @@
+import os
 import logging
+from tempfile import TemporaryDirectory
 
 import mlflow
+import pandas as pd
+
 from asec.evaluation import ClassificationEvaluationResult
 from config import MLFLOW_SUBFOLDER
 from mlflow.models import infer_signature
@@ -14,6 +18,7 @@ def mlflow_track(
     experiment_name: str,
     model_name: str,
     artifact_path: str,
+    reference_data: pd.DataFrame | None = None,
     tags: dict[str, str] = None,
 ) -> ModelInfo:
     test_metrics = result.tests_metrics
@@ -25,6 +30,12 @@ def mlflow_track(
         mlflow.log_metric("f1", test_metrics.f1)
         mlflow.log_metric("recall", test_metrics.recall)
         mlflow.log_metric("precision", test_metrics.precision)
+
+        if reference_data is not None:
+            with TemporaryDirectory() as tmpdir:
+                ref_data_path = os.path.join(tmpdir, "reference_data.parquet")
+                reference_data.to_parquet(ref_data_path)
+                mlflow.log_artifact(ref_data_path)
 
         if tags is not None:
             for key, val in tags.items():

@@ -62,3 +62,7 @@ Content-Type: application/json
     "native-country": "United-States"
   }
 ]
+
+
+### Flush logs
+POST {{base_url}}/model/flush-logs

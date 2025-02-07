@@ -41,12 +41,7 @@ class ClassificationEvaluation:
     def evaluate(
         self, model: Pipeline, include_train_metrics=True
     ) -> ClassificationEvaluationResult:
-        X_train, X_test, y_train, y_test = train_test_split(
-            self.input_data,
-            self.output_data,
-            test_size=self.evaluation_params.test_size,
-            random_state=self.evaluation_params.random_seed,
-        )
+        X_train, X_test, y_train, y_test = self.get_train_test_split()
         if self.fit_models:
             model.fit(X_train, y_train)
 
@@ -74,3 +69,16 @@ class ClassificationEvaluation:
         recall = recall_score(y_true, y_pred, pos_label=pos_label)
         precision = precision_score(y_true, y_pred, pos_label=pos_label)
         return MetricCollection(accuracy, f1, recall, precision)
+
+    def get_train_test_split(self):
+        return train_test_split(
+            self.input_data,
+            self.output_data,
+            test_size=self.evaluation_params.test_size,
+            random_state=self.evaluation_params.random_seed,
+        )
+
+    def get_test_data(self):
+        _, X_test, _, y_test = self.get_train_test_split()
+        return X_test, y_test
+
