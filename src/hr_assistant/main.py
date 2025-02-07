@@ -1,22 +1,16 @@
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 import mlflow
 import mlflow.sklearn
 from fastapi import FastAPI
 
 from hr_assistant import api, dependencies
-
-PREDICTION_LOG_PATH = Path("predictions.jsonl")
-
-# FIXME: Parameterize the model name and version
-MLFLOW_MODEL_NAME = "tracking-quickstart"
-MLFLOW_MODEL_VERSION = 1
+from hr_assistant.config import MLFLOW_MODEL_URI
 
 
-def _load_model(model_name: str, model_version: int) -> mlflow.sklearn.Model:
+def _load_model(model_uri: str) -> mlflow.sklearn.Model:
     # return mlflow.pyfunc.load_model(f"models:/{model_name}/{model_version}")
-    return mlflow.sklearn.load_model(f"models:/{model_name}/{model_version}")
+    return mlflow.sklearn.load_model(model_uri)
 
 
 @asynccontextmanager
@@ -34,7 +28,7 @@ async def lifespan(app: FastAPI):
     )
     app.state.request_logger = logger
 
-    app.state.model = _load_model(MLFLOW_MODEL_NAME, MLFLOW_MODEL_VERSION)
+    app.state.model = _load_model(MLFLOW_MODEL_URI)
 
     yield
 

@@ -4,6 +4,7 @@ import numpy as np
 from fastapi import APIRouter
 
 from hr_assistant import dependencies
+from hr_assistant.config import MLFLOW_MODEL_URI
 
 router = APIRouter(tags=["model"])
 
@@ -31,8 +32,8 @@ def predict(
     logger.log(
         input_data=data["input"],
         output_data=data["output"],
-        # FIXME: mlflow.sklearn.Model does not expose tracking metadata
-        metadata={"model_version": str(model)},
+        # FIXME: Model version could contain an alias, must resolve to a definitive version before logging to keep traceability
+        metadata={"model_version": MLFLOW_MODEL_URI},
     )
 
     return data
