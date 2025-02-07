@@ -6,7 +6,6 @@ import mlflow
 import pandas as pd
 
 from asec.evaluation import ClassificationEvaluationResult
-from config import MLFLOW_SUBFOLDER
 from mlflow.models import infer_signature
 from mlflow.models.model import ModelInfo
 from sklearn.pipeline import Pipeline
@@ -23,7 +22,6 @@ def mlflow_track(
 ) -> ModelInfo:
     test_metrics = result.tests_metrics
 
-    mlflow.set_tracking_uri(MLFLOW_SUBFOLDER)
     mlflow.set_experiment(experiment_name)
     with mlflow.start_run():
         mlflow.log_metric("accuracy", test_metrics.acc)

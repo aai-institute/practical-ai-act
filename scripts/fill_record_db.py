@@ -1,9 +1,7 @@
-from time import perf_counter
-
 from requests import post
 
 from asec.data import AdultData
-from config import FILE_NAME_ADULT
+from scripts.config import FILE_NAME_ADULT
 
 adult_data = AdultData(FILE_NAME_ADULT)
 X, _ = adult_data.load_input_output_data()

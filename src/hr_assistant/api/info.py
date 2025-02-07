@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from ..dependencies.models import ModelDependency
+from hr_assistant.dependencies.models import ModelDependency
 
 router = APIRouter(tags=["model"])
 

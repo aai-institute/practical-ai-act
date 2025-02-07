@@ -1,41 +1,41 @@
 from contextlib import asynccontextmanager
-
+from fastapi import FastAPI, Request, Response
 import mlflow
-import mlflow.sklearn
-from fastapi import FastAPI
 
-from hr_assistant import api, dependencies
-from hr_assistant.config import MLFLOW_MODEL_URI
+from .api.predict import router as predict_router
+from .api.info import router as info_router
+from .config import MODEL_URI
+from .dependencies.logging import SQLitePredictionLogger
 
 
 def _load_model(model_uri: str) -> mlflow.sklearn.Model:
-    # return mlflow.pyfunc.load_model(f"models:/{model_name}/{model_version}")
-    return mlflow.sklearn.load_model(model_uri)
+    return mlflow.sklearn.load_model("models:/xgboost-classifier/latest")
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Make a singleton prediction logger instance available to the application
-    # logger = dependencies.logging.PredictionLogger(PREDICTION_LOG_PATH)
-    # logger = dependencies.logging.OpenSearchPredictionLogger(
-    #     "https://localhost:9200", "predictions"
-    # )
-    # logger = dependencies.logging.DuckDBPredictionLogger(
-    #     Path("predictions.db"), "predictions"
-    # )
-    logger = dependencies.logging.SQLitePredictionLogger(
+async def lifespan(_app: FastAPI):
+    _app.state.model = _load_model(MODEL_URI)
+
+    logger = SQLitePredictionLogger(
         "predictions.sqlite3", table_name="predictions", capacity=100
     )
     app.state.request_logger = logger
 
-    app.state.model = _load_model(MLFLOW_MODEL_URI)
-
     yield
 
-    # Ensure the logger buffer is flushed before the application exits or restarts
     logger.flush()
 
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(api.predict, prefix="/model")
+app.include_router(predict_router, prefix="/model")
+app.include_router(info_router, prefix="/model")
+
+
+@app.middleware("http")
+async def log_request(request: Request, call_next):
+    print(f"Request: {request.url.path}")
+
+    response: Response = await call_next(request)
+    print(f"Response: {response.status_code}")
+    return response
