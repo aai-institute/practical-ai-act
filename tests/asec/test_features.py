@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from compliance_journey.step00_minimal_pipeline.asec.features import (
+from asec.features import (
     collect_features,
     MappedColumn,
 )
