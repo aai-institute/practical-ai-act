@@ -176,3 +176,18 @@ cython_debug/
 
 # MkDocs output folder
 public/
+
+# Model predictions log from FastAPI app
+predictions.jsonl
+predictions.db
+predictions.sqlite3
+
+# Evidently workspace
+/evidently/
+
+# MLflow
+/mlruns
+/mlartifacts
+
+# sqlite files
+*.sqlite3-journal
