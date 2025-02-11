@@ -72,3 +72,7 @@ ignore = [
     "RUF029",  # Unused Async (FastAPI routes are async)
     "FAST003", # FastAPI unused path parameter (they can be consumed by dependencies)
 ]
+
+[tool.dagster]
+module_name = "income_prediction"
+code_location_name = "income_prediction"
