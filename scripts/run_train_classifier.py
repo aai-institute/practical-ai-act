@@ -1,12 +1,11 @@
 import logging
-from typing import Protocol
 
-import pandas as pd
 from asec.evaluation import (
     ClassificationEvaluation,
     ClassificationEvaluationParams,
 )
 from asec.features import FeatureName
+from asec.nannyml import build_reference_data
 from asec.tracking import mlflow_track
 
 from asec.model_factory import ModelFactory
@@ -14,20 +13,7 @@ from asec.data import AdultData
 
 from config import FILE_NAME_ADULT
 #
-class ProbabilisticPredictor(Protocol):
-    def predict(self, X, **params):
-        ...
-    def predict_proba(self, X, **params):
-        ...
 
-
-def build_reference_data(model: ProbabilisticPredictor, X: pd.DataFrame, y_true: pd.DataFrame) -> pd.DataFrame:
-    reference_df = pd.DataFrame(X)
-    reference_df["target"] = y_true
-    reference_df["prediction"] = model.predict(X)
-    reference_df["prediction_probability"] = model.predict_proba(X).tolist()
-
-    return reference_df
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
