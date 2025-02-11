@@ -5,6 +5,7 @@ from income_prediction.assets import (
     income_prediction_features,
     income_prediction_model_xgboost,
     train_test_data,
+    reference_dataset,
 )
 from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
 from income_prediction.resources.configuration import Config
@@ -21,6 +22,7 @@ definitions = Definitions(
         income_prediction_features,
         train_test_data,
         income_prediction_model_xgboost,
+        reference_dataset,
     ],
     resources={
         "config": config,

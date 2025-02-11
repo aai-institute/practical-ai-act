@@ -19,7 +19,9 @@ def test_mapped_column(original_values, mapping, expected, unknown_default):
     if unknown_default is None:
         transformer = MappedColumn("col", mapping=mapping)
     else:
-        transformer = MappedColumn("col", mapping=mapping, unknown_default=unknown_default)
+        transformer = MappedColumn(
+            "col", mapping=mapping, unknown_default=unknown_default
+        )
     transformed = transformer.fit_transform(df)
     expected = pd.Series(expected, name="col").to_frame()
     pd.testing.assert_frame_equal(transformed, expected)

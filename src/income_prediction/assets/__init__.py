@@ -1,10 +1,14 @@
 import dagster as dg
 import mlflow
 import pandas as pd
+import sklearn.pipeline
 from sklearn.model_selection import train_test_split
 
+from asec.data import AdultData
 from income_prediction.assets.census_asec_dataset import download_and_filter_census_data
-from income_prediction.assets.income_prediction_features import get_income_prediction_features
+from income_prediction.assets.income_prediction_features import (
+    get_income_prediction_features,
+)
 from income_prediction.assets.income_prediction_model import (
     train_income_prediction_xgboost_classifier,
 )
@@ -20,7 +24,9 @@ def census_asec_dataset(config: Config):
 
 
 @dg.asset(io_manager_key="csv_io_manager")
-def income_prediction_features(config: Config, census_asec_dataset: pd.DataFrame) -> pd.DataFrame:
+def income_prediction_features(
+    config: Config, census_asec_dataset: pd.DataFrame
+) -> pd.DataFrame:
     """Pre-processes the Census ASEC dataset for income prediction."""
     return get_income_prediction_features(config.salary_bands, census_asec_dataset)
 
@@ -48,14 +54,16 @@ def income_prediction_model_xgboost(
     mlflow_session: MlflowSession,
     train_data: pd.DataFrame,
     test_data: pd.DataFrame,
-) -> None:
+) -> sklearn.pipeline.Pipeline:
     """Trains and evaluates the income prediction classifier with XGBoostClassifier."""
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name="xgboost-classifier"):
             mlflow.autolog(log_datasets=False)
 
-            pipeline = train_income_prediction_xgboost_classifier(train_data, config.random_state)
+            pipeline = train_income_prediction_xgboost_classifier(
+                train_data, config.random_state
+            )
 
             mlflow.evaluate(
                 model=pipeline.predict,
@@ -63,3 +71,23 @@ def income_prediction_model_xgboost(
                 targets=CensusASECMetadata.TARGET,
                 model_type="classifier",
             )
+
+    return pipeline
+
+
+@dg.asset(io_manager_key="csv_io_manager")
+def reference_dataset(
+    income_prediction_model_xgboost: sklearn.pipeline.Pipeline,
+    test_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """Reference dataset for post-deployment performance monitoring
+
+    Based on predictions of the model on the test dataset"""
+
+    y_proba = income_prediction_model_xgboost.predict_proba(test_data)
+
+    df = test_data.rename({CensusASECMetadata.TARGET: "target"}, axis=1)
+    df = pd.concat(
+        [df, pd.Series(y_proba.tolist(), name="predicted_probabilities")], axis=1
+    )
+    return df

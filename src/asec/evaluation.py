@@ -81,4 +81,3 @@ class ClassificationEvaluation:
     def get_test_data(self):
         _, X_test, _, y_test = self.get_train_test_split()
         return X_test, y_test
-
