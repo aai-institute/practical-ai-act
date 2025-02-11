@@ -13,6 +13,8 @@ dependencies = [
     "evidently>=0.6.1",
     "fastapi[standard]>0",
     "kaleido==0.2.1",
+    "dagster>=1.9.10",
+    "dagster-webserver>=1.9.10",
     "lightgbm>=4.5.0",
     "mlflow>=2.19.0",
     "more-itertools>=10.5.0",
@@ -23,22 +25,23 @@ dependencies = [
     "scikit-learn<1.6",
     "sensai>=1.3.0",
     "sensai-utils>=1.4.0",
+    "scikit-learn<1.6", # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
     "ucimlrepo>=0.0.7",
     "xgboost>=2.1.3",
 ]
 
 [dependency-groups]
 docs = [
+    "mike",
     "mkdocs",
     "mkdocs-callouts",
     "mkdocs-gen-files",
+    "mkdocs-include-dir-to-nav",
     "mkdocs-literate-nav",
     "mkdocs-section-index",
     "mkdocs-material",
     "mkdocstrings[python]",
     "mkdocs-git-revision-date-localized-plugin",
-    "mkdocs-include-dir-to-nav",
-    "mike",
 ]
 deploy = ["fastapi[standard]>=0"]
 dev = ["pytest>=8.3.4", "ruff>=0.9.3"]
@@ -49,7 +52,7 @@ exclude = ["openapi_client"]
 line-length = 88
 
 # FIXME: Exclude existing non-compliant code for now
-extend-exclude = ["scripts/**", "src/adult/**"]
+extend-exclude = ["scripts/**", "src/income_prediction/**"]
 
 [tool.ruff.lint]
 select = [
@@ -69,3 +72,7 @@ ignore = [
     "RUF029",  # Unused Async (FastAPI routes are async)
     "FAST003", # FastAPI unused path parameter (they can be consumed by dependencies)
 ]
+
+[tool.dagster]
+module_name = "income_prediction"
+code_location_name = "income_prediction"
