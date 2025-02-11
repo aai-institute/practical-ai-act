@@ -126,7 +126,7 @@ class DuckDBPredictionLogger(PredictionLogger):
 
 
 def get_request_logger(request: Request) -> PredictionLogger:
-    return request.app.state.request_logger
+    return request.state.request_logger
 
 
 PredictionLoggerDependency = Annotated[PredictionLogger, Depends(get_request_logger)]
