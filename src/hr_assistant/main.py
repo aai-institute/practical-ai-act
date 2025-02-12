@@ -1,27 +1,35 @@
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, Response
-import mlflow
+from typing import TypedDict
 
-from .api.predict import router as predict_router
+import mlflow
+from fastapi import FastAPI, Request, Response
+
 from .api.info import router as info_router
+from .api.predict import router as predict_router
 from .config import MODEL_URI
-from .dependencies.logging import SQLitePredictionLogger
+from .dependencies.logging import PredictionLogger, SQLitePredictionLogger
 
 
 def _load_model(model_uri: str) -> mlflow.sklearn.Model:
     return mlflow.sklearn.load_model("models:/xgboost-classifier/latest")
 
 
-@asynccontextmanager
-async def lifespan(_app: FastAPI):
-    _app.state.model = _load_model(MODEL_URI)
+class State(TypedDict):
+    model: mlflow.sklearn.Model
+    request_logger: PredictionLogger
 
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI) -> AsyncIterator[State]:
     logger = SQLitePredictionLogger(
         "predictions.sqlite3", table_name="predictions", capacity=100
     )
-    app.state.request_logger = logger
 
-    yield
+    yield {
+        "model": _load_model(MODEL_URI),
+        "request_logger": logger,
+    }
 
     logger.flush()
 
