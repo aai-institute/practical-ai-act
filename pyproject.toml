@@ -43,7 +43,11 @@ docs = [
     "mkdocstrings[python]",
     "mkdocs-git-revision-date-localized-plugin",
 ]
-deploy = ["fastapi[standard]>=0"]
+deploy = [
+    "fastapi[standard]>=0",
+    "mlserver>=1.6.0",
+    "mlserver-mlflow>=1.6.0",
+]
 dev = ["pytest>=8.3.4", "ruff>=0.9.3"]
 
 [tool.ruff]

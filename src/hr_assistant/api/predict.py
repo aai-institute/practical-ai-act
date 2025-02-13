@@ -1,10 +1,9 @@
 import pandas as pd
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict
 
-from hr_assistant.dependencies.models import ModelDependency
-from hr_assistant.dependencies.logging import PredictionLoggerDependency
-from hr_assistant.config import MODEL_URI
+from hr_assistant.api.exceptions import InferenceError
+from hr_assistant.dependencies.models import InferenceClientDependency
 
 
 def to_kebab(field: str) -> str:
@@ -27,40 +26,27 @@ class ModelInput(BaseModel):
     sex: str
     capital_gain: int
     capital_loss: int
-    hours_per_week: float
+    hours_per_week: int
     native_country: str
+    fnlwgt: int
 
 
 router = APIRouter(tags=["model"])
 
 
 @router.post("/predict")
-def predict(
+async def predict(
     model_input: ModelInput | list[ModelInput],
-    model: ModelDependency,
-    logger: PredictionLoggerDependency,
+    inference_client: InferenceClientDependency,
 ):
     if not isinstance(model_input, list):
         model_input = [model_input]
     input_data = pd.DataFrame.from_records(
         m.model_dump(by_alias=True) for m in model_input
     )
-    prediction = model.predict(input_data)
-    proba = model.predict_proba(input_data)
 
-    data = {
-        "input": input_data.to_dict(orient="records"),
-        "output": {
-            "class": prediction.tolist(),
-            "probabilities": proba.tolist(),
-        },
-    }
-
-    logger.log(
-        input_data=data["input"],
-        output_data=data["output"],
-        # FIXME: Model version could contain an alias, must resolve to a definitive version before logging to keep traceability
-        metadata={"model_version": MODEL_URI},
-    )
-
-    return data
+    request = inference_client.build_request(input_data)
+    try:
+        return await inference_client.predict(request)
+    except InferenceError as e:
+        raise HTTPException(status_code=500, detail=e.response.error) from e
