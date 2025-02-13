@@ -34,8 +34,9 @@ class ClassificationEvaluationResult:
 
 class ClassificationEvaluation:
     def __init__(
-        self, X, y, evaluation_params: ClassificationEvaluationParams, fit_models=True
+        self, X, y, evaluation_params: ClassificationEvaluationParams, fit_models=True, average: str = "binary"
     ):
+        self.average = average
         self.fit_models = fit_models
         self.input_data = X
         self.output_data = y
@@ -68,9 +69,9 @@ class ClassificationEvaluation:
         else:
             pos_label = 1
         accuracy = accuracy_score(y_true, y_pred)
-        f1 = f1_score(y_true, y_pred, pos_label=pos_label)
-        recall = recall_score(y_true, y_pred, pos_label=pos_label)
-        precision = precision_score(y_true, y_pred, pos_label=pos_label)
+        f1 = f1_score(y_true, y_pred, pos_label=pos_label, average=self.average)
+        recall = recall_score(y_true, y_pred, pos_label=pos_label, average=self.average)
+        precision = precision_score(y_true, y_pred, pos_label=pos_label, average=self.average)
         return MetricCollection(accuracy, f1, recall, precision)
 
     def get_train_test_split(self):
