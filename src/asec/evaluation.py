@@ -21,6 +21,9 @@ class MetricCollection:
     recall: float
     precision: float
 
+    def to_df(self):
+        return pd.DataFrame([self.__dict__])
+
 
 @dataclass
 class ClassificationEvaluationResult:
