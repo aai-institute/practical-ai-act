@@ -134,6 +134,7 @@ To ensure the dataset is relevant to the AI system's intended purpose, consider 
 
 > 4. Data sets shall take into account, to the extent required by the intended purpose, the characteristics or elements that are particular to the specific geographical, contextual, behavioural or functional setting within which the high-risk AI system is intended to be used.
 
+See section above.
 
 > 6. For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2 to 5 apply only to the testing data sets.
 
