@@ -15,7 +15,7 @@ ALL_FEATURES = (
 )
 
 
-def build_pipeline(classifier: Any) -> Pipeline:
+def build_pipeline(classifier: Any, exclude=None, encode_categoricals=True) -> Pipeline:
     """Constructs a preprocessing and classification pipeline.
 
     Parameters
@@ -37,13 +37,13 @@ def build_pipeline(classifier: Any) -> Pipeline:
         [
             (
                 "categorical_pipeline",
-                categorical_pipeline,
+                categorical_pipeline if encode_categoricals else "passthrough",
                 CensusASECMetadata.CATEGORICAL_FEATURES,
             ),
             (
                 "numerical_pipeline",
                 numerical_pipeline,
-                CensusASECMetadata.NUMERIC_FEATURES,
+                [feat for feat in CensusASECMetadata.NUMERIC_FEATURES if not feat in exclude] if exclude is not None else CensusASECMetadata.NUMERIC_FEATURES,
             ),
             (
                 "ordinal_pipeline",

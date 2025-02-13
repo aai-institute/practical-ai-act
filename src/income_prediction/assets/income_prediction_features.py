@@ -1,3 +1,5 @@
+from functools import partial
+
 import numpy as np
 import pandas as pd
 
@@ -26,7 +28,7 @@ def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFra
     return df
 
 
-def select_features(df: pd.DataFrame) -> pd.DataFrame:
+def select_features(df: pd.DataFrame, exclude: list[str]) -> pd.DataFrame:
     """Filters and retains only the relevant categorical, numerical, ordinal features, and the target variable.
 
     Parameters
@@ -45,11 +47,15 @@ def select_features(df: pd.DataFrame) -> pd.DataFrame:
         + CensusASECMetadata.ORDINAL_FEATURES
         + [CensusASECMetadata.TARGET]
     )
+
+    if exclude is not None:
+        selected_features = [feature for feature in selected_features if feature not in exclude]
+
     return df[selected_features]
 
 
 def get_income_prediction_features(
-    salary_bands: list[int], census_asec_dataset: pd.DataFrame
+    salary_bands: list[int], census_asec_dataset: pd.DataFrame, exclude: list[str] = None
 ) -> pd.DataFrame:
     """Preprocesses the Census ASEC dataset for income prediction by:
         - Assigning salary bands based on income thresholds.
@@ -68,4 +74,4 @@ def get_income_prediction_features(
         Preprocessed DataFrame containing selected features and salary band classifications.
     """
 
-    return census_asec_dataset.pipe(assign_salary_bands, salary_bands).pipe(select_features)
+    return census_asec_dataset.pipe(assign_salary_bands, salary_bands).pipe(partial(select_features, exclude=exclude))
