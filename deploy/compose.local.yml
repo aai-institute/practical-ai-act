@@ -1,6 +1,44 @@
-# MLflow deployment with local SQLite database and local artifact storage in Docker volumes
+# Local deployment for the MLOps stack
+#
+# - Minio for block storage
+# - MLflow for experiment tracking / model registry
+# - MLServer-based inference server, model fetched from MLflow
+# - Prometheus & Grafana for monitoring
 
 services:
+  minio:
+    image: minio/minio
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - web
+    environment:
+      MINIO_ROOT_USER: "minio_user"
+      MINIO_ROOT_PASSWORD: "minio_password"
+    healthcheck:
+      test: timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9000' || exit 1
+      interval: 2s
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  minio-create-bucket-mlflow:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - web
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 minio_user minio_password &&
+      mc mb --ignore-existing minio/mlflow &&
+      mc anonymous set download minio/mlflow
+      "
+
   mlflow:
     build:
       context: mlflow
@@ -11,9 +49,27 @@ services:
           action: rebuild
     ports:
       - "5000:5000"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/version').read()"
+      interval: 2s
+    networks:
+      - monitoring
+      - web
+    depends_on:
+      minio:
+        condition: service_healthy
+      minio-create-bucket-mlflow:
+        condition: service_completed_successfully
     volumes:
       - mlflow_artifacts:/mlartifacts
       - mlflow_db:/mlruns
+      - mlflow_metrics:/metrics
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minio_user
+      AWS_SECRET_ACCESS_KEY: minio_password
+    labels:
+      prometheus.job: "mlflow"
     command:
       - "mlflow"
       - "server"
@@ -21,9 +77,106 @@ services:
       - "0.0.0.0"
       - "--backend-store-uri"
       - "sqlite:///mlruns/mlflow.db"
-      - "--default-artifact-root"
-      - "/mlartifacts"
+      - "--artifacts-destination"
+      - "s3://mlflow"
+      - "--serve-artifacts"
+      - "--expose-prometheus"
+      - "/metrics"
+
+  # Needed for docker_sd_config target discovery in Prometheus
+  docker-proxy:
+    image: tecnativa/docker-socket-proxy
+    privileged: true
+    container_name: docker-proxy
+    environment:
+      CONTAINERS: 1
+      NETWORKS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - web
+      - monitoring
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
+      - web
+    ports:
+      - "3001:3000" # prevent clash with Dagster
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
+
+  model:
+    build:
+      context: model
+      dockerfile: Dockerfile
+    networks:
+      - monitoring
+      - web
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    environment:
+      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
+      MLSERVER_MODEL_NAME: "xgboost-classifier"
+      MLSERVER_MODEL_VERSION: "latest"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
+      interval: 2s
+    labels:
+      prometheus.job: "ml-model"
+      prometheus.port: "8082"
+
+  app:
+    build:
+      context: ../
+      dockerfile: deploy/app/Dockerfile
+    networks:
+      - web
+    ports:
+      - "8000:8000"
+    depends_on:
+      model:
+        condition: service_healthy
+    labels:
+      prometheus.job: "app"
+    develop:
+      watch:
+        - path: ..
+          action: sync
+          target: /app
+        - path: deploy/app
+          action: rebuild
+        - path: pyproject.toml
+          action: rebuild
+        - path: uv.lock
+          action: rebuild
 
 volumes:
+  minio_data:
   mlflow_artifacts:
   mlflow_db:
+  mlflow_metrics:
+  prometheus_data:
+
+networks:
+  monitoring:
+    internal: true
+  web:

@@ -4,7 +4,6 @@ import pandas as pd
 import sklearn.pipeline
 from sklearn.model_selection import train_test_split
 
-from asec.data import AdultData
 from income_prediction.assets.census_asec_dataset import download_and_filter_census_data
 from income_prediction.assets.income_prediction_features import (
     get_income_prediction_features,
@@ -57,14 +56,19 @@ def income_prediction_model_xgboost(
 ) -> sklearn.pipeline.Pipeline:
     """Trains and evaluates the income prediction classifier with XGBoostClassifier."""
 
+    model_name = "xgboost-classifier"
     with mlflow_session.start_run(context):
-        with mlflow.start_run(nested=True, run_name="xgboost-classifier"):
+        with mlflow.start_run(nested=True, run_name=model_name):
             mlflow.autolog(log_datasets=False)
 
             pipeline = train_income_prediction_xgboost_classifier(
                 train_data, config.random_state
             )
 
+            mlflow.register_model(
+                name=model_name,
+                model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
+            )
             mlflow.evaluate(
                 model=pipeline.predict,
                 data=test_data,
