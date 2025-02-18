@@ -303,7 +303,7 @@ def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFra
     return df
 
 
-def select_features(df: pd.DataFrame) -> pd.DataFrame:
+def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame:
     """Filters and retains only the relevant categorical, numerical, ordinal features, and the target variable.
 
     Parameters
@@ -322,6 +322,10 @@ def select_features(df: pd.DataFrame) -> pd.DataFrame:
         + CensusASECMetadata.ORDINAL_FEATURES
         + [CensusASECMetadata.TARGET]
     )
+
+    if exclude is not None:
+        selected_features = [feat for feat in selected_features if feat not in exclude]
+
     return df[selected_features]
 
 
