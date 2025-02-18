@@ -1,13 +1,17 @@
+from typing import Any
+
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.pipeline import make_pipeline, Pipeline, make_union
 from sklearn.compose import ColumnTransformer
 from sklearn.neural_network import MLPClassifier
 from sklearn.utils.metaestimators import available_if
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler, \
+    OrdinalEncoder
 
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 
+from .data import CensusASECMetadata
 from .features import collect_features, FeatureName
 
 
@@ -106,3 +110,49 @@ class ModelFactory:
         if add is not None:
             feature_union = make_union(*feature_union.transformer_list, *add)
         return feature_union
+
+
+def build_pipeline(classifier: Any) -> Pipeline:
+    """Constructs a preprocessing and classification pipeline.
+
+    Parameters
+    ----------
+    classifier : Any
+        Classifier to use in the pipeline.
+
+    Returns
+    -------
+    Pipeline
+        A scikit-learn pipeline with preprocessing and classifications steps.
+    """
+
+    categorical_pipeline = Pipeline([("encoder", OneHotEncoder(handle_unknown="ignore"))])
+    numerical_pipeline = Pipeline([("scaler", StandardScaler())])
+    ordinal_pipeline = Pipeline([("encoder", OrdinalEncoder())])
+
+    column_transformer = ColumnTransformer(
+        [
+            (
+                "categorical_pipeline",
+                categorical_pipeline,
+                CensusASECMetadata.CATEGORICAL_FEATURES,
+            ),
+            (
+                "numerical_pipeline",
+                numerical_pipeline,
+                CensusASECMetadata.NUMERIC_FEATURES,
+            ),
+            (
+                "ordinal_pipeline",
+                ordinal_pipeline,
+                CensusASECMetadata.ORDINAL_FEATURES,
+            ),
+        ]
+    )
+
+    return Pipeline(
+        [
+            ("preprocessor", column_transformer),
+            ("classifier", classifier),
+        ]
+    )
