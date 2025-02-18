@@ -20,9 +20,7 @@ services:
       MINIO_ROOT_PASSWORD: "minio_password"
     healthcheck:
       test: timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9000' || exit 1
-      interval: 1s
-      timeout: 10s
-      retries: 5
+      interval: 2s
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
@@ -53,9 +51,7 @@ services:
       - "5000:5000"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/version').read()"
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      interval: 2s
     networks:
       - monitoring
       - web
@@ -73,8 +69,7 @@ services:
       AWS_ACCESS_KEY_ID: minio_user
       AWS_SECRET_ACCESS_KEY: minio_password
     labels:
-      prometheus.job: "docker"
-      prometheus.service: "mlflow"
+      prometheus.job: "mlflow"
     command:
       - "mlflow"
       - "server"
@@ -144,13 +139,35 @@ services:
       - "8080:8080"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      interval: 2s
     labels:
-      prometheus.job: "docker"
-      prometheus.service: "ml-model"
+      prometheus.job: "ml-model"
       prometheus.port: "8082"
+
+  app:
+    build:
+      context: ../
+      dockerfile: deploy/app/Dockerfile
+    networks:
+      - web
+    ports:
+      - "8000:8000"
+    depends_on:
+      model:
+        condition: service_healthy
+    labels:
+      prometheus.job: "app"
+    develop:
+      watch:
+        - path: ..
+          action: sync
+          target: /app
+        - path: deploy/app
+          action: rebuild
+        - path: pyproject.toml
+          action: rebuild
+        - path: uv.lock
+          action: rebuild
 
 volumes:
   minio_data:

@@ -61,18 +61,25 @@ The `deploy/compose.local.yml` Docker Compose stack comprises the following comp
 - **MLServer**-based inference server (with a custom Docker container containing the inference-time dependencies), model fetched from MLflow model registry
   - OIP REST/gRPC endpoints at port 8080/8081
   - Prometheus metrics endpoint at port 8082
+- **FastAPI application**:
+  - Accessible at <http://localhost:8000>, [OpenAPI docs](http://localhost:8000/docs)
+  - Automatic watch for changes with hot reloading (needs Docker Compose `--watch/-w` flag)
+  - Calls inference server REST endpoint in Docker Compose
+  - Prometheus metrics endpoint at `/metrics`
 - **Prometheus & Grafana** for monitoring
   - Automatic discovery of Prometheus scrape targets based on `prometheus.` labels on containers
   - Grafana: <http://localhost:3001>, credentials `admin/admin`
-  - Predefined Grafana dashboards for MLflow and the inference server
+  - Predefined Grafana dashboards for MLflow, the FastAPI app, and the inference server
 
 Start the stack using:
 
 ```
-docker compose -f deploy/compose.local.yml up
+docker compose -f deploy/compose.local.yml up -w
 ```
 
 You can then log your MLflow experiments/models to <http://localhost:5000>.
 
-The model service needs a registered version of the `xgboost-classifier` model in the MLflow registry to start.
+The `model` service needs a registered version of the `xgboost-classifier` model in the MLflow registry to start.
 The model to be loaded can be customized through the `MLSERVER_MODEL_URI` environment variable (defaults to `models:/xgboost-classifier/latest`).
+
+The FastAPI application containing the demo for the use case is exposed at <http://localhost:8000>.

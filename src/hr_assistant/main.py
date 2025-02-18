@@ -3,8 +3,8 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import TypedDict
 
-import mlflow
 from fastapi import FastAPI, Request
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from .api.info import router as info_router
 from .api.predict import router as predict_router
@@ -14,16 +14,18 @@ from .dependencies.logging import (
 )
 
 
-def _load_model(model_uri: str) -> mlflow.sklearn.Model:
-    return mlflow.sklearn.load_model("models:/xgboost-classifier/latest")
-
-
 class State(TypedDict):
     request_logger: AbstractPredictionLogger
 
 
+# Prometheus metrics exporter
+instrumentator = Instrumentator()
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[State]:
+    instrumentator.expose(app, tags=["monitoring"])
+
     logger = SQLitePredictionLogger("predictions.sqlite3")
 
     yield {
@@ -34,6 +36,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[State]:
 
 
 app = FastAPI(lifespan=lifespan)
+instrumentator.instrument(app)
 
 app.include_router(predict_router, prefix="/model")
 app.include_router(info_router, prefix="/model")

@@ -1,0 +1,7 @@
+.venv/
+.git/
+data/
+/mlartifacts/
+/mlruns/
+/evidently/
+/tmp*
