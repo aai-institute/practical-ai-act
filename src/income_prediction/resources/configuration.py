@@ -15,7 +15,7 @@ class Config(ConfigurableResource):
 
     data_dir: str = "data"
 
-    mlflow_tracking_url: str = "http://localhost:4040"
+    mlflow_tracking_url: str = "http://localhost:5000"
     mlflow_experiment: str = "Income Prediction"
 
     random_state: int = 42

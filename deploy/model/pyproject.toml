@@ -1,0 +1,13 @@
+[project]
+name = "hr-assistant"
+version = "0.1.0"
+description = "An ML assistant for HR professionals."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mlserver>=1.6.0",
+    "mlserver-mlflow>=1.6.0",
+    "mlserver-sklearn>=1.6.0",
+    "scikit-learn<1.6",
+    "xgboost>=2.1.4",
+]

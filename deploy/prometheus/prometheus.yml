@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  - job_name: "prometheus"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "docker"
+    docker_sd_configs:
+      - host: "tcp://docker-proxy:2375"
+        refresh_interval: 5s
+    relabel_configs:
+      # Only keep containers that have a `prometheus-job` label.
+      - source_labels: [__meta_docker_container_label_prometheus_job]
+        regex: .+
+        action: keep
+      # Use the task labels that are prefixed by `prometheus-`.
+      - regex: __meta_docker_container_label_prometheus_(.+)
+        action: labelmap
+        replacement: $1
+      # Extract the scrape port from the `prometheus-port` label
+      - source_labels:
+          [
+            __meta_docker_container_label_prometheus_port,
+            __meta_docker_network_ip,
+          ]
+        regex: "([^;]+);([^;]+)"
+        replacement: "$2:$1"
+        target_label: __address__
