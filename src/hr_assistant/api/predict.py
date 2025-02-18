@@ -1,34 +1,56 @@
 import pandas as pd
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from starlette.responses import Response
 
 from hr_assistant.api.exceptions import InferenceError
 from hr_assistant.dependencies.models import InferenceClientDependency
 
 
-def to_kebab(field: str) -> str:
-    return field.replace("_", "-")
-
-
 class ModelInput(BaseModel):
-    model_config = ConfigDict(
-        alias_generator=to_kebab,
-    )
-
-    age: int
-    workclass: str
-    education: str
-    education_num: int
-    marital_status: str
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int
-    capital_loss: int
-    hours_per_week: int
-    native_country: str
-    fnlwgt: int
+    A_SEX: int
+    A_ENRLW: int
+    A_FTPT: int
+    A_HSCOL: int
+    A_MARITL: int
+    P_STAT: int
+    PECERT1: int
+    PEHSPNON: int
+    PRDTHSP: int
+    PRDASIAN: int
+    PRDTRACE: int
+    PENATVTY: int
+    PRCITSHP: int
+    PRDISFLG: int
+    A_LFSR: int
+    A_CLSWKR: int
+    A_FTLF: int
+    A_UNMEM: int
+    A_UNTYPE: int
+    PRUNTYPE: int
+    A_WKSTAT: int
+    INDUSTRY: int
+    CLWK: int
+    A_MJIND: int
+    A_MJOCC: int
+    PEMLR: int
+    ERN_SRCE: int
+    COV: int
+    HEA: int
+    A_AGE: int
+    A_WKSLK: int
+    WKSWORK: int
+    A_USLHRS: int
+    HRSWK: int
+    A_HRS1: int
+    NOEMP: int
+    A_GRSWK: int
+    A_HRSPAY: int
+    ERN_VAL: int
+    WAGEOTR: int
+    AGI: int
+    A_FNLWGT: int
+    A_HGA: int
 
 
 router = APIRouter(tags=["model"])
@@ -47,6 +69,7 @@ async def predict(
 
     request = inference_client.build_request(input_data)
     try:
-        return await inference_client.predict(request)
+        result = await inference_client.predict(request)
+        return Response(content=result.to_json(orient="records"))
     except InferenceError as e:
         raise HTTPException(status_code=500, detail=e.response.error) from e

@@ -15,7 +15,7 @@ from mlserver.types import (
 )
 
 from hr_assistant.api.exceptions import InferenceError
-from hr_assistant.config import INFERENCE_ENDPOINT
+from hr_assistant.config import INFERENCE_ENDPOINT, MODEL_NAME
 from hr_assistant.dependencies.logging import PredictionLoggerDependency
 
 
@@ -84,7 +84,7 @@ InferenceClientDependency = Annotated[
         partial(
             OpenInferenceProtocolClient,
             base_url=INFERENCE_ENDPOINT,
-            model_name="mlflow-model",  # FIXME: `mlflow models serve` uses hardcoded name
+            model_name=MODEL_NAME,
         )
     ),
 ]
