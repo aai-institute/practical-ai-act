@@ -1,4 +1,9 @@
-# MLflow deployment with local SQLite database and local artifact storage in Docker volumes
+# Local deployment for the MLOps stack
+#
+# - Minio for block storage
+# - MLflow for experiment tracking / model registry
+# - MLServer-based inference server, model fetched from MLflow
+# - Prometheus & Grafana for monitoring
 
 services:
   minio:
@@ -18,6 +23,8 @@ services:
       interval: 1s
       timeout: 10s
       retries: 5
+    volumes:
+      - minio_data:/data
     command: server /data --console-address ":9001"
 
   minio-create-bucket-mlflow:
@@ -146,6 +153,7 @@ services:
       prometheus.port: "8082"
 
 volumes:
+  minio_data:
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
