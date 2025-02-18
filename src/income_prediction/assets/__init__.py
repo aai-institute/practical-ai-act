@@ -4,17 +4,11 @@ import pandas as pd
 import sklearn.pipeline
 from sklearn.model_selection import train_test_split
 
-from asec.data import AdultData
-from income_prediction.assets.census_asec_dataset import download_and_filter_census_data
-from income_prediction.assets.income_prediction_features import (
-    get_income_prediction_features,
-)
-from income_prediction.assets.income_prediction_model import (
-    train_income_prediction_xgboost_classifier,
-)
-from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
+from asec.features import get_income_prediction_features
+from asec.data import CensusASECMetadata, download_and_filter_census_data
 from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
+from income_prediction.resources.model_factory import XGBClassifierFactory
 
 
 @dg.asset(io_manager_key="csv_io_manager")
@@ -50,20 +44,18 @@ def train_test_data(
 @dg.asset()
 def income_prediction_model_xgboost(
     context: dg.AssetExecutionContext,
-    config: Config,
     mlflow_session: MlflowSession,
     train_data: pd.DataFrame,
     test_data: pd.DataFrame,
+    model_factory: XGBClassifierFactory
 ) -> sklearn.pipeline.Pipeline:
     """Trains and evaluates the income prediction classifier with XGBoostClassifier."""
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name="xgboost-classifier"):
             mlflow.autolog(log_datasets=False)
-
-            pipeline = train_income_prediction_xgboost_classifier(
-                train_data, config.random_state
-            )
+            pipeline = model_factory.create()
+            pipeline.fit(train_data.drop(columns=[CensusASECMetadata.TARGET]), train_data[CensusASECMetadata.TARGET])
 
             mlflow.evaluate(
                 model=pipeline.predict,
