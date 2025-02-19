@@ -1396,7 +1396,7 @@ train = [
     { name = "dagster", specifier = ">=1.9.10" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },
     { name = "kaleido", specifier = "==0.2.1" },
-    { name = "lakefs-spec", specifier = "==0.11.2" },
+    { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "lightgbm", specifier = ">=4.5.0" },
     { name = "mlflow", specifier = ">=2.19.0" },
     { name = "scikit-learn", specifier = "<1.6" },
