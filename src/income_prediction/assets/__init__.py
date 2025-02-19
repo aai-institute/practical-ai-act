@@ -16,13 +16,13 @@ from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
 
 
-@dg.asset(io_manager_key="csv_io_manager")
+@dg.asset(io_manager_key="lakefs_io_manager")
 def census_asec_dataset(config: Config):
     """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria."""
     return download_and_filter_census_data(config.census_asec_dataset_year)
 
 
-@dg.asset(io_manager_key="csv_io_manager")
+@dg.asset(io_manager_key="lakefs_io_manager")
 def income_prediction_features(
     config: Config, census_asec_dataset: pd.DataFrame
 ) -> pd.DataFrame:
@@ -32,8 +32,8 @@ def income_prediction_features(
 
 @dg.multi_asset(
     outs={
-        "train_data": dg.AssetOut(io_manager_key="csv_io_manager"),
-        "test_data": dg.AssetOut(io_manager_key="csv_io_manager"),
+        "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
+        "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
     }
 )
 def train_test_data(
@@ -79,7 +79,7 @@ def income_prediction_model_xgboost(
     return pipeline
 
 
-@dg.asset(io_manager_key="csv_io_manager")
+@dg.asset(io_manager_key="lakefs_io_manager")
 def reference_dataset(
     income_prediction_model_xgboost: sklearn.pipeline.Pipeline,
     test_data: pd.DataFrame,
