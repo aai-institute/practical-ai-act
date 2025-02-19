@@ -6,11 +6,10 @@ from upath import UPath
 
 
 class LakeFSIOManager(dg.UPathIOManager):
+    extension = ".parquet"
+
     def load_from_path(self, context: InputContext, path: "UPath") -> pd.DataFrame:
-        return pd.read_parquet(
-            path.with_suffix(".parquet"),
-            storage_options=path.storage_options,
-        )
+        return pd.read_parquet(path, storage_options=path.storage_options)
 
     def dump_to_path(
         self, context: OutputContext, obj: pd.DataFrame, path: "UPath"
@@ -22,13 +21,9 @@ class LakeFSIOManager(dg.UPathIOManager):
         ) as tx:
             path.mkdir(parents=True, exist_ok=True)
 
-            # Need to add the file to the transaction branch
-            # the tx merge will apply it to the target branch.
-            ephemeral_path = f"lakefs://{repo}/{tx.branch.id}/{resource}.parquet"
-            obj.to_parquet(
-                ephemeral_path,
-                storage_options=path.storage_options,
-            )
+            # Need to add the file to the transaction branch, which gets then merged into the target branch
+            ephemeral_path = f"lakefs://{repo}/{tx.branch.id}/{resource}"
+            obj.to_parquet(ephemeral_path, storage_options=path.storage_options)
 
             tx.commit(
                 message=f"Add data from {context.asset_key.path}",
