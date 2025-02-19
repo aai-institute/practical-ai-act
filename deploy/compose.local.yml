@@ -6,6 +6,29 @@
 # - Prometheus & Grafana for monitoring
 
 services:
+  lakefs:
+    image: treeverse/lakefs
+    depends_on:
+      - minio-create-bucket-lakefs
+    ports:
+      - "8000:8000"
+    networks:
+      - web
+    environment:
+      - LAKEFS_DATABASE_TYPE=local
+      - LAKEFS_BLOCKSTORE_TYPE=s3
+      - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
+      - LAKEFS_BLOCKSTORE_S3_FORCE_PATH_STYLE=true
+      - LAKEFS_BLOCKSTORE_S3_ENDPOINT=http://minio:9000
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_ACCESS_KEY_ID=minio_user
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_SECRET_ACCESS_KEY=minio_password
+      - LAKEFS_AUTH_ENCRYPT_SECRET_KEY=hello
+      - LAKEFS_LOGGING_LEVEL=INFO
+      - LAKEFS_INSTALLATION_USER_NAME=aai
+      - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
+      - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - LAKECTL_SERVER_ENDPOINT_URL=http://localhost:8000
+    command: [ 'run', '--local-settings' ]
   minio:
     image: minio/minio
     expose:
@@ -35,10 +58,21 @@ services:
     entrypoint: >
       bash -c "
       mc alias set minio http://minio:9000 minio_user minio_password &&
-      mc mb --ignore-existing minio/mlflow &&
-      mc anonymous set download minio/mlflow
+      mc mb --ignore-existing minio/mlflow
       "
-
+  minio-create-bucket-lakefs:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks:
+      - web
+    # minio/ prefix in bucket name is the alias (must be given!)
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 minio_user minio_password &&
+      mc mb minio/lakefs --ignore-existing
+      "
   mlflow:
     build:
       context: mlflow
@@ -48,7 +82,7 @@ services:
         - path: mlflow
           action: rebuild
     ports:
-      - "5000:5000"
+      - "50000:5000"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/version').read()"
       interval: 2s
@@ -83,98 +117,11 @@ services:
       - "--expose-prometheus"
       - "/metrics"
 
-  # Needed for docker_sd_config target discovery in Prometheus
-  docker-proxy:
-    image: tecnativa/docker-socket-proxy
-    privileged: true
-    container_name: docker-proxy
-    environment:
-      CONTAINERS: 1
-      NETWORKS: 1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - monitoring
-
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
-    networks:
-      - web
-      - monitoring
-    ports:
-      - "9090:9090"
-
-  grafana:
-    image: grafana/grafana-oss
-    container_name: grafana
-    restart: unless-stopped
-    networks:
-      - monitoring
-      - web
-    ports:
-      - "3001:3000" # prevent clash with Dagster
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/etc/grafana/dashboards
-
-  model:
-    build:
-      context: model
-      dockerfile: Dockerfile
-    networks:
-      - monitoring
-      - web
-    depends_on:
-      mlflow:
-        condition: service_healthy
-    environment:
-      MLFLOW_TRACKING_URI: "http://mlflow:5000"
-      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
-      MLSERVER_MODEL_NAME: "xgboost-classifier"
-      MLSERVER_MODEL_VERSION: "latest"
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
-      interval: 2s
-    labels:
-      prometheus.job: "ml-model"
-      prometheus.port: "8082"
-
-  app:
-    build:
-      context: ../
-      dockerfile: deploy/app/Dockerfile
-    networks:
-      - web
-    ports:
-      - "8000:8000"
-    depends_on:
-      model:
-        condition: service_healthy
-    labels:
-      prometheus.job: "app"
-    develop:
-      watch:
-        - path: ..
-          action: sync
-          target: /app
-        - path: deploy/app
-          action: rebuild
-        - path: pyproject.toml
-          action: rebuild
-        - path: uv.lock
-          action: rebuild
-
 volumes:
   minio_data:
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
-  prometheus_data:
 
 networks:
   monitoring:

@@ -1,0 +1,95 @@
+services:
+  # Needed for docker_sd_config target discovery in Prometheus
+  docker-proxy:
+    image: tecnativa/docker-socket-proxy
+    privileged: true
+    container_name: docker-proxy
+    environment:
+      CONTAINERS: 1
+      NETWORKS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - web
+      - monitoring
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
+      - web
+    ports:
+      - "3001:3000" # prevent clash with Dagster
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
+
+  model:
+    build:
+      context: model
+      dockerfile: Dockerfile
+    networks:
+      - monitoring
+      - web
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    environment:
+      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
+      MLSERVER_MODEL_NAME: "xgboost-classifier"
+      MLSERVER_MODEL_VERSION: "latest"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
+      interval: 2s
+    labels:
+      prometheus.job: "ml-model"
+      prometheus.port: "8082"
+
+  app:
+    build:
+      context: ../
+      dockerfile: deploy/app/Dockerfile
+    networks:
+      - web
+    ports:
+      - "8000:8000"
+    depends_on:
+      model:
+        condition: service_healthy
+    labels:
+      prometheus.job: "app"
+    develop:
+      watch:
+        - path: ..
+          action: sync
+          target: /app
+        - path: deploy/app
+          action: rebuild
+        - path: pyproject.toml
+          action: rebuild
+        - path: uv.lock
+          action: rebuild
+
+volumes:
+  prometheus_data:
+
+networks:
+  monitoring:
+    external: true
+  web:
+    external: true
