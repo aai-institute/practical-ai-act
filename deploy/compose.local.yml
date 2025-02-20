@@ -66,6 +66,8 @@ services:
       - "8000:8000"
     networks:
       - web
+    volumes:
+      - lakefs_data:/var/lib/lakefs
     environment:
       - LAKEFS_DATABASE_TYPE=local
       - LAKEFS_BLOCKSTORE_TYPE=s3
@@ -125,6 +127,7 @@ services:
       - "/metrics"
 
   model:
+    profiles: [serve]
     build:
       context: model
       dockerfile: Dockerfile
@@ -216,6 +219,7 @@ services:
 
 volumes:
   minio_data:
+  lakefs_data:
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
