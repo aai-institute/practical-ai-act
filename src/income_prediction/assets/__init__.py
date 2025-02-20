@@ -14,15 +14,17 @@ from income_prediction.assets.income_prediction_model import (
 from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
 from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
+from .model import model_evaluation as model_evaluation
+from .monitoring import nannyml_report as nannyml_report
 
 
-@dg.asset(io_manager_key="lakefs_io_manager")
+@dg.asset(group_name="data", io_manager_key="lakefs_io_manager")
 def census_asec_dataset(config: Config):
     """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria."""
     return download_and_filter_census_data(config.census_asec_dataset_year)
 
 
-@dg.asset(io_manager_key="lakefs_io_manager")
+@dg.asset(group_name="data", io_manager_key="lakefs_io_manager")
 def income_prediction_features(
     config: Config, census_asec_dataset: pd.DataFrame
 ) -> pd.DataFrame:
@@ -31,10 +33,11 @@ def income_prediction_features(
 
 
 @dg.multi_asset(
+    group_name="data",
     outs={
         "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
         "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
-    }
+    },
 )
 def train_test_data(
     config: Config, income_prediction_features: pd.DataFrame
@@ -46,13 +49,12 @@ def train_test_data(
     return train_data, test_data
 
 
-@dg.asset()
+@dg.asset(group_name="model")
 def income_prediction_model_xgboost(
     context: dg.AssetExecutionContext,
     config: Config,
     mlflow_session: MlflowSession,
     train_data: pd.DataFrame,
-    test_data: pd.DataFrame,
 ) -> sklearn.pipeline.Pipeline:
     """Trains and evaluates the income prediction classifier with XGBoostClassifier."""
 
@@ -69,17 +71,11 @@ def income_prediction_model_xgboost(
                 name=model_name,
                 model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
             )
-            mlflow.evaluate(
-                model=pipeline.predict,
-                data=test_data,
-                targets=CensusASECMetadata.TARGET,
-                model_type="classifier",
-            )
 
     return pipeline
 
 
-@dg.asset(io_manager_key="lakefs_io_manager")
+@dg.asset(group_name="model", io_manager_key="lakefs_io_manager")
 def reference_dataset(
     income_prediction_model_xgboost: sklearn.pipeline.Pipeline,
     test_data: pd.DataFrame,

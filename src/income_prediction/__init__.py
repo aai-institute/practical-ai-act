@@ -5,11 +5,18 @@ import income_prediction.assets
 from income_prediction.io_managers.lakefs import LakeFSIOManager
 from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
+from .assets.model import ModelVersion
+from .resources.monitoring import InferenceLog
+from .sensors import report_trigger, model_version_trigger
 
 config = Config()
 
 definitions = dg.Definitions(
     assets=dg.load_assets_from_modules(modules=[income_prediction.assets]),
+    sensors=[
+        report_trigger,
+        model_version_trigger,
+    ],
     resources={
         "config": config,
         "mlflow_session": MlflowSession(
@@ -25,5 +32,7 @@ definitions = dg.Definitions(
                 verify_ssl=config.lakefs_verify_ssl,
             ),
         ),
+        "inference_logs": InferenceLog(api_base_url="http://localhost:8001"),
+        "model_version": ModelVersion.configure_at_launch(),
     },
 )
