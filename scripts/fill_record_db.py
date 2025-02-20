@@ -1,26 +1,26 @@
 from pathlib import Path
 
-from more_itertools import take
 import pandas as pd
-from requests import post
+import requests
 import tqdm
-
 
 X = pd.read_csv(
     Path(__file__).parents[1] / "data" / "test_data.csv",
     index_col=[0, 1],
 )
 
-batch_df = X.dropna().drop(columns=["SALARY_BAND"]).sample(n=1000)
+batch_df = X.dropna().drop(columns=["SALARY_BAND"]).sample(n=100)
 batch = batch_df.to_dict(orient="records")
 
+predict_endpoint = "http://localhost:8001/model/predict"
+
 # Batch request
-response = post("http://localhost:8000/model/predict", json=batch)
+response = requests.post(predict_endpoint, json=batch)
 response.raise_for_status()
 
 # Single-record requests
 with tqdm.tqdm(total=len(batch)) as pbar:
     for record in batch:
-        response = post("http://localhost:8000/model/predict", json=record)
+        response = requests.post(predict_endpoint, json=record)
         response.raise_for_status()
         pbar.update(1)
