@@ -3,7 +3,7 @@ import pandas as pd
 
 from . import InferenceLog, MlflowSession
 from .assets.model import ModelVersion
-from .jobs import data_quality_report, model_evaluation_job
+from .jobs import data_quality_report, model_evaluation_job, model_container_job
 
 
 def _need_to_run(log_df: pd.DataFrame, cursor: str | None) -> bool:
@@ -36,7 +36,7 @@ def report_trigger(context: dg.SensorEvaluationContext, inference_logs: Inferenc
 
 
 @dg.sensor(
-    job=model_evaluation_job,
+    jobs=[model_evaluation_job, model_container_job],
     default_status=dg.DefaultSensorStatus.STOPPED,
 )
 def model_version_trigger(context, mlflow_session: MlflowSession):

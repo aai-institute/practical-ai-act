@@ -12,7 +12,9 @@ from .sensors import report_trigger, model_version_trigger
 config = Config()
 
 definitions = dg.Definitions(
-    assets=dg.load_assets_from_modules(modules=[income_prediction.assets]),
+    assets=dg.with_source_code_references(
+        dg.load_assets_from_modules(modules=[income_prediction.assets])
+    ),
     sensors=[
         report_trigger,
         model_version_trigger,

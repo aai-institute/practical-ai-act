@@ -14,7 +14,10 @@ from income_prediction.assets.income_prediction_model import (
 from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
 from income_prediction.resources.configuration import Config
 from income_prediction.resources.mlflow_session import MlflowSession
-from .model import model_evaluation as model_evaluation
+from .model import (
+    model_evaluation as model_evaluation,
+    model_container as model_container,
+)
 from .monitoring import nannyml_report as nannyml_report
 
 
