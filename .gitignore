@@ -197,3 +197,4 @@ tmp*
 # mlfow
 mlartifacts
 mlruns
+.mlruns
