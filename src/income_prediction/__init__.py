@@ -50,7 +50,5 @@ definitions = dg.Definitions(
         ),
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
-        "mlflow_session": mlflow_session,
-        "csv_io_manager": CSVFSIOManager(base_path=UPath("./data")),
     },
 )
