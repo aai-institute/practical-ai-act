@@ -1688,7 +1688,7 @@ wheels = [
 
 [[package]]
 name = "lakefs-sdk"
-version = "1.49.1"
+version = "1.50.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aenum" },
@@ -1696,9 +1696,9 @@ dependencies = [
     { name = "python-dateutil" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cf/ab/6075c1956857f778762b8aa50bdeaa3e0087b236215d6e12d6fe8c8b7cb3/lakefs_sdk-1.49.1.tar.gz", hash = "sha256:2ede21edc4ed32e16a08fdc0ebdbb7abef4a7b201e6990a4e04e74a159c63cbf", size = 121248 }
+sdist = { url = "https://files.pythonhosted.org/packages/22/c5/e9e0f8a384413bc1c7edbfec0596fa88f7ec269e63e99183ce1b46bc4ef6/lakefs_sdk-1.50.0.tar.gz", hash = "sha256:6aee97a97c5ce4f7b0b6eebe5c3a0b6ed2dccd7f5fab9004b27ea7843a2a3869", size = 121223 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/33/6d/240cd01db6fc673a4b363258e64bbfff48df5d2d3a209955353856fd9172/lakefs_sdk-1.49.1-py3-none-any.whl", hash = "sha256:c2e934576f191272ffe8c6075f31eed3788c475f9fc4bdfb28ce5f0771a08b71", size = 212319 },
+    { url = "https://files.pythonhosted.org/packages/e1/eb/5c27625b7058510c1bea47ac38e3f479902d96ca1da52c447d79b4e484bf/lakefs_sdk-1.50.0-py3-none-any.whl", hash = "sha256:7355711a14bff665e9fd157261baebf30d074c7263e68cc66f5144ab9be376ec", size = 212660 },
 ]
 
 [[package]]
