@@ -9,6 +9,15 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "aenum"
+version = "3.1.15"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d0/f8/33e75863394f42e429bb553e05fda7c59763f0fd6848de847a25b3fbccf6/aenum-3.1.15.tar.gz", hash = "sha256:8cbd76cd18c4f870ff39b24284d3ea028fbe8731a58df3aa581e434c575b9559", size = 134730 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d0/fa/ca0c66b388624ba9dbbf35aab3a9f326bfdf5e56a7237fe8f1b600da6864/aenum-3.1.15-py3-none-any.whl", hash = "sha256:e0dfaeea4c2bd362144b87377e2c61d91958c5ed0b4daf89cb6f45ae23af6288", size = 137633 },
+]
+
+[[package]]
 name = "aiobotocore"
 version = "2.19.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1348,6 +1357,7 @@ train = [
     { name = "dagster" },
     { name = "dagster-webserver" },
     { name = "kaleido" },
+    { name = "lakefs-spec" },
     { name = "lightgbm" },
     { name = "mlflow" },
     { name = "optuna" },
@@ -1400,6 +1410,7 @@ train = [
     { name = "dagster", specifier = ">=1.9.10" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },
     { name = "kaleido", specifier = "==0.2.1" },
+    { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "lightgbm", specifier = ">=4.5.0" },
     { name = "mlflow", specifier = ">=2.19.0" },
     { name = "optuna", specifier = ">=4.2.1" },
@@ -1660,6 +1671,47 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/05/f9/27e94c1b3eb29e6933b6986ffc5fa1177d2cd1f0c8efc5f02c91c9ac61de/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_ppc64le.whl", hash = "sha256:151dffc4865e5fe6dafce5480fab84f950d14566c480c08a53c663a0020504b6", size = 2390661 },
     { url = "https://files.pythonhosted.org/packages/d9/d4/3c9735faa36ac591a4afcc2980d2691000506050b7a7e80bcfe44048daa7/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_s390x.whl", hash = "sha256:577facaa411c10421314598b50413aa1ebcf5126f704f1e5d72d7e4e9f020d90", size = 2546710 },
     { url = "https://files.pythonhosted.org/packages/4c/fa/be89a49c640930180657482a74970cdcf6f7072c8d2471e1babe17a222dc/kiwisolver-1.4.8-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:be4816dc51c8a471749d664161b434912eee82f2ea66bd7628bd14583a833e85", size = 2349213 },
+]
+
+[[package]]
+name = "lakefs"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "lakefs-sdk" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e6/1f/c92142e7174ea0dc3df70dea2abb1fb46704cb65a1498f0af537b2f536ba/lakefs-0.8.0.tar.gz", hash = "sha256:56962b94a6cf251a5c9d283c3dca839df58cde97670a91cac9244be589528d75", size = 41096 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c6/5e/a62181941014fcb017bc56466ec6cfbe4a91ef81d1bd65d25a4c1f388e6b/lakefs-0.8.0-py3-none-any.whl", hash = "sha256:2c548f79bcb36487a14d842edf9610fb7ee0a809d2ac6a44d391a8cb5dbe1a85", size = 50982 },
+]
+
+[[package]]
+name = "lakefs-sdk"
+version = "1.49.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aenum" },
+    { name = "pydantic" },
+    { name = "python-dateutil" },
+    { name = "urllib3" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cf/ab/6075c1956857f778762b8aa50bdeaa3e0087b236215d6e12d6fe8c8b7cb3/lakefs_sdk-1.49.1.tar.gz", hash = "sha256:2ede21edc4ed32e16a08fdc0ebdbb7abef4a7b201e6990a4e04e74a159c63cbf", size = 121248 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/33/6d/240cd01db6fc673a4b363258e64bbfff48df5d2d3a209955353856fd9172/lakefs_sdk-1.49.1-py3-none-any.whl", hash = "sha256:c2e934576f191272ffe8c6075f31eed3788c475f9fc4bdfb28ce5f0771a08b71", size = 212319 },
+]
+
+[[package]]
+name = "lakefs-spec"
+version = "0.11.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fsspec" },
+    { name = "lakefs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1a/e7/57d745b5f603173b98efc4e8b10b2b0059fc0bc0bfc827f8f9a5a1962759/lakefs_spec-0.11.2.tar.gz", hash = "sha256:6b2b6eb768592235278188cb803e0462afeecc4fe6aa339ace6df2c01f4c3673", size = 481909 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/72/b3/f10c5e7212e5540bab18f1fa38920f0ae1585235ca6fbf38c516730c1324/lakefs_spec-0.11.2-py3-none-any.whl", hash = "sha256:54380c4fe7ad6dc6eaa52e6e3babf9af1b8c324d5dd07b33e3a1831f675e387b", size = 22378 },
 ]
 
 [[package]]
@@ -3844,11 +3896,11 @@ wheels = [
 
 [[package]]
 name = "urllib3"
-version = "2.3.0"
+version = "2.0.7"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/aa/63/e53da845320b757bf29ef6a9062f5c669fe997973f966045cb019c3f4b66/urllib3-2.3.0.tar.gz", hash = "sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d", size = 307268 }
+sdist = { url = "https://files.pythonhosted.org/packages/af/47/b215df9f71b4fdba1025fc05a77db2ad243fa0926755a52c5e71659f4e3c/urllib3-2.0.7.tar.gz", hash = "sha256:c97dfde1f7bd43a71c8d2a58e369e9b2bf692d1334ea9f9cae55add7d0dd0f84", size = 282546 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/19/4ec628951a74043532ca2cf5d97b7b14863931476d117c471e8e2b1eb39f/urllib3-2.3.0-py3-none-any.whl", hash = "sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df", size = 128369 },
+    { url = "https://files.pythonhosted.org/packages/d2/b2/b157855192a68541a91ba7b2bbcb91f1b4faa51f8bae38d8005c034be524/urllib3-2.0.7-py3-none-any.whl", hash = "sha256:fdb6d215c776278489906c2f8916e6e7d4f5a9b602ccbcfdf7f016fc8da0596e", size = 124213 },
 ]
 
 [[package]]

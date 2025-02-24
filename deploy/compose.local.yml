@@ -1,15 +1,33 @@
-# Local deployment for the MLOps stack
+# Local deployment for the MLOps tool stack:
 #
-# - Minio for block storage
-# - MLflow for experiment tracking / model registry
+# - MinIO for block storage
+# - MLflow for experiment tracking / model registry, backed by MinIO
+# - lakeFS data lake, backed by MinIO
 # - MLServer-based inference server, model fetched from MLflow
 # - Prometheus & Grafana for monitoring
+#
+# The `serve` profile contains the ML model and application serving parts of the tool stack, as well as monitoring:
+#
+# - FastAPI application with hot-reloading
+# - Model inference server, loading from MLflow
+# - Prometheus, with docker-socket-proxy for scrape target discovery in Docker
+# - Grafana
+
+# YAML fragment for MinIO bucket creation containers
+x-minio-cmd: &minio_cmd
+  image: minio/mc
+  depends_on:
+    minio:
+      condition: service_healthy
+  networks:
+    - web
+  environment:
+    MINIO_ROOT_USER: "minio_user"
+    MINIO_ROOT_PASSWORD: "minio_password"
 
 services:
   minio:
     image: minio/minio
-    expose:
-      - "9000"
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -25,19 +43,44 @@ services:
       - minio_data:/data
     command: server /data --console-address ":9001"
 
+  # MinIO bucket creation containers
   minio-create-bucket-mlflow:
-    image: minio/mc
-    depends_on:
-      minio:
-        condition: service_healthy
-    networks:
-      - web
+    <<: *minio_cmd
     entrypoint: >
       bash -c "
-      mc alias set minio http://minio:9000 minio_user minio_password &&
-      mc mb --ignore-existing minio/mlflow &&
-      mc anonymous set download minio/mlflow
-      "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/mlflow"
+  minio-create-bucket-lakefs:
+    <<: *minio_cmd
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/lakefs"
+
+  lakefs:
+    image: treeverse/lakefs
+    depends_on:
+      minio-create-bucket-lakefs:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    networks:
+      - web
+    environment:
+      - LAKEFS_DATABASE_TYPE=local
+      - LAKEFS_BLOCKSTORE_TYPE=s3
+      - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
+      - LAKEFS_BLOCKSTORE_S3_FORCE_PATH_STYLE=true
+      - LAKEFS_BLOCKSTORE_S3_ENDPOINT=http://minio:9000
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_ACCESS_KEY_ID=minio_user
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_SECRET_ACCESS_KEY=minio_password
+      - LAKEFS_AUTH_ENCRYPT_SECRET_KEY=hello
+      - LAKEFS_LOGGING_LEVEL=INFO
+      - LAKEFS_INSTALLATION_USER_NAME=aai
+      - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
+      - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - LAKECTL_SERVER_ENDPOINT_URL=http://localhost:8000
+    command: [ 'run', '--local-settings' ]
 
   mlflow:
     build:
@@ -48,7 +91,7 @@ services:
         - path: mlflow
           action: rebuild
     ports:
-      - "5000:5000"
+      - "50000:5000"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/version').read()"
       interval: 2s
@@ -56,8 +99,6 @@ services:
       - monitoring
       - web
     depends_on:
-      minio:
-        condition: service_healthy
       minio-create-bucket-mlflow:
         condition: service_completed_successfully
     volumes:
@@ -82,43 +123,6 @@ services:
       - "--serve-artifacts"
       - "--expose-prometheus"
       - "/metrics"
-
-  # Needed for docker_sd_config target discovery in Prometheus
-  docker-proxy:
-    image: tecnativa/docker-socket-proxy
-    privileged: true
-    container_name: docker-proxy
-    environment:
-      CONTAINERS: 1
-      NETWORKS: 1
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - monitoring
-
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
-    networks:
-      - web
-      - monitoring
-    ports:
-      - "9090:9090"
-
-  grafana:
-    image: grafana/grafana-oss
-    container_name: grafana
-    restart: unless-stopped
-    networks:
-      - monitoring
-      - web
-    ports:
-      - "3001:3000" # prevent clash with Dagster
-    volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/etc/grafana/dashboards
 
   model:
     build:
@@ -145,13 +149,14 @@ services:
       prometheus.port: "8082"
 
   app:
+    profiles: [serve]
     build:
       context: ../
       dockerfile: deploy/app/Dockerfile
     networks:
       - web
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
       model:
         condition: service_healthy
@@ -168,6 +173,46 @@ services:
           action: rebuild
         - path: uv.lock
           action: rebuild
+
+  # Needed for docker_sd_config target discovery in Prometheus
+  docker-proxy:
+    profiles: [serve]
+    image: tecnativa/docker-socket-proxy
+    privileged: true
+    container_name: docker-proxy
+    environment:
+      CONTAINERS: 1
+      NETWORKS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - monitoring
+
+  prometheus:
+    profiles: [serve]
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - web
+      - monitoring
+    ports:
+      - "9090:9090"
+
+  grafana:
+    profiles: [serve]
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
+      - web
+    ports:
+      - "3001:3000" # prevent clash with Dagster
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
 
 volumes:
   minio_data:

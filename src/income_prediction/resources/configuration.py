@@ -17,8 +17,13 @@ class Config(ConfigurableResource):
 
     data_dir: str = "data"
 
-    mlflow_tracking_url: str = "http://localhost:5000"
+    mlflow_tracking_url: str = "http://localhost:50000"
     mlflow_experiment: str = "Income Prediction"
+
+    lakefs_host: str = "http://localhost:8000"
+    lakefs_access_key_id: str = "AKIAIOSFOLKFSSAMPLES"
+    lakefs_secret_access_key: str = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    lakefs_verify_ssl: bool = False
 
     random_state: int = 42
 
