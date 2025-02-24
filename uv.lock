@@ -459,6 +459,18 @@ wheels = [
 ]
 
 [[package]]
+name = "colorlog"
+version = "6.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d3/7a/359f4d5df2353f26172b3cc39ea32daa39af8de522205f512f458923e677/colorlog-6.9.0.tar.gz", hash = "sha256:bfba54a1b93b94f54e1f4fe48395725a3d92fd2a4af702f6bd70946bdc0c6ac2", size = 16624 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/51/9b208e85196941db2f0654ad0357ca6388ab3ed67efdbfc799f35d1f83aa/colorlog-6.9.0-py3-none-any.whl", hash = "sha256:5906e71acd67cb07a71e779c47c4bcb45fb8c2993eebe9e5adcd6a6f1b283eff", size = 11424 },
+]
+
+[[package]]
 name = "contourpy"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1338,6 +1350,8 @@ train = [
     { name = "kaleido" },
     { name = "lightgbm" },
     { name = "mlflow" },
+    { name = "optuna" },
+    { name = "optuna-integration", extra = ["sklearn"] },
     { name = "scikit-learn" },
     { name = "sensai" },
     { name = "sensai-utils" },
@@ -1388,6 +1402,8 @@ train = [
     { name = "kaleido", specifier = "==0.2.1" },
     { name = "lightgbm", specifier = ">=4.5.0" },
     { name = "mlflow", specifier = ">=2.19.0" },
+    { name = "optuna", specifier = ">=4.2.1" },
+    { name = "optuna-integration", extras = ["sklearn"], specifier = ">=4.2.1" },
     { name = "scikit-learn", specifier = "<1.6" },
     { name = "sensai", specifier = ">=1.3.0" },
     { name = "sensai-utils", specifier = ">=1.4.0" },
@@ -2475,6 +2491,43 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/58/64/32510c0a803465eb6ef1f5bd514d0f5627f8abc9444ed94f7240faf6fcaa/opentelemetry_util_http-0.51b0.tar.gz", hash = "sha256:05edd19ca1cc3be3968b1e502fd94816901a365adbeaab6b6ddb974384d3a0b9", size = 8043 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/48/dd/c371eeb9cc78abbdad231a27ce1a196a37ef96328d876ccbb381dea4c8ee/opentelemetry_util_http-0.51b0-py3-none-any.whl", hash = "sha256:0561d7a6e9c422b9ef9ae6e77eafcfcd32a2ab689f5e801475cbb67f189efa20", size = 7304 },
+]
+
+[[package]]
+name = "optuna"
+version = "4.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "alembic" },
+    { name = "colorlog" },
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "pyyaml" },
+    { name = "sqlalchemy" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/98/23/d9710e7116e23d042539ff3355dbb058a78c1f5a3eb344c1784c6df99361/optuna-4.2.1.tar.gz", hash = "sha256:2ecd74cdc8aaf5dda1f2b9e267999bab21def9a33e0a4f415ecae0c468c401e0", size = 453220 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/09/c4d329f7969443cdd4d482048ca406b6f61cda3c8e99ace71feaec7c8734/optuna-4.2.1-py3-none-any.whl", hash = "sha256:6d38199013441d3f70fac27136e05c0188c5f4ec3848db708ac311cbdeb30dbf", size = 383562 },
+]
+
+[[package]]
+name = "optuna-integration"
+version = "4.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "optuna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b6/a8/cb4c69264490b3ce4334db38e6fd6809be71d12d4a91b287d8d21ed1cedd/optuna_integration-4.2.1.tar.gz", hash = "sha256:4abff66014b23c578bd656595769cb446664812b2dfecc0dc2e38af4c03ddc12", size = 84969 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fb/72/96fb1f0b6c72af7d2a5c3029f864d38eda47150c939510b9a9f5abf143db/optuna_integration-4.2.1-py3-none-any.whl", hash = "sha256:f45c38750cb1a41401731603cd286c8435b0a8baec0c07e63a51fdd5e1ae8031", size = 97587 },
+]
+
+[package.optional-dependencies]
+sklearn = [
+    { name = "pandas" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
 ]
 
 [[package]]
