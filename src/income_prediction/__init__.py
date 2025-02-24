@@ -1,37 +1,40 @@
-from dagster import Definitions
-
-from income_prediction.assets import (
-    census_asec_dataset,
-    income_prediction_features,
-    income_prediction_model_xgboost,
-    train_test_data,
-    reference_dataset,
-)
+import dagster as dg
+from optuna.distributions import IntDistribution, FloatDistribution
+import income_prediction.assets
 from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
-from income_prediction.resources.configuration import Config
+from income_prediction.resources.configuration import Config, OptunaCVConfig, \
+    OptunaXGBParamDistribution
 from income_prediction.resources.mlflow_session import MlflowSession
 
-from income_prediction.resources.model_factory import XGBClassifierFactory
-from asec.model_factory import build_pipeline
+from upath import UPath
+
 
 config = Config()
+optuna_cv_config = OptunaCVConfig(
+    n_trials=10,
+    verbose=2,
+    timeout=600,
+    n_jobs=-1
+)
+optuna_xgb_param_distribution = OptunaXGBParamDistribution(
+    max_depth=IntDistribution(3, 10),
+    gamma=FloatDistribution(0, 9),
+    reg_lambda=FloatDistribution(0, 1),
+    colsample_bytree=FloatDistribution(0.25, 1),
+    min_child_weight=IntDistribution(1, 100),
+    classifier_prefix="classifier",
+)
 mlflow_session = MlflowSession(
     tracking_url=config.mlflow_tracking_url, experiment=config.mlflow_experiment
 )
-model_factory = XGBClassifierFactory(random_state=config.random_state)
 
-definitions = Definitions(
-    assets=[
-        census_asec_dataset,
-        income_prediction_features,
-        train_test_data,
-        income_prediction_model_xgboost,
-        reference_dataset,
-    ],
+definitions = dg.Definitions(
+    assets=dg.load_assets_from_modules([income_prediction.assets]),
     resources={
         "config": config,
+        "optuna_cv_config": optuna_cv_config,
+        "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
         "mlflow_session": mlflow_session,
-        "csv_io_manager": CSVFSIOManager(base_dir=config.data_dir),
-        "model_factory": model_factory
+        "csv_io_manager": CSVFSIOManager(base_path=UPath("./data")),
     },
 )
