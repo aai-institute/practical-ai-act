@@ -1,4 +1,5 @@
 import dagster as dg
+from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
 from upath import UPath
 
 import income_prediction.assets
@@ -15,6 +16,12 @@ definitions = dg.Definitions(
         "mlflow_session": MlflowSession(
             tracking_url=config.mlflow_tracking_url,
             experiment=config.mlflow_experiment,
+        ),
+        "io_manager": PickledObjectFilesystemIOManager(
+        "s3://dagster/",
+                endpoint_url=config.minio_host,
+                key=config.minio_access_key_id,
+                secret=config.minio_secret_access_key,
         ),
         "lakefs_io_manager": LakeFSIOManager(
             base_path=UPath(
