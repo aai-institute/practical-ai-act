@@ -24,6 +24,11 @@ x-minio-cmd: &minio_cmd
   environment:
     MINIO_ROOT_USER: "minio_user"
     MINIO_ROOT_PASSWORD: "minio_password"
+x-dagster-env: &dagster_env
+  DAGSTER_POSTGRES_HOST: "postgres"
+  DAGSTER_POSTGRES_USER: "postgres_user"
+  DAGSTER_POSTGRES_PASSWORD: "postgres_password"
+  DAGSTER_POSTGRES_DB: "postgres_db"
 
 services:
   minio:
@@ -33,6 +38,7 @@ services:
       - "9001:9001"
     networks:
       - web
+      - dagster
     environment:
       MINIO_ROOT_USER: "minio_user"
       MINIO_ROOT_PASSWORD: "minio_password"
@@ -56,7 +62,29 @@ services:
       bash -c "
       mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
       mc mb --ignore-existing minio/lakefs"
+  minio-create-bucket-dagster:
+    <<: *minio_cmd
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/dagster"
 
+  # This service runs the postgres DB used by dagster for run storage, schedule storage,
+  # and event log storage. Depending on the hardware you run this Compose on, you may be able
+  # to reduce the interval and timeout in the healthcheck to speed up your `docker-compose up` times.
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: "postgres_user"
+      POSTGRES_PASSWORD: "postgres_password"
+      POSTGRES_DB: "postgres_db"
+    networks:
+      - dagster
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres_user -d postgres_db" ]
+      interval: 10s
+      timeout: 8s
+      retries: 5
   lakefs:
     image: treeverse/lakefs
     depends_on:
@@ -66,6 +94,7 @@ services:
       - "8000:8000"
     networks:
       - web
+      - dagster
     environment:
       - LAKEFS_DATABASE_TYPE=local
       - LAKEFS_BLOCKSTORE_TYPE=s3
@@ -79,9 +108,80 @@ services:
       - LAKEFS_INSTALLATION_USER_NAME=aai
       - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
       - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-      - LAKECTL_SERVER_ENDPOINT_URL=http://localhost:8000
     command: [ 'run', '--local-settings' ]
 
+  lakefs-create-repo:
+    depends_on:
+      - lakefs
+    environment:
+      - LAKECTL_SERVER_ENDPOINT_URL=http://lakefs:8000
+      - LAKECTL_CREDENTIALS_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
+      - LAKECTL_CREDENTIALS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - REPOSITORY_URI=lakefs://twai-pipeline
+    networks:
+      - web
+    image: treeverse/lakefs
+    entrypoint: ""
+    command: sh -xc "lakectl fs ls $$REPOSITORY_URI/main/ || lakectl repo create $$REPOSITORY_URI s3://lakefs"
+
+  dagster-user-code:
+    depends_on:
+      lakefs-create-repo:
+        condition: service_completed_successfully
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile.income_prediction
+    image: dagster_user_code_image
+    networks:
+      - dagster
+    environment:
+      <<: *dagster_env
+      DAGSTER_CURRENT_IMAGE: "dagster_user_code_image"
+
+  dagster-webserver:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      dagster-user-code:
+        condition: service_started
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - web
+      - dagster
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - dagster-webserver
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "3000"
+      - -w
+      - workspace.yaml
+    environment:
+      <<: *dagster_env
+  dagster-daemon:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      dagster-user-code:
+        condition: service_started
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile
+    networks:
+      - dagster
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - dagster-daemon
+      - run
+    environment:
+      <<: *dagster_env
   mlflow:
     build:
       context: mlflow
@@ -98,6 +198,7 @@ services:
     networks:
       - monitoring
       - web
+      - dagster
     depends_on:
       minio-create-bucket-mlflow:
         condition: service_completed_successfully
@@ -164,15 +265,15 @@ services:
       prometheus.job: "app"
     develop:
       watch:
-        - path: ..
+        - path: app
+          action: rebuild
+        - path: ../pyproject.toml
+          action: rebuild
+        - path: ../uv.lock
+          action: rebuild
+        - path: ../src
           action: sync
-          target: /app
-        - path: deploy/app
-          action: rebuild
-        - path: pyproject.toml
-          action: rebuild
-        - path: uv.lock
-          action: rebuild
+          target: /app/src
 
   # Needed for docker_sd_config target discovery in Prometheus
   docker-proxy:
@@ -222,6 +323,8 @@ volumes:
   prometheus_data:
 
 networks:
+  web:
   monitoring:
     internal: true
-  web:
+  dagster:
+    name: dagster
