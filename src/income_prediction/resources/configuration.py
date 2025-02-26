@@ -1,7 +1,24 @@
 from typing import Any
 from optuna.distributions import IntDistribution, FloatDistribution
 from dagster import ConfigurableResource, ResourceDefinition
+from pydantic import BaseModel
 
+class MlFlowConfig(BaseModel):
+    mlflow_tracking_url: str = "http://localhost:50000"
+    mlflow_experiment: str = "Income Prediction"
+
+
+class LakeFsConfig(BaseModel):
+    lakefs_host: str = "http://localhost:8000"
+    lakefs_access_key_id: str = "AKIAIOSFOLKFSSAMPLES"
+    lakefs_secret_access_key: str = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    lakefs_verify_ssl: bool = False
+
+
+class MinioConfig(BaseModel):
+    minio_host: str = "http://localhost:9000"
+    minio_access_key_id: str = "minio_user"
+    minio_secret_access_key: str = "minio_password"
 
 class Config(ConfigurableResource):
     """Pipeline configuration."""
@@ -16,20 +33,6 @@ class Config(ConfigurableResource):
     ]  # > 120000 High
 
     data_dir: str = "data"
-
-    # FIXME: This is dependent on the environment and should be set outside the resource
-
-    mlflow_tracking_url: str = "http://localhost:50000"
-    mlflow_experiment: str = "Income Prediction"
-
-    lakefs_host: str = "http://localhost:8000"
-    lakefs_access_key_id: str = "AKIAIOSFOLKFSSAMPLES"
-    lakefs_secret_access_key: str = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-    lakefs_verify_ssl: bool = False
-
-    minio_host: str = "http://localhost:9000"
-    minio_access_key_id: str = "minio_user"
-    minio_secret_access_key: str = "minio_password"
 
     random_state: int = 42
 

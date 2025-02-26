@@ -29,6 +29,7 @@ x-dagster-env: &dagster_env
   DAGSTER_POSTGRES_USER: "postgres_user"
   DAGSTER_POSTGRES_PASSWORD: "postgres_password"
   DAGSTER_POSTGRES_DB: "postgres_db"
+  ENVIRONMENT: "docker"
 
 services:
   minio:

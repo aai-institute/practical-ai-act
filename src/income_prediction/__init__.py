@@ -6,7 +6,8 @@ from upath import UPath
 
 import income_prediction.assets
 from income_prediction.io_managers.lakefs import LakeFSIOManager
-from income_prediction.resources.configuration import Config
+from income_prediction.resources.configuration import Config, LakeFsConfig, \
+    MlFlowConfig, MinioConfig
 import dagster as dg
 from optuna.distributions import IntDistribution, FloatDistribution
 import income_prediction.assets
@@ -30,36 +31,52 @@ optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     min_child_weight=IntDistribution(1, 100),
     classifier_prefix="classifier",
 )
-mlflow_session = MlflowSession(
-    tracking_url=config.mlflow_tracking_url, experiment=config.mlflow_experiment
-)
 
-if os.environ.get("environment", None) == "docker":
+env = os.environ.get("ENVIRONMENT", None)
+print("Current environment:", env)
+
+if env == "docker":
+    lakefs_cfg = LakeFsConfig(
+        lakefs_host="http://lakefs:8000",
+    )
+    mlflow_cfg = MlFlowConfig(
+        mlflow_tracking_url="http://mlflow:5000",
+    )
+    minio_cfg = MinioConfig(
+        minio_host="http://minio:9000"
+    )
     default_io_manager = PickledObjectFilesystemIOManager(
         "s3://dagster/",
-        endpoint_url=config.minio_host,
-        key=config.minio_access_key_id,
-        secret=config.minio_secret_access_key,
+        endpoint_url=minio_cfg.minio_host,
+        key=minio_cfg.minio_access_key_id,
+        secret=minio_cfg.minio_secret_access_key,
     )
 else:
     default_io_manager = dg.FilesystemIOManager()
+    mlflow_cfg = MlFlowConfig()
+    lakefs_cfg = LakeFsConfig()
+    minio_cfg = MinioConfig()
+
+print("LakeFS config: ", lakefs_cfg)
+print("MinIO config: ", minio_cfg)
+print("MLflow config: ", mlflow_cfg)
 
 definitions = dg.Definitions(
     assets=dg.load_assets_from_modules(modules=[income_prediction.assets]),
     resources={
         "config": config,
         "mlflow_session": MlflowSession(
-            tracking_url=config.mlflow_tracking_url,
-            experiment=config.mlflow_experiment,
+            tracking_url=mlflow_cfg.mlflow_tracking_url,
+            experiment=mlflow_cfg.mlflow_experiment,
         ),
         "io_manager": default_io_manager,
         "lakefs_io_manager": LakeFSIOManager(
             base_path=UPath(
                 "lakefs://twai-pipeline/main/data/",
-                host=config.lakefs_host,
-                username=config.lakefs_access_key_id,
-                password=config.lakefs_secret_access_key,
-                verify_ssl=config.lakefs_verify_ssl,
+                host=lakefs_cfg.lakefs_host,
+                username=lakefs_cfg.lakefs_access_key_id,
+                password=lakefs_cfg.lakefs_secret_access_key,
+                verify_ssl=lakefs_cfg.lakefs_verify_ssl,
             ),
         ),
         "optuna_cv_config": optuna_cv_config,

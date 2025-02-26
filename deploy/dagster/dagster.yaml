@@ -1,6 +1,7 @@
 telemetry:
   enabled: false
 
+
 scheduler:
   module: dagster.core.scheduler
   class: DagsterDaemonScheduler
@@ -18,6 +19,7 @@ run_launcher:
       - DAGSTER_POSTGRES_USER
       - DAGSTER_POSTGRES_PASSWORD
       - DAGSTER_POSTGRES_DB
+      - ENVIRONMENT
     network: dagster
     container_kwargs:
       volumes: # Make docker client accessible to any launched containers as well
