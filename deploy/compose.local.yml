@@ -96,6 +96,8 @@ services:
     networks:
       - web
       - dagster
+    volumes:
+      - lakefs_data:/var/lib/lakefs
     environment:
       - LAKEFS_DATABASE_TYPE=local
       - LAKEFS_BLOCKSTORE_TYPE=s3
@@ -328,6 +330,7 @@ services:
 
 volumes:
   minio_data:
+  lakefs_data:
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
