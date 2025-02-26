@@ -17,6 +17,8 @@ class Config(ConfigurableResource):
 
     data_dir: str = "data"
 
+    # FIXME: This is dependent on the environment and should be set outside the resource
+
     mlflow_tracking_url: str = "http://localhost:50000"
     mlflow_experiment: str = "Income Prediction"
 
@@ -24,6 +26,10 @@ class Config(ConfigurableResource):
     lakefs_access_key_id: str = "AKIAIOSFOLKFSSAMPLES"
     lakefs_secret_access_key: str = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
     lakefs_verify_ssl: bool = False
+
+    minio_host: str = "http://localhost:9000"
+    minio_access_key_id: str = "minio_user"
+    minio_secret_access_key: str = "minio_password"
 
     random_state: int = 42
 

@@ -75,6 +75,10 @@ The `serve` profile of the Docker Compose stack deploys the ML model inference s
   - Grafana: <http://localhost:3001>, credentials `admin/admin`
   - Predefined Grafana dashboards for MLflow, the FastAPI app, and the inference server
 
+The `dagster` profile contains the following:
+- **Dagster Daemon** and **Webserver**, based on a common base image (`deploy/dagster/Dockerfile`)
+- The **user code location** image, containing the assets, and used to launch executions (see `deploy/dagster/Dockerfile.income_prediction`)
+
 In order to train a model, start the basic stack using:
 
 ```

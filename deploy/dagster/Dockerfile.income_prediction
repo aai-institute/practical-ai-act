@@ -1,0 +1,29 @@
+FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ARG DAGSTER_CORE_VERSION=1.10.2
+ARG DAGSTER_LIB_VERSION=0.26.2
+
+WORKDIR /opt/dagster/app
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --group train --no-install-project
+
+# Copy the project into the image
+ADD src src
+
+# Sync the project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-editable --group train
+
+# Run dagster code server on port 4000
+EXPOSE 4000
+
+ENTRYPOINT ["uv", "run"]
+# CMD allows this to be overridden from run launchers or executors to execute runs and steps
+CMD ["dagster", "code-server", "start", "-h", "0.0.0.0", "-p", "4000", "-m", "income_prediction"]

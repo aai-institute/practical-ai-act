@@ -1,5 +1,5 @@
-ARG UV_BASE_IMAGE_TAG=python3.13-bookworm-slim
-FROM ghcr.io/astral-sh/uv:${UV_BASE_IMAGE_TAG}
+FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ARG MLFLOW_VERSION=2.20.0
 
