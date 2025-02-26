@@ -1,11 +1,10 @@
-import subprocess
 from pathlib import Path
 
 import dagster as dg
 import mlflow.pyfunc
 import pandas as pd
 
-from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
+from asec.data import CensusASECMetadata
 from income_prediction.resources.mlflow_session import MlflowSession
 from income_prediction.utils.docker import build_container_image
 
@@ -17,7 +16,7 @@ class ModelVersion(dg.ConfigurableResource):
 
 # FIXME: The explicit dependency on the model asset is not needed, but makes for a nicer graph in the UI
 #        Ideally, we could depend on the `model` asset group instead
-@dg.asset(group_name="evaluation", deps=["income_prediction_model_xgboost"])
+@dg.asset(group_name="evaluation", deps=["optuna_search_xgb"])
 def model_evaluation(
     context: dg.AssetExecutionContext,
     model_version: ModelVersion,

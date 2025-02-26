@@ -2,30 +2,31 @@ import os
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
+from optuna.distributions import IntDistribution, FloatDistribution
 from upath import UPath
 
 import income_prediction.assets
-from income_prediction.io_managers.lakefs import LakeFSIOManager
-from income_prediction.resources.configuration import Config, LakeFsConfig, \
-    MlFlowConfig, MinioConfig
-import dagster as dg
-from optuna.distributions import IntDistribution, FloatDistribution
 import income_prediction.assets
 from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
-from income_prediction.resources.configuration import Config, OptunaCVConfig, \
-    OptunaXGBParamDistribution
+from income_prediction.io_managers.lakefs import LakeFSIOManager
+from income_prediction.resources.configuration import (
+    Config,
+    LakeFsConfig,
+    MlFlowConfig,
+    MinioConfig,
+)
+from income_prediction.resources.configuration import (
+    Config,
+    OptunaCVConfig,
+    OptunaXGBParamDistribution,
+)
 from income_prediction.resources.mlflow_session import MlflowSession
 from .assets.model import ModelVersion
 from .resources.monitoring import InferenceLog
 from .sensors import report_trigger, model_version_trigger
 
 config = Config()
-optuna_cv_config = OptunaCVConfig(
-    n_trials=10,
-    verbose=2,
-    timeout=600,
-    n_jobs=-1
-)
+optuna_cv_config = OptunaCVConfig(n_trials=10, verbose=2, timeout=600, n_jobs=-1)
 optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     max_depth=IntDistribution(3, 10),
     gamma=FloatDistribution(0, 9),
@@ -45,9 +46,7 @@ if env == "docker":
     mlflow_cfg = MlFlowConfig(
         mlflow_tracking_url="http://mlflow:5000",
     )
-    minio_cfg = MinioConfig(
-        minio_host="http://minio:9000"
-    )
+    minio_cfg = MinioConfig(minio_host="http://minio:9000")
     default_io_manager = PickledObjectFilesystemIOManager(
         "s3://dagster/",
         endpoint_url=minio_cfg.minio_host,
