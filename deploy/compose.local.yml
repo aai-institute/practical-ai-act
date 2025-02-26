@@ -125,9 +125,7 @@ services:
     command: sh -xc "lakectl fs ls $$REPOSITORY_URI/main/ || lakectl repo create $$REPOSITORY_URI s3://lakefs"
 
   dagster-user-code:
-    depends_on:
-      lakefs-create-repo:
-        condition: service_completed_successfully
+    profiles: [dagster]
     build:
       context: ..
       dockerfile: deploy/dagster/Dockerfile.income_prediction
@@ -137,13 +135,23 @@ services:
     environment:
       <<: *dagster_env
       DAGSTER_CURRENT_IMAGE: "dagster_user_code_image"
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
+        - path: ../pyproject.toml
+          action: rebuild
+        - path: ../uv.lock
+          action: rebuild
+        - path: ../src
+          action: rebuild
+          target: /opt/dagster/app/src
 
   dagster-webserver:
+    profiles: [dagster]
     depends_on:
       postgres:
         condition: service_healthy
-      dagster-user-code:
-        condition: service_started
     build:
       context: ..
       dockerfile: deploy/dagster/Dockerfile
@@ -165,11 +173,12 @@ services:
     environment:
       <<: *dagster_env
   dagster-daemon:
+    profiles: [dagster]
     depends_on:
       postgres:
         condition: service_healthy
-      dagster-user-code:
-        condition: service_started
+      lakefs-create-repo:
+        condition: service_completed_successfully
     build:
       context: ..
       dockerfile: deploy/dagster/Dockerfile
@@ -226,6 +235,7 @@ services:
       - "/metrics"
 
   model:
+    profiles: [serve]
     build:
       context: model
       dockerfile: Dockerfile

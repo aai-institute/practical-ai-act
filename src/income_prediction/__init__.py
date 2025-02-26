@@ -1,3 +1,5 @@
+import os
+
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
 from upath import UPath
@@ -9,6 +11,16 @@ from income_prediction.resources.mlflow_session import MlflowSession
 
 config = Config()
 
+if os.environ.get("environment", None) == "docker":
+    default_io_manager = PickledObjectFilesystemIOManager(
+        "s3://dagster/",
+        endpoint_url=config.minio_host,
+        key=config.minio_access_key_id,
+        secret=config.minio_secret_access_key,
+    )
+else:
+    default_io_manager = dg.FilesystemIOManager()
+
 definitions = dg.Definitions(
     assets=dg.load_assets_from_modules(modules=[income_prediction.assets]),
     resources={
@@ -17,12 +29,7 @@ definitions = dg.Definitions(
             tracking_url=config.mlflow_tracking_url,
             experiment=config.mlflow_experiment,
         ),
-        "io_manager": PickledObjectFilesystemIOManager(
-        "s3://dagster/",
-                endpoint_url=config.minio_host,
-                key=config.minio_access_key_id,
-                secret=config.minio_secret_access_key,
-        ),
+        "io_manager": default_io_manager,
         "lakefs_io_manager": LakeFSIOManager(
             base_path=UPath(
                 "lakefs://twai-pipeline/main/data/",
