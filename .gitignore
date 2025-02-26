@@ -193,7 +193,9 @@ predictions.sqlite3
 *.sqlite3-journal
 # Dagster
 tmp*
+.tmp_dagster_*
 
 # mlfow
 mlartifacts
 mlruns
+.mlruns

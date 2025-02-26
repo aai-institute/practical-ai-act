@@ -1,33 +1,30 @@
 import dagster as dg
 import mlflow
-import pandas as pd
 import sklearn.pipeline
 from sklearn.model_selection import train_test_split
-
-from income_prediction.assets.census_asec_dataset import download_and_filter_census_data
-from income_prediction.assets.income_prediction_features import (
-    get_income_prediction_features,
-)
-from income_prediction.assets.income_prediction_model import (
-    train_income_prediction_xgboost_classifier,
-)
-from income_prediction.metadata.census_asec_metadata import CensusASECMetadata
-from income_prediction.resources.configuration import Config
-from income_prediction.resources.mlflow_session import MlflowSession
-from .model import (
-    model_evaluation as model_evaluation,
-    model_container as model_container,
-)
-from .monitoring import nannyml_report as nannyml_report
+from asec.model_factory import ModelFactory
 
 
-@dg.asset(group_name="data", io_manager_key="lakefs_io_manager")
+import optuna
+import pandas as pd
+
+
+
+from asec.features import get_income_prediction_features
+from asec.data import CensusASECMetadata, download_and_filter_census_data
+
+from ..resources.configuration import Config, OptunaCVConfig
+from ..resources.mlflow_session import MlflowSession
+
+
+
+@dg.asset(io_manager_key="lakefs_io_manager")
 def census_asec_dataset(config: Config):
     """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria."""
     return download_and_filter_census_data(config.census_asec_dataset_year)
 
 
-@dg.asset(group_name="data", io_manager_key="lakefs_io_manager")
+@dg.asset(io_manager_key="lakefs_io_manager")
 def income_prediction_features(
     config: Config, census_asec_dataset: pd.DataFrame
 ) -> pd.DataFrame:
@@ -36,11 +33,10 @@ def income_prediction_features(
 
 
 @dg.multi_asset(
-    group_name="data",
     outs={
         "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
         "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
-    },
+    }
 )
 def train_test_data(
     config: Config, income_prediction_features: pd.DataFrame
@@ -52,42 +48,49 @@ def train_test_data(
     return train_data, test_data
 
 
-@dg.asset(group_name="model")
-def income_prediction_model_xgboost(
-    context: dg.AssetExecutionContext,
-    config: Config,
-    mlflow_session: MlflowSession,
-    train_data: pd.DataFrame,
-) -> sklearn.pipeline.Pipeline:
-    """Trains and evaluates the income prediction classifier with XGBoostClassifier."""
 
-    model_name = "xgboost-classifier"
+@dg.asset
+def optuna_search_xgb(
+        context: dg.AssetExecutionContext,
+        mlflow_session: MlflowSession,
+        train_data: pd.DataFrame,
+        test_data: pd.DataFrame,
+        optuna_cv_config: OptunaCVConfig,
+        optuna_xgb_param_distribution: dg.ResourceParam[dict[str, optuna.distributions.BaseDistribution]],
+):
+
+    optuna_search = optuna.integration.OptunaSearchCV(
+        ModelFactory.create_xgb(), param_distributions=optuna_xgb_param_distribution, **optuna_cv_config.as_dict()
+    )
+
+    optuna_search.fit(train_data.drop(columns=CensusASECMetadata.TARGET), train_data[CensusASECMetadata.TARGET])
+
     with mlflow_session.start_run(context):
-        with mlflow.start_run(nested=True, run_name=model_name):
+        with mlflow.start_run(nested=True, run_name="xgboost-classifier"):
             mlflow.autolog(log_datasets=False)
-
-            pipeline = train_income_prediction_xgboost_classifier(
-                train_data, config.random_state
+            best_model = optuna_search.best_estimator_
+            best_model.fit(train_data.drop(columns=CensusASECMetadata.TARGET), train_data[CensusASECMetadata.TARGET])
+            mlflow.evaluate(
+                model=best_model.predict,
+                data=test_data,
+                targets=CensusASECMetadata.TARGET,
+                model_type="classifier",
             )
-
-            mlflow.register_model(
-                name=model_name,
-                model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
-            )
-
-    return pipeline
+            return best_model
 
 
-@dg.asset(group_name="model", io_manager_key="lakefs_io_manager")
+
+
+@dg.asset(io_manager_key="lakefs_io_manager")
 def reference_dataset(
-    income_prediction_model_xgboost: sklearn.pipeline.Pipeline,
+    optuna_search_xgb: sklearn.pipeline.Pipeline,
     test_data: pd.DataFrame,
 ) -> pd.DataFrame:
     """Reference dataset for post-deployment performance monitoring
 
     Based on predictions of the model on the test dataset"""
 
-    y_proba = income_prediction_model_xgboost.predict_proba(test_data)
+    y_proba = optuna_search_xgb.predict_proba(test_data)
 
     df = test_data.rename({CensusASECMetadata.TARGET: "target"}, axis=1)
     df = pd.concat(
