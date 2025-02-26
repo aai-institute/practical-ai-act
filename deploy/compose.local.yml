@@ -175,6 +175,10 @@ services:
       - workspace.yaml
     environment:
       <<: *dagster_env
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
   dagster-daemon:
     profiles: [dagster]
     depends_on:
@@ -194,6 +198,10 @@ services:
       - run
     environment:
       <<: *dagster_env
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
   mlflow:
     build:
       context: mlflow
