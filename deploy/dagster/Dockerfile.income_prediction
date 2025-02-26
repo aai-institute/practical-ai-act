@@ -26,7 +26,7 @@ ADD src src
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-editable --group train
+    uv sync --frozen --group train
 
 # Run dagster code server on port 4000
 EXPOSE 4000
