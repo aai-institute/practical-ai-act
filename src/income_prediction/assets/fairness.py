@@ -7,14 +7,22 @@ from asec.data import CensusASECMetadata
 TARGET = CensusASECMetadata.TARGET
 
 MARITAL_STATUS_FEATURE = CensusASECMetadata.Fields.MARITAL_STATUS
+SEX_FEATURE = CensusASECMetadata.Fields.GENDER
 
 IS_MARRIED = 1
 IS_NOT_MARRIED = 0
 
-PRIVILEGED_GROUPS = [{MARITAL_STATUS_FEATURE: IS_MARRIED}]
-UNPRIVILEGED_GROUPS = [{MARITAL_STATUS_FEATURE: IS_NOT_MARRIED}]
+SEX_MALE = 1
+SEX_FEMALE = 2
 
-HIGH_INCOME_CLASS = 1
+PRIVILEGED_GROUPS = [
+    {SEX_FEATURE: SEX_MALE},
+]
+UNPRIVILEGED_GROUPS = [
+    {SEX_FEATURE: SEX_FEMALE},
+]
+
+HIGH_INCOME_CLASS = 4
 
 
 def evaluate_fairness(
@@ -24,8 +32,8 @@ def evaluate_fairness(
         data,
         label_name=TARGET,
         favorable_classes=[HIGH_INCOME_CLASS],
-        protected_attribute_names=[MARITAL_STATUS_FEATURE],
-        privileged_classes=[[IS_MARRIED]],
+        protected_attribute_names=[SEX_FEATURE],
+        privileged_classes=[[SEX_MALE]],
     )
 
     predictions_data = ground_truth.copy(deepcopy=True)

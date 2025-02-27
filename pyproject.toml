@@ -45,6 +45,8 @@ train = [
     "s3fs>=2025.2.0",
     "dagster-obstore>=0.2.0",
     "aif360>=0.6.1",
+    "shap>=0.46.0",
+    "numba==0.61.0",
 ]
 deploy = [
     "fastapi>=0.110",
