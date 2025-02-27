@@ -304,11 +304,11 @@ def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFra
 
 
 def binarize_marital_status(df: pd.DataFrame) -> pd.DataFrame:
-    """Binarize the marital status feature by grouping all non-married statuses into a single category."""
+    """Binarize the marital status attribute by grouping all non-married statuses into a single category."""
 
-    df[CensusASECMetadata.Fields.MARITAL_STATUS] = df[
-        CensusASECMetadata.Fields.MARITAL_STATUS
-    ].isin([1, 2, 3, 4])
+    df[CensusASECMetadata.Fields.MARITAL_STATUS] = (
+        df[CensusASECMetadata.Fields.MARITAL_STATUS].isin([1, 2, 3, 4]).astype(int)
+    )
     return df
 
 

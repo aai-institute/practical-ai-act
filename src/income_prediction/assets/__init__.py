@@ -12,6 +12,7 @@ from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
+from ..utils.mlflow import log_fairness_metrics
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
@@ -85,46 +86,15 @@ def optuna_search_xgb(
                 model_type="classifier",
             )
 
+            # Fairness evaluation
+            X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
+            context.log.info(test_data.columns)
+            y_pred = best_model.predict(X_test)
+
+            fairness_metrics = evaluate_fairness(test_data, y_pred)
+            log_fairness_metrics(fairness_metrics)
+
             return best_model
-
-
-@dg.asset()
-def fairness_metrics(
-    context: dg.AssetExecutionContext,
-    optuna_search_xgb: sklearn.pipeline.Pipeline,
-    mlflow_session: MlflowSession,
-    test_data: pd.DataFrame,
-) -> None:
-    """Evaluates the fairness of the model on the test dataset."""
-
-    X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
-    context.log.info(test_data.columns)
-    y_pred = optuna_search_xgb.predict(X_test)
-
-    fairness_metrics = evaluate_fairness(test_data, y_pred)
-
-    with mlflow_session.start_run(context=context):
-        mlflow.log_metric(
-            "fair_statistical_parity_difference",
-            fairness_metrics.statistical_parity_difference(),
-        )
-        mlflow.log_metric("fair_disparate_impact", fairness_metrics.disparate_impact())
-        mlflow.log_metric(
-            "fair_equal_opportunity_difference",
-            fairness_metrics.equal_opportunity_difference(),
-        )
-        mlflow.log_metric(
-            "fair_average_odds_difference",
-            fairness_metrics.average_abs_odds_difference(),
-        )
-        mlflow.log_metric(
-            "fair_tpr_privileged",
-            fairness_metrics.true_positive_rate(privileged=True),
-        )
-        mlflow.log_metric(
-            "fair_tpr_unprivileged",
-            fairness_metrics.true_positive_rate(privileged=False),
-        )
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
