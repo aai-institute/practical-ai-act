@@ -44,6 +44,7 @@ train = [
     "dagster-postgres>=0.26.2",
     "s3fs>=2025.2.0",
     "dagster-obstore>=0.2.0",
+    "aif360>=0.6.1",
 ]
 deploy = [
     "fastapi>=0.110",

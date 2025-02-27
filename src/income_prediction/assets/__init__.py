@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from asec.data import CensusASECMetadata, download_and_filter_census_data
 from asec.features import get_income_prediction_features
 from asec.model_factory import ModelFactory
+from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
@@ -55,36 +56,75 @@ def optuna_search_xgb(
     ],
 ):
     model_name = "xgboost-classifier"
+
+    X_train = train_data.drop(columns=CensusASECMetadata.TARGET)
+    y_train = train_data[CensusASECMetadata.TARGET]
+
     optuna_search = optuna.integration.OptunaSearchCV(
         ModelFactory.create_xgb(),
         param_distributions=optuna_xgb_param_distribution,
         **optuna_cv_config.as_dict(),
     )
-
-    optuna_search.fit(
-        train_data.drop(columns=CensusASECMetadata.TARGET),
-        train_data[CensusASECMetadata.TARGET],
-    )
+    optuna_search.fit(X_train, y_train)
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name=model_name):
             mlflow.autolog(log_datasets=False)
             best_model = optuna_search.best_estimator_
-            best_model.fit(
-                train_data.drop(columns=CensusASECMetadata.TARGET),
-                train_data[CensusASECMetadata.TARGET],
-            )
+            best_model.fit(X_train, y_train)
+
             mlflow.register_model(
                 name=model_name,
                 model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
             )
+
             mlflow.evaluate(
                 model=best_model.predict,
                 data=test_data,
                 targets=CensusASECMetadata.TARGET,
                 model_type="classifier",
             )
+
             return best_model
+
+
+@dg.asset()
+def fairness_metrics(
+    context: dg.AssetExecutionContext,
+    optuna_search_xgb: sklearn.pipeline.Pipeline,
+    mlflow_session: MlflowSession,
+    test_data: pd.DataFrame,
+) -> None:
+    """Evaluates the fairness of the model on the test dataset."""
+
+    X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
+    context.log.info(test_data.columns)
+    y_pred = optuna_search_xgb.predict(X_test)
+
+    fairness_metrics = evaluate_fairness(test_data, y_pred)
+
+    with mlflow_session.start_run(context=context):
+        mlflow.log_metric(
+            "fair_statistical_parity_difference",
+            fairness_metrics.statistical_parity_difference(),
+        )
+        mlflow.log_metric("fair_disparate_impact", fairness_metrics.disparate_impact())
+        mlflow.log_metric(
+            "fair_equal_opportunity_difference",
+            fairness_metrics.equal_opportunity_difference(),
+        )
+        mlflow.log_metric(
+            "fair_average_odds_difference",
+            fairness_metrics.average_abs_odds_difference(),
+        )
+        mlflow.log_metric(
+            "fair_tpr_privileged",
+            fairness_metrics.true_positive_rate(privileged=True),
+        )
+        mlflow.log_metric(
+            "fair_tpr_unprivileged",
+            fairness_metrics.true_positive_rate(privileged=False),
+        )
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")

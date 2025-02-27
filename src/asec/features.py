@@ -303,6 +303,15 @@ def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFra
     return df
 
 
+def binarize_marital_status(df: pd.DataFrame) -> pd.DataFrame:
+    """Binarize the marital status feature by grouping all non-married statuses into a single category."""
+
+    df[CensusASECMetadata.Fields.MARITAL_STATUS] = df[
+        CensusASECMetadata.Fields.MARITAL_STATUS
+    ].isin([1, 2, 3, 4])
+    return df
+
+
 def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame:
     """Filters and retains only the relevant categorical, numerical, ordinal features, and the target variable.
 
@@ -351,6 +360,8 @@ def get_income_prediction_features(
         Preprocessed DataFrame containing selected features and salary band classifications.
     """
 
-    return census_asec_dataset.pipe(assign_salary_bands, salary_bands).pipe(
-        partial(select_features, exclude=exclude)
+    return (
+        census_asec_dataset.pipe(assign_salary_bands, salary_bands)
+        .pipe(binarize_marital_status)
+        .pipe(partial(select_features, exclude=exclude))
     )

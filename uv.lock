@@ -18,6 +18,22 @@ wheels = [
 ]
 
 [[package]]
+name = "aif360"
+version = "0.6.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "matplotlib" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fa/bb/d96f06e8c461e11d3a6f68d9141cbca484708c457c8e36987a7c3048335f/aif360-0.6.1.tar.gz", hash = "sha256:635afc0bbe785e08fa242eee5e5080238193d0583bc0f5006a132050d4fb77f2", size = 2003486 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/7b/7e4fa9e7b6f62759663db3b5aaa12a6cc9ef866223e5978c25844bceb762/aif360-0.6.1-py3-none-any.whl", hash = "sha256:2bae0f7ba95c4902f551df33c7603c3be0319442a96b35ad99199a7d62093217", size = 259720 },
+]
+
+[[package]]
 name = "aiobotocore"
 version = "2.20.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1242,6 +1258,7 @@ monitoring = [
     { name = "nannyml" },
 ]
 train = [
+    { name = "aif360" },
     { name = "dagster" },
     { name = "dagster-obstore" },
     { name = "dagster-postgres" },
@@ -1295,6 +1312,7 @@ docs = [
 ]
 monitoring = [{ name = "nannyml", specifier = ">=0.13.0" }]
 train = [
+    { name = "aif360", specifier = ">=0.6.1" },
     { name = "dagster", specifier = ">=1.9.10" },
     { name = "dagster-obstore", specifier = ">=0.2.0" },
     { name = "dagster-postgres", specifier = ">=0.26.2" },
