@@ -15,7 +15,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     dagster-graphql==${DAGSTER_CORE_VERSION} \
     dagster-webserver==${DAGSTER_CORE_VERSION} \
     dagster-postgres==${DAGSTER_LIB_VERSION} \
-    dagster-docker==${DAGSTER_LIB_VERSION}
+    dagster-docker==${DAGSTER_LIB_VERSION} \
+    dagster-obstore==0.2.0
 
 # Set $DAGSTER_HOME and copy dagster.yaml and workspace.yaml there
 ENV DAGSTER_HOME=/opt/dagster/dagster_home/

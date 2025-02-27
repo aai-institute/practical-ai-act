@@ -36,10 +36,11 @@ optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     classifier_prefix="classifier",
 )
 
-env = os.environ.get("ENVIRONMENT", None)
+in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
+env = "development" if in_dagster_dev else "production"
 print("Current environment:", env)
 
-if env == "docker":
+if env == "production":
     lakefs_cfg = LakeFsConfig(
         lakefs_host="http://lakefs:8000",
     )

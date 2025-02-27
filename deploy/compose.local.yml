@@ -24,12 +24,17 @@ x-minio-cmd: &minio_cmd
   environment:
     MINIO_ROOT_USER: "minio_user"
     MINIO_ROOT_PASSWORD: "minio_password"
+
+# Common environment variables for the Dagster services
 x-dagster-env: &dagster_env
   DAGSTER_POSTGRES_HOST: "postgres"
   DAGSTER_POSTGRES_USER: "postgres_user"
   DAGSTER_POSTGRES_PASSWORD: "postgres_password"
   DAGSTER_POSTGRES_DB: "postgres_db"
-  ENVIRONMENT: "docker"
+  DAGSTER_LOGS_S3_ENDPOINT: "http://minio:9000"
+  DAGSTER_LOGS_S3_BUCKET: "dagster"
+  DAGSTER_LOGS_S3_ACCESS_KEY_ID: "minio_user"
+  DAGSTER_LOGS_S3_SECRET_KEY: "minio_password"
 
 services:
   minio:
@@ -82,7 +87,7 @@ services:
     networks:
       - dagster
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres_user -d postgres_db" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres_user -d postgres_db"]
       interval: 10s
       timeout: 8s
       retries: 5
@@ -111,7 +116,7 @@ services:
       - LAKEFS_INSTALLATION_USER_NAME=aai
       - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
       - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    command: [ 'run', '--local-settings' ]
+    command: ["run", "--local-settings"]
 
   lakefs-create-repo:
     depends_on:
@@ -196,6 +201,9 @@ services:
     command:
       - dagster-daemon
       - run
+    healthcheck:
+      test: dagster-daemon liveness-check
+      interval: 15s
     environment:
       <<: *dagster_env
     develop:
