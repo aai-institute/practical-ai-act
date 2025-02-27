@@ -1,16 +1,16 @@
 import collections.abc
+from collections.abc import Callable
 from copy import copy
 from enum import Enum
 from functools import partial
-from typing import Literal, Any, Callable
+from typing import Any, Literal
 
 import numpy as np
 import pandas as pd
-
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.pipeline import make_pipeline, FeatureUnion, make_union, Pipeline
+from sklearn.compose import ColumnTransformer, make_column_transformer
+from sklearn.pipeline import FeatureUnion, Pipeline, make_pipeline, make_union
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.compose import make_column_transformer, ColumnTransformer
 
 from .data import AdultData, CensusASECMetadata
 
@@ -330,7 +330,9 @@ def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame
 
 
 def get_income_prediction_features(
-        salary_bands: list[int], census_asec_dataset: pd.DataFrame, exclude: list[str] = None
+    salary_bands: list[int],
+    census_asec_dataset: pd.DataFrame,
+    exclude: list[str] = None,
 ) -> pd.DataFrame:
     """Preprocesses the Census ASEC dataset for income prediction by:
         - Assigning salary bands based on income thresholds.
@@ -349,4 +351,6 @@ def get_income_prediction_features(
         Preprocessed DataFrame containing selected features and salary band classifications.
     """
 
-    return census_asec_dataset.pipe(assign_salary_bands, salary_bands).pipe(partial(select_features, exclude=exclude))
+    return census_asec_dataset.pipe(assign_salary_bands, salary_bands).pipe(
+        partial(select_features, exclude=exclude)
+    )

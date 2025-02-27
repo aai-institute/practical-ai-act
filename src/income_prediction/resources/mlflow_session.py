@@ -77,3 +77,24 @@ class MlflowSession(ConfigurableResource):
         tags["dagster.run_id"] = run_id
 
         return start_mlflow_run(run_name, tags=tags)
+
+    def get_latest_model_version(self, model_name: str) -> tuple[str, str]:
+        """Retrieves the latest version of a model from MLflow.
+
+        Parameters
+        ----------
+        model_name : str
+            Name of the model to retrieve.
+
+        Returns
+        -------
+        tuple[str, str]
+            The version and URI of the latest model.
+        """
+        client = mlflow.tracking.MlflowClient()
+        model = client.get_registered_model(model_name)
+        from mlflow.entities.model_registry import ModelVersion
+
+        versions: list[ModelVersion] = model.latest_versions
+
+        return versions[0].version, f"models:/{model_name}/{versions[0].version}"

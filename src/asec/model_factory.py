@@ -1,19 +1,18 @@
 from typing import Any
 
+from lightgbm import LGBMClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.neural_network import MLPClassifier
-from sklearn.utils.metaestimators import available_if
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
     LabelEncoder,
     OneHotEncoder,
-    StandardScaler,
     OrdinalEncoder,
+    StandardScaler,
 )
-
+from sklearn.utils.metaestimators import available_if
 from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
 
 from .data import CensusASECMetadata
 
@@ -145,7 +144,7 @@ def build_pipeline(classifier: Any, exclude=None, encode_categoricals=True) -> P
             [
                 feat
                 for feat in CensusASECMetadata.NUMERIC_FEATURES
-                if not feat in exclude
+                if feat not in exclude
             ]
             if exclude is not None
             else CensusASECMetadata.NUMERIC_FEATURES,

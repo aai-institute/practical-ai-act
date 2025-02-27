@@ -1,8 +1,9 @@
-import pytest
 import pandas as pd
+import pytest
+
 from asec.features import (
-    collect_features,
     MappedColumn,
+    collect_features,
 )
 
 

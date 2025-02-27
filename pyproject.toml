@@ -43,6 +43,7 @@ train = [
     "lakefs-spec>=0.11.2",
     "dagster-postgres>=0.26.2",
     "s3fs>=2025.2.0",
+    "dagster-obstore>=0.2.0",
 ]
 deploy = [
     "fastapi>=0.110",

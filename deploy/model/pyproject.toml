@@ -5,9 +5,10 @@ description = "An ML assistant for HR professionals."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mlserver>=1.6.0",
-    "mlserver-mlflow>=1.6.0",
-    "mlserver-sklearn>=1.6.0",
+    "mlserver>=1.7.0rc1",
+    "mlserver-mlflow>=1.7.0rc1",
+    "mlserver-sklearn>=1.7.0rc1",
+    "numpy>=2",
     "scikit-learn<1.6",
     "xgboost>=2.1.4",
 ]

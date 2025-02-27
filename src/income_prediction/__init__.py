@@ -1,28 +1,31 @@
 import os
+from typing import Literal
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
+from optuna.distributions import IntDistribution, FloatDistribution
 from upath import UPath
 
 import income_prediction.assets
-from income_prediction.io_managers.lakefs import LakeFSIOManager
-from income_prediction.resources.configuration import Config, LakeFsConfig, \
-    MlFlowConfig, MinioConfig
-import dagster as dg
-from optuna.distributions import IntDistribution, FloatDistribution
 import income_prediction.assets
-from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
-from income_prediction.resources.configuration import Config, OptunaCVConfig, \
-    OptunaXGBParamDistribution
+from income_prediction.io_managers.lakefs import LakeFSIOManager
+from income_prediction.resources.configuration import (
+    Config,
+    LakeFsConfig,
+    MlFlowConfig,
+    MinioConfig,
+)
+from income_prediction.resources.configuration import (
+    Config,
+    OptunaCVConfig,
+    OptunaXGBParamDistribution,
+)
 from income_prediction.resources.mlflow_session import MlflowSession
+from .assets.model import ModelVersion
+from .sensors import model_version_trigger
 
 config = Config()
-optuna_cv_config = OptunaCVConfig(
-    n_trials=10,
-    verbose=2,
-    timeout=600,
-    n_jobs=-1
-)
+optuna_cv_config = OptunaCVConfig(n_trials=10, verbose=2, timeout=600, n_jobs=-1)
 optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     max_depth=IntDistribution(3, 10),
     gamma=FloatDistribution(0, 9),
@@ -32,19 +35,25 @@ optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     classifier_prefix="classifier",
 )
 
-env = os.environ.get("ENVIRONMENT", None)
+
+def get_current_env() -> Literal["development", "production"]:
+    """Determine the current Dagster environment."""
+    in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
+    env = "development" if in_dagster_dev else "production"
+    return env
+
+
+env = get_current_env()
 print("Current environment:", env)
 
-if env == "docker":
+if env == "production":
     lakefs_cfg = LakeFsConfig(
         lakefs_host="http://lakefs:8000",
     )
     mlflow_cfg = MlFlowConfig(
         mlflow_tracking_url="http://mlflow:5000",
     )
-    minio_cfg = MinioConfig(
-        minio_host="http://minio:9000"
-    )
+    minio_cfg = MinioConfig(minio_host="http://minio:9000")
     default_io_manager = PickledObjectFilesystemIOManager(
         "s3://dagster/",
         endpoint_url=minio_cfg.minio_host,
@@ -62,7 +71,10 @@ print("MinIO config: ", minio_cfg)
 print("MLflow config: ", mlflow_cfg)
 
 definitions = dg.Definitions(
-    assets=dg.load_assets_from_modules(modules=[income_prediction.assets]),
+    assets=dg.with_source_code_references(
+        dg.load_assets_from_modules(modules=[income_prediction.assets])
+    ),
+    sensors=[model_version_trigger],
     resources={
         "config": config,
         "mlflow_session": MlflowSession(
@@ -81,5 +93,6 @@ definitions = dg.Definitions(
         ),
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
+        "model_version": ModelVersion.configure_at_launch(),
     },
 )
