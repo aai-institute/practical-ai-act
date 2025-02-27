@@ -1,11 +1,7 @@
 from __future__ import annotations
 
-import urllib
-import urllib.request
-import zipfile
 from enum import Enum
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
 import pandas as pd
 from sensai.util.cache import pickle_cached

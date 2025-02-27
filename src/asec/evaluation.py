@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import Any
 
 import pandas as pd
-from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
+from sklearn.pipeline import Pipeline
 
 
 @dataclass
@@ -34,7 +34,12 @@ class ClassificationEvaluationResult:
 
 class ClassificationEvaluation:
     def __init__(
-        self, X, y, evaluation_params: ClassificationEvaluationParams, fit_models=True, average: str = "binary"
+        self,
+        X,
+        y,
+        evaluation_params: ClassificationEvaluationParams,
+        fit_models=True,
+        average: str = "binary",
     ):
         self.average = average
         self.fit_models = fit_models
@@ -71,7 +76,9 @@ class ClassificationEvaluation:
         accuracy = accuracy_score(y_true, y_pred)
         f1 = f1_score(y_true, y_pred, pos_label=pos_label, average=self.average)
         recall = recall_score(y_true, y_pred, pos_label=pos_label, average=self.average)
-        precision = precision_score(y_true, y_pred, pos_label=pos_label, average=self.average)
+        precision = precision_score(
+            y_true, y_pred, pos_label=pos_label, average=self.average
+        )
         return MetricCollection(accuracy, f1, recall, precision)
 
     def get_train_test_split(self):

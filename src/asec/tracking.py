@@ -1,14 +1,14 @@
-import os
 import logging
+import os
 from tempfile import TemporaryDirectory
 
 import mlflow
 import pandas as pd
-
-from asec.evaluation import ClassificationEvaluationResult
 from mlflow.models import infer_signature
 from mlflow.models.model import ModelInfo
 from sklearn.pipeline import Pipeline
+
+from asec.evaluation import ClassificationEvaluationResult
 
 
 def mlflow_track(

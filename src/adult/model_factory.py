@@ -1,14 +1,13 @@
+from lightgbm import LGBMClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.pipeline import make_pipeline, Pipeline, make_union
 from sklearn.compose import ColumnTransformer
 from sklearn.neural_network import MLPClassifier
-from sklearn.utils.metaestimators import available_if
+from sklearn.pipeline import Pipeline, make_pipeline, make_union
 from sklearn.preprocessing import LabelEncoder
-
+from sklearn.utils.metaestimators import available_if
 from xgboost import XGBClassifier
-from lightgbm import LGBMClassifier
 
-from .features import collect_features, FeatureName
+from .features import FeatureName, collect_features
 
 
 class LabelEncodedClassifier(ClassifierMixin, BaseEstimator):

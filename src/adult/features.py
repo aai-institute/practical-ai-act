@@ -1,14 +1,14 @@
 import collections.abc
+from collections.abc import Callable
 from copy import copy
 from enum import Enum
-from typing import Literal, Any, Callable
+from typing import Any, Literal
 
 import pandas as pd
-
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.pipeline import make_pipeline, FeatureUnion, make_union, Pipeline
+from sklearn.compose import ColumnTransformer, make_column_transformer
+from sklearn.pipeline import FeatureUnion, Pipeline, make_pipeline, make_union
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.compose import make_column_transformer, ColumnTransformer
 
 from .data import AdultData
 
