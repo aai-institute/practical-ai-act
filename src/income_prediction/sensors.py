@@ -1,42 +1,14 @@
 import dagster as dg
 import pandas as pd
 
-from . import InferenceLog, MlflowSession
+from . import MlflowSession
 from .assets.model import ModelVersion
-from .jobs import data_quality_report, model_evaluation_job, model_container_job
-
-
-def _need_to_run(log_df: pd.DataFrame, cursor: str | None) -> bool:
-    if cursor is None:
-        return True
-    if log_df.empty:
-        return False
-    return log_df.iloc[-1].id != cursor
+from .jobs import model_container_job
 
 
 @dg.sensor(
-    job=data_quality_report,
-    minimum_interval_seconds=10,
-    default_status=dg.DefaultSensorStatus.STOPPED,
-)
-def report_trigger(context: dg.SensorEvaluationContext, inference_logs: InferenceLog):
-    log = inference_logs.fetch_inference_log()
-    last_id = context.cursor
-
-    context.log.info(f"Log info: {log.info}, last ID: {last_id}")
-
-    if _need_to_run(log, last_id):
-        last_id = log.iloc[-1].id
-        yield dg.RunRequest(
-            run_key=f"report-{last_id}",
-        )
-        context.update_cursor(last_id)
-    else:
-        yield dg.SkipReason("No new inference data")
-
-
-@dg.sensor(
-    jobs=[model_evaluation_job, model_container_job],
+    job=model_container_job,
+    description="Build inference server container image whenever a new model version is registered in the MLflow registry",
     default_status=dg.DefaultSensorStatus.STOPPED,
 )
 def model_version_trigger(context, mlflow_session: MlflowSession):
@@ -44,7 +16,6 @@ def model_version_trigger(context, mlflow_session: MlflowSession):
     ver, uri = mlflow_session.get_latest_model_version(model_name)
     if context.cursor != ver:
         yield dg.RunRequest(
-            job_name=model_container_job.name,
             run_key=f"model-container-build-{model_name}-{ver}",
             run_config={
                 "resources": {

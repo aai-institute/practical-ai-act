@@ -8,7 +8,6 @@ from upath import UPath
 
 import income_prediction.assets
 import income_prediction.assets
-from income_prediction.io_managers.csv_fs_io_manager import CSVFSIOManager
 from income_prediction.io_managers.lakefs import LakeFSIOManager
 from income_prediction.resources.configuration import (
     Config,
@@ -24,7 +23,7 @@ from income_prediction.resources.configuration import (
 from income_prediction.resources.mlflow_session import MlflowSession
 from .assets.model import ModelVersion
 from .resources.monitoring import InferenceLog
-from .sensors import report_trigger, model_version_trigger
+from .sensors import model_version_trigger
 
 config = Config()
 optuna_cv_config = OptunaCVConfig(n_trials=10, verbose=2, timeout=600, n_jobs=-1)
@@ -36,6 +35,7 @@ optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     min_child_weight=IntDistribution(1, 100),
     classifier_prefix="classifier",
 )
+
 
 def get_current_env() -> Literal["development", "production"]:
     """Determine the current Dagster environment."""
@@ -75,10 +75,7 @@ definitions = dg.Definitions(
     assets=dg.with_source_code_references(
         dg.load_assets_from_modules(modules=[income_prediction.assets])
     ),
-    sensors=[
-        report_trigger,
-        model_version_trigger,
-    ],
+    sensors=[model_version_trigger],
     resources={
         "config": config,
         "mlflow_session": MlflowSession(

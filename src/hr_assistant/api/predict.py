@@ -1,16 +1,9 @@
-from typing import cast
-
-import duckdb
 import pandas as pd
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from starlette.responses import Response
 
 from hr_assistant.api.exceptions import InferenceError
-from hr_assistant.dependencies.logging import (
-    PredictionLoggerDependency,
-    SQLitePredictionLogger,
-)
 from hr_assistant.dependencies.models import InferenceClientDependency
 
 
@@ -80,15 +73,3 @@ async def predict(
         return Response(content=result.to_json(orient="records"))
     except InferenceError as e:
         raise HTTPException(status_code=500, detail=e.response.error) from e
-
-
-# FIXME: This is an ugly workaround to enable building the Dagster sensor
-@router.get("/logs")
-async def inference_logs(logger: PredictionLoggerDependency):
-    db_path = cast(SQLitePredictionLogger, logger)._db_path
-    with duckdb.connect() as db:
-        db.query(f"ATTACH '{db_path}' (TYPE SQLITE);")
-        df = db.query(
-            "SELECT * FROM predictions.inference_requests req LEFT JOIN predictions.inference_responses resp ON (req.id == resp.id)"
-        ).df()
-        return Response(df.to_csv(), media_type="application/csv")
