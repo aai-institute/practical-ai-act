@@ -4,7 +4,7 @@ import pandas as pd
 from income_prediction.resources.monitoring import InferenceLog
 
 
-@dg.asset
+@dg.asset(group_name="monitoring")
 def nannyml_report(
     context: dg.AssetExecutionContext,
     reference_dataset: pd.DataFrame,

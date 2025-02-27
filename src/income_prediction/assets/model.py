@@ -39,7 +39,7 @@ def model_evaluation(
             )
 
 
-@dg.asset(kinds={"docker"})
+@dg.asset(kinds={"docker"}, group_name="deployment")
 def model_container(context: dg.AssetExecutionContext, model_version: ModelVersion):
     context.log.info(f"Building container for model version {model_version.version}")
 
