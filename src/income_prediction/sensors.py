@@ -44,7 +44,8 @@ def model_version_trigger(context, mlflow_session: MlflowSession):
     ver, uri = mlflow_session.get_latest_model_version(model_name)
     if context.cursor != ver:
         yield dg.RunRequest(
-            run_key=f"evaluate-{model_name}-{ver}",
+            job_name=model_container_job.name,
+            run_key=f"model-container-build-{model_name}-{ver}",
             run_config={
                 "resources": {
                     "model_version": {
