@@ -8,6 +8,11 @@ ENV UV_SYSTEM_PYTHON=1
 
 EXPOSE 5000
 
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    apt-get update && \
+    apt-get install -yqq --no-install-recommends tini
+
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install \
     mlflow==${MLFLOW_VERSION} \
@@ -16,3 +21,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     boto3 \
     psycopg2-binary \
     prometheus_flask_exporter
+
+# Use tini to properly handle container termination
+ENTRYPOINT [ "tini", "--" ]
