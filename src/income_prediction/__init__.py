@@ -1,4 +1,5 @@
 import os
+from typing import Literal
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
@@ -36,8 +37,14 @@ optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     classifier_prefix="classifier",
 )
 
-in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
-env = "development" if in_dagster_dev else "production"
+def get_current_env() -> Literal["development", "production"]:
+    """Determine the current Dagster environment."""
+    in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
+    env = "development" if in_dagster_dev else "production"
+    return env
+
+
+env = get_current_env()
 print("Current environment:", env)
 
 if env == "production":
