@@ -58,6 +58,7 @@ def optuna_search_xgb(
         dict[str, optuna.distributions.BaseDistribution]
     ],
 ):
+    model_name = "xgboost-classifier"
     optuna_search = optuna.integration.OptunaSearchCV(
         ModelFactory.create_xgb(),
         param_distributions=optuna_xgb_param_distribution,
@@ -70,12 +71,16 @@ def optuna_search_xgb(
     )
 
     with mlflow_session.start_run(context):
-        with mlflow.start_run(nested=True, run_name="xgboost-classifier"):
+        with mlflow.start_run(nested=True, run_name=model_name):
             mlflow.autolog(log_datasets=False)
             best_model = optuna_search.best_estimator_
             best_model.fit(
                 train_data.drop(columns=CensusASECMetadata.TARGET),
                 train_data[CensusASECMetadata.TARGET],
+            )
+            mlflow.register_model(
+                name=model_name,
+                model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
             )
             mlflow.evaluate(
                 model=best_model.predict,
