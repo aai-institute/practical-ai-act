@@ -22,7 +22,6 @@ from income_prediction.resources.configuration import (
 )
 from income_prediction.resources.mlflow_session import MlflowSession
 from .assets.model import ModelVersion
-from .resources.monitoring import InferenceLog
 from .sensors import model_version_trigger
 
 config = Config()
@@ -94,7 +93,6 @@ definitions = dg.Definitions(
         ),
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
-        "inference_logs": InferenceLog(api_base_url="http://localhost:8001"),
         "model_version": ModelVersion.configure_at_launch(),
     },
 )
