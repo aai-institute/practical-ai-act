@@ -1,0 +1,56 @@
+telemetry:
+  enabled: false
+
+scheduler:
+  module: dagster.core.scheduler
+  class: DagsterDaemonScheduler
+
+run_coordinator:
+  module: dagster.core.run_coordinator
+  class: QueuedRunCoordinator
+
+run_launcher:
+  module: dagster_docker
+  class: DockerRunLauncher
+  config:
+    env_vars:
+      - DAGSTER_POSTGRES_HOST
+      - DAGSTER_POSTGRES_USER
+      - DAGSTER_POSTGRES_PASSWORD
+      - DAGSTER_POSTGRES_DB
+      - DAGSTER_LOGS_S3_ENDPOINT
+      - DAGSTER_LOGS_S3_BUCKET
+      - DAGSTER_LOGS_S3_ACCESS_KEY_ID
+      - DAGSTER_LOGS_S3_SECRET_KEY
+    network: dagster
+    container_kwargs:
+      volumes: # Make docker client accessible to any launched containers as well
+        - /var/run/docker.sock:/var/run/docker.sock
+
+storage:
+  postgres:
+    postgres_db:
+      hostname:
+        env: DAGSTER_POSTGRES_HOST
+      username:
+        env: DAGSTER_POSTGRES_USER
+      password:
+        env: DAGSTER_POSTGRES_PASSWORD
+      db_name:
+        env: DAGSTER_POSTGRES_DB
+      port: 5432
+
+compute_logs:
+  module: dagster_obstore.s3.compute_log_manager
+  class: S3ComputeLogManager
+  config:
+    bucket:
+      env: DAGSTER_LOGS_S3_BUCKET
+    access_key_id:
+      env: DAGSTER_LOGS_S3_ACCESS_KEY_ID
+    secret_access_key:
+      env: DAGSTER_LOGS_S3_SECRET_KEY
+    allow_http: true
+    endpoint:
+      env: DAGSTER_LOGS_S3_ENDPOINT
+    prefix: "logs/"

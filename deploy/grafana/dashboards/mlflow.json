@@ -1,0 +1,258 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "/^version$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "mlflow_exporter_info",
+          "format": "table",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Server version",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 3,
+        "y": 0
+      },
+      "id": 3,
+      "maxDataPoints": 1,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "sum(rate(mlflow_http_request_total{status=\"200\"}[5m])) / (sum(rate(mlflow_http_request_total[5m])))",
+          "format": "time_series",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "HTTP request success rate",
+      "type": "gauge"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 1,
+      "maxDataPoints": 50,
+      "options": {
+        "calculate": false,
+        "calculation": {
+          "xBuckets": {
+            "mode": "size",
+            "value": ""
+          },
+          "yBuckets": {
+            "mode": "size",
+            "value": ""
+          }
+        },
+        "cellGap": 1,
+        "color": {
+          "exponent": 0.5,
+          "fill": "dark-orange",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "Oranges",
+          "steps": 64
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-9
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "tooltip": {
+          "mode": "single",
+          "showColorScale": false,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false,
+          "unit": "s"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": "Prometheus",
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by(le) (rate(mlflow_http_request_duration_seconds_bucket[$__rate_interval]))",
+          "format": "heatmap",
+          "fullMetaSearch": false,
+          "includeNullMetadata": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "HTTP request latency",
+      "type": "heatmap"
+    }
+  ],
+  "preload": true,
+  "refresh": true,
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "MLflow",
+  "uid": "fedf38ey5pnggd",
+  "version": 1,
+  "weekStart": ""
+}

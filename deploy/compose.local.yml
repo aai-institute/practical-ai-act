@@ -1,6 +1,215 @@
-# MLflow deployment with local SQLite database and local artifact storage in Docker volumes
+# Local deployment for the MLOps tool stack:
+#
+# - MinIO for block storage
+# - MLflow for experiment tracking / model registry, backed by MinIO
+# - lakeFS data lake, backed by MinIO
+# - MLServer-based inference server, model fetched from MLflow
+# - Prometheus & Grafana for monitoring
+#
+# The `serve` profile contains the ML model and application serving parts of the tool stack, as well as monitoring:
+#
+# - FastAPI application with hot-reloading
+# - Model inference server, loading from MLflow
+# - Prometheus, with docker-socket-proxy for scrape target discovery in Docker
+# - Grafana
+
+# YAML fragment for MinIO bucket creation containers
+x-minio-cmd: &minio_cmd
+  image: minio/mc
+  depends_on:
+    minio:
+      condition: service_healthy
+  networks:
+    - web
+  environment:
+    MINIO_ROOT_USER: "minio_user"
+    MINIO_ROOT_PASSWORD: "minio_password"
+
+# Common environment variables for the Dagster services
+x-dagster-env: &dagster_env
+  DAGSTER_POSTGRES_HOST: "postgres"
+  DAGSTER_POSTGRES_USER: "postgres_user"
+  DAGSTER_POSTGRES_PASSWORD: "postgres_password"
+  DAGSTER_POSTGRES_DB: "postgres_db"
+  DAGSTER_LOGS_S3_ENDPOINT: "http://minio:9000"
+  DAGSTER_LOGS_S3_BUCKET: "dagster"
+  DAGSTER_LOGS_S3_ACCESS_KEY_ID: "minio_user"
+  DAGSTER_LOGS_S3_SECRET_KEY: "minio_password"
 
 services:
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - web
+      - dagster
+    environment:
+      MINIO_ROOT_USER: "minio_user"
+      MINIO_ROOT_PASSWORD: "minio_password"
+    healthcheck:
+      test: timeout 5s bash -c ':> /dev/tcp/127.0.0.1/9000' || exit 1
+      interval: 2s
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  # MinIO bucket creation containers
+  minio-create-bucket-mlflow:
+    <<: *minio_cmd
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/mlflow"
+  minio-create-bucket-lakefs:
+    <<: *minio_cmd
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/lakefs"
+  minio-create-bucket-dagster:
+    <<: *minio_cmd
+    entrypoint: >
+      bash -c "
+      mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
+      mc mb --ignore-existing minio/dagster"
+
+  # This service runs the postgres DB used by dagster for run storage, schedule storage,
+  # and event log storage. Depending on the hardware you run this Compose on, you may be able
+  # to reduce the interval and timeout in the healthcheck to speed up your `docker-compose up` times.
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: "postgres_user"
+      POSTGRES_PASSWORD: "postgres_password"
+      POSTGRES_DB: "postgres_db"
+    networks:
+      - dagster
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_user -d postgres_db"]
+      interval: 10s
+      timeout: 8s
+      retries: 5
+  lakefs:
+    image: treeverse/lakefs
+    depends_on:
+      minio-create-bucket-lakefs:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    networks:
+      - web
+      - dagster
+    volumes:
+      - lakefs_data:/var/lib/lakefs
+    environment:
+      - LAKEFS_DATABASE_TYPE=local
+      - LAKEFS_BLOCKSTORE_TYPE=s3
+      - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
+      - LAKEFS_BLOCKSTORE_S3_FORCE_PATH_STYLE=true
+      - LAKEFS_BLOCKSTORE_S3_ENDPOINT=http://minio:9000
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_ACCESS_KEY_ID=minio_user
+      - LAKEFS_BLOCKSTORE_S3_CREDENTIALS_SECRET_ACCESS_KEY=minio_password
+      - LAKEFS_AUTH_ENCRYPT_SECRET_KEY=hello
+      - LAKEFS_LOGGING_LEVEL=INFO
+      - LAKEFS_INSTALLATION_USER_NAME=aai
+      - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
+      - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    command: ["run", "--local-settings"]
+
+  lakefs-create-repo:
+    depends_on:
+      - lakefs
+    environment:
+      - LAKECTL_SERVER_ENDPOINT_URL=http://lakefs:8000
+      - LAKECTL_CREDENTIALS_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
+      - LAKECTL_CREDENTIALS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - REPOSITORY_URI=lakefs://twai-pipeline
+    networks:
+      - web
+    image: treeverse/lakefs
+    entrypoint: ""
+    command: sh -xc "lakectl fs ls $$REPOSITORY_URI/main/ || lakectl repo create $$REPOSITORY_URI s3://lakefs"
+
+  dagster-user-code:
+    profiles: [dagster]
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile.income_prediction
+    image: dagster_user_code_image
+    networks:
+      - dagster
+    environment:
+      <<: *dagster_env
+      DAGSTER_CURRENT_IMAGE: "dagster_user_code_image"
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
+        - path: ../pyproject.toml
+          action: rebuild
+        - path: ../uv.lock
+          action: rebuild
+        - path: ../src
+          action: rebuild
+          target: /opt/dagster/app/src
+
+  dagster-webserver:
+    profiles: [dagster]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - web
+      - dagster
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - dagster-webserver
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "3000"
+      - -w
+      - workspace.yaml
+    environment:
+      <<: *dagster_env
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
+  dagster-daemon:
+    profiles: [dagster]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      lakefs-create-repo:
+        condition: service_completed_successfully
+    build:
+      context: ..
+      dockerfile: deploy/dagster/Dockerfile
+    networks:
+      - dagster
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - dagster-daemon
+      - run
+    healthcheck:
+      test: dagster-daemon liveness-check
+      interval: 15s
+    environment:
+      <<: *dagster_env
+    develop:
+      watch:
+        - path: dagster
+          action: rebuild
   mlflow:
     build:
       context: mlflow
@@ -10,10 +219,27 @@ services:
         - path: mlflow
           action: rebuild
     ports:
-      - "5000:5000"
+      - "50000:5000"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/version').read()"
+      interval: 2s
+    networks:
+      - monitoring
+      - web
+      - dagster
+    depends_on:
+      minio-create-bucket-mlflow:
+        condition: service_completed_successfully
     volumes:
       - mlflow_artifacts:/mlartifacts
       - mlflow_db:/mlruns
+      - mlflow_metrics:/metrics
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minio_user
+      AWS_SECRET_ACCESS_KEY: minio_password
+    labels:
+      prometheus.job: "mlflow"
     command:
       - "mlflow"
       - "server"
@@ -21,9 +247,114 @@ services:
       - "0.0.0.0"
       - "--backend-store-uri"
       - "sqlite:///mlruns/mlflow.db"
-      - "--default-artifact-root"
-      - "/mlartifacts"
+      - "--artifacts-destination"
+      - "s3://mlflow"
+      - "--serve-artifacts"
+      - "--expose-prometheus"
+      - "/metrics"
+
+  model:
+    profiles: [serve]
+    build:
+      context: model
+      dockerfile: Dockerfile
+    networks:
+      - monitoring
+      - web
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    environment:
+      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
+      MLSERVER_MODEL_NAME: "xgboost-classifier"
+      MLSERVER_MODEL_VERSION: "latest"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
+      interval: 2s
+    labels:
+      prometheus.job: "ml-model"
+      prometheus.port: "8082"
+
+  app:
+    profiles: [serve]
+    build:
+      context: ../
+      dockerfile: deploy/app/Dockerfile
+    networks:
+      - web
+    ports:
+      - "8001:8000"
+    depends_on:
+      model:
+        condition: service_healthy
+    labels:
+      prometheus.job: "app"
+    develop:
+      watch:
+        - path: app
+          action: rebuild
+        - path: ../pyproject.toml
+          action: rebuild
+        - path: ../uv.lock
+          action: rebuild
+        - path: ../src
+          action: sync
+          target: /app/src
+
+  # Needed for docker_sd_config target discovery in Prometheus
+  docker-proxy:
+    profiles: [serve]
+    image: tecnativa/docker-socket-proxy
+    privileged: true
+    container_name: docker-proxy
+    environment:
+      CONTAINERS: 1
+      NETWORKS: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - monitoring
+
+  prometheus:
+    profiles: [serve]
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - web
+      - monitoring
+    ports:
+      - "9090:9090"
+
+  grafana:
+    profiles: [serve]
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
+      - web
+    ports:
+      - "3001:3000" # prevent clash with Dagster
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
 
 volumes:
+  minio_data:
+  lakefs_data:
   mlflow_artifacts:
   mlflow_db:
+  mlflow_metrics:
+  prometheus_data:
+
+networks:
+  web:
+  monitoring:
+    internal: true
+  dagster:
+    name: dagster

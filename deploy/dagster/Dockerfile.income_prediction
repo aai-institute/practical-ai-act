@@ -1,0 +1,60 @@
+FROM python:3.13-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ARG DAGSTER_CORE_VERSION=1.10.2
+ARG DAGSTER_LIB_VERSION=0.26.2
+
+WORKDIR /opt/dagster/app
+
+# Cannot symlink into the cache mount directory, need to copy installed files instead
+ENV UV_LINK_MODE=copy
+
+# Install dependencies
+
+# Docker CLI with buildx is needed for container builds
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    <<EOS
+        apt-get update
+        apt-get install -yqq --no-install-recommends ca-certificates curl
+        install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+        chmod a+r /etc/apt/keyrings/docker.asc
+
+        # Add the repository to Apt sources:
+        echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
+            > /etc/apt/sources.list.d/docker.list
+        apt-get update
+
+        apt-get install -yqq --no-install-recommends docker-ce-cli docker-buildx-plugin
+EOS
+
+# libgomp is a system dependency of lightgbm
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    apt-get update && \
+    apt-get install -yqq --no-install-recommends libgomp1
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --group train --no-install-project
+
+# Copy the project into the image
+COPY src src
+COPY deploy/model deploy/model
+
+# Sync the project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --group train
+
+# Run dagster code server on port 4000
+EXPOSE 4000
+
+ENTRYPOINT ["uv", "run"]
+# CMD allows this to be overridden from run launchers or executors to execute runs and steps
+CMD ["dagster", "code-server", "start", "-h", "0.0.0.0", "-p", "4000", "-m", "income_prediction"]

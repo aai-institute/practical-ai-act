@@ -1,15 +1,26 @@
-from requests import post
+from pathlib import Path
 
-from asec.data import AdultData
-from scripts.config import FILE_NAME_ADULT
+import pandas as pd
+import requests
+import tqdm
 
-adult_data = AdultData(FILE_NAME_ADULT)
-X, _ = adult_data.load_input_output_data()
+X = pd.read_csv(
+    Path(__file__).parents[1] / "data" / "test_data.csv",
+    index_col=[0, 1],
+)
 
-batch_df = X.dropna().sample(n=1000)
-batch_df[AdultData.Column.HOURS_PER_WEEK] *= 2
+batch_df = X.dropna().drop(columns=["SALARY_BAND"]).sample(n=100)
 batch = batch_df.to_dict(orient="records")
 
-for record in batch:
-    response = post("http://localhost:8000/model/predict", json=record)
-    response.raise_for_status()
+predict_endpoint = "http://localhost:8001/model/predict"
+
+# Batch request
+response = requests.post(predict_endpoint, json=batch)
+response.raise_for_status()
+
+# Single-record requests
+with tqdm.tqdm(total=len(batch)) as pbar:
+    for record in batch:
+        response = requests.post(predict_endpoint, json=record)
+        response.raise_for_status()
+        pbar.update(1)
