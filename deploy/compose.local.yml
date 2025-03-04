@@ -258,22 +258,21 @@ services:
     build:
       context: model
       dockerfile: Dockerfile
+      network: host
+      args:
+        # FIXME: This depends on the running MLflow registry and the correct resolution in network host mode
+        MLFLOW_TRACKING_URI: "http://host.docker.internal:50000"
+        MODEL_URI: "models:/xgboost-classifier/latest"
+        MODEL_NAME: "xgboost-classifier"
+        MODEL_VERSION: "latest"
     networks:
       - monitoring
       - web
-    depends_on:
-      mlflow:
-        condition: service_healthy
-    environment:
-      MLFLOW_TRACKING_URI: "http://mlflow:5000"
-      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
-      MLSERVER_MODEL_NAME: "xgboost-classifier"
-      MLSERVER_MODEL_VERSION: "latest"
     ports:
       - "8080:8080"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
-      interval: 2s
+      interval: 5s
     labels:
       prometheus.job: "ml-model"
       prometheus.port: "8082"
