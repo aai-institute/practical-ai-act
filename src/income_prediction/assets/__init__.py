@@ -1,5 +1,7 @@
 import dagster as dg
 import mlflow
+import mlflow.models
+import mlflow.utils
 import optuna
 import pandas as pd
 import sklearn.pipeline
@@ -68,15 +70,18 @@ def optuna_search_xgb(
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name=model_name):
-            mlflow.autolog(log_datasets=False)
+            mlflow.autolog(log_datasets=False, log_models=False)
             best_model = optuna_search.best_estimator_
             best_model.fit(
                 train_data.drop(columns=CensusASECMetadata.TARGET),
                 train_data[CensusASECMetadata.TARGET],
             )
-            mlflow.register_model(
-                name=model_name,
-                model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
+
+            mlflow.sklearn.log_model(
+                best_model,
+                artifact_path="model",
+                registered_model_name=model_name,
+                code_paths=["src/asec"],
             )
             mlflow.evaluate(
                 model=best_model.predict,
