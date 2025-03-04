@@ -1,38 +1,21 @@
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import TypedDict
 
 from fastapi import FastAPI, Request
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from .api.info import router as info_router
 from .api.predict import router as predict_router
-from .dependencies.logging import (
-    AbstractPredictionLogger,
-    SQLitePredictionLogger,
-)
-
-
-class State(TypedDict):
-    request_logger: AbstractPredictionLogger
-
 
 # Prometheus metrics exporter
 instrumentator = Instrumentator()
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI) -> AsyncIterator[State]:
+async def lifespan(_app: FastAPI) -> AsyncIterator:
     instrumentator.expose(app, tags=["monitoring"])
-
-    logger = SQLitePredictionLogger("predictions.sqlite3")
-
-    yield {
-        "request_logger": logger,
-    }
-
-    logger.flush()
+    yield
 
 
 app = FastAPI(lifespan=lifespan)

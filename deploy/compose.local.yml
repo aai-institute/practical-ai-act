@@ -75,22 +75,26 @@ services:
       mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
       mc mb --ignore-existing minio/dagster"
 
-  # This service runs the postgres DB used by dagster for run storage, schedule storage,
-  # and event log storage. Depending on the hardware you run this Compose on, you may be able
-  # to reduce the interval and timeout in the healthcheck to speed up your `docker-compose up` times.
   postgres:
     image: postgres:17
     environment:
       POSTGRES_USER: "postgres_user"
       POSTGRES_PASSWORD: "postgres_password"
       POSTGRES_DB: "postgres_db"
+      POSTGRES_ADDITIONAL_DB_NAMES: "hr_assistant,mlflow"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/init-dbs.sh:/docker-entrypoint-initdb.d/init-dbs.sh
     networks:
       - dagster
+      - web
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres_user -d postgres_db"]
       interval: 10s
-      timeout: 8s
+      timeout: 5s
       retries: 5
+
   lakefs:
     image: treeverse/lakefs
     depends_on:
