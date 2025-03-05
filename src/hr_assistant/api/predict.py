@@ -72,4 +72,4 @@ async def predict(
         result = await inference_client.predict(request)
         return Response(content=result.to_json(orient="records"))
     except InferenceError as e:
-        raise HTTPException(status_code=500, detail=e.response.error) from e
+        raise HTTPException(status_code=500, detail=e.message) from e

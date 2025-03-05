@@ -75,22 +75,26 @@ services:
       mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
       mc mb --ignore-existing minio/dagster"
 
-  # This service runs the postgres DB used by dagster for run storage, schedule storage,
-  # and event log storage. Depending on the hardware you run this Compose on, you may be able
-  # to reduce the interval and timeout in the healthcheck to speed up your `docker-compose up` times.
   postgres:
     image: postgres:17
     environment:
       POSTGRES_USER: "postgres_user"
       POSTGRES_PASSWORD: "postgres_password"
       POSTGRES_DB: "postgres_db"
+      POSTGRES_ADDITIONAL_DB_NAMES: "hr_assistant,mlflow"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/init-dbs.sh:/docker-entrypoint-initdb.d/init-dbs.sh
     networks:
       - dagster
+      - web
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres_user -d postgres_db"]
       interval: 10s
-      timeout: 8s
+      timeout: 5s
       retries: 5
+
   lakefs:
     image: treeverse/lakefs
     depends_on:
@@ -102,9 +106,11 @@ services:
       - web
       - dagster
     volumes:
-      - lakefs_data:/var/lib/lakefs
+      - lakefs_data:/lakefs
     environment:
       - LAKEFS_DATABASE_TYPE=local
+      - LAKEFS_DATABASE_LOCAL_PATH=/lakefs/db
+      - LAKEFS_COMMITTED_LOCAL_CACHE_DIR=/lakefs/cache
       - LAKEFS_BLOCKSTORE_TYPE=s3
       - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
       - LAKEFS_BLOCKSTORE_S3_FORCE_PATH_STYLE=true
@@ -116,6 +122,8 @@ services:
       - LAKEFS_INSTALLATION_USER_NAME=aai
       - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
       - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - LAKEFS_STATS_ENABLED=false
+      - LAKEFS_USAGE_REPORT_ENABLED=false
     command: ["run", "--local-settings"]
 
   lakefs-create-repo:
@@ -258,22 +266,20 @@ services:
     build:
       context: model
       dockerfile: Dockerfile
+      network: host
+      args:
+        # FIXME: This depends on the running MLflow registry and the correct resolution in network host mode
+        MLFLOW_TRACKING_URI: "http://host.docker.internal:50000"
+        MODEL_NAME: "xgboost-classifier"
+        MODEL_VERSION: "latest"
     networks:
       - monitoring
       - web
-    depends_on:
-      mlflow:
-        condition: service_healthy
-    environment:
-      MLFLOW_TRACKING_URI: "http://mlflow:5000"
-      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
-      MLSERVER_MODEL_NAME: "xgboost-classifier"
-      MLSERVER_MODEL_VERSION: "latest"
     ports:
       - "8080:8080"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
-      interval: 2s
+      interval: 5s
     labels:
       prometheus.job: "ml-model"
       prometheus.port: "8082"
@@ -347,6 +353,12 @@ services:
 volumes:
   minio_data:
   lakefs_data:
+    driver: local
+    # Match ownership to the user of the lakeFS container
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "uid=100,gid=100,mode=770"
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:

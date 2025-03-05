@@ -15,7 +15,7 @@ from mlserver.types import (
 )
 
 from hr_assistant.api.exceptions import InferenceError
-from hr_assistant.config import INFERENCE_ENDPOINT, MODEL_NAME
+from hr_assistant.config import settings
 from hr_assistant.dependencies.logging import PredictionLoggerDependency
 
 
@@ -55,27 +55,30 @@ class OpenInferenceProtocolClient:
     async def predict(self, request: InferenceRequest) -> pd.DataFrame:
         """Perform and log an inference request."""
 
-        resp = await self._httpx.post(
-            f"/v2/models/{self._model_name}/infer", content=request.model_dump_json()
-        )
-        data = resp.json()
-        # No raise_for_status() since the Open Inference Protocol returns a custom error response
+        http_response: httpx.Response | None = None
+        response: InferenceResponse | InferenceErrorResponse | None = None
+        try:
+            http_response = await self._httpx.post(
+                f"/v2/models/{self._model_name}/infer",
+                content=request.model_dump_json(),
+            )
+            # No raise_for_status() since the Open Inference Protocol returns a custom error response model
+            data = http_response.json()
 
-        response: InferenceResponse | InferenceErrorResponse
-
-        if "error" in data:
-            response = InferenceErrorResponse(**data)
-            success = False
-        else:
-            response = InferenceResponse(**data)
-            success = True
-
-        # Log inference request/response pair
-        self._logger.log(request, response)
-
-        if not success:
-            raise InferenceError(response)
-        return PandasCodec.decode_response(response)
+            if "error" in data:
+                response = InferenceErrorResponse(**data)
+                raise InferenceError(response)
+            else:
+                response = InferenceResponse(**data)
+                return PandasCodec.decode_response(response)
+        except httpx.HTTPStatusError as e:
+            http_response = e.response
+            raise InferenceError(message=str(e)) from e
+        except httpx.HTTPError as e:
+            raise InferenceError(message=str(e)) from e
+        finally:
+            # Log every request, even if it fails
+            self._logger.log(request, response, http_response)
 
 
 InferenceClientDependency = Annotated[
@@ -83,8 +86,8 @@ InferenceClientDependency = Annotated[
     Depends(
         partial(
             OpenInferenceProtocolClient,
-            base_url=INFERENCE_ENDPOINT,
-            model_name=MODEL_NAME,
+            base_url=settings.inference_base_url,
+            model_name=settings.model_name,
         )
     ),
 ]

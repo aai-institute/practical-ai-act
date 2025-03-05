@@ -1,6 +1,5 @@
 from typing import Any
 
-from lightgbm import LGBMClassifier
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.neural_network import MLPClassifier
@@ -98,6 +97,8 @@ class ModelFactory:
         cls,
         **lgbm_kwargs,
     ):
+        from lightgbm import LGBMClassifier
+
         classifier = LabelEncodedClassifier(
             LGBMClassifier(**lgbm_kwargs), LabelEncoder()
         )

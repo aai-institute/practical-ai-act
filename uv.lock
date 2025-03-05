@@ -1220,6 +1220,8 @@ deploy = [
     { name = "mlserver" },
     { name = "mlserver-mlflow" },
     { name = "prometheus-fastapi-instrumentator" },
+    { name = "psycopg2-binary" },
+    { name = "pydantic-settings" },
 ]
 dev = [
     { name = "ipython" },
@@ -1275,6 +1277,8 @@ deploy = [
     { name = "mlserver", specifier = ">=1.7.0rc0" },
     { name = "mlserver-mlflow", specifier = ">=1.7.0rc0" },
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.2" },
+    { name = "psycopg2-binary", specifier = ">=2.9.10" },
+    { name = "pydantic-settings", specifier = ">=2.8.0" },
 ]
 dev = [
     { name = "ipython", specifier = ">=8.32.0" },
