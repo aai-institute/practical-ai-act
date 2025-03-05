@@ -1,7 +1,9 @@
 from typing import Any
-from optuna.distributions import IntDistribution, FloatDistribution
+
 from dagster import ConfigurableResource, ResourceDefinition
+from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel
+
 
 class MlFlowConfig(BaseModel):
     mlflow_tracking_url: str = "http://localhost:50000"
@@ -19,6 +21,7 @@ class MinioConfig(BaseModel):
     minio_host: str = "http://localhost:9000"
     minio_access_key_id: str = "minio_user"
     minio_secret_access_key: str = "minio_password"
+
 
 class Config(ConfigurableResource):
     """Pipeline configuration."""
@@ -43,6 +46,7 @@ class OptunaCVConfig(ConfigurableResource):
     parameters of the Optuna cross-validation search. The parameters are passed to
     the [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV] class.
     """
+
     n_trials: int = 100
     timeout: int = 600
     verbose: int = 2
@@ -59,8 +63,9 @@ class OptunaCVConfig(ConfigurableResource):
             "n_jobs": self.n_jobs,
             "random_state": self.random_state,
             "refit": self.refit,
-            **(self.kwargs or {})
+            **(self.kwargs or {}),
         }
+
 
 class OptunaXGBParamDistribution(ResourceDefinition):
     """
@@ -79,14 +84,17 @@ class OptunaXGBParamDistribution(ResourceDefinition):
             the classifier parameters must be prefixed with the name of the classifier
             step in the pipeline.
     """
-    def __init__(self, max_depth: IntDistribution | None = None,
-                 gamma: FloatDistribution | None = None,
-                 reg_lambda: FloatDistribution | None = None,
-                 colsample_bytree: FloatDistribution | None = None,
-                 min_child_weight: IntDistribution | None = None,
-                 classifier_prefix: str | None = None,
-                 **kwargs: Any):
 
+    def __init__(
+        self,
+        max_depth: IntDistribution | None = None,
+        gamma: FloatDistribution | None = None,
+        reg_lambda: FloatDistribution | None = None,
+        colsample_bytree: FloatDistribution | None = None,
+        min_child_weight: IntDistribution | None = None,
+        classifier_prefix: str | None = None,
+        **kwargs: Any,
+    ):
         if classifier_prefix is None:
             classifier_prefix = ""
         else:
@@ -98,9 +106,11 @@ class OptunaXGBParamDistribution(ResourceDefinition):
             f"{classifier_prefix}reg_lambda": reg_lambda,
             f"{classifier_prefix}colsample_bytree": colsample_bytree,
             f"{classifier_prefix}min_child_weight": min_child_weight,
-            **{f"{classifier_prefix}{k}": v for k, v in kwargs.items()}
+            **{f"{classifier_prefix}{k}": v for k, v in kwargs.items()},
         }
 
-        distribution_dict = {k: v for k, v in distribution_dict.items() if v is not None}
+        distribution_dict = {
+            k: v for k, v in distribution_dict.items() if v is not None
+        }
 
         super().__init__(resource_fn=lambda: distribution_dict)
