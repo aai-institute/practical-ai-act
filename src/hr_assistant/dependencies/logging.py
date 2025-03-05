@@ -245,6 +245,7 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
         REQUEST = "inference_requests"
         RESPONSE = "inference_responses"
         ERROR = "inference_errors"
+        METADATA = "inference_metadata"
 
     def __init__(
         self,
@@ -270,11 +271,16 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
             "error": "TEXT",
             "response": "JSONB",
         }
+        metadata_schema = {
+            "id": "TEXT PRIMARY KEY NOT NULL",
+            "metadata": "JSONB",
+        }
 
         tables = {
             self.Tables.REQUEST: request_schema,
             self.Tables.RESPONSE: response_schema,
             self.Tables.ERROR: error_schema,
+            self.Tables.METADATA: metadata_schema,
         }
 
         with self._db_conn.cursor() as cur:
@@ -286,6 +292,67 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
                 cur.execute(f"CREATE TABLE IF NOT EXISTS {table_name} ({schema_str})")
             cur.connection.commit()
 
+    def _log_request(self, cur: psycopg2.extensions.cursor, request: InferenceRequest):
+        cur.execute(
+            f"INSERT INTO {self.Tables.REQUEST} VALUES (%s, %s, %s, %s)",
+            (
+                request.id,
+                request.parameters.model_dump_json(),
+                _json_list(request.inputs),
+                _json_list(request.outputs) if request.outputs else None,
+            ),
+        )
+
+    def _log_response(
+        self,
+        cur: psycopg2.extensions.cursor,
+        request_id: str,
+        response: InferenceResponse | InferenceErrorResponse,
+        raw_response: httpx.Response | None = None,
+    ):
+        if isinstance(response, InferenceResponse):
+            cur.execute(
+                f"INSERT INTO {self.Tables.RESPONSE} VALUES (%s, %s, %s, %s, %s)",
+                (
+                    response.model_name,
+                    response.model_version,
+                    response.id,
+                    response.parameters.model_dump_json(),
+                    _json_list(response.outputs),
+                ),
+            )
+
+        if isinstance(response, InferenceErrorResponse):
+            response_info = {
+                "status_code": raw_response.status_code,
+                "url": str(raw_response.url),
+                "duration": raw_response.elapsed.total_seconds(),
+                "method": raw_response.request.method,
+                "headers": dict(raw_response.headers),
+                "body": raw_response.text,
+            }
+            cur.execute(
+                f"INSERT INTO {self.Tables.ERROR} VALUES (%s, %s, %s)",
+                (
+                    request_id,
+                    response.error,
+                    psycopg2.extras.Json(response_info),
+                ),
+            )
+
+    def _log_metadata(
+        self, cur: psycopg2.extensions.cursor, request_id: str, metadata: dict
+    ):
+        if not metadata:
+            return
+        cur.execute(
+            f"INSERT INTO {self.Tables.METADATA} VALUES (%s, %s)",
+            (
+                request_id,
+                psycopg2.extras.Json(metadata),
+            ),
+        )
+
     def log(
         self,
         input_data: InferenceRequest,
@@ -294,45 +361,9 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
         metadata=None,
     ):
         with self._db_conn.cursor() as cur:
-            cur.execute(
-                f"INSERT INTO {self.Tables.REQUEST} VALUES (%s, %s, %s, %s)",
-                (
-                    input_data.id,
-                    input_data.parameters.model_dump_json(),
-                    _json_list(input_data.inputs),
-                    _json_list(input_data.outputs) if input_data.outputs else None,
-                ),
-            )
-
-            if isinstance(output_data, InferenceResponse):
-                cur.execute(
-                    f"INSERT INTO {self.Tables.RESPONSE} VALUES (%s, %s, %s, %s, %s)",
-                    (
-                        output_data.model_name,
-                        output_data.model_version,
-                        output_data.id,
-                        output_data.parameters.model_dump_json(),
-                        _json_list(output_data.outputs),
-                    ),
-                )
-
-            if isinstance(output_data, InferenceErrorResponse):
-                response_info = {
-                    "status_code": raw_response.status_code,
-                    "url": str(raw_response.url),
-                    "duration": raw_response.elapsed.total_seconds(),
-                    "method": raw_response.request.method,
-                    "headers": dict(raw_response.headers),
-                    "body": raw_response.text,
-                }
-                cur.execute(
-                    f"INSERT INTO {self.Tables.ERROR} VALUES (%s, %s, %s)",
-                    (
-                        input_data.id,
-                        output_data.error,
-                        psycopg2.extras.Json(response_info),
-                    ),
-                )
+            self._log_request(cur, input_data)
+            self._log_response(cur, input_data.id, output_data, raw_response)
+            self._log_metadata(cur, input_data.id, metadata)
             cur.connection.commit()
 
 
