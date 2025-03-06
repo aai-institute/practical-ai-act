@@ -1,8 +1,11 @@
 import json
 from typing import Protocol
+
+import psycopg2.extensions
 from sklearn.preprocessing import LabelEncoder
 from sklearn.base import BaseEstimator
 import pandas as pd
+import mlflow
 from asec.util import flatten_column
 
 
@@ -33,31 +36,29 @@ def build_reference_data(
 
 
 def load_predictions(
-    db, table_name, encoder: LabelEncoder | None = None
+    cursor: psycopg2.extensions.cursor
 ) -> pd.DataFrame:
-    predictions = db.execute(f"SELECT input, output from {table_name}").fetchall()
-    records = []
-    for row in predictions:
-        input_data = json.loads(row[0])[0]
+    query = f"""
+        SELECT req.id as req_id, req.parameters as req_parameters, req.inputs as req_inputs, req.outputs as req_outputs, resp.id as resp_id, resp.model_name as resp_model_name, resp.model_version as resp_model_version, resp.parameters as resp_parameters, resp.outputs as resp_outputs
+        FROM inference_requests req INNER JOIN inference_responses resp
+        ON (req.id = resp.id)
+    """
 
-        output_data = json.loads(row[1])
-        if isinstance(output_data, dict):
-            # Predictions with probabilities
-            prediction_data = output_data["class"][0]
-            proba = output_data["probabilities"][0]
-        else:
-            # Simple argmax predictions
-            prediction_data = int(output_data)
-            proba = []
-        records.append(
-            input_data
-            | {"prediction": prediction_data, "prediction_probability": proba}
-        )
+    cursor.execute(query)
+    rows = cursor.fetchall()
 
-    df = pd.DataFrame.from_records(records)
-    df = flatten_column(df, "prediction_probability", name_prefix="prob")
+    from mlserver.types import InferenceRequest, InferenceResponse
+    from mlserver.codecs import PandasCodec
 
-    if encoder is not None:
-        df["prediction"] = encoder.transform(df["prediction"])
+    results = []
+    for row in rows:
+        req = InferenceRequest.model_validate({k.removeprefix("req_"): v for k, v in row.items() if k.startswith("req_")})
+        resp = InferenceResponse.model_validate({k.removeprefix("resp_"): v for k, v in row.items() if k.startswith("resp_")})
+        req_df = PandasCodec.decode_request(req)
+        resp_df = PandasCodec.decode_response(resp)
 
-    return df
+        df = req_df.copy()
+        df['target'] = resp_df[resp_df.columns[0]]
+        results.append(df)
+
+    return pd.concat(results, axis=0)
