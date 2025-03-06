@@ -83,7 +83,9 @@ def optuna_search_xgb(
                 artifact_path="model",
                 registered_model_name=model_name,
                 code_paths=["src/asec"],
-                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(5),
+                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
+                    5
+                ),
             )
             mlflow.evaluate(
                 model=best_model.predict,

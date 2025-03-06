@@ -35,9 +35,7 @@ def build_reference_data(
     return reference_df
 
 
-def load_predictions(
-    cursor: psycopg2.extensions.cursor
-) -> pd.DataFrame:
+def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
     query = f"""
         SELECT req.id as req_id, req.parameters as req_parameters, req.inputs as req_inputs, req.outputs as req_outputs, resp.id as resp_id, resp.model_name as resp_model_name, resp.model_version as resp_model_version, resp.parameters as resp_parameters, resp.outputs as resp_outputs
         FROM inference_requests req INNER JOIN inference_responses resp
@@ -52,13 +50,17 @@ def load_predictions(
 
     results = []
     for row in rows:
-        req = InferenceRequest.model_validate({k.removeprefix("req_"): v for k, v in row.items() if k.startswith("req_")})
-        resp = InferenceResponse.model_validate({k.removeprefix("resp_"): v for k, v in row.items() if k.startswith("resp_")})
+        req = InferenceRequest.model_validate({
+            k.removeprefix("req_"): v for k, v in row.items() if k.startswith("req_")
+        })
+        resp = InferenceResponse.model_validate({
+            k.removeprefix("resp_"): v for k, v in row.items() if k.startswith("resp_")
+        })
         req_df = PandasCodec.decode_request(req)
         resp_df = PandasCodec.decode_response(resp)
 
         df = req_df.copy()
-        df['target'] = resp_df[resp_df.columns[0]]
+        df["target"] = resp_df[resp_df.columns[0]]
         results.append(df)
 
     return pd.concat(results, axis=0)

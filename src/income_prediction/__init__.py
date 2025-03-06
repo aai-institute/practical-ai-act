@@ -3,24 +3,21 @@ from typing import Literal
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
-from optuna.distributions import IntDistribution, FloatDistribution
+from optuna.distributions import FloatDistribution, IntDistribution
 from upath import UPath
 
-import income_prediction.assets
 import income_prediction.assets
 from income_prediction.io_managers.lakefs import LakeFSIOManager
 from income_prediction.resources.configuration import (
     Config,
     LakeFsConfig,
-    MlFlowConfig,
     MinioConfig,
-)
-from income_prediction.resources.configuration import (
-    Config,
+    MlFlowConfig,
     OptunaCVConfig,
     OptunaXGBParamDistribution,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
+
 from .assets.model import ModelVersion
 from .sensors import model_version_trigger
 

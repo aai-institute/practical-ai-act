@@ -11,6 +11,7 @@ def generate_figure():
     fig.update_layout(title="Live Updating Plotly Graph")
     return fig.to_html(full_html=False)
 
+
 @app.get("/", response_class=HTMLResponse)
 def index():
     return f"""
@@ -24,6 +25,7 @@ def index():
     </body>
     </html>
     """
+
 
 @app.get("/update_data", response_class=HTMLResponse)
 def update_data():
