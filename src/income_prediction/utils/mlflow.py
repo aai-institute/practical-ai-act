@@ -1,7 +1,9 @@
 import mlflow
 
 
-def start_mlflow_run(run_name: str, tags: dict[str, str] | None = None) -> mlflow.ActiveRun:
+def start_mlflow_run(
+    run_name: str, tags: dict[str, str] | None = None
+) -> mlflow.ActiveRun:
     """Starts a new MLflow run or retrieves an existing run with the specified run name.
 
     Parameters

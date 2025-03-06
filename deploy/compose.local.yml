@@ -30,7 +30,7 @@ x-dagster-env: &dagster_env
   DAGSTER_POSTGRES_HOST: "postgres"
   DAGSTER_POSTGRES_USER: "postgres_user"
   DAGSTER_POSTGRES_PASSWORD: "postgres_password"
-  DAGSTER_POSTGRES_DB: "postgres_db"
+  DAGSTER_POSTGRES_DB: "dagster"
   DAGSTER_LOGS_S3_ENDPOINT: "http://minio:9000"
   DAGSTER_LOGS_S3_BUCKET: "dagster"
   DAGSTER_LOGS_S3_ACCESS_KEY_ID: "minio_user"
@@ -81,10 +81,11 @@ services:
       POSTGRES_USER: "postgres_user"
       POSTGRES_PASSWORD: "postgres_password"
       POSTGRES_DB: "postgres_db"
-      POSTGRES_ADDITIONAL_DB_NAMES: "hr_assistant,mlflow"
+      POSTGRES_ADDITIONAL_DB_NAMES: "hr_assistant,dagster"
     ports:
       - "5432:5432"
     volumes:
+      - postgres_data:/var/lib/postgresql/data
       - ./postgres/init-dbs.sh:/docker-entrypoint-initdb.d/init-dbs.sh
     networks:
       - dagster
@@ -105,11 +106,14 @@ services:
     networks:
       - web
       - dagster
+    # NOTE: Need to run as root to allow access to the database Docker volume (owned by root)
+    user: root
     volumes:
       - lakefs_data:/lakefs
     environment:
       - LAKEFS_DATABASE_TYPE=local
       - LAKEFS_DATABASE_LOCAL_PATH=/lakefs/db
+      - LAKEFS_DATABASE_LOCAL_ENABLE_LOGGING=true
       - LAKEFS_COMMITTED_LOCAL_CACHE_DIR=/lakefs/cache
       - LAKEFS_BLOCKSTORE_TYPE=s3
       - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
@@ -353,15 +357,10 @@ services:
 volumes:
   minio_data:
   lakefs_data:
-    driver: local
-    # Match ownership to the user of the lakeFS container
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
-      o: "uid=100,gid=100,mode=770"
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
+  postgres_data:
   prometheus_data:
 
 networks:
