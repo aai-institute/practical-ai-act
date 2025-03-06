@@ -12,6 +12,7 @@ from mlserver.types import (
     InferenceResponse,
     MetadataModelErrorResponse,
     MetadataModelResponse,
+    RequestOutput,
 )
 
 from hr_assistant.api.exceptions import InferenceError
@@ -39,6 +40,9 @@ class OpenInferenceProtocolClient:
     def build_request(self, input_data: pd.DataFrame) -> InferenceRequest:
         request = PandasCodec.encode_request(input_data, use_bytes=False)
         request.id = self._request.state.request_id
+        request.outputs = [
+            RequestOutput(name="predict_proba"),
+        ]
         return request
 
     async def metadata(
