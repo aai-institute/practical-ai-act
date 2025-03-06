@@ -1,11 +1,10 @@
-import json
 from typing import Protocol
 
-import psycopg2.extensions
-from sklearn.preprocessing import LabelEncoder
-from sklearn.base import BaseEstimator
 import pandas as pd
-import mlflow
+import psycopg2.extensions
+from mlserver.codecs import NumpyCodec
+from sklearn.preprocessing import LabelEncoder
+
 from asec.util import flatten_column
 
 
@@ -36,8 +35,10 @@ def build_reference_data(
 
 
 def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
-    query = f"""
-        SELECT req.id as req_id, req.parameters as req_parameters, req.inputs as req_inputs, req.outputs as req_outputs, resp.id as resp_id, resp.model_name as resp_model_name, resp.model_version as resp_model_version, resp.parameters as resp_parameters, resp.outputs as resp_outputs
+    query = """
+        SELECT
+            req.raw_request as request,
+            resp.raw_response as response
         FROM inference_requests req INNER JOIN inference_responses resp
         ON (req.id = resp.id)
     """
@@ -45,22 +46,24 @@ def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
     cursor.execute(query)
     rows = cursor.fetchall()
 
-    from mlserver.types import InferenceRequest, InferenceResponse
     from mlserver.codecs import PandasCodec
+    from mlserver.types import InferenceRequest, InferenceResponse
 
     results = []
     for row in rows:
-        req = InferenceRequest.model_validate({
-            k.removeprefix("req_"): v for k, v in row.items() if k.startswith("req_")
-        })
-        resp = InferenceResponse.model_validate({
-            k.removeprefix("resp_"): v for k, v in row.items() if k.startswith("resp_")
-        })
+        req = InferenceRequest.model_validate(row["request"])
+        resp = InferenceResponse.model_validate(row["response"])
         req_df = PandasCodec.decode_request(req)
-        resp_df = PandasCodec.decode_response(resp)
+
+        outputs = {o.name: NumpyCodec.decode_output(o) for o in resp.outputs}
+        prediction = pd.Series(outputs["predict"].ravel(), name="prediction")
+        prediction_probability = pd.DataFrame(
+            outputs["predict_proba"].tolist(),
+            columns=[f"prob_{i}" for i in range(outputs["predict_proba"].shape[1])],
+        )
 
         df = req_df.copy()
-        df["target"] = resp_df[resp_df.columns[0]]
+        df = pd.concat([df, prediction, prediction_probability], axis=1)
         results.append(df)
 
     return pd.concat(results, axis=0)

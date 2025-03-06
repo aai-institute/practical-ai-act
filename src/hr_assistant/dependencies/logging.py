@@ -258,6 +258,7 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
             "parameters": "JSONB",
             "inputs": "JSONB",
             "outputs": "JSONB",
+            "raw_request": "JSONB",
         }
         response_schema = {
             "model_name": "TEXT",
@@ -265,6 +266,7 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
             "id": "TEXT PRIMARY KEY NOT NULL",
             "parameters": "JSONB",
             "outputs": "JSONB",
+            "raw_response": "JSONB",
         }
         error_schema = {
             "id": "TEXT PRIMARY KEY NOT NULL",
@@ -294,12 +296,13 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
 
     def _log_request(self, cur: psycopg2.extensions.cursor, request: InferenceRequest):
         cur.execute(
-            f"INSERT INTO {self.Tables.REQUEST} VALUES (%s, %s, %s, %s)",
+            f"INSERT INTO {self.Tables.REQUEST} VALUES (%s, %s, %s, %s, %s)",
             (
                 request.id,
                 request.parameters.model_dump_json(),
                 _json_list(request.inputs),
                 _json_list(request.outputs) if request.outputs else None,
+                request.model_dump_json(),
             ),
         )
 
@@ -312,13 +315,14 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
     ):
         if isinstance(response, InferenceResponse):
             cur.execute(
-                f"INSERT INTO {self.Tables.RESPONSE} VALUES (%s, %s, %s, %s, %s)",
+                f"INSERT INTO {self.Tables.RESPONSE} VALUES (%s, %s, %s, %s, %s, %s)",
                 (
                     response.model_name,
                     response.model_version,
                     response.id,
                     response.parameters.model_dump_json(),
                     _json_list(response.outputs),
+                    response.model_dump_json(),
                 ),
             )
 
