@@ -49,8 +49,13 @@ reference_df = build_reference_data(
 
 chunk_size = 250
 estimator = nml.CBPE(
-    problem_type="classification_binary",
-    y_pred_proba="prob_1",
+    problem_type="classification_multiclass",
+    y_pred_proba={
+        idx: f"prob_{idx}"
+        for idx in range(
+            len(Config().salary_bands) + 1
+        )  # Account for implicit highest band
+    },
     y_pred="prediction",
     y_true="target",
     metrics=["roc_auc"],
