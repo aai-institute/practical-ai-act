@@ -2,6 +2,8 @@ FROM python:3.12 AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+ENV UV_LINK_MODE=copy
+
 WORKDIR /app
 
 RUN --mount=type=cache,target=/root/.cache/uv \
