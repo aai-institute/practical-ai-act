@@ -11,6 +11,7 @@ from asec.data import CensusASECMetadata, download_and_filter_census_data
 from asec.features import get_income_prediction_features
 from asec.model_factory import ModelFactory
 from .model import model_container as model_container
+from .monitoring import nannyml_container as nannyml_container
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
 
@@ -82,7 +83,7 @@ def optuna_search_xgb(
                 artifact_path="model",
                 registered_model_name=model_name,
                 code_paths=["src/asec"],
-                input_example=train_data.head(5),
+                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(5),
             )
             mlflow.evaluate(
                 model=best_model.predict,
