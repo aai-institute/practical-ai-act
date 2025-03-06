@@ -1,13 +1,12 @@
 import dagster as dg
-import pandas as pd
 
 from . import MlflowSession
 from .assets.model import ModelVersion
-from .jobs import model_container_job
+from .jobs import model_container_job, nannyml_container_job
 
 
 @dg.sensor(
-    job=model_container_job,
+    jobs=[model_container_job, nannyml_container_job],
     description="Build inference server container image whenever a new model version is registered in the MLflow registry",
     default_status=dg.DefaultSensorStatus.STOPPED,
 )
