@@ -166,6 +166,8 @@ services:
         - path: ../src
           action: rebuild
           target: /opt/dagster/app/src
+        - path: nannyml
+          action: rebuild
 
   dagster-webserver:
     profiles: [dagster]
