@@ -1,7 +1,18 @@
+# Use a lightweight base image
 FROM python:3.12-slim
 
-RUN pip install fastapi uvicorn plotly
+# Set working directory
+WORKDIR /app
 
-ADD main.py main.py
+# Build argument for the pickled estimator filename
+ARG NANNYML_ESTIMATOR
+RUN echo "Building with NANNYML_ESTIMATOR=$NANNYML_ESTIMATOR"
 
-CMD ["uvicorn", "--reload", "main:app", "--host", "0.0.0.0", "--port", "4040"]
+COPY main.py /app/main.py
+COPY $NANNYML_ESTIMATOR /app/nannyml_estimator.pkl
+
+# List files in the container to verify the pickle file exists
+# RUN ls -lh /app
+
+# Default command: Keep container running for manual inspection
+CMD ["tail", "-f", "/dev/null"]
