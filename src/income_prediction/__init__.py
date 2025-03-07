@@ -14,7 +14,7 @@ from income_prediction.resources.configuration import (
     MinioConfig,
     MlFlowConfig,
     OptunaCVConfig,
-    OptunaXGBParamDistribution,
+    OptunaXGBParamDistribution, NannyMLConfig,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
 
@@ -67,6 +67,7 @@ print("LakeFS config: ", lakefs_cfg)
 print("MinIO config: ", minio_cfg)
 print("MLflow config: ", mlflow_cfg)
 
+nanny_ml_config = NannyMLConfig(chunk_size=250)
 definitions = dg.Definitions(
     assets=dg.with_source_code_references(
         dg.load_assets_from_modules(modules=[income_prediction.assets])
@@ -91,5 +92,6 @@ definitions = dg.Definitions(
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
         "model_version": ModelVersion.configure_at_launch(),
+        "nanny_ml_config": nanny_ml_config
     },
 )

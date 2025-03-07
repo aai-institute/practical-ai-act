@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
@@ -114,3 +114,8 @@ class OptunaXGBParamDistribution(ResourceDefinition):
         }
 
         super().__init__(resource_fn=lambda: distribution_dict)
+
+
+class NannyMLConfig(ConfigurableResource):
+    chunk_size: int = 200
+    metrics: list[str] = ["roc_auc"]

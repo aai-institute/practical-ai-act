@@ -1,7 +1,7 @@
 import dagster as dg
 
 from .assets.model import model_container
-from .assets.monitoring import nannyml_container
+from .assets.monitoring import nannyml_container, reference_dataset, nannyml_estimator
 
 model_container_job = dg.define_asset_job(
     name="model_container_job",
@@ -12,5 +12,5 @@ model_container_job = dg.define_asset_job(
 nannyml_container_job = dg.define_asset_job(
     name="nannyml_container_job",
     description="Monitoring service container image build",
-    selection=[nannyml_container],
+    selection=[reference_dataset, nannyml_estimator, nannyml_container],
 )

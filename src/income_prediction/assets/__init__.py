@@ -4,14 +4,13 @@ import mlflow.models
 import mlflow.utils
 import optuna
 import pandas as pd
-import sklearn.pipeline
 from sklearn.model_selection import train_test_split
 
 from asec.data import CensusASECMetadata, download_and_filter_census_data
 from asec.features import get_income_prediction_features
 from asec.model_factory import ModelFactory
 from .model import model_container as model_container
-from .monitoring import nannyml_container as nannyml_container
+from .monitoring import nannyml_container as nannyml_container, reference_dataset as reference_dataset, nannyml_estimator as nannyml_estimator
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
 
@@ -96,19 +95,3 @@ def optuna_search_xgb(
             return best_model
 
 
-@dg.asset(io_manager_key="lakefs_io_manager")
-def reference_dataset(
-    optuna_search_xgb: sklearn.pipeline.Pipeline,
-    test_data: pd.DataFrame,
-) -> pd.DataFrame:
-    """Reference dataset for post-deployment performance monitoring
-
-    Based on predictions of the model on the test dataset"""
-
-    y_proba = optuna_search_xgb.predict_proba(test_data)
-
-    df = test_data.rename({CensusASECMetadata.TARGET: "target"}, axis=1)
-    df = pd.concat(
-        [df, pd.Series(y_proba.tolist(), name="predicted_probabilities")], axis=1
-    )
-    return df
