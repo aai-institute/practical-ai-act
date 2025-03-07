@@ -29,9 +29,8 @@ train = [
     "dagster>=1.9.10",
     "dagster-webserver>=1.9.10",
     "lightgbm>=4.5.0",
-    "sensai>=1.3.0",
     "sensai-utils>=1.4.0",
-    "scikit-learn<1.6",                   # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
+    "scikit-learn<1.6", # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
     "ucimlrepo>=0.0.7",
     "xgboost>=2.1.3",
     "optuna>=4.2.1",
@@ -40,6 +39,9 @@ train = [
     "dagster-postgres>=0.26.2",
     "s3fs>=2025.2.0",
     "dagster-obstore>=0.2.0",
+    "nannyml>=0.13.0",
+    "mlserver>=1.7.0rc0",
+    "mlserver-mlflow>=1.7.0rc0",
 ]
 deploy = [
     "fastapi>=0.110",
@@ -50,9 +52,11 @@ deploy = [
     "prometheus-fastapi-instrumentator>=7.0.2",
     "psycopg2-binary>=2.9.10",
     "pydantic-settings>=2.8.0",
+    "nannyml>=0.13.0",
 ]
 monitoring = ["nannyml>=0.13.0"]
 dev = ["ipython>=8.32.0", "pytest>=8.3.4", "ruff>=0.9.3"]
+
 
 [tool.ruff]
 preview = true
