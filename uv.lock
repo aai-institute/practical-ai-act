@@ -1242,7 +1242,11 @@ docs = [
     { name = "mkdocstrings", extra = ["python"] },
 ]
 monitoring = [
+    { name = "fastapi" },
+    { name = "mlserver" },
+    { name = "mlserver-sklearn" },
     { name = "nannyml" },
+    { name = "psycopg2-binary" },
 ]
 train = [
     { name = "dagster" },
@@ -1301,7 +1305,13 @@ docs = [
     { name = "mkdocs-section-index" },
     { name = "mkdocstrings", extras = ["python"] },
 ]
-monitoring = [{ name = "nannyml", specifier = ">=0.13.0" }]
+monitoring = [
+    { name = "fastapi", specifier = ">=0.115.8" },
+    { name = "mlserver", specifier = ">=1.7.0rc1" },
+    { name = "mlserver-sklearn", specifier = ">=1.6.1" },
+    { name = "nannyml", specifier = ">=0.13.0" },
+    { name = "psycopg2-binary", specifier = ">=2.9.10" },
+]
 train = [
     { name = "dagster", specifier = ">=1.9.10" },
     { name = "dagster-obstore", specifier = ">=0.2.0" },
@@ -2068,6 +2078,20 @@ dependencies = [
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fb/22/41045cd05539f405de70142ce0cc399cfa2961236b7367fdd7d99323c193/mlserver_mlflow-1.7.0rc1-py3-none-any.whl", hash = "sha256:108382fcc16c5cedf84e44d39dd4c21929e893a0adb2092d9246ccd9c71623a9", size = 10182 },
+]
+
+[[package]]
+name = "mlserver-sklearn"
+version = "1.6.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "joblib" },
+    { name = "mlserver" },
+    { name = "scikit-learn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/20/84/64146775ae97d1bb5865b555a43eee2137611d95fa49245b0c7c27602311/mlserver_sklearn-1.6.1.tar.gz", hash = "sha256:1939a3ca19ce69775c3ab4a8093010ee612763b81cda9ecb02de8ce925b154e6", size = 7025 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/9e/ebcd75898d53539c449a201dcc1e2f5b638822a14ada09ded06a02d3c324/mlserver_sklearn-1.6.1-py3-none-any.whl", hash = "sha256:f42619f052dba8ec0a5d901d81aca91cf73300f6b71302d8430bce227a6e346d", size = 8013 },
 ]
 
 [[package]]

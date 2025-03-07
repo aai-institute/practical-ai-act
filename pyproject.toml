@@ -54,7 +54,13 @@ deploy = [
     "pydantic-settings>=2.8.0",
     "nannyml>=0.13.0",
 ]
-monitoring = ["nannyml>=0.13.0"]
+monitoring = [
+    "fastapi>=0.115.8",
+    "mlserver>=1.7.0rc1",
+    "mlserver-sklearn>=1.6.1",
+    "nannyml>=0.13.0",
+    "psycopg2-binary>=2.9.10",
+]
 dev = ["ipython>=8.32.0", "pytest>=8.3.4", "ruff>=0.9.3"]
 
 
