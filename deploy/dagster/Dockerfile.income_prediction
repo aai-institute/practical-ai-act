@@ -28,7 +28,7 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
             > /etc/apt/sources.list.d/docker.list
         apt-get update
 
-        apt-get install -yqq --no-install-recommends docker-ce-cli docker-buildx-plugin
+        apt-get install -yqq --no-install-recommends docker-ce-cli docker-buildx-plugin build-essential gcc
 EOS
 
 # libgomp is a system dependency of lightgbm
