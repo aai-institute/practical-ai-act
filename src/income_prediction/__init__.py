@@ -7,7 +7,7 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from upath import UPath
 
 import income_prediction.assets
-from income_prediction.io_managers.lakefs import LakeFSIOManager
+from income_prediction.io_managers.lakefs import LakeFSParquetIOManager
 from income_prediction.resources.configuration import (
     Config,
     LakeFsConfig,
@@ -79,7 +79,7 @@ definitions = dg.Definitions(
             experiment=mlflow_cfg.mlflow_experiment,
         ),
         "io_manager": default_io_manager,
-        "lakefs_io_manager": LakeFSIOManager(
+        "lakefs_io_manager": LakeFSParquetIOManager(
             base_path=UPath(
                 "lakefs://twai-pipeline/main/data/",
                 host=lakefs_cfg.lakefs_host,
