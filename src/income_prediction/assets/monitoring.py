@@ -54,7 +54,7 @@ def nannyml_estimator(reference_dataset: pd.DataFrame, config: Config, nanny_ml_
 @dg.asset(kinds={"docker"}, group_name="deployment", deps=["nannyml_estimator"])
 def nannyml_container(context: dg.AssetExecutionContext, model_version: ModelVersion,
                       nannyml_estimator: nml.CBPE) -> dg.Output:
-    build_context = Path(__file__).parents[3] / "deploy" / "nannyml"
+    build_context = Path(__file__).parents[3]
     image_tag = f"nannyml:{model_version.version}"
     context.log.info(f"{image_tag=}")
     with NamedTemporaryFile(suffix=".pkl", delete=True, dir=build_context) as tmp_file:
@@ -65,9 +65,11 @@ def nannyml_container(context: dg.AssetExecutionContext, model_version: ModelVer
 
         context.log.info(f"{pkl_path=}")
         context.log.info(f"File exists: {pkl_path.exists()}")
+        context.log.info(f"{build_context=}")
         build_result = build_container_image(build_context,
                                              [image_tag],
-                                             build_args={"NANNYML_ESTIMATOR": str(pkl_path.name)})
+                                             build_args={"NANNYML_ESTIMATOR": str(pkl_path.name)},
+                                             docker_file=build_context / "deploy" / "nannyml" / "Dockerfile")
 
     if not build_result.success:
         context.log.info("Container build logs:\n" + build_result.build_logs)
