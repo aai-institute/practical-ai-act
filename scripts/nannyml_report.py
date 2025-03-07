@@ -10,7 +10,8 @@ from sklearn.model_selection import train_test_split
 
 from asec.data import download_and_filter_census_data
 from asec.features import get_income_prediction_features
-from asec.nannyml import build_reference_data, load_predictions
+from asec.nannyml import build_reference_data
+from deploy.nannyml.main import load_predictions
 
 from config import FILE_NAME_ASEC
 from income_prediction.resources.configuration import Config
