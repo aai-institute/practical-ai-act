@@ -1,18 +1,27 @@
-# Use a lightweight base image
-FROM python:3.12-slim
+FROM python:3.12 AS builder
 
-# Set working directory
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ENV UV_LINK_MODE=copy
+
 WORKDIR /app
 
-# Build argument for the pickled estimator filename
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --group monitoring
+
+
+FROM python:3.12-slim
+WORKDIR /app
+COPY --from=builder /app/.venv /app/.venv
+
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends libgomp1
+
 ARG NANNYML_ESTIMATOR
-RUN echo "Building with NANNYML_ESTIMATOR=$NANNYML_ESTIMATOR"
+COPY deploy/nannyml/main.py .
+COPY $NANNYML_ESTIMATOR ./nannyml_estimator.pkl
+ENV NANNYML_ESTIMATOR=/app/nannyml_estimator.pkl
 
-COPY main.py /app/main.py
-COPY $NANNYML_ESTIMATOR /app/nannyml_estimator.pkl
-
-# List files in the container to verify the pickle file exists
-# RUN ls -lh /app
-
-# Default command: Keep container running for manual inspection
-CMD ["tail", "-f", "/dev/null"]
+CMD ["/app/.venv/bin/uvicorn", "--reload", "main:app", "--host", "0.0.0.0", "--port", "4040"]
