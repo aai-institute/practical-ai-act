@@ -8,7 +8,6 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import pandas as pd
-from sensai.util.cache import pickle_cached
 from ucimlrepo import fetch_ucirepo
 
 
@@ -70,6 +69,7 @@ class AdultData:
         loading_func = fetch_ucirepo
 
         if data_path is not None:
+            from sensai.util.cache import pickle_cached
             loading_func = pickle_cached(data_path)(loading_func)
 
         self._data = loading_func(id=2)

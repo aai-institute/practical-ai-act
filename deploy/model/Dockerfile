@@ -11,7 +11,7 @@ COPY download_model_artifacts.py /
 # Minimal dependencies to access MLflow model registry
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv venv --seed && \
-    uv pip install --prerelease=allow mlflow 'mlserver>=1.7.0rc0' 'mlserver-mlflow>=1.7.0rc0'
+    uv pip install --prerelease=allow mlflow 'mlserver>=1.7.0rc0' 'mlserver-sklearn>=1.7.0rc0'
 
 ARG MLFLOW_TRACKING_URI
 ENV MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI
@@ -41,7 +41,9 @@ ENV MLSERVER_MODEL_NAME=$MODEL_NAME
 ARG MODEL_VERSION=latest
 ENV MLSERVER_MODEL_VERSION=$MODEL_VERSION
 
-ENV MLSERVER_MODEL_URI="file:///model"
+ENV MLSERVER_MODEL_URI="file:///model/model.pkl"
+# FIXME: Extract code paths from model metadata
+ENV PYTHONPATH=/model/code
 
 EXPOSE 8080 8081 8082
 

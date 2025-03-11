@@ -3,15 +3,17 @@ from typing import Annotated
 
 import fastapi
 import httpx
+import numpy as np
 import pandas as pd
 from fastapi import Depends
-from mlserver.codecs import PandasCodec
+from mlserver.codecs import NumpyCodec, PandasCodec
 from mlserver.types import (
     InferenceErrorResponse,
     InferenceRequest,
     InferenceResponse,
     MetadataModelErrorResponse,
     MetadataModelResponse,
+    RequestOutput,
 )
 
 from hr_assistant.api.exceptions import InferenceError
@@ -39,6 +41,10 @@ class OpenInferenceProtocolClient:
     def build_request(self, input_data: pd.DataFrame) -> InferenceRequest:
         request = PandasCodec.encode_request(input_data, use_bytes=False)
         request.id = self._request.state.request_id
+        request.outputs = [
+            RequestOutput(name="predict"),
+            RequestOutput(name="predict_proba"),
+        ]
         return request
 
     async def metadata(
@@ -52,7 +58,7 @@ class OpenInferenceProtocolClient:
         else:
             return MetadataModelResponse(**resp.json()), True
 
-    async def predict(self, request: InferenceRequest) -> pd.DataFrame:
+    async def predict(self, request: InferenceRequest) -> dict[str, np.ndarray]:
         """Perform and log an inference request."""
 
         http_response: httpx.Response | None = None
@@ -70,7 +76,7 @@ class OpenInferenceProtocolClient:
                 raise InferenceError(response)
             else:
                 response = InferenceResponse(**data)
-                return PandasCodec.decode_response(response)
+                return {o.name: NumpyCodec.decode_output(o) for o in response.outputs}
         except httpx.HTTPStatusError as e:
             http_response = e.response
             raise InferenceError(message=str(e)) from e

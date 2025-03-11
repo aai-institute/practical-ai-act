@@ -1,131 +1,65 @@
 """Create an Evidently report from the logged predictions in an SQLite3 database."""
 
-import json
-import sqlite3
-from pathlib import Path
+import os
 
-import mlflow
 import mlflow.models
-import pandas as pd
+import nannyml as nml
+import psycopg2.extras
+from sensai.util.cache import pickle_cached
+from sklearn.model_selection import train_test_split
 
+from asec.data import download_and_filter_census_data
+from asec.features import get_income_prediction_features
+from asec.nannyml import build_reference_data
+from deploy.nannyml.main import load_predictions
 
-def fetch_test_data(model_uri: str) -> pd.DataFrame:
-    """Fetch the test data for the given model from MLflow."""
+from config import FILE_NAME_ASEC
+from income_prediction.resources.configuration import Config
 
-    model = mlflow.models.get_model_info(model_uri)
-    if model is None:
-        raise ValueError(f"Model not found: {model_uri}")
+# Pretend we're in `dagster dev` to force correct environment selection
+os.putenv("DAGSTER_IS_DEV_CLI", "1")
 
-    run = mlflow.get_run(model.run_id)
-    if run is None:
-        raise ValueError(f"Run not found: {model.run_id}")
-
-    client = mlflow.client.MlflowClient()
-    dataset = next(
-        (
-            a.path
-            for a in client.list_artifacts(run.info.run_id)
-            if a.path.endswith("reference_data.parquet")
-        ),
-        None,
-    )
-    if dataset is None:
-        raise ValueError(f"MLflow artifact not found: {run.info.run_id}")
-
-    local_path = client.download_artifacts(run.info.run_id, dataset)
-    df = pd.read_parquet(local_path)
-    return df
-
-
-def predictions_to_dataset(predictions: list, columns: list[str]) -> pd.DataFrame:
-    """Convert the logged predictions to a dataset for analysis."""
-
-    records = []
-    for row in predictions:
-        input_data = json.loads(row[0])[0]
-
-        output_data = json.loads(row[1])
-        if isinstance(output_data, dict):
-            # Predictions with probabilities
-            prediction_data = output_data["class"][0]
-            proba = output_data["probabilities"][0]
-        else:
-            # Simple argmax predictions
-            prediction_data = int(output_data)
-            proba = []
-        records.append(input_data | {"prediction": prediction_data, "prediction_probability": proba})
-
-    return pd.DataFrame.from_records(records, columns=columns)
-
-
-def expand_predict_proba(
-    df: pd.DataFrame, col: str = "prediction_probability"
-) -> pd.DataFrame:
-    pred_proba_expanded = pd.DataFrame(
-        df[col].tolist(),
-        columns=[f"prob_{idx}" for idx in range(NUM_CLASSES)],
-        index=df.index,
-    )
-    df = pd.concat(
-        [df.drop(col, axis="columns"), pred_proba_expanded],
-        axis=1,
-    )
-    return df
-
-
-PREDICTIONS_DB_FILE = Path(__file__).parents[1] / "predictions.sqlite3"
-PREDICTIONS_TABLE = "predictions"
-NUM_CLASSES = 2
-
-mlflow.set_tracking_uri("/Users/kristof/Projects/twai-pipeline/compliance_journey/step01_logging/mlruns"
-                            )
-
-db = sqlite3.connect(PREDICTIONS_DB_FILE)
-
-model_versions = [
-    row[0]
-    for row in db.execute(
-        f'SELECT DISTINCT metadata->>"model_version" from {PREDICTIONS_TABLE}'
-    ).fetchall()
-]
-assert len(model_versions) == 1, "Multiple model versions found in the database"
-
-print(f"Fetching test data for model {model_versions[0]}")
-reference_df = fetch_test_data(model_versions[0])
-
-predictions = db.execute(f"SELECT input, output from {PREDICTIONS_TABLE}").fetchall()
-analysis_df = predictions_to_dataset(
-    predictions,
-    columns=list(reference_df.drop("target", axis=1).columns),
+db_conn = psycopg2.connect(
+    host="localhost",
+    user="postgres_user",
+    password="postgres_password",
+    dbname="hr_assistant",
 )
 
-reference_df["prediction_probability"] = reference_df["prediction_probability"].map(lambda arr: [float(v) for v in arr])
-
-analysis_df = expand_predict_proba(analysis_df)
-reference_df = expand_predict_proba(reference_df)
-
-print("Analysis:", analysis_df.columns)
-print("Reference:", reference_df.columns)
-
+try:
+    with db_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+        analysis_df = load_predictions(cur)
+finally:
+    db_conn.close()
 
 # NannyML reporting
-import nannyml as nml
 
-CLASSES = ["<=50K", ">50K"]
-label_map = {cls: idx for idx, cls in enumerate(CLASSES)}
+data = pickle_cached(FILE_NAME_ASEC)(download_and_filter_census_data)(year=2024)
+data = get_income_prediction_features(Config().salary_bands, data)
+X, y = data.drop(columns=["SALARY_BAND"]), data["SALARY_BAND"]
 
-reference_df["prediction"] = reference_df["prediction"].map(label_map)
-reference_df["target"] = reference_df["target"].map(label_map)
+_, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=31)
 
-analysis_df["prediction"] = analysis_df["prediction"].map(label_map)
+mlflow.set_tracking_uri("http://localhost:50000")
+MODEL_URI = "models:/xgboost-classifier/latest"
+model = mlflow.sklearn.load_model(MODEL_URI)
 
-chunk_size = 500
+reference_df = build_reference_data(
+    model, X_test, y_test, encoder=model.steps[-1][1].encoder
+)
+
+chunk_size = 250
 estimator = nml.CBPE(
-    problem_type="classification_binary",
-    y_pred_proba="prob_1",
+    problem_type="classification_multiclass",
+    y_pred_proba={
+        idx: f"prob_{idx}"
+        for idx in range(
+            len(Config().salary_bands) + 1
+        )  # Account for implicit highest band
+    },
     y_pred="prediction",
     y_true="target",
-    metrics=["roc_auc", "f1"],
+    metrics=["roc_auc"],
     chunk_size=chunk_size,
 )
 estimator.fit(reference_df)
@@ -133,3 +67,4 @@ estimated_performance = estimator.estimate(analysis_df)
 
 fig = estimated_performance.plot()
 fig.show()
+fig.write_image("nannyml_report.png")

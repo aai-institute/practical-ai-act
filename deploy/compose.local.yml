@@ -3,15 +3,21 @@
 # - MinIO for block storage
 # - MLflow for experiment tracking / model registry, backed by MinIO
 # - lakeFS data lake, backed by MinIO
-# - MLServer-based inference server, model fetched from MLflow
-# - Prometheus & Grafana for monitoring
+#
+# The `dagster` profile bundles the Dagster services:
+# - Dagster webserver
+# - Dagster daemon
+# - User code container containing the actual ML pipeline
 #
 # The `serve` profile contains the ML model and application serving parts of the tool stack, as well as monitoring:
 #
 # - FastAPI application with hot-reloading
 # - Model inference server, loading from MLflow
+#
+#  The `monitoring` profile contains the monitoring components:
 # - Prometheus, with docker-socket-proxy for scrape target discovery in Docker
-# - Grafana
+# - Grafana, with pre-defined dashboards for operational monitoring
+# - A NannyML dashboard for monitoring the performance of the deployed model
 
 # YAML fragment for MinIO bucket creation containers
 x-minio-cmd: &minio_cmd
@@ -166,6 +172,8 @@ services:
         - path: ../src
           action: rebuild
           target: /opt/dagster/app/src
+        - path: nannyml
+          action: rebuild
 
   dagster-webserver:
     profiles: [dagster]
@@ -267,15 +275,7 @@ services:
 
   model:
     profiles: [serve]
-    build:
-      context: model
-      dockerfile: Dockerfile
-      network: host
-      args:
-        # FIXME: This depends on the running MLflow registry and the correct resolution in network host mode
-        MLFLOW_TRACKING_URI: "http://host.docker.internal:50000"
-        MODEL_NAME: "xgboost-classifier"
-        MODEL_VERSION: "latest"
+    image: xgboost-classifier:latest
     networks:
       - monitoring
       - web
@@ -329,7 +329,7 @@ services:
       - monitoring
 
   prometheus:
-    profiles: [serve]
+    profiles: [monitoring]
     image: prom/prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -341,7 +341,7 @@ services:
       - "9090:9090"
 
   grafana:
-    profiles: [serve]
+    profiles: [monitoring]
     image: grafana/grafana-oss
     container_name: grafana
     restart: unless-stopped
@@ -353,6 +353,16 @@ services:
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/etc/grafana/dashboards
+
+  nannyml:
+    profiles: [monitoring]
+    image: nannyml:latest
+    container_name: nannyml
+    restart: unless-stopped
+    networks:
+      - web
+    ports:
+      - "4040:4040"
 
 volumes:
   minio_data:

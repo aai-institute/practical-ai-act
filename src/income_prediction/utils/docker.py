@@ -14,7 +14,7 @@ class ContainerBuildResult:
 
 
 def build_container_image(
-    build_context: Path, tags: list[str], build_args: dict[str, str] | None = None
+    build_context: Path, tags: list[str], build_args: dict[str, str] | None = None, docker_file: Path | None = None
 ) -> ContainerBuildResult | None:
     """Builds a Docker container image using buildx from the given build context.
 
@@ -35,17 +35,22 @@ def build_container_image(
         raise ValueError(f"Build context {build_context} is not a directory")
 
     with NamedTemporaryFile(suffix=".json", delete_on_close=False) as metadata_file:
-        success = False
         tags_args = [f"-t={tag}" for tag in tags]
         cmd = [
             "docker",
             "buildx",
             "build",
-            " ".join(tags_args),
+            *tags_args,
             "--metadata-file",
             metadata_file.name,
             str(build_context),
-        ]
+            ]
+        if docker_file is not None:
+            cmd.extend([
+                "--file",
+                str(docker_file.relative_to(build_context))
+            ])
+
         if build_args:
             cmd.extend([
                 f"--build-arg={key}={value}" for key, value in build_args.items()

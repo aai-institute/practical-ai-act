@@ -255,16 +255,20 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
 
         request_schema = {
             "id": "TEXT PRIMARY KEY NOT NULL",
+            "timestamp": "TIMESTAMPTZ DEFAULT NOW()",
             "parameters": "JSONB",
             "inputs": "JSONB",
             "outputs": "JSONB",
+            "raw_request": "JSONB",
         }
         response_schema = {
             "model_name": "TEXT",
             "model_version": "TEXT",
             "id": "TEXT PRIMARY KEY NOT NULL",
+            "timestamp": "TIMESTAMPTZ DEFAULT NOW()",
             "parameters": "JSONB",
             "outputs": "JSONB",
+            "raw_response": "JSONB",
         }
         error_schema = {
             "id": "TEXT PRIMARY KEY NOT NULL",
@@ -294,12 +298,13 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
 
     def _log_request(self, cur: psycopg2.extensions.cursor, request: InferenceRequest):
         cur.execute(
-            f"INSERT INTO {self.Tables.REQUEST} VALUES (%s, %s, %s, %s)",
+            f"INSERT INTO {self.Tables.REQUEST} (id, parameters, inputs, outputs, raw_request) VALUES (%s, %s, %s, %s, %s)",
             (
                 request.id,
                 request.parameters.model_dump_json(),
                 _json_list(request.inputs),
                 _json_list(request.outputs) if request.outputs else None,
+                request.model_dump_json(),
             ),
         )
 
@@ -312,13 +317,14 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
     ):
         if isinstance(response, InferenceResponse):
             cur.execute(
-                f"INSERT INTO {self.Tables.RESPONSE} VALUES (%s, %s, %s, %s, %s)",
+                f"INSERT INTO {self.Tables.RESPONSE} (model_name, model_version, id, parameters, outputs, raw_response) VALUES (%s, %s, %s, %s, %s, %s)",
                 (
                     response.model_name,
                     response.model_version,
                     response.id,
                     response.parameters.model_dump_json(),
                     _json_list(response.outputs),
+                    response.model_dump_json(),
                 ),
             )
 
@@ -332,7 +338,7 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
                 "body": raw_response.text,
             }
             cur.execute(
-                f"INSERT INTO {self.Tables.ERROR} VALUES (%s, %s, %s)",
+                f"INSERT INTO {self.Tables.ERROR} (id, error, response) VALUES (%s, %s, %s)",
                 (
                     request_id,
                     response.error,
@@ -346,7 +352,7 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
         if not metadata:
             return
         cur.execute(
-            f"INSERT INTO {self.Tables.METADATA} VALUES (%s, %s)",
+            f"INSERT INTO {self.Tables.METADATA} (id, metadata) VALUES (%s, %s)",
             (
                 request_id,
                 psycopg2.extras.Json(metadata),
