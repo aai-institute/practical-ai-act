@@ -356,6 +356,16 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/etc/grafana/dashboards
 
+  nannyml:
+    profiles: [monitoring]
+    image: nannyml:latest
+    container_name: nannyml
+    restart: unless-stopped
+    networks:
+      - monitoring
+    ports:
+      - "4040:4040"
+
 volumes:
   minio_data:
   lakefs_data:
