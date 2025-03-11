@@ -1307,8 +1307,8 @@ docs = [
 ]
 monitoring = [
     { name = "fastapi", specifier = ">=0.115.8" },
-    { name = "mlserver", specifier = ">=1.7.0rc1" },
-    { name = "mlserver-sklearn", specifier = ">=1.6.1" },
+    { name = "mlserver", specifier = ">=1.7.0rc0" },
+    { name = "mlserver-sklearn", specifier = ">=1.7.0rc0" },
     { name = "nannyml", specifier = ">=0.13.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
 ]
@@ -2082,16 +2082,16 @@ wheels = [
 
 [[package]]
 name = "mlserver-sklearn"
-version = "1.6.1"
+version = "1.7.0rc1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "joblib" },
     { name = "mlserver" },
     { name = "scikit-learn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/20/84/64146775ae97d1bb5865b555a43eee2137611d95fa49245b0c7c27602311/mlserver_sklearn-1.6.1.tar.gz", hash = "sha256:1939a3ca19ce69775c3ab4a8093010ee612763b81cda9ecb02de8ce925b154e6", size = 7025 }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/7d/c9bda250e95eb5d0f3960440d499c413be2620117024964cf31f1bf66667/mlserver_sklearn-1.7.0rc1.tar.gz", hash = "sha256:1eb9534413637a2abcac0d8dc5094b0326ecf08e6a2e81c1272d8d4b56ad40cd", size = 6861 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/9e/ebcd75898d53539c449a201dcc1e2f5b638822a14ada09ded06a02d3c324/mlserver_sklearn-1.6.1-py3-none-any.whl", hash = "sha256:f42619f052dba8ec0a5d901d81aca91cf73300f6b71302d8430bce227a6e346d", size = 8013 },
+    { url = "https://files.pythonhosted.org/packages/4e/e2/afda7757bdb04c57cb820bb2a3a8a2e5bbfb76d8b8bdfb526541df6142e2/mlserver_sklearn-1.7.0rc1-py3-none-any.whl", hash = "sha256:f5b6b14dc85e52f0f730d13c2d0f56f3410926d0e1c82de09fbb77c3983ab8f3", size = 8055 },
 ]
 
 [[package]]

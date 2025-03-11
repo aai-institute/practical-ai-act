@@ -56,8 +56,8 @@ deploy = [
 ]
 monitoring = [
     "fastapi>=0.115.8",
-    "mlserver>=1.7.0rc1",
-    "mlserver-sklearn>=1.6.1",
+    "mlserver>=1.7.0rc0",
+    "mlserver-sklearn>=1.7.0rc0",
     "nannyml>=0.13.0",
     "psycopg2-binary>=2.9.10",
 ]
