@@ -35,7 +35,6 @@ def build_container_image(
         raise ValueError(f"Build context {build_context} is not a directory")
 
     with NamedTemporaryFile(suffix=".json", delete_on_close=False) as metadata_file:
-        success = False
         tags_args = [f"-t={tag}" for tag in tags]
         cmd = [
             "docker",
