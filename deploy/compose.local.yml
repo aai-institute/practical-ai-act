@@ -354,7 +354,7 @@ services:
     container_name: nannyml
     restart: unless-stopped
     networks:
-      - monitoring
+      - web
     ports:
       - "4040:4040"
 
