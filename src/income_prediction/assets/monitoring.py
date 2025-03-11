@@ -55,8 +55,9 @@ def nannyml_estimator(reference_dataset: pd.DataFrame, config: Config, nanny_ml_
 def nannyml_container(context: dg.AssetExecutionContext, model_version: ModelVersion,
                       nannyml_estimator: nml.CBPE) -> dg.Output:
     build_context = Path(__file__).parents[3]
-    image_tag = f"nannyml:{model_version.version}"
-    context.log.info(f"{image_tag=}")
+    image_tags = [f"nannyml:{suffix}" for suffix in [model_version.version, "latest"]]
+    
+    context.log.info(f"{image_tags=}")
     with NamedTemporaryFile(suffix=".pkl", delete=True, dir=build_context) as tmp_file:
         pkl_path = Path(tmp_file.name)
 
@@ -67,7 +68,7 @@ def nannyml_container(context: dg.AssetExecutionContext, model_version: ModelVer
         context.log.info(f"File exists: {pkl_path.exists()}")
         context.log.info(f"{build_context=}")
         build_result = build_container_image(build_context,
-                                             [image_tag],
+                                             image_tags,
                                              build_args={"NANNYML_ESTIMATOR": str(pkl_path.name)},
                                              docker_file=build_context / "deploy" / "nannyml" / "Dockerfile")
 
@@ -76,9 +77,9 @@ def nannyml_container(context: dg.AssetExecutionContext, model_version: ModelVer
         raise ValueError(f"Failed to build container image: {build_result.build_logs}")
 
     return dg.Output(
-        value=image_tag,
+        value=image_tags,
         metadata={
-            "image_tag": image_tag,
+            "image_tags": image_tags,
             "image_name": build_result.image_name,
             "image_digest": build_result.image_digest,
             "build_logs": dg.MetadataValue.text(build_result.build_logs),

@@ -18,13 +18,13 @@ def model_container(context: dg.AssetExecutionContext, model_version: ModelVersi
     model_name = model_version.uri.rsplit("/")[-2]
 
     build_context = Path(__file__).parents[3] / "deploy" / "model"
-    image_tag = f"{model_name}:{model_version.version}"
+    image_tags = [f"{model_name}:{suffix}" for suffix in [model_version.version, "latest"]]
     context.log.info(f"Build context: {build_context}")
-    context.log.info(f"Image tag: {image_tag}")
+    context.log.info(f"Image tags: {image_tags}")
 
     build_result = build_container_image(
         build_context,
-        tags=[image_tag],
+        tags=image_tags,
         build_args={
             # FIXME: Hardcoded, but should be made configurable
             "MLFLOW_TRACKING_URI": "http://host.docker.internal:50000",
@@ -38,9 +38,9 @@ def model_container(context: dg.AssetExecutionContext, model_version: ModelVersi
         raise ValueError("Failed to build container image", build_result.build_logs)
 
     return dg.Output(
-        value=image_tag,
+        value=image_tags,
         metadata={
-            "image_tag": image_tag,
+            "image_tags": image_tags,
             "image_name": build_result.image_name,
             "image_digest": build_result.image_digest,
             "build_logs": dg.MetadataValue.text(build_result.build_logs),
