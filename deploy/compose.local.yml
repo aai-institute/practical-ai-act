@@ -3,15 +3,21 @@
 # - MinIO for block storage
 # - MLflow for experiment tracking / model registry, backed by MinIO
 # - lakeFS data lake, backed by MinIO
-# - MLServer-based inference server, model fetched from MLflow
-# - Prometheus & Grafana for monitoring
+#
+# The `dagster` profile bundles the Dagster services:
+# - Dagster webserver
+# - Dagster daemon
+# - User code container containing the actual ML pipeline
 #
 # The `serve` profile contains the ML model and application serving parts of the tool stack, as well as monitoring:
 #
 # - FastAPI application with hot-reloading
 # - Model inference server, loading from MLflow
+#
+#  The `monitoring` profile contains the monitoring components:
 # - Prometheus, with docker-socket-proxy for scrape target discovery in Docker
-# - Grafana
+# - Grafana, with pre-defined dashboards for operational monitoring
+# - A NannyML dashboard for monitoring the performance of the deployed model
 
 # YAML fragment for MinIO bucket creation containers
 x-minio-cmd: &minio_cmd
@@ -323,7 +329,7 @@ services:
       - monitoring
 
   prometheus:
-    profiles: [serve]
+    profiles: [monitoring]
     image: prom/prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -335,7 +341,7 @@ services:
       - "9090:9090"
 
   grafana:
-    profiles: [serve]
+    profiles: [monitoring]
     image: grafana/grafana-oss
     container_name: grafana
     restart: unless-stopped
