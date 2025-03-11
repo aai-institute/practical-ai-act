@@ -269,15 +269,7 @@ services:
 
   model:
     profiles: [serve]
-    build:
-      context: model
-      dockerfile: Dockerfile
-      network: host
-      args:
-        # FIXME: This depends on the running MLflow registry and the correct resolution in network host mode
-        MLFLOW_TRACKING_URI: "http://host.docker.internal:50000"
-        MODEL_NAME: "xgboost-classifier"
-        MODEL_VERSION: "latest"
+    image: xgboost-classifier:latest
     networks:
       - monitoring
       - web
