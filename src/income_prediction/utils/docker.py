@@ -14,7 +14,10 @@ class ContainerBuildResult:
 
 
 def build_container_image(
-    build_context: Path, tags: list[str]
+    build_context: Path,
+    tags: list[str],
+    build_args: dict[str, str] | None = None,
+    docker_file: Path | None = None,
 ) -> ContainerBuildResult | None:
     """Builds a Docker container image using buildx from the given build context.
 
@@ -40,36 +43,47 @@ def build_container_image(
             "docker",
             "buildx",
             "build",
-            " ".join(tags_args),
+            *tags_args,
             "--metadata-file",
             metadata_file.name,
             str(build_context),
         ]
-        retval = subprocess.call(cmd)
-        success = retval == 0
+        if docker_file is not None:
+            cmd.extend(["--file", str(docker_file.relative_to(build_context))])
 
-        metadata = {}
-        build_logs = ""
+        if build_args:
+            cmd.extend([
+                f"--build-arg={key}={value}" for key, value in build_args.items()
+            ])
+
         try:
-            # Extract image digest from metadata file
-            metadata_file.close()
-            metadata_str = Path(metadata_file.name).read_text()
-            metadata = json.loads(metadata_str)
+            subprocess.check_output(cmd, encoding="utf-8")
+            success = True
+        except subprocess.CalledProcessError as e:
+            success = False
+            build_logs = e.output
 
-            # Extract build logs from buildx history
-            buildx_build_id = metadata["buildx.build.ref"].split("/")[-1]
-            cmd = [
-                "docker",
-                "buildx",
-                "history",
-                "logs",
-                buildx_build_id,
-            ]
-            build_logs = subprocess.check_output(
-                cmd, stderr=subprocess.STDOUT, encoding="utf-8"
-            )
-        except:
-            pass
+        # Extract image digest from metadata file
+        metadata = {}
+        metadata_file.close()
+        metadata_str = Path(metadata_file.name).read_text()
+        if metadata_str:
+            metadata = json.loads(metadata_str)
+            try:
+                # Extract build logs from buildx history
+                buildx_build_id = metadata["buildx.build.ref"].split("/")[-1]
+                cmd = [
+                    "docker",
+                    "buildx",
+                    "history",
+                    "logs",
+                    buildx_build_id,
+                ]
+                build_logs = subprocess.check_output(
+                    cmd, stderr=subprocess.STDOUT, encoding="utf-8"
+                )
+            except subprocess.CalledProcessError as e:
+                build_logs = e.output
 
         return ContainerBuildResult(
             success=success,

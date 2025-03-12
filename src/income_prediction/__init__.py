@@ -3,24 +3,22 @@ from typing import Literal
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
-from optuna.distributions import IntDistribution, FloatDistribution
+from optuna.distributions import FloatDistribution, IntDistribution
 from upath import UPath
 
 import income_prediction.assets
-import income_prediction.assets
-from income_prediction.io_managers.lakefs import LakeFSIOManager
+from income_prediction.io_managers.lakefs import LakeFSParquetIOManager
 from income_prediction.resources.configuration import (
     Config,
     LakeFsConfig,
-    MlFlowConfig,
     MinioConfig,
-)
-from income_prediction.resources.configuration import (
-    Config,
+    MlFlowConfig,
+    NannyMLConfig,
     OptunaCVConfig,
     OptunaXGBParamDistribution,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
+
 from .assets.model import ModelVersion
 from .sensors import model_version_trigger
 
@@ -70,6 +68,7 @@ print("LakeFS config: ", lakefs_cfg)
 print("MinIO config: ", minio_cfg)
 print("MLflow config: ", mlflow_cfg)
 
+nanny_ml_config = NannyMLConfig(chunk_size=250)
 definitions = dg.Definitions(
     assets=dg.with_source_code_references(
         dg.load_assets_from_modules(modules=[income_prediction.assets])
@@ -82,7 +81,7 @@ definitions = dg.Definitions(
             experiment=mlflow_cfg.mlflow_experiment,
         ),
         "io_manager": default_io_manager,
-        "lakefs_io_manager": LakeFSIOManager(
+        "lakefs_io_manager": LakeFSParquetIOManager(
             base_path=UPath(
                 "lakefs://twai-pipeline/main/data/",
                 host=lakefs_cfg.lakefs_host,
@@ -94,5 +93,6 @@ definitions = dg.Definitions(
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
         "model_version": ModelVersion.configure_at_launch(),
+        "nanny_ml_config": nanny_ml_config,
     },
 )

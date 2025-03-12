@@ -8,11 +8,7 @@ version = "0.1.0"
 description = "An ML assistant for HR professionals."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "more-itertools>=10.5.0",
-    "numpy>2",
-    "pandas>=2.2.3",
-]
+dependencies = ["more-itertools>=10.5.0", "numpy>2", "pandas>=2.2.3"]
 
 [dependency-groups]
 docs = [
@@ -33,7 +29,6 @@ train = [
     "dagster>=1.9.10",
     "dagster-webserver>=1.9.10",
     "lightgbm>=4.5.0",
-    "sensai>=1.3.0",
     "sensai-utils>=1.4.0",
     "scikit-learn<1.6", # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
     "ucimlrepo>=0.0.7",
@@ -44,9 +39,12 @@ train = [
     "dagster-postgres>=0.26.2",
     "s3fs>=2025.2.0",
     "dagster-obstore>=0.2.0",
+    "nannyml>=0.13.0",
+    "mlserver>=1.7.0rc0",
+    "mlserver-mlflow>=1.7.0rc0",
     "aif360>=0.6.1",
-    "shap>=0.46.0",
-    "numba==0.61.0",
+    "shap>=0.47.0",
+    "numba>=0.61.0",
 ]
 deploy = [
     "fastapi>=0.110",
@@ -55,9 +53,19 @@ deploy = [
     "duckdb>=1.1.3",
     "httpx>=0.28.1",
     "prometheus-fastapi-instrumentator>=7.0.2",
+    "psycopg2-binary>=2.9.10",
+    "pydantic-settings>=2.8.0",
+    "nannyml>=0.13.0",
 ]
-monitoring = ["nannyml>=0.13.0"]
+monitoring = [
+    "fastapi>=0.115.8",
+    "mlserver>=1.7.0rc0",
+    "mlserver-sklearn>=1.7.0rc0",
+    "nannyml>=0.13.0",
+    "psycopg2-binary>=2.9.10",
+]
 dev = ["ipython>=8.32.0", "pytest>=8.3.4", "ruff>=0.9.3"]
+
 
 [tool.ruff]
 preview = true
@@ -65,7 +73,7 @@ exclude = ["openapi_client"]
 line-length = 88
 
 # FIXME: Exclude existing non-compliant code for now
-extend-exclude = ["scripts/**", "src/income_prediction/**"]
+extend-exclude = ["scripts/**"]
 
 [tool.ruff.lint]
 select = [

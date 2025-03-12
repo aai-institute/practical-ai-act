@@ -3,15 +3,21 @@
 # - MinIO for block storage
 # - MLflow for experiment tracking / model registry, backed by MinIO
 # - lakeFS data lake, backed by MinIO
-# - MLServer-based inference server, model fetched from MLflow
-# - Prometheus & Grafana for monitoring
+#
+# The `dagster` profile bundles the Dagster services:
+# - Dagster webserver
+# - Dagster daemon
+# - User code container containing the actual ML pipeline
 #
 # The `serve` profile contains the ML model and application serving parts of the tool stack, as well as monitoring:
 #
 # - FastAPI application with hot-reloading
 # - Model inference server, loading from MLflow
+#
+#  The `monitoring` profile contains the monitoring components:
 # - Prometheus, with docker-socket-proxy for scrape target discovery in Docker
-# - Grafana
+# - Grafana, with pre-defined dashboards for operational monitoring
+# - A NannyML dashboard for monitoring the performance of the deployed model
 
 # YAML fragment for MinIO bucket creation containers
 x-minio-cmd: &minio_cmd
@@ -30,7 +36,7 @@ x-dagster-env: &dagster_env
   DAGSTER_POSTGRES_HOST: "postgres"
   DAGSTER_POSTGRES_USER: "postgres_user"
   DAGSTER_POSTGRES_PASSWORD: "postgres_password"
-  DAGSTER_POSTGRES_DB: "postgres_db"
+  DAGSTER_POSTGRES_DB: "dagster"
   DAGSTER_LOGS_S3_ENDPOINT: "http://minio:9000"
   DAGSTER_LOGS_S3_BUCKET: "dagster"
   DAGSTER_LOGS_S3_ACCESS_KEY_ID: "minio_user"
@@ -75,22 +81,27 @@ services:
       mc alias set minio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} &&
       mc mb --ignore-existing minio/dagster"
 
-  # This service runs the postgres DB used by dagster for run storage, schedule storage,
-  # and event log storage. Depending on the hardware you run this Compose on, you may be able
-  # to reduce the interval and timeout in the healthcheck to speed up your `docker-compose up` times.
   postgres:
     image: postgres:17
     environment:
       POSTGRES_USER: "postgres_user"
       POSTGRES_PASSWORD: "postgres_password"
       POSTGRES_DB: "postgres_db"
+      POSTGRES_ADDITIONAL_DB_NAMES: "hr_assistant,dagster"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init-dbs.sh:/docker-entrypoint-initdb.d/init-dbs.sh
     networks:
       - dagster
+      - web
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres_user -d postgres_db"]
       interval: 10s
-      timeout: 8s
+      timeout: 5s
       retries: 5
+
   lakefs:
     image: treeverse/lakefs
     depends_on:
@@ -101,10 +112,15 @@ services:
     networks:
       - web
       - dagster
+    # NOTE: Need to run as root to allow access to the database Docker volume (owned by root)
+    user: root
     volumes:
-      - lakefs_data:/var/lib/lakefs
+      - lakefs_data:/lakefs
     environment:
       - LAKEFS_DATABASE_TYPE=local
+      - LAKEFS_DATABASE_LOCAL_PATH=/lakefs/db
+      - LAKEFS_DATABASE_LOCAL_ENABLE_LOGGING=true
+      - LAKEFS_COMMITTED_LOCAL_CACHE_DIR=/lakefs/cache
       - LAKEFS_BLOCKSTORE_TYPE=s3
       - LAKEFS_BLOCKSTORE_DEFAULT_NAMESPACE_PREFIX=s3://lakefs/
       - LAKEFS_BLOCKSTORE_S3_FORCE_PATH_STYLE=true
@@ -116,6 +132,8 @@ services:
       - LAKEFS_INSTALLATION_USER_NAME=aai
       - LAKEFS_INSTALLATION_ACCESS_KEY_ID=AKIAIOSFOLKFSSAMPLES
       - LAKEFS_INSTALLATION_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - LAKEFS_STATS_ENABLED=false
+      - LAKEFS_USAGE_REPORT_ENABLED=false
     command: ["run", "--local-settings"]
 
   lakefs-create-repo:
@@ -154,6 +172,8 @@ services:
         - path: ../src
           action: rebuild
           target: /opt/dagster/app/src
+        - path: nannyml
+          action: rebuild
 
   dagster-webserver:
     profiles: [dagster]
@@ -255,25 +275,15 @@ services:
 
   model:
     profiles: [serve]
-    build:
-      context: model
-      dockerfile: Dockerfile
+    image: xgboost-classifier:latest
     networks:
       - monitoring
       - web
-    depends_on:
-      mlflow:
-        condition: service_healthy
-    environment:
-      MLFLOW_TRACKING_URI: "http://mlflow:5000"
-      MLSERVER_MODEL_URI: "models:/xgboost-classifier/latest"
-      MLSERVER_MODEL_NAME: "xgboost-classifier"
-      MLSERVER_MODEL_VERSION: "latest"
     ports:
       - "8080:8080"
     healthcheck:
       test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8080/v2/health/live').read()"
-      interval: 2s
+      interval: 5s
     labels:
       prometheus.job: "ml-model"
       prometheus.port: "8082"
@@ -319,7 +329,7 @@ services:
       - monitoring
 
   prometheus:
-    profiles: [serve]
+    profiles: [monitoring]
     image: prom/prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -331,7 +341,7 @@ services:
       - "9090:9090"
 
   grafana:
-    profiles: [serve]
+    profiles: [monitoring]
     image: grafana/grafana-oss
     container_name: grafana
     restart: unless-stopped
@@ -344,12 +354,23 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/etc/grafana/dashboards
 
+  nannyml:
+    profiles: [monitoring]
+    image: nannyml:latest
+    container_name: nannyml
+    restart: unless-stopped
+    networks:
+      - web
+    ports:
+      - "4040:4040"
+
 volumes:
   minio_data:
   lakefs_data:
   mlflow_artifacts:
   mlflow_db:
   mlflow_metrics:
+  postgres_data:
   prometheus_data:
 
 networks:

@@ -1,18 +1,23 @@
 import dagster as dg
 import mlflow
+import mlflow.models
+import mlflow.utils
 import optuna
 import pandas as pd
-import sklearn.pipeline
 from sklearn.model_selection import train_test_split
 
 from asec.data import CensusASECMetadata, download_and_filter_census_data
 from asec.features import get_income_prediction_features
 from asec.model_factory import ModelFactory
-from .fairness import evaluate_fairness
-from .model import model_container as model_container
+
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
 from ..utils.mlflow import log_fairness_metrics
+from .fairness import evaluate_fairness
+from .model import model_container as model_container
+from .monitoring import nannyml_container as nannyml_container
+from .monitoring import nannyml_estimator as nannyml_estimator
+from .monitoring import reference_dataset as reference_dataset
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
@@ -55,6 +60,7 @@ def optuna_search_xgb(
     optuna_xgb_param_distribution: dg.ResourceParam[
         dict[str, optuna.distributions.BaseDistribution]
     ],
+    config: Config,
 ):
     model_name = "xgboost-classifier"
 
@@ -70,13 +76,18 @@ def optuna_search_xgb(
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name=model_name):
-            mlflow.autolog(log_datasets=False)
+            mlflow.autolog(log_datasets=False, log_models=False)
             best_model = optuna_search.best_estimator_
             best_model.fit(X_train, y_train)
 
-            mlflow.register_model(
-                name=model_name,
-                model_uri=f"runs:/{mlflow.active_run().info.run_id}/model",
+            mlflow.sklearn.log_model(
+                best_model,
+                artifact_path="model",
+                registered_model_name=model_name,
+                code_paths=["src/asec"],
+                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
+                    5
+                ),
             )
 
             mlflow.evaluate(
@@ -84,6 +95,9 @@ def optuna_search_xgb(
                 data=test_data,
                 targets=CensusASECMetadata.TARGET,
                 model_type="classifier",
+                evaluator_config={
+                    "log_model_explainability": config.log_model_explainability,
+                },
             )
 
             # Fairness evaluation
@@ -95,21 +109,3 @@ def optuna_search_xgb(
             log_fairness_metrics(fairness_metrics)
 
             return best_model
-
-
-@dg.asset(io_manager_key="lakefs_io_manager")
-def reference_dataset(
-    optuna_search_xgb: sklearn.pipeline.Pipeline,
-    test_data: pd.DataFrame,
-) -> pd.DataFrame:
-    """Reference dataset for post-deployment performance monitoring
-
-    Based on predictions of the model on the test dataset"""
-
-    y_proba = optuna_search_xgb.predict_proba(test_data)
-
-    df = test_data.rename({CensusASECMetadata.TARGET: "target"}, axis=1)
-    df = pd.concat(
-        [df, pd.Series(y_proba.tolist(), name="predicted_probabilities")], axis=1
-    )
-    return df

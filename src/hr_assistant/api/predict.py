@@ -70,6 +70,16 @@ async def predict(
     request = inference_client.build_request(input_data)
     try:
         result = await inference_client.predict(request)
-        return Response(content=result.to_json(orient="records"))
+        predict = result["predict"]
+        predict_proba = result["predict_proba"]
+
+        df = pd.concat(
+            [
+                pd.Series(predict.ravel(), name="class"),
+                pd.Series(predict_proba.tolist(), name="probabilities"),
+            ],
+            axis=1,
+        )
+        return Response(content=df.to_json(orient="records"))
     except InferenceError as e:
-        raise HTTPException(status_code=500, detail=e.response.error) from e
+        raise HTTPException(status_code=500, detail=e.message) from e
