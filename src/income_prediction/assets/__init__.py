@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 import dagster as dg
 import mlflow
 import mlflow.models
@@ -21,17 +23,19 @@ from .monitoring import reference_dataset as reference_dataset
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
-def census_asec_dataset(config: Config):
+def census_asec_dataset(experiment_config: Config):
     """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria."""
-    return download_and_filter_census_data(config.census_asec_dataset_year)
+    return download_and_filter_census_data(experiment_config.census_asec_dataset_year)
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
 def income_prediction_features(
-    config: Config, census_asec_dataset: pd.DataFrame
+    experiment_config: Config, census_asec_dataset: pd.DataFrame
 ) -> pd.DataFrame:
     """Pre-processes the Census ASEC dataset for income prediction."""
-    return get_income_prediction_features(config.salary_bands, census_asec_dataset)
+    return get_income_prediction_features(
+        experiment_config.salary_bands, census_asec_dataset
+    )
 
 
 @dg.multi_asset(
@@ -41,11 +45,11 @@ def income_prediction_features(
     }
 )
 def train_test_data(
-    config: Config, income_prediction_features: pd.DataFrame
+    experiment_config: Config, income_prediction_features: pd.DataFrame
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Splits the dataset for income prediction into training and test sets."""
     train_data, test_data = train_test_split(
-        income_prediction_features, random_state=config.random_state
+        income_prediction_features, random_state=experiment_config.random_state
     )
     return train_data, test_data
 
@@ -60,7 +64,7 @@ def optuna_search_xgb(
     optuna_xgb_param_distribution: dg.ResourceParam[
         dict[str, optuna.distributions.BaseDistribution]
     ],
-    config: Config,
+    experiment_config: Config,
 ):
     model_name = "xgboost-classifier"
 
@@ -96,7 +100,7 @@ def optuna_search_xgb(
                 targets=CensusASECMetadata.TARGET,
                 model_type="classifier",
                 evaluator_config={
-                    "log_model_explainability": config.log_model_explainability,
+                    "log_model_explainability": experiment_config.log_model_explainability,
                 },
             )
 

@@ -22,7 +22,6 @@ from income_prediction.resources.mlflow_session import MlflowSession
 from .assets.model import ModelVersion
 from .sensors import model_version_trigger
 
-config = Config()
 optuna_cv_config = OptunaCVConfig(n_trials=10, verbose=2, timeout=600, n_jobs=-1)
 optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     max_depth=IntDistribution(3, 10),
@@ -75,7 +74,7 @@ definitions = dg.Definitions(
     ),
     sensors=[model_version_trigger],
     resources={
-        "config": config,
+        "experiment_config": Config(),
         "mlflow_session": MlflowSession(
             tracking_url=mlflow_cfg.mlflow_tracking_url,
             experiment=mlflow_cfg.mlflow_experiment,

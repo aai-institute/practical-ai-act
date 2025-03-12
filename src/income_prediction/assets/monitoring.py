@@ -37,14 +37,14 @@ def reference_dataset(
 
 @dg.asset(group_name="deployment", deps=["reference_dataset"])
 def nannyml_estimator(
-    reference_dataset: pd.DataFrame, config: Config, nanny_ml_config: NannyMLConfig
+    reference_dataset: pd.DataFrame, experiment_config: Config, nanny_ml_config: NannyMLConfig
 ):
     estimator = nml.CBPE(
         problem_type="classification_multiclass",
         y_pred_proba={
             idx: f"prob_{idx}"
             for idx in range(
-                len(config.salary_bands) + 1
+                len(experiment_config.salary_bands) + 1
             )  # Account for implicit highest band
         },
         y_pred="prediction",
