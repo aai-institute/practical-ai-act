@@ -37,7 +37,9 @@ def reference_dataset(
 
 @dg.asset(group_name="deployment", deps=["reference_dataset"])
 def nannyml_estimator(
-    reference_dataset: pd.DataFrame, experiment_config: Config, nanny_ml_config: NannyMLConfig
+    reference_dataset: pd.DataFrame,
+    experiment_config: Config,
+    nanny_ml_config: NannyMLConfig,
 ):
     estimator = nml.CBPE(
         problem_type="classification_multiclass",
