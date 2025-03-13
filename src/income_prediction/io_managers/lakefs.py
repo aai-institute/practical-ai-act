@@ -30,7 +30,7 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
                 raise RuntimeError("No canonical path found in metadata")
             return UPath(
                 canonical_uri,
-                storage_options=dict(self._base_path.storage_options),
+                **self._base_path.storage_options,
             )
         else:
             return super()._get_path(context)
