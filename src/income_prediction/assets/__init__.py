@@ -1,7 +1,7 @@
-from dataclasses import dataclass
-
 import dagster as dg
 import mlflow
+import mlflow.data
+import mlflow.data.pandas_dataset
 import mlflow.models
 import mlflow.utils
 import optuna
@@ -11,10 +11,11 @@ from sklearn.model_selection import train_test_split
 from asec.data import CensusASECMetadata, download_and_filter_census_data
 from asec.features import get_income_prediction_features
 from asec.model_factory import ModelFactory
+from income_prediction.utils.dagster import canonical_lakefs_uri_for_input
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
-from ..utils.mlflow import log_fairness_metrics
+from ..utils.mlflow import LakeFSDatasetSource, log_fairness_metrics
 from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from .monitoring import nannyml_container as nannyml_container
@@ -84,6 +85,28 @@ def optuna_search_xgb(
             best_model = optuna_search.best_estimator_
             best_model.fit(X_train, y_train)
 
+            train_ds = mlflow.data.pandas_dataset.from_pandas(
+                train_data,
+                name="train_data",
+                targets=CensusASECMetadata.TARGET,
+                source=LakeFSDatasetSource(
+                    lakefs_uri=canonical_lakefs_uri_for_input(context, "train_data"),
+                    server="localhost:8000",
+                ),
+            )
+            mlflow.log_input(train_ds)
+
+            test_ds = mlflow.data.pandas_dataset.from_pandas(
+                test_data,
+                name="test_data",
+                targets=CensusASECMetadata.TARGET,
+                source=LakeFSDatasetSource(
+                    lakefs_uri=canonical_lakefs_uri_for_input(context, "test_data"),
+                    server="localhost:8000",
+                ),
+            )
+            mlflow.log_input(test_ds)
+
             mlflow.sklearn.log_model(
                 best_model,
                 artifact_path="model",
@@ -96,8 +119,7 @@ def optuna_search_xgb(
 
             mlflow.evaluate(
                 model=best_model.predict,
-                data=test_data,
-                targets=CensusASECMetadata.TARGET,
+                data=test_ds,
                 model_type="classifier",
                 evaluator_config={
                     "log_model_explainability": experiment_config.log_model_explainability,
