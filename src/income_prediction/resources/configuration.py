@@ -48,7 +48,15 @@ class OptunaCVConfig(ConfigurableResource):
     Optuna cross-validation configuration. This resource is used to configure the
     parameters of the Optuna cross-validation search. The parameters are passed to
     the [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV] class.
-    It causes optuna to use a 5-fold cross-validation with a test size of 0.25.
+
+    This config does not specify the 'cv' parameter, so it will resolve to the default
+    value from optuna
+    ([sklearn.model_selection.StratifiedKFold][sklearn.model_selection.StratifiedKFold]
+    with 5 splits), see the documentation of
+    [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV]
+    for more details. If you want to use a stratified shuffle split with a custom
+    validation size and number of splits, use
+    [income_prediction.resources.configuration.StratifiedShuffleCVConfig][income_prediction.resources.configuration.StratifiedShuffleCVConfig]
 
     Args:
         n_trials: Number of trials for the optimization.
