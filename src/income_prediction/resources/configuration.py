@@ -75,7 +75,7 @@ class OptunaCVConfig(ConfigurableResource):
     timeout: int = 600
     verbose: int = 2
     n_jobs: int = -1
-    random_state: int = 495
+    random_state: int
     refit: bool = True
     scoring: str = "accuracy"
     kwargs: dict[str, Any] | None = None
