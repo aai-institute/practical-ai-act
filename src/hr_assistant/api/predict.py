@@ -161,4 +161,5 @@ async def explain_prediction(
 
     buf = io.BytesIO()
     ax.get_figure().savefig(buf, format="png")
+    plt.clf()
     return Response(content=buf.getvalue(), media_type="image/png")
