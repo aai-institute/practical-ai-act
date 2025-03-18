@@ -4,6 +4,7 @@ import json
 import numpy as np
 import pandas as pd
 from fastapi import APIRouter, HTTPException
+from matplotlib import pyplot as plt
 from mlserver.codecs import NumpyCodec, StringCodec
 from pydantic import BaseModel
 from starlette.responses import Response
@@ -156,6 +157,7 @@ async def explain_prediction(
             feature_names=explanation.feature_names,
             plot_type="bar",
         )
+        ax = plt.gcf()
 
     buf = io.BytesIO()
     ax.get_figure().savefig(buf, format="png")
