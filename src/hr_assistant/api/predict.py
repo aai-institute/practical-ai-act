@@ -1,9 +1,15 @@
+import io
+import json
+
+import numpy as np
 import pandas as pd
 from fastapi import APIRouter, HTTPException
+from mlserver.codecs import NumpyCodec, StringCodec
 from pydantic import BaseModel
 from starlette.responses import Response
 
 from hr_assistant.api.exceptions import InferenceError
+from hr_assistant.dependencies.logging import PredictionLoggerDependency
 from hr_assistant.dependencies.models import InferenceClientDependency
 
 
@@ -69,6 +75,7 @@ async def predict(
 
     request = inference_client.build_request(input_data)
     try:
+        # Making a prediction will automatically record explanations in the inference log
         result = await inference_client.predict(request)
         predict = result["predict"]
         predict_proba = result["predict_proba"]
@@ -83,3 +90,73 @@ async def predict(
         return Response(content=df.to_json(orient="records"))
     except InferenceError as e:
         raise HTTPException(status_code=500, detail=e.message) from e
+
+
+@router.get(
+    "/explain/{request_id}",
+    response_class=Response,
+    responses={200: {"content": {"image/png": {}}}},
+)
+async def explain_prediction(
+    request_id: str,
+    logger: PredictionLoggerDependency,
+):
+    # Fetch the explanation data from the inference log
+
+    req, resp, err, _ = logger.fetch(request_id)
+    if req is None:
+        raise HTTPException(status_code=404, detail="Request not found")
+
+    if err:
+        raise HTTPException(
+            status_code=404,
+            detail="Request resulted in error, no explanation possible.",
+        )
+
+    explanation_data = next((o for o in resp.outputs if o.name == "explain"), None)
+    if explanation_data is None:
+        raise HTTPException(status_code=404, detail="Explanation data not found")
+
+    decoded = StringCodec.decode_output(explanation_data)
+    decoded = json.loads(decoded[0])
+
+    # Restore numpy arrays in explanation data
+    decoded["values"] = np.array(decoded["values"])
+    decoded["base_values"] = np.array(decoded["base_values"])
+    decoded["data"] = np.array(decoded["data"])
+
+    import shap.plots
+
+    explanation = shap.Explanation(**decoded)
+
+    # Use waterfall plot for single-instance predictions, summary plot for batch predictions
+    if len(explanation) == 1:
+        # Restore predictions
+        predictions = next((o for o in resp.outputs if o.name == "predict"), None)
+        predictions = NumpyCodec.decode_output(predictions).ravel()
+        print(predictions.shape)
+
+        # Plot feature importance on the predicted class
+        predicted_class = predictions[0]
+        data = explanation[0, :, predicted_class]
+        num_features = 10
+        ax = shap.plots.waterfall(
+            data,
+            max_display=num_features,
+            show=False,
+        )
+
+        # HACK: Manually rescale the plot to fit the feature names and values
+        ax.get_figure().set_size_inches(15, num_features * 0.5 + 1.5)
+    else:
+        ax = shap.summary_plot(
+            explanation.values,
+            explanation.data,
+            show=False,
+            feature_names=explanation.feature_names,
+            plot_type="bar",
+        )
+
+    buf = io.BytesIO()
+    ax.get_figure().savefig(buf, format="png")
+    return Response(content=buf.getvalue(), media_type="image/png")

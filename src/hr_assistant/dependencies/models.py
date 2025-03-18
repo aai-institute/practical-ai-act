@@ -6,7 +6,7 @@ import httpx
 import numpy as np
 import pandas as pd
 from fastapi import Depends
-from mlserver.codecs import NumpyCodec, PandasCodec
+from mlserver.codecs import Base64Codec, NumpyCodec, PandasCodec, StringCodec
 from mlserver.types import (
     InferenceErrorResponse,
     InferenceRequest,
@@ -44,6 +44,7 @@ class OpenInferenceProtocolClient:
         request.outputs = [
             RequestOutput(name="predict"),
             RequestOutput(name="predict_proba"),
+            RequestOutput(name="explain"),
         ]
         return request
 
@@ -76,7 +77,17 @@ class OpenInferenceProtocolClient:
                 raise InferenceError(response)
             else:
                 response = InferenceResponse(**data)
-                return {o.name: NumpyCodec.decode_output(o) for o in response.outputs}
+
+                def _decode_output(o):
+                    match o.parameters.content_type:
+                        case "np":
+                            return NumpyCodec.decode_output(o)
+                        case "base64":
+                            return Base64Codec.decode_output(o)
+                        case "str":
+                            return StringCodec.decode_output(o)
+
+                return {o.name: _decode_output(o) for o in response.outputs}
         except httpx.HTTPStatusError as e:
             http_response = e.response
             raise InferenceError(message=str(e)) from e
