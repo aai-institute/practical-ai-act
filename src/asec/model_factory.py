@@ -89,8 +89,10 @@ class ModelFactory:
         cls,
         **xgb_kwargs,
     ):
-        classifier = LabelEncodedClassifier(XGBClassifier(**xgb_kwargs), LabelEncoder())
-        return build_pipeline(classifier, exclude=cls.exclude)
+        classifier = XGBClassifier(enable_categorical=True, **xgb_kwargs)
+        return build_pipeline(
+            classifier, exclude=cls.exclude, encode_categoricals=False
+        )
 
     @classmethod
     def create_lightgbm(

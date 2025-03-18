@@ -47,4 +47,5 @@ model_input = {
 }
 
 response = post("http://localhost:8001/model/predict", json=model_input)
+print("Request ID:", response.headers["X-Request-ID"])
 print(response.text)
