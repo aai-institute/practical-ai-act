@@ -72,7 +72,7 @@ class ExplainableSKLearnModel(SKLearnModel):
 
         # Split the pipeline into a feature transformer and the model
         self.feature_pipeline = self._model[:-1]
-        self.predictor = self._model[-1].classifier
+        self.predictor = self._model[-1]
 
         # Construct SHAP explainer for the underlying XGboost model, using the transformed
         # feature names.This allows us to use a TreeExplainer for the SKlearn pipeline,

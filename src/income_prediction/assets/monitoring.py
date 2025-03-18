@@ -8,6 +8,7 @@ import pandas as pd
 import sklearn.pipeline
 
 from asec.data import CensusASECMetadata
+from asec.model_factory import LabelEncodedClassifier
 from asec.nannyml import build_reference_data
 from income_prediction.assets.model import ModelVersion
 from income_prediction.resources.configuration import Config, NannyMLConfig
@@ -31,13 +32,19 @@ def reference_dataset(
     X_test = test_data.drop(columns=[CensusASECMetadata.TARGET])
     y_test = test_data[CensusASECMetadata.TARGET]
 
-    df = build_reference_data(model, X_test, y_test, encoder=model.steps[-1][1].encoder)
+    encoder = None
+    if isinstance(model.steps[-1][1], LabelEncodedClassifier):
+        encoder = model.steps[-1][1].encoder
+
+    df = build_reference_data(model, X_test, y_test, encoder=encoder)
     return df
 
 
 @dg.asset(group_name="deployment", deps=["reference_dataset"])
 def nannyml_estimator(
-    reference_dataset: pd.DataFrame, experiment_config: Config, nanny_ml_config: NannyMLConfig
+    reference_dataset: pd.DataFrame,
+    experiment_config: Config,
+    nanny_ml_config: NannyMLConfig,
 ):
     estimator = nml.CBPE(
         problem_type="classification_multiclass",

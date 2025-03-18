@@ -69,6 +69,9 @@ def optuna_search_xgb(
     model_name = "xgboost-classifier"
 
     X_train = train_data.drop(columns=CensusASECMetadata.TARGET)
+    # Encode categorical features for XGBoost
+    for col in CensusASECMetadata.CATEGORICAL_FEATURES:
+        X_train[col] = X_train[col].astype("category")
     y_train = train_data[CensusASECMetadata.TARGET]
 
     optuna_search = optuna.integration.OptunaSearchCV(
