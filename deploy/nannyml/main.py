@@ -1,13 +1,12 @@
 import os
+import pickle
 
 import pandas as pd
 import psycopg2
-import psycopg2.extras
 import psycopg2.extensions
+import psycopg2.extras
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-import pickle
-
 from mlserver.codecs import NumpyCodec
 
 app = FastAPI()
@@ -73,7 +72,7 @@ def generate_figure():
 
 @app.get("/", response_class=HTMLResponse)
 def index():
-    return f"""
+    return """
     <!DOCTYPE html>
     <html lang="en">
     <head>

@@ -14,8 +14,8 @@ from income_prediction.resources.configuration import (
     MinioConfig,
     MlFlowConfig,
     NannyMLConfig,
-    StratifiedShuffleCVConfig,
     OptunaXGBParamDistribution,
+    StratifiedShuffleCVConfig,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
 

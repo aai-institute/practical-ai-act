@@ -278,6 +278,8 @@ class AdultASECData:
 
         loading_func = _fetch_asec_data
         if data_path is not None:
+            from sensai.util.cache import pickle_cached
+
             loading_func = pickle_cached(data_path)(loading_func)
 
         self._data = loading_func(year=year, data_path=data_path)
@@ -297,10 +299,7 @@ class AdultASECData:
     def load_input_output_data(self) -> tuple[pd.DataFrame, pd.Series]:
         df = self.load_data_frame()
         inputs: pd.DataFrame = df[
-            [
-                col
-                for col in self.COLS_CATEGORICAL + self.COLS_NUMERIC + self.COLS_ORDINAL
-            ]
+            list(self.COLS_CATEGORICAL + self.COLS_NUMERIC + self.COLS_ORDINAL)
         ]
         outputs: pd.Series = df[[self.TARGET]]
         return inputs, outputs
@@ -449,7 +448,7 @@ def download_file(url: str, destination: Path) -> None:
     try:
         urllib.request.urlretrieve(url, destination)
     except urllib.error.URLError as e:
-        raise ValueError(f"Failed to download data from {url}: {e}")
+        raise ValueError(f"Failed to download data from {url}: {e}") from e
 
 
 def extract_file_from_zip(zip_path: Path, expected_file: str, extract_to: Path) -> None:
@@ -476,7 +475,7 @@ def extract_file_from_zip(zip_path: Path, expected_file: str, extract_to: Path) 
 
             zip_ref.extract(expected_file, extract_to)
     except zipfile.BadZipFile as e:
-        raise ValueError(f"Invalid ZIP archive: {e}")
+        raise ValueError(f"Invalid ZIP archive: {e}") from e
 
 
 def filter_relevant_census_data(df: pd.DataFrame) -> pd.DataFrame:

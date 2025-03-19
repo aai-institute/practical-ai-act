@@ -1,9 +1,9 @@
 from typing import Any
 
-from sklearn.model_selection import StratifiedShuffleSplit
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel
+from sklearn.model_selection import StratifiedShuffleSplit
 
 
 class MlFlowConfig(BaseModel):

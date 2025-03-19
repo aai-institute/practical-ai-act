@@ -30,9 +30,9 @@ train = [
     "dagster-webserver>=1.9.10",
     "lightgbm>=4.5.0",
     "sensai-utils>=1.4.0",
-    "scikit-learn<1.6", # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
+    "scikit-learn<1.6",                   # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
     "ucimlrepo>=0.0.7",
-    "xgboost==2.1.3", # highest supported version by MLflow autologger
+    "xgboost==2.1.3",                     # highest supported version by MLflow autologger
     "optuna>=4.2.1",
     "optuna-integration[sklearn]>=4.2.1",
     "lakefs-spec>=0.11.2",
@@ -94,6 +94,7 @@ ignore = [
     "E501",    # Line too long
     "RUF029",  # Unused Async (FastAPI routes are async)
     "FAST003", # FastAPI unused path parameter (they can be consumed by dependencies)
+    "UP042",   # Allow inheritance from both str and enum.Enum for compatibility
 ]
 
 [tool.dagster]

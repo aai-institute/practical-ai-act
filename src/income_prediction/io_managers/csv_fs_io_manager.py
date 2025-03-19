@@ -1,7 +1,6 @@
 """Custom IO manager for saving and loading DataFrames as CSV files."""
 
 import os
-from typing import Union
 
 import pandas as pd
 from dagster import ConfigurableIOManager, InputContext, OutputContext
@@ -21,7 +20,7 @@ class CSVFSIOManager(ConfigurableIOManager):
     base_dir: str
     extension: str = ".csv"
 
-    def _get_path(self, context: Union[InputContext, OutputContext]) -> str:
+    def _get_path(self, context: InputContext | OutputContext) -> str:
         """Generates a file path by combining the base directory, asset key path, and file extension.
 
         Parameters
