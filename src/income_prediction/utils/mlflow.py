@@ -1,51 +1,5 @@
-from typing import Any
-
 import mlflow
 from aif360.metrics import ClassificationMetric
-
-
-class LakeFSDatasetSource(mlflow.data.DatasetSource):
-    """A custom MLflow dataset source for datasets stored in lakeFS"""
-
-    def __init__(self, lakefs_uri: str, server: str):
-        super().__init__()
-        self.uri = lakefs_uri
-        self.server = server
-
-    @staticmethod
-    def _get_source_type() -> str:
-        return "lakefs"
-
-    def load(self) -> Any:
-        raise NotImplementedError()
-
-    @staticmethod
-    def _can_resolve(raw_source: Any) -> bool:
-        if raw_source is None:
-            return False
-        if isinstance(raw_source, str):
-            return raw_source.startswith("lakefs://")
-        return False
-
-    @classmethod
-    def _resolve(cls, raw_source: Any) -> "mlflow.data.DatasetSource":
-        return cls(raw_source)
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "source_type": self._get_source_type(),
-            "lakefs_uri": self.uri,
-            "server": self.server,
-        }
-
-    @classmethod
-    def from_dict(cls, source_dict: dict[Any, Any]) -> "mlflow.data.DatasetSource":
-        source_type = source_dict["source_type"]
-        if source_type != cls._get_source_type():
-            raise ValueError(
-                f"Source type {source_dict['source_type']} does not match expected type {cls._get_source_type()}"
-            )
-        return cls(**source_dict)
 
 
 def start_mlflow_run(

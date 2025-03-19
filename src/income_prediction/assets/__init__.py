@@ -15,7 +15,7 @@ from income_prediction.utils.dagster import canonical_lakefs_uri_for_input
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
-from ..utils.mlflow import LakeFSDatasetSource, log_fairness_metrics
+from ..utils.mlflow import log_fairness_metrics
 from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from .monitoring import nannyml_container as nannyml_container
@@ -92,9 +92,8 @@ def optuna_search_xgb(
                 train_data,
                 name="train_data",
                 targets=CensusASECMetadata.TARGET,
-                source=LakeFSDatasetSource(
-                    lakefs_uri=canonical_lakefs_uri_for_input(context, "train_data"),
-                    server="localhost:8000",
+                source=canonical_lakefs_uri_for_input(
+                    context, "train_data", protocol="s3"
                 ),
             )
             mlflow.log_input(train_ds)
@@ -103,9 +102,8 @@ def optuna_search_xgb(
                 test_data,
                 name="test_data",
                 targets=CensusASECMetadata.TARGET,
-                source=LakeFSDatasetSource(
-                    lakefs_uri=canonical_lakefs_uri_for_input(context, "test_data"),
-                    server="localhost:8000",
+                source=canonical_lakefs_uri_for_input(
+                    context, "test_data", protocol="s3"
                 ),
             )
             mlflow.log_input(test_ds)

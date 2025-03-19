@@ -1,3 +1,5 @@
+from typing import Literal
+
 import dagster as dg
 
 SHORT_RUN_ID_LENGTH = 8
@@ -28,6 +30,7 @@ def extract_run_id(context: dg.AssetExecutionContext, short: bool = False) -> st
 def canonical_lakefs_uri_for_input(
     context: dg.AssetExecutionContext,
     input_name: str,
+    protocol: Literal["lakefs", "s3"] = "lakefs",
 ) -> str:
     """Return the canonical lakeFS URI for a given input asset (must be managed by a lakeFS I/O manager).
 
@@ -37,6 +40,8 @@ def canonical_lakefs_uri_for_input(
         Dagster asset execution context, providing information about the current run.
     input_name : str
         Name of the input asset
+    protocol : Literal["lakefs", "s3"], optional, default "lakefs"
+        Protocol to use in the URI (lakefs or S3)
 
     Returns
     -------
@@ -49,4 +54,8 @@ def canonical_lakefs_uri_for_input(
     metadata = ev.asset_materialization.metadata
     if "canonical_uri" not in metadata:
         raise ValueError("No canonical URI found in metadata")
-    return metadata.get("canonical_uri").value
+
+    uri = metadata.get("canonical_uri").value
+    if protocol == "s3":
+        uri = uri.replace("lakefs://", "s3://")
+    return uri
