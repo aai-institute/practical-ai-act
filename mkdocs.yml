@@ -20,6 +20,7 @@ nav:
       - getting-started/ai-act-in-a-nutshell.md
   - How-to:
       - how-to/index.md
+      - how-to/reference-architecture.md
   - Explanations:
       - explanations/index.md
       - explanations/uncertainty-quantification.md
