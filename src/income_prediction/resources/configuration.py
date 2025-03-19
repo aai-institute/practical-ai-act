@@ -1,5 +1,6 @@
 from typing import Any
 
+from sklearn.model_selection import StratifiedShuffleSplit
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel
@@ -47,14 +48,36 @@ class OptunaCVConfig(ConfigurableResource):
     Optuna cross-validation configuration. This resource is used to configure the
     parameters of the Optuna cross-validation search. The parameters are passed to
     the [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV] class.
+
+    This config does not specify the 'cv' parameter, so it will resolve to the default
+    value from optuna
+    ([sklearn.model_selection.StratifiedKFold][sklearn.model_selection.StratifiedKFold]
+    with 5 splits), see the documentation of
+    [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV]
+    for more details. If you want to use a stratified shuffle split with a custom
+    validation size and number of splits, use
+    [income_prediction.resources.configuration.StratifiedShuffleCVConfig][income_prediction.resources.configuration.StratifiedShuffleCVConfig]
+
+    Args:
+        n_trials: Number of trials for the optimization.
+        timeout: Time limit for the optimization process in seconds.
+        verbose: Verbosity level.
+        n_jobs: Number of parallel jobs to run.
+        random_state: Seed for the random number generator.
+        refit: Whether to refit the best model on the whole dataset.
+        scoring: Scoring strategy to evaluate the performance of the cross-validated
+            model on the validation set. For more details,
+            see [sklearn.metrics.get_scorer][sklearn.metrics.get_scorer]
+        kwargs: Additional keyword arguments to pass to the OptunaSearchCV class.
     """
 
     n_trials: int = 100
     timeout: int = 600
     verbose: int = 2
     n_jobs: int = -1
-    random_state: int = 495
+    random_state: int
     refit: bool = True
+    scoring: str = "accuracy"
     kwargs: dict[str, Any] | None = None
 
     def as_dict(self) -> dict[str, Any]:
@@ -65,8 +88,45 @@ class OptunaCVConfig(ConfigurableResource):
             "n_jobs": self.n_jobs,
             "random_state": self.random_state,
             "refit": self.refit,
+            "scoring": self.scoring,
             **(self.kwargs or {}),
         }
+
+
+class StratifiedShuffleCVConfig(OptunaCVConfig):
+    """
+    Optuna cross-validation configuration. This resource is used to configure the
+    parameters of the Optuna cross-validation search. The parameters are passed to
+    the [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV] class.
+    It causes optuna to use a stratified shuffle split cross-validator with
+    user defined validation size and number of splits.
+
+    Args:
+        n_trials: Number of trials for the optimization.
+        timeout: Time limit for the optimization process in seconds.
+        verbose: Verbosity level.
+        n_jobs: Number of parallel jobs to run.
+        random_state: Seed for the random number generator.
+        refit: Whether to refit the best model on the whole dataset.
+        scoring: Scoring strategy to evaluate the performance of the cross-validated
+            model on the validation set. For more details,
+            see [sklearn.metrics.get_scorer][sklearn.metrics.get_scorer]
+        validation_size: Fraction of the dataset to include in the validation split.
+        kwargs: Additional keyword arguments to pass to the OptunaSearchCV class.
+
+    """
+
+    validation_size: float = 0.2
+    n_splits: int = 5
+
+    def as_dict(self) -> dict[str, Any]:
+        config_dict = super().as_dict()
+        config_dict["cv"] = StratifiedShuffleSplit(
+            self.n_splits,
+            test_size=self.validation_size,
+            random_state=self.random_state,
+        )
+        return config_dict
 
 
 class OptunaXGBParamDistribution(ResourceDefinition):

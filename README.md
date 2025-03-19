@@ -97,3 +97,8 @@ In order to start the serving parts of the Docker Compose stack, specify the `se
 ```
 docker compose -f deploy/compose.local.yml --profile serve up -w
 ```
+
+## Caveats when running on Colima
+
+Colima needs to be started with the `--network-address` switch to allow the model container to reach the MLflow server on the host.
+To do this, run `colima start <options> --network-address`.

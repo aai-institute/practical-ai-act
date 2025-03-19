@@ -372,11 +372,55 @@ class PgSQLPredictionLogger(AbstractPredictionLogger):
             self._log_metadata(cur, input_data.id, metadata)
             cur.connection.commit()
 
+    def fetch(self, request_id: str):
+        """Fetch the request, response, error, and metadata for a given request ID."""
+
+        with self._db_conn.cursor() as cur:
+            cur.execute(
+                f"SELECT raw_request FROM {self.Tables.REQUEST} WHERE id = %s",
+                (request_id,),
+            )
+            request = (
+                InferenceRequest.model_validate(cur.fetchone()[0])
+                if cur.rowcount
+                else None
+            )
+
+            cur.execute(
+                f"SELECT raw_response FROM {self.Tables.RESPONSE} WHERE id = %s",
+                (request_id,),
+            )
+            response = (
+                InferenceResponse.model_validate(cur.fetchone()[0])
+                if cur.rowcount
+                else None
+            )
+
+            cur.execute(
+                f"SELECT id, error FROM {self.Tables.ERROR} WHERE id = %s",
+                (request_id,),
+            )
+            error_data = cur.fetchone()
+            error = (
+                InferenceErrorResponse.model_validate(
+                    id=error_data[0], error=error_data[1]
+                )
+                if error_data
+                else None
+            )
+
+            cur.execute(
+                f"SELECT * FROM {self.Tables.METADATA} WHERE id = %s",
+                (request_id,),
+            )
+            metadata = cur.fetchone() if cur.rowcount else None
+        return request, response, error, metadata
+
 
 def get_request_logger(request: Request) -> PredictionLogger:
     return request.state.request_logger
 
 
 PredictionLoggerDependency = Annotated[
-    AbstractPredictionLogger, Depends(PgSQLPredictionLogger)
+    PgSQLPredictionLogger, Depends(PgSQLPredictionLogger)
 ]

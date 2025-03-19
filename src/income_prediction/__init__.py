@@ -14,7 +14,7 @@ from income_prediction.resources.configuration import (
     MinioConfig,
     MlFlowConfig,
     NannyMLConfig,
-    OptunaCVConfig,
+    StratifiedShuffleCVConfig,
     OptunaXGBParamDistribution,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
@@ -22,7 +22,18 @@ from income_prediction.resources.mlflow_session import MlflowSession
 from .assets.model import ModelVersion
 from .sensors import model_version_trigger
 
-optuna_cv_config = OptunaCVConfig(n_trials=10, verbose=2, timeout=600, n_jobs=-1)
+RANDOM_STATE = 495
+experiment_config = Config(random_state=RANDOM_STATE)
+optuna_cv_config = StratifiedShuffleCVConfig(
+    n_trials=10,
+    verbose=2,
+    timeout=600,
+    n_jobs=-1,
+    n_splits=5,
+    validation_size=0.2,
+    random_state=experiment_config.random_state,
+    scoring="f1_macro",
+)
 optuna_xgb_param_distribution = OptunaXGBParamDistribution(
     max_depth=IntDistribution(3, 10),
     gamma=FloatDistribution(0, 9),
@@ -74,7 +85,7 @@ definitions = dg.Definitions(
     ),
     sensors=[model_version_trigger],
     resources={
-        "experiment_config": Config(),
+        "experiment_config": experiment_config,
         "mlflow_session": MlflowSession(
             tracking_url=mlflow_cfg.mlflow_tracking_url,
             experiment=mlflow_cfg.mlflow_experiment,
