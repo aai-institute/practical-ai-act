@@ -104,6 +104,8 @@ theme:
   icon:
     logo: _images/aai-favicon.png
     repo: fontawesome/brands/github
+    admonition:
+      success: octicons/law-24
   features:
     - content.tabs.link
     - content.code.copy
