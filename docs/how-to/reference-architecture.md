@@ -24,4 +24,5 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Further Resources
 
-- [Model Performance Monitoring](model-monitoring.md)
+-   [Inference Log](inference-log.md)
+-   [Model Performance Monitoring](model-monitoring.md)

@@ -22,6 +22,7 @@ nav:
       - how-to/index.md
       - how-to/reference-architecture.md
       - how-to/model-monitoring.md
+      - how-to/inference-log.md
   - Explanations:
       - explanations/index.md
       - explanations/uncertainty-quantification.md
