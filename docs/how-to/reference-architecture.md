@@ -16,8 +16,6 @@ document.getElementById('svgFrame').addEventListener('load', function() {
     const iframe = this.getSVGDocument();
     // Need to match attribute name in all XML namespaces, since SVG <2 uses `xlink`
     const links = iframe.querySelectorAll('a[*|href^="/"]');
-    console.log(links);
-
     links.forEach(link => link.setAttribute('target', '_top'));
 });
 </script>
