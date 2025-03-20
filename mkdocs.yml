@@ -21,6 +21,9 @@ nav:
   - How-to:
       - how-to/index.md
       - how-to/reference-architecture.md
+      - how-to/data-versioning.md
+      - how-to/experiment-tracking.md
+      - how-to/model-registry.md
       - how-to/model-monitoring.md
       - how-to/inference-log.md
   - Explanations:
