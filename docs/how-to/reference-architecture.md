@@ -22,5 +22,15 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Further Resources
 
+The following pages provide more detailed information on the components of the reference architecture, group by the phase of the machine learning lifecycle.
+
+### Training Phase
+
+-   [Data Versioning](data-versioning.md)
+-   [Experiment Tracking](experiment-tracking.md)
+-   [Model Registry](model-registry.md)
+
+### Deployment Phase
+
 -   [Inference Log](inference-log.md)
 -   [Model Performance Monitoring](model-monitoring.md)
