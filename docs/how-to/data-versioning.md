@@ -22,7 +22,7 @@ A suitable data version control system needs to accommodate multiple engineers w
 This can be done for example by using a *branch* workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).
 
 ```mermaid
-%%{ init: { 'logLevel': 'debug', 'theme': 'base'} }%%
+%%{ init: {'theme': 'base'} }%%
 ---
 title: Branching in a (data) version control system
 ---
@@ -38,7 +38,7 @@ gitGraph
    commit
    commit
 ```
-*Figure 1: A branching data version control approach, with the dots being commits (immutable snapshots of the data).*
+*Figure 1: A branching data version control approach, with commits (immutable snapshots of the data) shown as dots.*
 
 
 2. **Distributed storage.**
