@@ -1,4 +1,4 @@
-# Data versioning
+# Experiment tracking
 
 !!! success "Compliance Info"
     TODO: Add article references to provisions addressed by experiment tracking
@@ -29,3 +29,12 @@ This typically includes, but is not limited to,
 MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualizes model performance in different stages of the ML training lifecycle.
 It features a number of pre-configured tracking plugins for popular machine learning libraries called **autologgers**, which allow the collection of metrics and configuration with minimal setup.
 In addition, MLflow comes with a UI that can be used to visualize metadata and results across experiments.
+
+2. [Weights & Biases](https://wandb.ai/)
+
+Weights & Biases (or WandB) is a managed service for experiment tracking, metrics and metadata logging, and storing model and data artifacts.
+
+3. [neptune.ai](https://neptune.ai)
+
+neptune.ai is another managed experiment tracking service for logging, visualizing, and monitoring metrics both in a training run and across multiple runs.
+It supports both managed and on-premise deployments, and offers special functionality for large language models (LLMs).
