@@ -10,15 +10,60 @@ not only to be transparent, or to easily share work with colleagues, but to be a
 
 In the software engineering world, distributed version control systems (VCS) have seen wide adoption because they address all of these concerns.
 Through a set of basic abstractions, they provide bookkeeping powers by means of unique and immutable references, distributed storage for work sharing, and a graph-based history building for detailed information keeping.
-Consequently, *data version control* or *data versioning* can be thought of as the similar approach to all data *artifacts* produced by your machine learning systems.
+Consequently, *data version control* or *data versioning* systems (DVCS) can be thought of as the similar approach to all data *artifacts* produced by your machine learning systems.
+
+## Implementation notes
+
+To add data versioning to a machine learning project, it is important to figure out a few steps:
+
+1. **Collaborative development.**
+
+A suitable data version control system needs to accommodate multiple engineers working simultaneously on different versions of the data, and ensure that changes made by one engineer do not invalidate the work of another.
+This can be done for example by using a *branch* workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).
+
+```mermaid
+%%{ init: { 'logLevel': 'debug', 'theme': 'base'} }%%
+---
+title: Branching in a (data) version control system
+---
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit
+```
+*Figure 1: A branching data version control approach, with the dots being commits (immutable snapshots of the data).*
+
+
+2. **Distributed storage.**
+
+A data version control system should be accessible for all developers, and host the data in an off-device location to ensure easy access, fault tolerance, and availability of backups.
+
+3. **Communication with users.**
+
+In addition to availability, security, and fault tolerance, it is necessary that the data version control system can be easily interfaced with in AI application code.
+This usually means that a selection of API clients or SDKs is available for a variety of programming languages, which allows developers to efficiently interface with the DVCS.
 
 ## Key technologies
 
 1. [lakeFS](https://lakefs.io)
 
-lakeFS borrows a lot of its version control abstractions from the git VCS tool.
+lakeFS models a lot of its version control abstractions like the [git VCS](https://git-scm.com/) tool.
 It builds a linear history on commits, separates different avenues of work with branches, allows annotating data with tags, and also has supported for a merge workflow.
-For storage, it can always be used with a local machine file system, but it can also be set up on a cloud storage bucket of one of the larger providers (AWS, GCP, Azure).
+It can be set up on either local storage or a cloud storage bucket of one of the larger providers (AWS, GCP, Azure).
 
-lakeFS can ingest data via a command-line interface (CLI), ``lakectl``, or be addressed through one of its client libraries, most notably that in Python.
-On top of that, an fsspec implementation (https://lakefs-spec.org) allows users to transfer files with minimal setup directly in Python code, and simplifies integration with data frame libraries and OLAP systems like duckDB.
+2. [DVC](https://dvc.org/)
+
+DVC is a pure-Python command-line interface (CLI) for versioning data and model artifacts resulting from ML pipelines.
+In addition, it has functionality for local experiment tracking, and versioning data pipelines in git together with project source code.
+
+3. [git-lfs](https://git-lfs.com)
+
+Git Large File Storage (LFS) stores large data assets in remote locations, and replaces the data with text pointers in git, so that data and its usage are decoupled on the storage level.
+It integrates with the git command-line interface, augmenting developers' existing git workflows intuitively, and reducing the learning curve that an addition of a standalone tool would bring.
