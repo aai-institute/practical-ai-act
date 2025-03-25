@@ -33,4 +33,5 @@ The following pages provide more detailed information on the components of the r
 ### Deployment Phase
 
 -   [Inference Log](inference-log.md)
+-   [Model Explainability](explainability.md)
 -   [Model Performance Monitoring](model-monitoring.md)

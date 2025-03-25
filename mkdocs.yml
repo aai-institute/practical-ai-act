@@ -23,6 +23,7 @@ nav:
       - how-to/reference-architecture.md
       - how-to/data-versioning.md
       - how-to/experiment-tracking.md
+      - how-to/explainability.md
       - how-to/model-registry.md
       - how-to/model-monitoring.md
       - how-to/inference-log.md

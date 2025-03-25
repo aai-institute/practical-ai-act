@@ -4,8 +4,12 @@
 
     Implementing an inference log will help you in achieving compliance with the following regulations:
 
-    - **|Art. 12|** (Record-Keeping)
+    - **|Art. 12|** (Record-Keeping), in particular:
+        - **|Art. 12(1)|**, since the inference log enables the recording of events
+        - **|Art. 12(2)|**, since the inference log allows the identification of potentially harmful situations and facilitates the post-market monitoring
+    - **|Art. 19|** (Automatically Generated Logs)
     - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+    - **|Art. 72|** (Post-Market Monitoring)
 
 ## Rationale
 
@@ -68,6 +72,9 @@ erDiagram
     REQUESTS ||--|| ERRORS : "has"
     REQUESTS ||--|| METADATA : "has"
 ```
+
+Choose a database or storage solution that supports the required data structure and provides the necessary performance and scalability characteristics for the AI system's workload.
+Additionally, consider the data retention requirements of |Art. 19| and the need for data protection and privacy (e.g., interactions with GDPR) when selecting a log storage solution.
 
 ### Application Middleware
 
