@@ -22,7 +22,7 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Further Resources
 
-The following pages provide more detailed information on the components of the reference architecture, group by the phase of the machine learning lifecycle.
+The following pages provide more detailed information on the components of the reference architecture, grouped by the phase of the machine learning lifecycle.
 
 ### Training Phase
 
