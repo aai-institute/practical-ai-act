@@ -37,9 +37,9 @@ Contrast this with an implementation that would require access to the deployed m
 
 The system exposes an `/model/explain` API endpoint, that allows a user to request explanations for a given model prediction (as identified by its request ID, which is automatically attached to any prediction output through an HTTP `X-Request-ID` header).
 
-For a given inference request ID, the system retrieves the corresponding input, output, and explanation data from the [inference log](./inference-log.md), and returns a visual representation of the SHAP explanation for the prediction to the user.
+For a given inference request ID, the system retrieves the corresponding input, output, and explanation data from the [inference log](./inference-log.md), and returns a visual representation of the SHAP explanation for the prediction to the user:
 
-<!-- TODO: Insert example explanation plot -->
+![SHAP waterfall plot for a single record](../_images/shap_single_prediction.png)
 
 ## Key Technologies
 
