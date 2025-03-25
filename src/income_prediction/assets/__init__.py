@@ -19,6 +19,7 @@ from ..utils.mlflow import log_fairness_metrics
 from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from .monitoring import nannyml_container as nannyml_container
+from .monitoring import nannyml_drift_calculator as nannyml_drift_calculator
 from .monitoring import nannyml_estimator as nannyml_estimator
 from .monitoring import reference_dataset as reference_dataset
 
