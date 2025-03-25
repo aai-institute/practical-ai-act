@@ -1,6 +1,9 @@
 # Data versioning
 
 !!! success "Compliance Info"
+
+    --8<-- "docs/how-to/\_compliance-info-box.partial"
+
     TODO: Add article references to provisions addressed by data versioning
 
 ## Motivation
@@ -10,7 +13,7 @@ not only to be transparent, or to easily share work with colleagues, but to be a
 
 In the software engineering world, distributed version control systems (VCS) have seen wide adoption because they address all of these concerns.
 Through a set of basic abstractions, they provide bookkeeping powers by means of unique and immutable references, distributed storage for work sharing, and a graph-based history building for detailed information keeping.
-Consequently, *data version control* or *data versioning* systems (DVCS) can be thought of as the similar approach to all data *artifacts* produced by your machine learning systems.
+Consequently, _data version control_ or _data versioning_ systems (DVCS) can be thought of as the similar approach to all data _artifacts_ produced by your machine learning systems.
 
 ## Implementation notes
 
@@ -19,7 +22,7 @@ To add data versioning to a machine learning project, it is important to figure 
 1. **Collaborative development.**
 
 A suitable data version control system needs to accommodate multiple engineers working simultaneously on different versions of the data, and ensure that changes made by one engineer do not invalidate the work of another.
-This can be done for example by using a *branch* workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).
+This can be done for example by using a _branch_ workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).
 
 ```mermaid
 %%{ init: {'theme': 'base'} }%%
@@ -38,8 +41,8 @@ gitGraph
    commit
    commit
 ```
-*Figure 1: A branching data version control approach, with commits (immutable snapshots of the data) shown as dots.*
 
+_Figure 1: A branching data version control approach, with commits (immutable snapshots of the data) shown as dots._
 
 2. **Distributed storage.**
 

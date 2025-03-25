@@ -1,6 +1,9 @@
 # Model registry
 
 !!! success "Compliance Info"
+
+    --8<-- "docs/how-to/_compliance-info-box.partial"
+
     TODO: Add article references to provisions addressed by a model registry
 
 ## Motivation

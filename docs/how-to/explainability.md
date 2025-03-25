@@ -2,8 +2,8 @@
 
 !!! success "Compliance Info"
 
-    - **|Art. 14|** (Human Oversight), in particular |Art. 14(4)(c)|, since explainability approaches enable human interpretation of the system output
-    - **|Art. 86|** (Right to explanation)
+    --8<-- "docs/how-to/_compliance-info-box.partial"
+
     - **|Art. 13|** (Transparency and Provision of Information to Deployers), in particular:
         - |Art. 13(1)|: Explainability techniques contribute to a transparent system operation
         - |Art. 13(3)(b)(iv)|: Explainability techniques directly provide information relevant to explain the system's output
