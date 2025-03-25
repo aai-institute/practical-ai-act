@@ -30,7 +30,6 @@ nav:
   - Explanations:
       - explanations/index.md
       - explanations/uncertainty-quantification.md
-      - explanations/explainability.md
       - explanations/bias.md
       - explanations/fairness.md
       - explanations/data-governance.md
