@@ -18,7 +18,7 @@ nav:
       - getting-started/index.md
       - getting-started/first-steps.md
       - getting-started/ai-act-in-a-nutshell.md
-  - Reference Architecture:
+  - Engineering Practice:
       - how-to/reference-architecture.md
       - how-to/data-versioning.md
       - how-to/experiment-tracking.md
