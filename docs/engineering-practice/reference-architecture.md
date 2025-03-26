@@ -1,9 +1,7 @@
-<style>
-/* Hide the TOC sidebar to expand vertical space */
-.md-sidebar--secondary {
-  display: none !important;
-}
-</style>
+---
+hide:
+    - toc
+---
 
 <!-- Need to use embed instead of img to enable hyperlinks in the image -->
 

@@ -10,22 +10,22 @@ validation:
   absolute_links: warn
   unrecognized_links: warn
 
-copyright: Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a><br>The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn gGmbH.
+copyright: Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a>, licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 license</a><br>The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn gGmbH.
 
 nav:
   - Home: index.md
   - Getting Started:
       - getting-started/index.md
-      - getting-started/first-steps.md
-      - getting-started/ai-act-in-a-nutshell.md
   - Engineering Practice:
-      - how-to/reference-architecture.md
-      - how-to/data-versioning.md
-      - how-to/experiment-tracking.md
-      - how-to/explainability.md
-      - how-to/model-registry.md
-      - how-to/model-monitoring.md
-      - how-to/inference-log.md
+      - engineering-practice/reference-architecture.md
+      - engineering-practice/data-versioning.md
+      - engineering-practice/experiment-tracking.md
+      - engineering-practice/explainability.md
+      - engineering-practice/model-registry.md
+      - engineering-practice/model-monitoring.md
+      - engineering-practice/inference-log.md
+  - Showcase:
+      - showcase/index.md
   - Explanations:
       - explanations/index.md
       - explanations/bias.md
@@ -75,6 +75,7 @@ markdown_extensions:
   # python-markdown extensions: https://python-markdown.github.io/extensions/
   - admonition
   - attr_list
+  - md_in_html
   - sane_lists
   - toc:
       permalink: true
@@ -102,13 +103,13 @@ markdown_extensions:
 theme:
   name: "material"
   custom_dir: docs/_theme_overrides
-  logo: _images/aai-logo-cropped.png
-  favicon: _images/aai-favicon.png
+  logo: _images/logo.svg
+  favicon: _images/logo.svg
   font:
     text: IBM Plex Sans # Arial replacement
     code: Source Code Pro
   icon:
-    logo: _images/aai-favicon.png
+    logo: _images/logo.svg
     repo: fontawesome/brands/github
     admonition:
       success: octicons/law-24
