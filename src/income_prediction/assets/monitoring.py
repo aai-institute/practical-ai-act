@@ -86,7 +86,11 @@ def nannyml_drift_calculator(
     return calc
 
 
-@dg.asset(kinds={"docker"}, group_name="deployment", deps=["nannyml_estimator"])
+@dg.asset(
+    kinds={"docker"},
+    group_name="deployment",
+    deps=["nannyml_estimator", "nannyml_drift_calculator"],
+)
 def nannyml_container(
     context: dg.AssetExecutionContext,
     model_version: ModelVersion,
