@@ -31,6 +31,5 @@
 }
 
 .md-header {
-    background: rgb(24, 165, 167);
-    background: linear-gradient(30deg, rgb(24, 165, 167), 90%, rgb(191, 255, 199));
+    background: #5d5e60;
 }

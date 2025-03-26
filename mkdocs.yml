@@ -10,8 +10,6 @@ validation:
   absolute_links: warn
   unrecognized_links: warn
 
-copyright: Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a>, licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 license</a><br>The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn gGmbH.
-
 nav:
   - Home: index.md
   - Getting Started:
