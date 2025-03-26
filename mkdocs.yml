@@ -41,6 +41,7 @@ nav:
       - explanations/technical-documentation.md
       - explanations/traceability.md
       - explanations/transparency.md
+  - acknowledgments.md
 
 plugins:
   - callouts
