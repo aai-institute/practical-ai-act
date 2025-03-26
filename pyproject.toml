@@ -21,7 +21,6 @@ docs = [
     "mkdocs-section-index",
     "mkdocs-material",
     "mkdocstrings[python]",
-    "mkdocs-git-revision-date-localized-plugin",
 ]
 train = [
     "mlflow>=2.19.0",
