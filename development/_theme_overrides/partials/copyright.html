@@ -1,0 +1,57 @@
+<style>
+  .copyright {
+    display: inline-flex;
+    max-width: 80%;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .copyright p {
+    font-size: 80%;
+  }
+
+  .logo {
+    align-self: center;
+    max-height: 64px;
+  }
+
+  .logo-container {
+    display: inline-flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 16px;
+  }
+
+  @media (max-width: 800px) {
+    .logo {
+      max-height: 32px;
+    }
+
+    .logo-container {
+      flex-direction: column;
+    }
+  }
+</style>
+<div class="copyright">
+  <p>
+    Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank"
+                             rel="noopener">appliedAI Institute for Europe gGmbH</a>,
+    licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC
+    BY-NC-SA 4.0 license</a>
+  </p>
+  <p>
+    The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn
+    gGmbH.
+  </p>
+
+  <div class="logo-container">
+    <a href="https://appliedai-institute.de" target="_blank">
+      <img class="logo" src="/_images/aai-logo-cropped.png"
+           title="appliedAI Institute for Europe gGmbH"/>
+    </a>
+    <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
+      <img class="logo" src="/_images/stmd-logo.png"
+           title="Bayerisches Staatsministerium für Digitales"/>
+    </a>
+  </div>
+</div>
