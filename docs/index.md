@@ -34,7 +34,7 @@ A project demonstrating the implementation of a trustworthy AI system.
     ---
     Engineering techniques for trustworthy AI systems
 
--   :material-book-open-variant:{ .lg .middle } [__Explanations__](explanations/index.md)
+-   :material-gavel:{ .lg .middle } [__AI Act Conformity__](conformity/index.md)
 
     ---
 

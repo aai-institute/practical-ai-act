@@ -24,18 +24,20 @@ nav:
       - engineering-practice/inference-log.md
   - Showcase:
       - showcase/index.md
-  - Explanations:
-      - explanations/index.md
-      - explanations/bias.md
-      - explanations/fairness.md
-      - explanations/data-governance.md
-      - explanations/accuracy.md
-      - explanations/cybersecurity.md
-      - explanations/interoperability.md
-      - explanations/privacy-and-data-security.md
-      - explanations/robustness.md
-      - explanations/technical-documentation.md
-      - explanations/transparency.md
+  - AI Act Conformity:
+      - conformity/index.md
+      - Documents:
+          - conformity/documents/index.md
+          - conformity/documents/technical-documentation.md
+          - conformity/documents/instructions-for-use.md
+      - conformity/bias.md
+      - conformity/fairness.md
+      - conformity/data-governance.md
+      - conformity/accuracy.md
+      - conformity/cybersecurity.md
+      - conformity/interoperability.md
+      - conformity/privacy-and-data-security.md
+      - conformity/robustness.md
   - acknowledgments.md
 
 plugins:
