@@ -12,8 +12,8 @@ validation:
 
 nav:
   - Home: index.md
-  - Getting Started:
-      - getting-started/index.md
+  - Reader's Guide:
+      - readers-guide/index.md
   - Engineering Practice:
       - engineering-practice/reference-architecture.md
       - engineering-practice/data-versioning.md

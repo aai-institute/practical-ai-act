@@ -16,7 +16,7 @@ A project demonstrating the implementation of a trustworthy AI system.
 
 <div class="grid cards" markdown>
 
--   :material-clock-fast:{ .lg .middle } [__Getting Started__](getting-started/index.md)
+-   :material-clock-fast:{ .lg .middle } [__Reader's Guide__](readers-guide/index.md)
 
     ---
     How to access the resources on this site
