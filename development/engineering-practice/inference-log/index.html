@@ -15,7 +15,7 @@
         <link rel="next" href="../../showcase/">
       
       
-      <link rel="icon" href="../../_images/logo.svg">
+      <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
@@ -49,8 +49,8 @@
         
         
         
-        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.38e079b2.css">
-        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"Source Code Pro"}</style>
+        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
+        <style>:root{--md-text-font:"Source Sans Pro";--md-code-font:"Source Code Pro"}</style>
       
     
     
@@ -96,9 +96,11 @@
         <aside class="md-banner">
           <div class="md-banner__inner md-grid md-typeset">
             
-            You are currently viewing <strong>pre-release</strong> documentation. This may contain features that have not yet been
-released. For the most accurate information, please <strong><a href="../../..">access the latest
-    release</a></strong>.
+            You are currently viewing <strong>pre-release</strong> documentation. This
+may contain features that have not yet been released. For the most accurate
+information, please
+
+<strong><a href="../../..">access the latest release</a></strong>.
           </div>
           
         </aside>
@@ -154,7 +156,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
       data-md-component="logo"
     >
       
-  <img src="../../_images/logo.svg" alt="logo">
+  <img src="../../_images/logos/baiaa-logo.svg" alt="logo">
 
     </a>
 
@@ -304,7 +306,7 @@ released. For the most accurate information, please <strong><a href="../../..">a
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
       
-  <img src="../../_images/logo.svg" alt="logo">
+  <img src="../../_images/logos/baiaa-logo.svg" alt="logo">
 
     </a>
     twai-pipeline
@@ -1219,63 +1221,112 @@ By further encapsulating the interface to the model itself in another dependency
         
       </main>
       
+ <style>
+  .content-notice {
+    align-self: center;
+    font-size: 0.6rem;
+  }
+
+  .content-notice p {
+    color: grey;
+    background-color: #fafafa;
+    max-width: 80ch;
+    padding: 8px 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+  }
+
+  [data-md-color-scheme="slate"] .content-notice p {
+    color: grey;
+    background-color: #333;
+    border-color: #444;
+  }
+</style>
+<div class="content-notice">
+  <p>
+    <em>Disclaimer</em>: The information provided on this web site is for
+    informational purposes only and does not constitute legal advice. The tools,
+    practices, and mappings presented here reflect our interpretation of the EU
+    AI Act and are intended to support understanding and implementation of
+    trustworthy AI principles. Following this guidance does not guarantee
+    compliance with the EU AI Act or any other legal or regulatory framework. We
+    are not affiliated with, nor do we endorse, any of the tools listed on this
+    website.
+  </p>
+</div>
+ 
         <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <style>
+  .md-footer-meta__inner {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
   .copyright {
-    display: inline-flex;
-    max-width: 80%;
+    display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 16px;
+    padding: 0 0.4rem;
   }
 
   .copyright p {
-    font-size: 80%;
+    font-size: 0.6rem;
   }
 
   .logo {
-    align-self: center;
-    max-height: 64px;
+    max-height: 96px;
+  }
+
+  .aai-logo {
+    padding: 14px;
   }
 
   .logo-container {
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
-    align-self: center;
-    gap: 16px;
+    align-items: center;
   }
 
   @media (max-width: 800px) {
-    .logo {
-      max-height: 32px;
-    }
-
     .logo-container {
       flex-direction: column;
+    }
+    .logo {
+      max-height: 64px;
     }
   }
 </style>
 <div class="copyright">
   <p>
-    Copyright &copy; 2025 <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a>,
-    licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC
-    BY-NC-SA 4.0 license</a>
+    Copyright &copy; 2025
+    <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a
+    >, licensed under the
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 license</a
+    >
   </p>
   <p>
-    The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung Heilbronn
-    gGmbH.
+    The appliedAI Institute for Europe gGmbH is supported by the KI-Stiftung
+    Heilbronn gGmbH.
   </p>
 
   <div class="logo-container">
-    <a href="https://appliedai-institute.de" target="_blank">
-      <img class="logo" src="/_images/aai-logo-cropped.png"
-           title="appliedAI Institute for Europe gGmbH"/>
-    </a>
     <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
-      <img class="logo" src="/_images/stmd-logo.png"
-           title="Bayerisches Staatsministerium für Digitales"/>
+      <img
+        class="logo"
+        src="/_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
+        title="Bayerisches Staatsministerium für Digitales"
+      />
+    </a>
+    <a href="https://appliedai-institute.de" target="_blank">
+      <img
+        class="logo aai-logo"
+        src="/_images/aai-logo-cropped.png"
+        title="appliedAI Institute for Europe gGmbH"
+      />
     </a>
   </div>
 </div>
@@ -1318,6 +1369,7 @@ By further encapsulating the interface to the model itself in another dependency
   </div>
 </footer>
       
+ 
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
