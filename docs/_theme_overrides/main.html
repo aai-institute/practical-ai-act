@@ -1,8 +1,43 @@
 {% extends "base.html" %}
+
 {% block announce %}
 {%- if config.extra.pre_release -%}
-You are currently viewing <strong>pre-release</strong> documentation. This may contain features that have not yet been
-released. For the most accurate information, please <strong><a href="{{ '../' ~ base_url }}">access the latest
-    release</a></strong>.
+You are currently viewing <strong>pre-release</strong> documentation. This
+may contain features that have not yet been released. For the most accurate
+information, please
+
+<strong><a href="{{ '../' ~ base_url }}">access the latest release</a></strong>.
 {%- endif -%}
+{% endblock %}
+
+{% block footer %}
+<style>
+  .content-notice {
+    align-self: center;
+    font-size: 0.6rem;
+  }
+
+  .content-notice p {
+    color: grey;
+    background-color: #fafafa;
+    max-width: 80ch;
+    padding: 8px 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+  }
+</style>
+<div class="flex-grow: 1">&nbsp;</div>
+<div class="content-notice">
+  <p>
+    <em>Disclaimer</em>: The information provided on this web site is for
+    informational purposes only and does not constitute legal advice. The tools,
+    practices, and mappings presented here reflect our interpretation of the EU
+    AI Act and are intended to support understanding and implementation of
+    trustworthy AI principles. Following this guidance does not guarantee
+    compliance with the EU AI Act or any other legal or regulatory framework. We
+    are not affiliated with, nor do we endorse, any of the tools listed on this
+    website.
+  </p>
+</div>
+{{ super() }}
 {% endblock %}
