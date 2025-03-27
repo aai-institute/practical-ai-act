@@ -102,7 +102,7 @@ theme:
   logo: _images/logos/baiaa-logo.svg
   favicon: _images/logos/baiaa-icon.svg
   font:
-    text: IBM Plex Sans # Arial replacement
+    text: Source Sans Pro # Arial replacement
     code: Source Code Pro
   icon:
     logo: _images/logos/baiaa-icon.svg
