@@ -99,7 +99,7 @@ markdown_extensions:
 theme:
   name: "material"
   custom_dir: docs/_theme_overrides
-  logo: _images/logos/baiaa-logo.svg
+  logo: _images/logos/baiaa-icon.svg
   favicon: _images/logos/baiaa-icon.svg
   font:
     text: Source Sans Pro # Arial replacement
@@ -113,7 +113,6 @@ theme:
     - content.tabs.link
     - content.code.copy
     - content.code.annotate
-    - content.action.edit
   palette:
     # Palette toggle for light mode
     - scheme: aai-light

@@ -12,7 +12,10 @@ hide:
 }
 </style>
 
-A project demonstrating the implementation of a trustworthy AI system.
+#
+
+![](_images/logos/baiaa-logo-black.svg#only-light){ class="hero-logo" }
+![](_images/logos/baiaa-logo.svg#only-dark){ class="hero-logo" }
 
 <div class="grid cards" markdown>
 

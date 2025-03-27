@@ -2,26 +2,48 @@
   .content-notice {
     align-self: center;
     font-size: 0.6rem;
+    margin-bottom: 8px;
+
+    max-width: 120ch;
+    padding: 8px 8px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    color: grey;
+    background-color: #fafafa;
+
+    cursor: pointer;
   }
 
   .content-notice p {
-    color: grey;
-    background-color: #fafafa;
-    max-width: 80ch;
-    padding: 8px 16px;
-    border: 1px solid #f0f0f0;
-    border-radius: 16px;
+    margin: 0;
   }
 
-  [data-md-color-scheme="slate"] .content-notice p {
+  .disclaimer-title {
+    text-align:  center;
+    width: 100%;
+    font-style: italic;
+  }
+
+  #disclaimer-text {
+    transition: max-height .25s ease-out !important;
+    overflow: hidden;
+    max-height: 0;
+  }
+
+  #disclaimer-text.visible {
+    transition: max-height .25s ease-in !important;
+    max-height: 500px;
+  }
+
+  [data-md-color-scheme="slate"] .content-notice {
     color: grey;
     background-color: #333;
     border-color: #444;
   }
 </style>
 <div class="content-notice">
-  <p>
-    <em>Disclaimer</em>: The information provided on this web site is for
+  <p class="disclaimer-title">Legal Disclaimer (click to toggle)</p>
+    <p id="disclaimer-text" class="visible">The information provided on this website is for
     informational purposes only and does not constitute legal advice. The tools,
     practices, and mappings presented here reflect our interpretation of the EU
     AI Act and are intended to support understanding and implementation of
@@ -31,3 +53,10 @@
     website.
   </p>
 </div>
+
+<script>
+  const disclaimerText = document.getElementById("disclaimer-text")
+  Array.from(document.getElementsByClassName("content-notice")).forEach(el => el.addEventListener("click", () => {
+    disclaimerText.classList.toggle("visible");
+  }))
+</script>
