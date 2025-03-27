@@ -1,35 +1,35 @@
+/* Common styles for all themes */
+[data-md-color-scheme] {
+  --md-code-font-family: "Source Code Pro", monospace;
+  --md-typeset-a-color: var(--md-primary-fg-color) !important;
+
+  --md-accent-fg-color: #ebba58;
+}
+
+/* Light mode theme */
 [data-md-color-scheme="aai-light"] {
-    /* Primary color shades */
-    --md-primary-fg-color: #084059;
-    --md-primary-fg-color--light: #46add5;
-    --md-primary-fg-color--dark: #04212f;
-
-    --md-typeset-a-color: var(--md-primary-fg-color);
-
-    /* Accent color shades */
-    --md-accent-fg-color: var(--md-primary-fg-color--light);
-
-    --md-code-font-family: "Source Code Pro", monospace
+  --md-primary-fg-color: #146ef5;
+  --md-primary-fg-color--light: #06b8ff;
+  --md-primary-fg-color--dark: #01192b;
 }
 
+/* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
 [data-md-color-scheme="slate"] {
-    --md-primary-fg-color: #46add5;
-    --md-primary-fg-color--dark: #04212f;
-    --md-accent-fg-color: hsl(197, 63%, 75%);
-
-    --md-typeset-a-color: var(--md-primary-fg-color) !important;
-
-    --md-accent-fg-color: var(--md-primary-fg-color);
-
-    --md-code-font-family: "Source Code Pro", monospace
+  --md-primary-fg-color: #06b8ff;
+  --md-primary-fg-color--light: #06b8ff;
+  --md-primary-fg-color--dark: #0044bb;
 }
 
+/* Hide dark images in light mode */
 [data-md-color-scheme="aai-light"] img[src$="#only-dark"],
 [data-md-color-scheme="aai-light"] img[src$="#gh-dark-mode-only"] {
-    display: none;
-    /* Hide dark images in light mode */
+  display: none;
 }
 
 .md-header {
-    background: #5d5e60;
+  background: linear-gradient(120deg, #01192b, 75%, #0044bb);
+}
+
+.md-footer {
+  background: var(--md-primary-fg-color--dark);
 }
