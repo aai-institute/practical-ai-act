@@ -17,12 +17,22 @@ hide:
 ![](_images/logos/baiaa-logo-black.svg#only-light){ class="hero-logo" }
 ![](_images/logos/baiaa-logo.svg#only-dark){ class="hero-logo" }
 
+Welcome to the **trustworthy-AI pipeline** (twai) project!
+
+The project aims to support AI practitioners, data scientists, and engineers who are interested in implementing trustworthy AI systems under the European AI Act. It provides engineering practices and background information to accelerate compliance with the regulations for high-risk systems.
+
+If you want to dive straight into code, we provide a showcase project containing a worked end-to-end machine learning pipeline for a (hypothetical) high-risk AI system.
+
+As a first time visitor, have a look at the [Reader's Guide](readers-guide/index.md) for navigating the content.
+
+---
+
 <div class="grid cards" markdown>
 
 -   :material-clock-fast:{ .lg .middle } [__Reader's Guide__](readers-guide/index.md)
 
     ---
-    How to access the resources on this site
+    How to navigate the content of this site
 
 
 -   :material-trophy:{ .lg .middle } [__Showcase__](showcase/index.md)
@@ -45,12 +55,6 @@ hide:
 
 </div>
 
-----
-
--   showing how following software engineering best practices supports compliance
--   provide an exemplary system architecture for a trustworthy AI system
--   provide explicit implementations of software components
--   link engineering practices and software components to the the requirements for high-risk system under the AI Act
 
 
 
