@@ -1,3 +1,9 @@
+---
+tags:
+    - phase::data engineering
+    - phase::modeling
+---
+
 # Data versioning
 
 !!! success "Compliance Info"
@@ -76,3 +82,32 @@ In addition, it has functionality for local experiment tracking, and versioning 
 
 Git Large File Storage (LFS) stores large data assets in remote locations, and replaces the data with text pointers in git, so that data and its usage are decoupled on the storage level.
 It integrates with the git command-line interface, augmenting developers' existing git workflows intuitively, and reducing the learning curve that an addition of a standalone tool would bring.
+
+<!-- TODO remove duplication-->
+
+-   Establish a **data management system**
+
+    -   Centralize data storage (e.g., in a Data Lake or Data Warehouse)
+        -   Implement access control and restrict access to data to authorized personal and systems only
+        -   Avoid storing data on developer machines. Provide discovery tooling. Provide centralized compute with high-speed data access.
+
+-   **Data versioning:**
+    -   Automation:
+        -   Version datasets on data processing pipelines
+        -   Generate logs on each update
+        -   Execute pipelines on data changes
+    -   Depending on the use case and data set properties:
+        -   Store complete versions (suitable for small data sets only)
+        -   Store increments (new image objects, new partitions in time series, etc)
+        -   Store differences (deltas) between data set versions
+    -   **Rule of thumb:** You should version data whenever changes to the dataset occur that could impact its use, reproducibility, or compatibility with downstream systems.
+        -   Initial data set creation
+        -   Data updates (new data, corrections, expansions)
+        -   Data processing: after applying preprocessing steps (evaluate based on compute vs. storage requirements)
+        -   Model training: maintain a version of the data for each trained model
+        -   Performance: after subsampling or aggregating
+        -   Experiments: when experimenting with different versions, including different features, etc.
+        -   Collaboration: track contributions per team/person
+        -   Decommissioning: store the last version of the data
+        -   Scheduled: hourly, daily, weekly, etc.
+    -   **Tools:** LakeFS, DVC, Delta Lake, Git LFS

@@ -1,8 +1,10 @@
 # Data Governance
 
+![](https://placehold.co/600x400?text=Data+Activities+in+the+ML+lifecycle)
+
 |Article 10| mandates that datasets used in the development of high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
 
-The quality criteria for high-risk AI Systems as listed in paragraphs 2 to 5 in |Article 10|.
+The quality criteria for high-risk AI Systems as listed in sections 2 to 5 in |Article 10|.
 
 > 2. Training, validation and testing data sets shall be subject to data governance and management practices appropriate for the intended purpose of the high-risk AI system.
 
@@ -10,29 +12,18 @@ It is important to highlight that the article requires practices to be tailored 
 
 Although the article specifies certain practices that should be implemented, it does not provide a clear definition of data governance and data management. Furthermore, the listed items do not address the best practices (as practiced when implementing MLOps) for effective data governance and management.
 
-> (a) the relevant design choices;
 
-Any specific decisions made during the design and development of an high-risk AI system must be documented. Such decisions can include:
-
--   Architecture specific: These are choices related to the architecture, algorithms, data handling, and setup of the AI System. Depending on the architecture, different preprocessing techniques might need to be used.
--   Impact on performance: These choices influence how well the AI system performs. Techniques can be applied to increase accuracy, reliability, or to reduce bias.
--   Compliance-specific decisions: These choices are made to ensure compliance with laws and ethical guidelines. For example, anonymizing PIIs.
-
-> (b) data collection processes and the origin of data, and in the case of personal data, the original purpose of the data collection;
+> |Art. 10(2)(b)| data collection processes and the origin of data, and in the case of personal data, the original purpose of the data collection;
 
 From the documentation, it shall be understood:
 
--   How the data is collected. Which methods and procedures where used to to gather the data (survey, sensor, scraping, etc.)? Which conditions apply to the data collection (consent, regulatory compliance)? How does it align with best practices and ethical standards.
+-   How the data is collected. Which methods and procedures where used to gather the data (survey, sensor, scraping, etc.)? Which conditions apply to the data collection (consent, regulatory compliance)? How does it align with best practices and ethical standards.
 -   What is the source of the data? Is it publicly available, proprietary, collected from third parties (e.g., via an API)? What are the geographical, cultural, and demographic origins of the data?
 -   To ensure compliance with the GDPR, personal data can only be collected for a specific purpose and cannot be repurposed.
 
 Before model training, data often undergoes various preprocessing steps. For example, datasets may be created by merging multiple datasets or combining different features. Simply documenting the final dataset is insufficient, as it does not allow the origin of the data to be traced. Proper documentation of data lineage is essential to maintain traceability and accountability.
 
-> (c) relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation;
 
-The documentation of all data preparation is essential for traceability and transparency. See the point above on implementing data lineage.
-
-Being specific and precise when documenting datasets is essential to minimize the risk of misinterpretation, both of the documentation itself and when using the data. A common approach to reduce ambiguity is to create a company-wide glossary that provides detailed definitions for terms. Datasets or fields linked to a glossary term should adhere strictly to the defined meaning, ensuring consistency and clarity.
 
 > (d) the formulation of assumptions, in particular with respect to the information that the data are supposed to measure and represent;
 
@@ -104,94 +95,16 @@ To ensure the dataset is relevant to the AI system's intended purpose, consider 
 -   Evaluate Bias & Fairness Considerations
     -   Conduct bias audits to ensure one group is not over- or underrepresented.
 
-**Ensuring Data is Error-Free**
-
--   Perform Data Consistency Checks
-
-    -   Identify and remove duplicate records.
-    -   Ensure data formats are consistent (e.g., all dates in correct format).
-    -   Check for missing values and determine handling strategies (imputation or removal).
-
--   Detect and Handle Missing or Incomplete Data
-
-    -   Conduct data analysis to identify missing fields.
-    -   Use statistical methods to assess if missing data skews results.
-    -   Implement appropriate handling (e.g., interpolation, mean/mode imputation).
-
--   Validate Data Against Ground Truth
-
-    -   Cross-check a sample of the dataset against verified real-world sources or domain experts.
-
--   Ensure Data Accuracy Through Automated Validation
-
-    -   Implement automated scripts to check for:
-        -   Logical inconsistencies (e.g., negative age values).
-        -   Outliers and anomalies using statistical methods (e.g., z-score, IQR analysis).
-
--   Use Data Provenance and Source Verification
-
-    -   Track and document the source of each dataset.
-    -   Ensure it originates from reliable and ethical sources.
-
--   Monitor for Data Drift Over Time
-
-    -   Set up periodic validation checks to see if the data distribution changes over time.
-    -   Retrain models if significant drift is detected.
-
--   Human Review and Expert Validation
-    -   Engage domain experts to review a portion of the dataset.
-    -   Ensure labels and annotations reflect domain knowledge accurately.
 
 > 4. Data sets shall take into account, to the extent required by the intended purpose, the characteristics or elements that are particular to the specific geographical, contextual, behavioral or functional setting within which the high-risk AI system is intended to be used.
 
 See section above.
 
+
+<!-- TODO formulate this without citation, or remove?-->
 > 6. For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2 to 5 apply only to the testing data sets.
 
 This paragraph addresses high-risk AI systems that are developed without using techniques involving the training of AI models. These systems might rely on alternative approaches, such as rule-based systems, hard-coded algorithms, or pre-existing models that do not require additional training or updates to their parameters.
 
-## Data Governance and Management Best Practices
 
--   Establish a **data management system**
-
-    -   Centralize data storage (e.g., in a Data Lake or Data Warehouse)
-        -   Implement access control and restrict access to data to authorized personal and systems only
-        -   Avoid storing data on developer machines. Provide discovery tooling. Provide centralized compute with high-speed data access.
-    -   Establish a organization-wide glossary index
-        -   Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.
-
--   **Document data sources** (in a Data Catalog or in a Data Card):
-
-    -   Data selection process
-    -   Quality improvement measures
-    -   Data owners
-    -   Description
-    -   Classification (applicable glossary terms)
-    -   Fields (name, type, description, classification) for tabular data
-    -   Data properties (e.g., format, resolution) for non-tabular data
-
--   **Establish data lineage** (i.e., define upstream or downstream data sets) on data set level or on column level for tabular data.
-
-    -   Define lineage in a data catalog, or have it automatically represented in a workflow/data orchestrator
-        -   Keep records of the data lifecycle, including the sources of data, selection criteria, and preprocessing steps (all steps to model training).
-
--   **Data versioning:**
-    -   Automation:
-        -   Version datasets on data processing pipelines
-        -   Generate logs on each update
-        -   Execute pipelines on data changes
-    -   Depending on the use case and data set properties:
-        -   Store complete versions (suitable for small data sets only)
-        -   Store increments (new image objects, new partitions in time series, etc)
-        -   Store differences (deltas) between data set versions
-    -   **Rule of thumb:** You should version data whenever changes to the dataset occur that could impact its use, reproducibility, or compatibility with downstream systems.
-        -   Initial data set creation
-        -   Data updates (new data, corrections, expansions)
-        -   Data processing: after applying preprocessing steps (evaluate based on compute vs. storage requirements)
-        -   Model training: maintain a version of the data for each trained model
-        -   Performance: after subsampling or aggregating
-        -   Experiments: when experimenting with different versions, including different features, etc.
-        -   Collaboration: track contributions per team/person
-        -   Decommissioning: store the last version of the data
-        -   Scheduled: hourly, daily, weekly, etc.
-    -   **Tools:** LakeFS, DVC, Delta Lake, Git LFS
+- [Data Versioning](data-versioning.md)

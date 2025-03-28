@@ -24,11 +24,12 @@ The following pages provide more detailed information on the components of the r
 
 ### Training Phase
 
--   [Data Versioning](data-versioning.md)
 -   [Experiment Tracking](experiment-tracking.md)
 -   [Model Registry](model-registry.md)
--   [Bias Mitigation](bias-mitigation.md)
--   [Data Governance](data-governance.md)
+-   [Data Governance](data-governance/index.md)
+    -   [Bias Mitigation](data-governance/bias-mitigation.md)
+    -   [Data Versioning](data-governance/data-versioning.md)
+    -   [Data Quality](data-governance/data-quality.md)
 -   [Measuring Accuracy](accuracy.md)
 
 ### Deployment Phase

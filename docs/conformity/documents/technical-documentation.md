@@ -2,7 +2,43 @@
 
 - Article 11
 
-Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market. This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements. It should include a general description of the AI system, its intended purpose, design specifications, and information on performance evaluation. Small and medium-sized enterprises (SMEs) may provide this information in a simplified form, as specified by the EU. 
+Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market.
+This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements.
+It should include a general description of the AI system, its intended purpose, design specifications, and information on performance evaluation.
+Small and medium-sized enterprises (SMEs) may provide this information in a simplified form, as specified by the EU.
+
+## Data Documentation
+
+See also below, under "Dataset Information"
+
+
+-   Data selection process
+-   Quality improvement measures
+-   Data owners
+-   Description
+-   Classification (applicable glossary terms)
+-   Fields (name, type, description, classification) for tabular data
+-   Data properties (e.g., format, resolution) for non-tabular data
+
+
+> |Art. 10(2)(a)| the relevant design choices;
+
+Any specific decisions made during the design and development of a high-risk AI system must be documented. Such decisions can include:
+
+-   Architecture specific: These are choices related to the architecture, algorithms, data handling, and setup of the AI System. Depending on the architecture, different preprocessing techniques might need to be used.
+-   Impact on performance: These choices influence how well the AI system performs. Techniques can be applied to increase accuracy, reliability, or to reduce bias.
+-   Compliance-specific decisions: These choices are made to ensure compliance with laws and ethical guidelines. For example, anonymizing PIIs.
+
+
+-   **Establish data lineage** (i.e., define upstream or downstream data sets) on data set level or on column level for tabular data.
+
+    -   Define lineage in a data catalog, or have it automatically represented in a workflow/data orchestrator
+        -   Keep records of the data lifecycle, including the sources of data, selection criteria, and preprocessing steps (all steps to model training).
+
+
+-   Establish an organization-wide glossary index
+    -   Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.
+
 
 
 ## Model cards
@@ -62,4 +98,6 @@ A good **model card** is a structured document that provides clear, concise, and
 
 ## Annex IV: Technical Documentation Details
 
-Annex IV provides a comprehensive list of elements that must be included in the technical documentation referred to in Article 11. This includes detailed descriptions of the AI system's design specifications, algorithms, training data sets, risk management systems, validation and testing procedures, performance metrics, and cybersecurity measures. The annex ensures that all relevant information is available to assess the system's compliance with the AI Act.
+|Annex IV| provides a comprehensive list of elements that must be included in the technical documentation referred to in |Article 11|.
+This includes detailed descriptions of the AI system's design specifications, algorithms, training data sets, risk management systems, validation and testing procedures, performance metrics, and cybersecurity measures.
+The annex ensures that all relevant information is available to assess the system's compliance with the AI Act.

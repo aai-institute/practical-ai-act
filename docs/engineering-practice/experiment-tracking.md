@@ -11,7 +11,7 @@
 ## Motivation
 
 AI models are typically trained on large amounts of data, using lots of compute resources.
-The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the [data versioning](data-versioning.md) section),
+The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the [data versioning](data-governance/data-versioning.md) section),
 what configurable attributes (also called _hyperparameters_) were used for the training, but also training techniques used like batching, which optimization target, and many more.
 
 The sum of all choices for the training of an AI model is often called an **experiment**.
