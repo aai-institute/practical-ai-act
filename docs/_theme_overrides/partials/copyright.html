@@ -30,9 +30,17 @@
     align-items: center;
   }
 
-  @media (max-width: 800px) {
-    .logo-container {
+  @media (max-width: 720px) {
+    .md-footer-meta__inner {
       flex-direction: column;
+      justify-content: center;
+    }
+    .copyright {
+      width: 100%;
+      flex-direction: column;
+    }
+    .copyright p {
+      margin-bottom: 0;
     }
     .logo {
       max-height: 64px;
