@@ -6,6 +6,8 @@
 
     TODO: Add article references to provisions addressed by experiment tracking
 
+    - |Art. 15(3)|, experiment tracking captures used performance metrics and levels of accuracy
+
 ## Motivation
 
 AI models are typically trained on large amounts of data, using lots of compute resources.

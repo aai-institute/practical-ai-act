@@ -15,6 +15,8 @@
     - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
     - **|Art. 72(2)|** (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.
 
+    - TODO: Art. 15(4), robustness through continuous monitoring of operations and performance
+
 ## Rationale
 
 TODO: Explain why model performance monitoring is important.

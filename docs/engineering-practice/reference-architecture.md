@@ -27,9 +27,13 @@ The following pages provide more detailed information on the components of the r
 -   [Data Versioning](data-versioning.md)
 -   [Experiment Tracking](experiment-tracking.md)
 -   [Model Registry](model-registry.md)
+-   [Bias Mitigation](bias-mitigation.md)
+-   [Data Governance](data-governance.md)
+-   [Measuring Accuracy](accuracy.md)
 
 ### Deployment Phase
 
 -   [Inference Log](inference-log.md)
 -   [Model Explainability](explainability.md)
 -   [Model Performance Monitoring](model-monitoring.md)
+-   [Containerization](containerization.md)
