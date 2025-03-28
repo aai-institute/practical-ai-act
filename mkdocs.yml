@@ -15,12 +15,16 @@ nav:
   - Reader's Guide: readers-guide.md
   - Engineering Practice:
       - engineering-practice/reference-architecture.md
+      - engineering-practice/bias-mitigation.md
+      - engineering-practice/containerization.md
       - engineering-practice/data-versioning.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
       - engineering-practice/model-monitoring.md
       - engineering-practice/inference-log.md
+      - engineering-practice/data-governance.md
+      - engineering-practice/accuracy.md
   - Showcase:
       - showcase/index.md
   - AI Act Conformity:
@@ -29,14 +33,6 @@ nav:
           - conformity/documents/index.md
           - conformity/documents/technical-documentation.md
           - conformity/documents/instructions-for-use.md
-      - conformity/bias.md
-      - conformity/fairness.md
-      - conformity/data-governance.md
-      - conformity/accuracy.md
-      - conformity/cybersecurity.md
-      - conformity/interoperability.md
-      - conformity/privacy-and-data-security.md
-      - conformity/robustness.md
   - acknowledgments.md
 
 plugins:
@@ -61,6 +57,7 @@ plugins:
       canonical_version: latest
   - privacy
   - search:
+  - tags
   - include_dir_to_nav:
       file_pattern: '.*\.(md|ipynb)$'
 

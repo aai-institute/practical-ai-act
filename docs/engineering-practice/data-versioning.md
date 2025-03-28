@@ -53,6 +53,12 @@ A data version control system should be accessible for all developers, and host 
 In addition to availability, security, and fault tolerance, it is necessary that the data version control system can be easily interfaced with in AI application code.
 This usually means that a selection of API clients or SDKs is available for a variety of programming languages, which allows developers to efficiently interface with the DVCS.
 
+## Interoperability
+
+-   Where applicable, ensure that datasets and documentation are interoperable with standard regulatory frameworks and can be audited by authorities.
+    -   Standardize formats (e.g., CSV or Parquet files for tabular data)
+    -   Centralize data storage (e.g., in a data lake or data warehouse) such that access to data sets can be given at any time, and it is not depending on data sets on local machines of ML Engineers and Data Scientists.
+
 ## Key technologies
 
 1. [lakeFS](https://lakefs.io)
