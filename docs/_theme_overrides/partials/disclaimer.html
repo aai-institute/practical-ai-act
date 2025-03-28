@@ -19,19 +19,19 @@
   }
 
   .disclaimer-title {
-    text-align:  center;
+    text-align: center;
     width: 100%;
     font-style: italic;
   }
 
   #disclaimer-text {
-    transition: max-height .25s ease-out !important;
+    transition: max-height 0.25s ease-out;
     overflow: hidden;
     max-height: 0;
   }
 
   #disclaimer-text.visible {
-    transition: max-height .25s ease-in !important;
+    transition: max-height 0.25s ease-in;
     max-height: 500px;
   }
 
@@ -41,22 +41,49 @@
     border-color: #444;
   }
 </style>
-<div class="content-notice">
+<div class="content-notice" id="disclaimer">
   <p class="disclaimer-title">Legal Disclaimer (click to toggle)</p>
-    <p id="disclaimer-text" class="visible">The information provided on this website is for
-    informational purposes only and does not constitute legal advice. The tools,
-    practices, and mappings presented here reflect our interpretation of the EU
-    AI Act and are intended to support understanding and implementation of
-    trustworthy AI principles. Following this guidance does not guarantee
-    compliance with the EU AI Act or any other legal or regulatory framework. We
-    are not affiliated with, nor do we endorse, any of the tools listed on this
-    website.
+  <p id="disclaimer-text">
+    The information provided on this website is for informational purposes only
+    and does not constitute legal advice. The tools, practices, and mappings
+    presented here reflect our interpretation of the EU AI Act and are intended
+    to support understanding and implementation of trustworthy AI principles.
+    Following this guidance does not guarantee compliance with the EU AI Act or
+    any other legal or regulatory framework. We are not affiliated with, nor do
+    we endorse, any of the tools listed on this website.
   </p>
 </div>
 
 <script>
-  const disclaimerText = document.getElementById("disclaimer-text")
-  Array.from(document.getElementsByClassName("content-notice")).forEach(el => el.addEventListener("click", () => {
-    disclaimerText.classList.toggle("visible");
-  }))
+  function restoreDisclaimerState(el) {
+    const storedState = sessionStorage.getItem("disclaimerVisible");
+
+    // Temporarily disable CSS transitions to apply the class immediately
+    el.style.transition = "none !important";
+
+    if (storedState === null || storedState === "true") {
+      el.classList.add("visible");
+    } else {
+      el.classList.remove("visible");
+    }
+
+    // Force reflow so that the change applies immediately without a transition
+    void el.offsetWidth;
+
+    // Remove the inline override so CSS transitions take effect again
+    el.style.transition = "";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const disclaimerText = document.getElementById("disclaimer-text");
+    restoreDisclaimerState(disclaimerText);
+
+    document.getElementById("disclaimer").addEventListener("click", () => {
+      disclaimerText.classList.toggle("visible");
+      sessionStorage.setItem(
+        "disclaimerVisible",
+        disclaimerText.classList.contains("visible")
+      );
+    });
+  });
 </script>
