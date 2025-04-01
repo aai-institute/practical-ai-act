@@ -4,6 +4,13 @@
 
     ...
 
+
+> (f) examination in view of possible biases that are likely to affect the health and safety of persons, have a negative impact on fundamental rights or lead to discrimination prohibited under Union law, especially where data outputs influence inputs for future operations;
+> (g) appropriate measures to detect, prevent and mitigate possible biases identified according to point (f);
+
+-   Evaluate Bias & Fairness Considerations
+    -   Conduct bias audits to ensure one group is not over- or underrepresented.
+
 -   Implement measures to identify, monitor, and mitigate potential biases in datasets that could lead to discriminatory outcomes.
 
     -   **Conduct Exploratory Data Analysis (EDA):** Analyze the dataset for imbalances or patterns that may suggest bias, such as over-representation or under-representation of certain groups.

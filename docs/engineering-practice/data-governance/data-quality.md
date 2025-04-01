@@ -54,6 +54,19 @@ Being specific and precise when documenting datasets is essential to minimize th
     -   Engage domain experts to review a portion of the dataset.
     -   Ensure labels and annotations reflect domain knowledge accurately.
 
+> (h) the identification of relevant data gaps or shortcomings that prevent compliance with this Regulation, and how those gaps and shortcomings can be addressed.
+
+Understand how gaps and shortcomings may lead to non-compliance. Define strategies to deal with gaps and shortcomings. Gaps and shortcomings being:
+
+-   Data gaps: incomplete data sets, essential information missing.
+-   Data shortcomings: Flaws in the data quality (errors or inconsistencies) or a biased data set.
+
+Gaps and shortcoming may be addressed by further data collection, cleaning data, synthetic data generation.
+
+> 4. Data sets shall take into account, to the extent required by the intended purpose, the characteristics or elements that are particular to the specific geographical, contextual, behavioral or functional setting within which the high-risk AI system is intended to be used.
+
+See section above.
+
 ## Key Technologies
 
 -   [Pandera](https://pandera.readthedocs.io/en/stable/), for data quality validation
