@@ -8,10 +8,10 @@
 
     TODO: Incomplete
 
-    - |Art. 15| (Accuracy, Robustness and Cybersecurity), in particular:
-        - |Art. 15(4)| Robustness, monitoring and alerting can help detect and mitigate potential robustness and availability issues
-        - |Art. 15(5)| Cybersecurity, since monitoring is a crucial part of threat detection
-    - |Art. 26|** (Obligations of Deployers of High-Risk AI Systems), in particular:
+    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - **|Art. 15(4)|** Robustness, monitoring and alerting can help detect and mitigate potential robustness and availability issues
+        - **|Art. 15(5)|** Cybersecurity, since monitoring is a crucial part of threat detection
+    - **|Art. 26|** (Obligations of Deployers of High-Risk AI Systems), in particular:
         - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
         - **|Art. 26(6)|** (Keeping of system logs by the deployer)
 
