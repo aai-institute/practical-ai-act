@@ -10,7 +10,9 @@
         - **|Art. 12(1)|**, since the inference log enables the recording of events
         - **|Art. 12(2)|**, since the inference log allows the identification of potentially harmful situations and facilitates the post-market monitoring
     - **|Art. 19|** (Automatically Generated Logs)
-    - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+    - |Art. 26|** (Obligations of Deployers of High-Risk AI Systems), in particular:
+        - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+        - **|Art. 26(6)|** (Keeping of system logs by the deployer)
     - **|Art. 72|** (Post-Market Monitoring)
 
 ## Rationale
