@@ -8,7 +8,7 @@ hide:
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/\_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     TODO: This list is incomplete
 

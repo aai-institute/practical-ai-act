@@ -2,7 +2,7 @@
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     Implementing an inference log will help you in achieving compliance with the following regulations:
 

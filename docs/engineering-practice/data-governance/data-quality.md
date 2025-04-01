@@ -6,7 +6,7 @@ tags:
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     |Art. 10(2)(c)|: relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation
 
