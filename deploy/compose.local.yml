@@ -316,7 +316,7 @@ services:
 
   # Needed for docker_sd_config target discovery in Prometheus
   docker-proxy:
-    profiles: [serve]
+    profiles: [monitoring]
     image: tecnativa/docker-socket-proxy
     privileged: true
     container_name: docker-proxy
