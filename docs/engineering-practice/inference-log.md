@@ -15,7 +15,7 @@
         - **|Art. 26(6)|** (Keeping of system logs by the deployer)
     - **|Art. 72|** (Post-Market Monitoring)
 
-## Rationale
+## Motivation
 
 An inference log is a permanent record of all inferences made by the AI system, including the input and output data, the model used, and relevant additional metadata.
 

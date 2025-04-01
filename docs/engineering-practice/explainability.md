@@ -15,7 +15,7 @@
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - |Annex IV(3)|: Explainability techniques can be part of the instructions for use to the deployer
 
-## Rationale
+## Motivation
 
 Although there is no explicit demand for using explainability methods within the AI Act, they can aid compliance with the regulation, by providing insights into the system's decision-making process.
 

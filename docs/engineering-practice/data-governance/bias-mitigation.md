@@ -6,7 +6,7 @@
         - **|Art. 10(2)(g)|**: Appropriate measures for bias detection, prevention, and mitigation
         - **|Art. 10(5)|**: Use of special categories of personal data in bias detection and correction
 
-## Rationale
+## Motivation
 
 Biases are commonly considered one of the most detrimental effects of artificial intelligence (AI)
 use.

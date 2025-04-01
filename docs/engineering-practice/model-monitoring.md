@@ -17,7 +17,7 @@
 
     - TODO: Art. 15(4), robustness through continuous monitoring of operations and performance
 
-## Rationale
+## Motivation
 
 TODO: Explain why model performance monitoring is important.
 
