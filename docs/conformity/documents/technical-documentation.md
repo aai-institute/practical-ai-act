@@ -1,6 +1,11 @@
 # Technical Documentation
 
-- Article 11
+!!! success "Compliance Info"
+
+    --8<-- "docs/how-to/_compliance-info-box.partial"
+
+        |Art. 11|
+        |Art. 10(2)(b)|
 
 Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market.
 This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements.
@@ -79,6 +84,12 @@ From the documentation, it shall be understood:
 
 -   Establish an organization-wide glossary index
     -   Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.
+
+> |Art. 10(2)(c)| relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation;
+
+The documentation of all data preparation is essential for traceability and transparency. See the point above on implementing data lineage.
+
+Being specific and precise when documenting datasets is essential to minimize the risk of misinterpretation, both of the documentation itself and when using the data. A common approach to reduce ambiguity is to create a company-wide glossary that provides detailed definitions for terms. Datasets or fields linked to a glossary term should adhere strictly to the defined meaning, ensuring consistency and clarity.
 
 > (d) the formulation of assumptions, in particular with respect to the information that the data are supposed to measure and represent;
 

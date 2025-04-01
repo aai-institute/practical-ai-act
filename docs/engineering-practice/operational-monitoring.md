@@ -2,7 +2,7 @@
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     Implementing an operational metrics solution will help you in achieving compliance with the following requirements of the AI Act:
 
@@ -15,7 +15,7 @@
         - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
         - **|Art. 26(6)|** (Keeping of system logs by the deployer)
 
-## Rationale
+## Motivation
 
 Besides [monitoring the performance](model-monitoring.md) of your machine learning models, it is also important to monitor the performance of the underlying technical infrastructure and services.
 This includes monitoring the health of the servers, databases, and other components that support your machine learning applications.
