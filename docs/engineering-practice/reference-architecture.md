@@ -37,4 +37,5 @@ The following pages provide more detailed information on the components of the r
 -   [Inference Log](inference-log.md)
 -   [Model Explainability](explainability.md)
 -   [Model Performance Monitoring](model-monitoring.md)
+-   [Operational Monitoring](operational-monitoring.md)
 -   [Containerization](containerization.md)
