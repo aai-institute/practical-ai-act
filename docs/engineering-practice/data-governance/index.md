@@ -8,18 +8,14 @@
 
 
 ![](https://placehold.co/600x400?text=Data+Activities+in+the+ML+lifecycle)
-In general, the term data governance describes the summation of all techniques
-of managing data throughout its whole lifecycle. In regard to the AI Act,
-|Article 10| mandates that datasets used in the development of high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
 
-Although the article specifies certain practices that should be implemented, it does not provide a clear definition of data governance and data management. Furthermore, the listed items do not address the best practices (as practiced when implementing MLOps) for effective data governance and management.
+In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, |Article 10| mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
+While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.
 
-
-
-> 2. Training, validation and testing data sets shall be subject to data governance and management practices appropriate for the intended purpose of the high-risk AI system.
-
-It is important to highlight that the article requires practices to be tailored to the system's intended purpose. For instance, a high-risk AI system in healthcare would demand practices to safeguard patient privacy. Meanwhile, an AI system in finance would prioritize ensuring datasets are representative of diverse economic groups to prevent discriminatory outcomes.
-
+To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centered on process and documentation,
+see [Technical Documentation](../../conformity/documents/technical-documentation.md).
+This is not a simple mapping of paragraphs to either or, moreover each paragraph
+of |Art. 10| can include both types of tasks.
 
 
 
@@ -30,7 +26,7 @@ Specific to bias. Refer to the page on [bias mitigation](bias-mitigation.md) for
 
 
 
-> 3. Training, validation and testing data sets shall be relevant, sufficiently representative, and to the best extent possible, free of errors and complete in view of the intended purpose. They shall have the appropriate statistical properties, including, where applicable, as regards the persons or groups of persons in relation to whom the high-risk AI system is intended to be used. Those characteristics of the data sets may be met at the level of individual data sets or at the level of a combination thereof.
+
 
 
 
