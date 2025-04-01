@@ -168,3 +168,8 @@ A good **model card** is a structured document that provides clear, concise, and
 |Annex IV| provides a comprehensive list of elements that must be included in the technical documentation referred to in |Article 11|.
 This includes detailed descriptions of the AI system's design specifications, algorithms, training data sets, risk management systems, validation and testing procedures, performance metrics, and cybersecurity measures.
 The annex ensures that all relevant information is available to assess the system's compliance with the AI Act.
+
+
+## Readings:
+- [Datasheets for Datasets](https://arxiv.org/abs/1803.09010)
+- [The Data Cards Playbook](https://sites.research.google/datacardsplaybook/)
