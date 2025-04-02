@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/baiaa-logo.svg">
+  <img src="docs/_images/logos/baiaa-logo-black.svg">
+</picture>
+
 # twai-pipeline
 
 ## Setting up the environment
@@ -62,6 +67,7 @@ The `deploy/compose.local.yml` Docker Compose stack comprises the following base
   - Accessible at <http://localhost:8000>
 
 The `serve` profile of the Docker Compose stack deploys the ML model inference server, main application, and monitoring components:
+
 - **FastAPI application**:
   - Accessible at <http://localhost:8001>, [OpenAPI docs](http://localhost:8001/docs)
   - Automatic watch for changes with hot reloading (needs Docker Compose `--watch/-w` flag)
@@ -76,6 +82,7 @@ The `serve` profile of the Docker Compose stack deploys the ML model inference s
   - Predefined Grafana dashboards for MLflow, the FastAPI app, and the inference server
 
 The `dagster` profile contains the following:
+
 - **Dagster Daemon** and **Webserver**, based on a common base image (`deploy/dagster/Dockerfile`)
 - The **user code location** image, containing the assets, and used to launch executions (see `deploy/dagster/Dockerfile.income_prediction`)
 
