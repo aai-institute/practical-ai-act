@@ -1,36 +1,57 @@
+/* Common styles for all themes */
+[data-md-color-scheme] {
+  --md-code-font-family: "Source Code Pro", monospace;
+  --md-typeset-a-color: var(--md-primary-fg-color) !important;
+
+  --md-accent-fg-color: #ebba58;
+}
+
+/* Light mode theme */
 [data-md-color-scheme="aai-light"] {
-    /* Primary color shades */
-    --md-primary-fg-color: #084059;
-    --md-primary-fg-color--light: #46add5;
-    --md-primary-fg-color--dark: #04212f;
+  --md-primary-fg-color: #146ef5;
+  --md-primary-fg-color--light: #06b8ff;
+  --md-primary-fg-color--dark: #01192b;
 
-    --md-typeset-a-color: var(--md-primary-fg-color);
-
-    /* Accent color shades */
-    --md-accent-fg-color: var(--md-primary-fg-color--light);
-
-    --md-code-font-family: "Source Code Pro", monospace
+  --card-bg-color: var(--md-primary-bg-color);
+  --bg-gradient-color: rgba(255, 255, 255, 70%);
 }
 
+/* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
 [data-md-color-scheme="slate"] {
-    --md-primary-fg-color: #46add5;
-    --md-primary-fg-color--dark: #04212f;
-    --md-accent-fg-color: hsl(197, 63%, 75%);
+  --md-primary-fg-color: #06b8ff;
+  --md-primary-fg-color--light: #06b8ff;
+  --md-primary-fg-color--dark: #0044bb;
 
-    --md-typeset-a-color: var(--md-primary-fg-color) !important;
-
-    --md-accent-fg-color: var(--md-primary-fg-color);
-
-    --md-code-font-family: "Source Code Pro", monospace
+  --card-bg-color: hsla(var(--md-hue),15%, 14%, 1);
+  --bg-gradient-color: hsla(var(--md-hue),15%, 14%, 70%);
 }
 
+/* ----- Individual elements ----- */
+
+/* Hide dark images in light mode */
 [data-md-color-scheme="aai-light"] img[src$="#only-dark"],
 [data-md-color-scheme="aai-light"] img[src$="#gh-dark-mode-only"] {
-    display: none;
-    /* Hide dark images in light mode */
+  display: none;
 }
 
+/* Hexagon pattern in the background, behind a semi-transparent color overlay */
+.md-container {
+  background: linear-gradient(
+    var(--bg-gradient-color),
+    var(--bg-gradient-color)
+  ),
+  url("/_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
+}
+
+
 .md-header {
-    background: rgb(24, 165, 167);
-    background: linear-gradient(30deg, rgb(24, 165, 167), 90%, rgb(191, 255, 199));
+  background: linear-gradient(120deg, #01192b, 75%, #0044bb);
+}
+
+.md-footer {
+  background: var(--md-primary-fg-color--dark);
+}
+
+.cards {
+  background-color: var(--card-bg-color);
 }

@@ -1,130 +1,279 @@
-from __future__ import annotations
+import collections.abc
+from collections.abc import Callable
+from copy import copy
 from enum import Enum
-from functools import partial
-from typing import Union, Sequence
+from typing import Any, Literal
 
-import numpy as np
 import pandas as pd
-from sensai.data_transformation import (
-    DFTNormalisation,
-    SkLearnTransformerFactoryFactory,
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.compose import ColumnTransformer, make_column_transformer
+from sklearn.pipeline import FeatureUnion, Pipeline, make_pipeline, make_union
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+from .data import AdultData
+
+
+class MappedColumn(BaseEstimator, TransformerMixin):
+    def __init__(self, column: str, mapping: dict, unknown_default: Any = pd.NA):
+        """
+        Parameters:
+        - column: str, the column to map
+        - mapping_dict: dict, the dictionary with mapping values
+        - unknown_default:
+        """
+        self.unknown_default = unknown_default
+        self.column = column
+        self.mapping = mapping
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        return X[self.column].apply(self._map_value).to_frame()
+
+    def _map_value(self, val):
+        if isinstance(self.mapping, collections.abc.Mapping):
+            if val in set(self.mapping.values()):
+                return val
+
+            return self.mapping.get(val, self.unknown_default)
+        elif isinstance(self.mapping, Callable):
+            return self.mapping(val)
+        else:
+            raise RuntimeError(f"Unknown mapping type: {type(self.mapping)}")
+
+    def get_feature_names_out(self, input_features):
+        return [self.column]
+
+
+class ColumnDifference(BaseEstimator, TransformerMixin):
+    def __init__(self, col1: str, col2: str, resulting_col_name: str):
+        self.resulting_col_name = resulting_col_name
+        self.col1 = col1
+        self.col2 = col2
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        return (X[self.col1] - X[self.col2]).to_frame(self.resulting_col_name)
+
+
+def _encoded_name(name: str) -> str:
+    return f"{name}-encoded"
+
+
+def _standardized_name(name: str) -> str:
+    return f"{name}-standardized"
+
+
+class FeatureName(Enum):
+    NET_CAPITAL_STANDARDIZED = _standardized_name("net-capital")
+    WORK_CLASS_ENCODED = _encoded_name(AdultData.Column.WORK_CLASS)
+    OCCUPATION_ENCODED = _encoded_name(AdultData.Column.OCCUPATION)
+    RACE_ENCODED = _encoded_name(AdultData.Column.RACE)
+    SEX_ENCODED = _encoded_name(AdultData.Column.SEX)
+    AGE_STANDARDIZED = _standardized_name(AdultData.Column.AGE)
+    RELATIONSHIP_ENCODED = _encoded_name(AdultData.Column.RELATIONSHIP)
+    NATIVE_COUNTRY_ENCODED = _encoded_name(AdultData.Column.NATIVE_COUNTRY)
+    MARITAL_STATUS_ENCODED = _encoded_name(AdultData.Column.MARITAL_STATUS)
+    EDUCATION_ENCODED = _encoded_name(AdultData.Column.EDUCATION)
+    EDUCATION_NUM_STANDARDIZED = _standardized_name(AdultData.Column.EDUCATION_NUM)
+    HOURS_PER_WEEK_STANDARDIZED = _standardized_name(AdultData.Column.HOURS_PER_WEEK)
+
+
+def make_one_hot_encoded(
+    column: AdultData.Column,
+    mapping_dict: dict | None = None,
+    unknown_value: Any | None = None,
+    categories: list[str] | Literal["auto"] = "auto",
+) -> Pipeline | ColumnTransformer:
+    if mapping_dict is None and unknown_value is not None:
+        raise ValueError("Must specify mapping when providing unknown default value")
+
+    if categories == "auto" and mapping_dict is not None:
+        categories = set(mapping_dict.values())
+        if unknown_value is not None:
+            categories = categories.union({unknown_value})
+        categories = [[*categories]]  # OneHotEncoder expects a list of array-like
+    elif categories != "auto":
+        categories = [[*categories]]
+
+    encoder = OneHotEncoder(categories=categories)
+    if mapping_dict is not None:
+        return make_pipeline(
+            MappedColumn(column.value, mapping_dict, unknown_default=unknown_value),
+            encoder,
+        )
+
+    return make_column_transformer((encoder, [column.value]))
+
+
+def make_standardized(
+    column: AdultData.Column,
+):
+    return make_column_transformer((StandardScaler(), [column.value]))
+
+
+_all_features: dict[FeatureName, ColumnTransformer | Pipeline] = {}
+
+_all_features[FeatureName.SEX_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.SEX, categories=["Female", "Male"]
 )
-from sensai.featuregen import (
-    FeatureGeneratorRegistry,
-    FeatureGeneratorTakeColumns,
+
+
+_RACE_MAPPING = {
+    "White": "White",
+    "Black": "Other",
+    "Asian-Pac-Islander": "Other",
+    "Amer-Indian-Eskimo": "Other",
+    "Other": "Other",
+}
+
+_all_features[FeatureName.RACE_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.RACE, mapping_dict=_RACE_MAPPING
 )
-from sensai.columngen import ColumnGenerator
-
-from adult.data import AdultData
 
 
-class AdultFeatureRegistry(FeatureGeneratorRegistry):
-    class FeatureName(Enum):
-        NET_CAPITAL = "net-capital"
-        WORK_CLASS = AdultData.Column.WORK_CLASS
-        OCCUPATION = AdultData.Column.OCCUPATION
-        RACE = AdultData.Column.RACE
-        SEX = AdultData.Column.SEX
-        AGE = AdultData.Column.AGE
-        RELATIONSHIP = AdultData.Column.RELATIONSHIP
-        NATIVE_COUNTRY = AdultData.Column.NATIVE_COUNTRY
-        MARITAL_STATUS = AdultData.Column.MARITAL_STATUS
-        EDUCATION = AdultData.Column.EDUCATION
-        EDUCATION_NUM = AdultData.Column.EDUCATION_NUM
-        HOURS_PER_WEEK = AdultData.Column.HOURS_PER_WEEK
+_MARITAL_STATUS_MAPPING = {
+    "Married-civ-spouse": "Married",
+    "Married-spouse-absent": "Married",
+    "Married-AF-spouse": "Married",
+    "Never-married": "Never Married",
+    "Divorced": "Previously Married",
+    "Separated": "Previously Married",
+    "Widowed": "Previously Married",
+}
 
-        @staticmethod
-        def personal_features() -> Sequence[AdultFeatureRegistry.FeatureName]:
-            return (
-                AdultFeatureRegistry.FeatureName.SEX,
-                AdultFeatureRegistry.FeatureName.AGE,
-                AdultFeatureRegistry.FeatureName.RACE,
-                AdultFeatureRegistry.FeatureName.MARITAL_STATUS,
-                AdultFeatureRegistry.FeatureName.NATIVE_COUNTRY,
-                AdultFeatureRegistry.FeatureName.RELATIONSHIP,
-            )
+_all_features[FeatureName.MARITAL_STATUS_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.MARITAL_STATUS, _MARITAL_STATUS_MAPPING
+)
 
-        @classmethod
-        def default_features(cls) -> Sequence[AdultFeatureRegistry.FeatureName]:
-            return tuple(
-                [
-                    feat
-                    for feat in AdultFeatureRegistry.FeatureName
-                    if feat not in cls.personal_features()
-                ]
-            )
+_COUNTRY_MAPPING = {"United-States": "US", "?": "Unknown"}
+_OTHER_COUNTRY_DEFAULT = "Other"
 
-    def __init__(self):
-        super().__init__()
-        self._register_column_features()
-
-    @staticmethod
-    def _is_categorical_column(member: AdultFeatureRegistry.FeatureName):
-        cat_cols = [m.value for m in AdultData.COLS_CATEGORICAL]
-        return member.value in cat_cols
-
-    @staticmethod
-    def _is_numeric_column(member: AdultFeatureRegistry.FeatureName):
-        num_cols = [m.value for m in AdultData.COLS_NUMERIC]
-        return member.value in num_cols
-
-    def _register_column_features(self):
-        for member in self.FeatureName:
-            if self._is_categorical_column(member):
-                self.register_categorical(AdultData.Column(member.value).value)
-            elif self._is_numeric_column(member):
-                self.register_standard_scaled(AdultData.Column(member.value).value)
-
-    def register_standard_scaled(self, col_name: str):
-        self.register_factory(
-            self.FeatureName(col_name),
-            partial(
-                FeatureGeneratorTakeColumns,
-                col_name,
-                normalisation_rule_template=DFTNormalisation.RuleTemplate(
-                    transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
-                ),
-            ),
-        )
-
-    def register_min_max_scaled(self, col_name: str):
-        self.register_factory(
-            self.FeatureName(col_name),
-            partial(
-                FeatureGeneratorTakeColumns,
-                col_name,
-                normalisation_rule_template=DFTNormalisation.RuleTemplate(
-                    transformer_factory=SkLearnTransformerFactoryFactory.MinMaxScaler()
-                ),
-            ),
-        )
-
-    def register_categorical(self, col_name: str):
-        self.register_factory(
-            self.FeatureName(col_name),
-            partial(
-                FeatureGeneratorTakeColumns,
-                col_name,
-                categorical_feature_names=col_name,
-            ),
-        )
+_all_features[FeatureName.NATIVE_COUNTRY_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.NATIVE_COUNTRY,
+    _COUNTRY_MAPPING,
+    unknown_value=_OTHER_COUNTRY_DEFAULT,
+)
 
 
-class _NetCapital(ColumnGenerator):
-    def __init__(self):
-        super().__init__(AdultFeatureRegistry.FeatureName.NET_CAPITAL.value)
+_EDUCATION_MAPPING = {
+    "Preschool": "No formal education",
+    "1st-4th": "No formal education",
+    "5th-6th": "No formal education",
+    "7th-8th": "No formal education",
+    "9th": "Some High School",
+    "10th": "Some High School",
+    "11th": "Some High School",
+    "12th": "Some High School",
+    "HS-grad": "High School Graduate",
+    "Some-college": "Collage/Associate Degree",
+    "Bachelors": "Bachelor's Degree",
+    "Masters": "Advanced Degree",
+    "Doctorate": "Advanced Degree",
+    "Prof-school": "Advanced Degree",
+    "Assoc-acdm": "Assoc-acdm",
+    "Assoc-voc": "Assoc-voc",
+}
 
-    def _generate_column(self, df: pd.DataFrame) -> Union[pd.Series, list, np.ndarray]:
-        return df[AdultData.Column.CAPITAL_GAIN] - df[AdultData.Column.CAPITAL_LOSS]
+_all_features[FeatureName.EDUCATION_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.EDUCATION, _EDUCATION_MAPPING
+)
+
+_RELATIONSHIP_MAPPING = {
+    "Wife": "Spouse",
+    "Husband": "Spouse",
+    "Own-Child": "Child",
+    "Own-child": "Child",
+    "Other-relative": "Other Relative",
+    "Not-in-family": "Not family",
+    "Unmarried": "Not family",
+}
+
+_all_features[FeatureName.RELATIONSHIP_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.RELATIONSHIP, _RELATIONSHIP_MAPPING
+)
 
 
-adult_feature_registry = AdultFeatureRegistry()
+_OCCUPATION_UNKNOWN_DEFAULT = "Unknown"
+_OCCUPATION_MAPPING = {
+    "Adm-clerical": "White Collar",
+    "Armed-Forces": "Military",
+    "Craft-repair": "Blue Collar",
+    "Exec-managerial": "White Collar",
+    "Farming-fishing": "Blue Collar",
+    "Handlers-cleaners": "Blue Collar",
+    "Machine-op-inspct": "Blue Collar",
+    "Other-service": "Service",
+    "Priv-house-serv": "Service",
+    "Prof-specialty": "White Collar",
+    "Protective-service": "Service",
+    "Sales": "White Collar",
+    "Tech-support": "White Collar",
+    "Transport-moving": "Blue Collar",
+    "?": _OCCUPATION_UNKNOWN_DEFAULT,
+}
 
-adult_feature_registry.register_factory(
-    AdultFeatureRegistry.FeatureName.NET_CAPITAL,
-    lambda: _NetCapital().to_feature_generator(
-        normalisation_rule_template=DFTNormalisation.RuleTemplate(
-            transformer_factory=SkLearnTransformerFactoryFactory.StandardScaler()
-        ),
+_all_features[FeatureName.OCCUPATION_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.OCCUPATION,
+    mapping_dict=_OCCUPATION_MAPPING,
+    unknown_value=_OCCUPATION_UNKNOWN_DEFAULT,
+)
+
+
+_WORK_CLASS_UNKNOWN_DEFAULT = "Unknown"
+_WORK_CLASS_MAPPING = {
+    "Private": "Private",
+    "Self-emp-not-inc": "Self-employed",
+    "Self-emp-inc": "Self-employed",
+    "Local-gov": "Government",
+    "State-gov": "Government",
+    "Federal-gov": "Government",
+    "Without-pay": "Unemployed",
+    "Never-worked": "Unemployed",
+    "?": _WORK_CLASS_UNKNOWN_DEFAULT,
+}
+
+
+_all_features[FeatureName.WORK_CLASS_ENCODED] = make_one_hot_encoded(
+    AdultData.Column.WORK_CLASS,
+    mapping_dict=_WORK_CLASS_MAPPING,
+    unknown_value=_WORK_CLASS_UNKNOWN_DEFAULT,
+)
+
+
+_all_features[FeatureName.NET_CAPITAL_STANDARDIZED] = make_pipeline(
+    ColumnDifference(
+        AdultData.Column.CAPITAL_GAIN,
+        AdultData.Column.CAPITAL_LOSS,
+        FeatureName.NET_CAPITAL_STANDARDIZED.value,
     ),
+    StandardScaler(),
 )
+
+
+_all_features[FeatureName.EDUCATION_NUM_STANDARDIZED] = make_standardized(
+    AdultData.Column.EDUCATION_NUM
+)
+_all_features[FeatureName.HOURS_PER_WEEK_STANDARDIZED] = make_standardized(
+    AdultData.Column.HOURS_PER_WEEK
+)
+_all_features[FeatureName.AGE_STANDARDIZED] = make_standardized(AdultData.Column.AGE)
+
+
+def collect_features(
+    include_only: list[FeatureName] | None = None,
+    exclude: list[FeatureName] | None = None,
+) -> FeatureUnion:
+    feature_list = []
+    for identifier, feature in _all_features.items():
+        is_include = include_only is None or identifier in include_only
+        is_exclude = exclude is not None and identifier in exclude
+
+        if is_include and not is_exclude:
+            # we copy to avoid the shared usage of the same object
+            feature_list.append(copy(feature))
+
+    return make_union(*feature_list)

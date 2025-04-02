@@ -75,7 +75,7 @@ class AIAReferenceProcessor(InlineProcessor):
             # Unparsed reference - fallback to plain text
             el.tag = "span"
             el.set("class", "aia-ref-unparsed")
-            warnings.warn(f"Unparsed AIA reference: {m.group(1)}")
+            warnings.warn(f"Unparsed AIA reference: {m.group(1)}", stacklevel=1)
 
         return el, m.start(0), m.end(0)
 
