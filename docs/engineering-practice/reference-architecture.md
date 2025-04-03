@@ -5,7 +5,7 @@ hide:
 
 <!-- Need to use embed instead of img to enable hyperlinks in the image -->
 
-<embed src="/_images/reference-architecture.drawio.svg" id="svgFrame"
+<embed src="../../_images/reference-architecture.drawio.svg" id="svgFrame"
 style="padding: 32px; width: 100%; box-sizing: border-box;"></embed>
 
 <script>

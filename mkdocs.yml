@@ -2,6 +2,7 @@ site_name: twai-pipeline
 site_dir: public/docs
 repo_url: https://github.com/aai-institute/twai-pipeline
 edit_uri: edit/main/docs/
+site_url: https://aai-institute.github.io/twai-pipeline/
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
