@@ -13,7 +13,7 @@ from sklearn.preprocessing import (
 from sklearn.utils.metaestimators import available_if
 from xgboost import XGBClassifier
 
-from .data import CensusASECMetadata
+from .data import PUMSMetaData
 
 
 class LabelEncodedClassifier(ClassifierMixin, BaseEstimator):
@@ -66,23 +66,7 @@ class ModelFactory:
     the feature union).
     """
 
-    exclude = tuple(
-        map(
-            str,
-            (
-                CensusASECMetadata.Fields.WEEKLY_EARNINGS,
-                CensusASECMetadata.Fields.HOURLY_WAGE,
-                CensusASECMetadata.Fields.LONGEST_JOB_EARNINGS,
-                CensusASECMetadata.Fields.SECOND_JOB_INCOME,
-                CensusASECMetadata.Fields.ADJUSTED_GROSS_INCOME,
-                CensusASECMetadata.Fields.ANNUAL_INCOME,
-                CensusASECMetadata.Fields.FINAL_WEIGHT,
-                CensusASECMetadata.Fields.ANNUAL_EARNINGS,
-                CensusASECMetadata.Fields.SELF_EMPLOYMENT_INCOME,
-                CensusASECMetadata.Fields.SECOND_JOB_INCOME,
-            ),
-        )
-    )
+    exclude = (PUMSMetaData.Fields.ANNUAL_INCOME, )
 
     @classmethod
     def create_xgb(
@@ -115,7 +99,7 @@ class ModelFactory:
         return build_pipeline(classifier, exclude=cls.exclude)
 
 
-def build_pipeline(classifier: Any, exclude=None, encode_categoricals=True) -> Pipeline:
+def build_pipeline(classifier: Any, exclude=None, include_only=None, encode_categoricals=True) -> Pipeline:
     """Constructs a preprocessing and classification pipeline.
 
     Parameters
@@ -135,27 +119,32 @@ def build_pipeline(classifier: Any, exclude=None, encode_categoricals=True) -> P
     numerical_pipeline = Pipeline([("scaler", StandardScaler())])
     ordinal_pipeline = Pipeline([("encoder", OrdinalEncoder())])
 
+    def filter_features(feat_list: list[str]):
+      if include_only is not None:
+        feat_list = [f for f in feat_list if f in include_only]
+      if exclude is not None:
+        feat_list = [f for f in feat_list if f not in exclude]
+      return feat_list
+
+    categorical_features = filter_features(PUMSMetaData.CATEGORICAL_FEATURES)
+    numerical_features = filter_features(PUMSMetaData.NUMERIC_FEATURES)
+    ordinal_features = filter_features(PUMSMetaData.ORDINAL_FEATURES)
+
     column_transformer = ColumnTransformer([
         (
             "categorical_pipeline",
             categorical_pipeline if encode_categoricals else "passthrough",
-            CensusASECMetadata.CATEGORICAL_FEATURES,
+            categorical_features
         ),
         (
             "numerical_pipeline",
             numerical_pipeline,
-            [
-                feat
-                for feat in CensusASECMetadata.NUMERIC_FEATURES
-                if feat not in exclude
-            ]
-            if exclude is not None
-            else CensusASECMetadata.NUMERIC_FEATURES,
+            numerical_features
         ),
         (
             "ordinal_pipeline",
             ordinal_pipeline,
-            CensusASECMetadata.ORDINAL_FEATURES,
+            ordinal_features,
         ),
     ])
 

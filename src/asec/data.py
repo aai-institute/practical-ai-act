@@ -3,11 +3,16 @@ from __future__ import annotations
 import urllib
 import urllib.request
 import zipfile
+from dataclasses import dataclass
 from enum import Enum
+from os import PathLike
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import numpy as np
 import pandas as pd
+from folktables import ACSDataSource, BasicProblem, adult_filter
+
 from ucimlrepo import fetch_ucirepo
 
 
@@ -552,3 +557,154 @@ def download_and_filter_census_data(year: int) -> pd.DataFrame:
     """
     df = download_census_data(year)
     return filter_relevant_census_data(df)
+
+def download_pums_data(year: int, base_dir: str | PathLike = "data"):
+  """
+  This function uses the `folktables` library to download
+  the Public Use Microdata Sample (PUMS) data from the US Census Bureau.
+
+  Args:
+    year: The year for which the PUMS data is to be downloaded.
+    base_dir: The base directory where the data will be stored.
+
+  Returns:
+    pd.DataFrame: The downloaded PUMS data as a pandas DataFrame.
+
+  """
+  data_source = ACSDataSource(survey_year=year,
+                              horizon='1-Year',
+                              survey='person',
+                              root_dir=base_dir)
+  return data_source.get_data(download=True)
+
+def filter_pums_data(df: pd.DataFrame, features: list[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
+
+
+  spec = BasicProblem(
+    features=features,
+    target=PUMSMetaData.Fields.ANNUAL_INCOME,
+    preprocess=adult_filter,
+    #postprocess=lambda x: np.nan_to_num(x, -1),
+  )
+
+  feature_df, target_df, _ = spec.df_to_pandas(df)
+  return feature_df, target_df
+
+def binning_targets(target_df: pd.DataFrame, target_bins: list[int]) -> pd.DataFrame:
+  values = np.searchsorted(
+    target_bins, target_df[PUMSMetaData.Fields.ANNUAL_INCOME], side="right"
+  )
+  return pd.DataFrame(data=values, columns=[PUMSMetaData.SALARY_BAND])
+
+def transform_to_categorical(feature_df: pd.DataFrame) -> pd.DataFrame:
+  cat_cols = set(PUMSMetaData.CATEGORICAL_FEATURES).intersection(
+    set(feature_df.columns))
+
+  for col in cat_cols:
+    feature_df[col] = feature_df[col].astype("category")
+
+  return feature_df.infer_objects()
+
+
+class PUMSMetaData:
+
+  class Fields:
+    """
+    Mapping of original column names to human-readable names for PUMS data.
+    """
+
+    # Demographics
+    AGE_YEARS = "AGEP"
+    GENDER = "SEX"
+    MARITAL_STATUS = "MAR"
+    HOUSEHOLD_RELATIONSHIP = "RELSHIPP"
+    HISPANIC_ETHNICITY = "HISP"
+    ASIAN_ETHNICITY = "RACASN"
+    RACE = "RAC1P"
+    COUNTRY_OF_BIRTH = "POBP"
+    CITIZENSHIP_STATUS = "CIT"
+    DISABILITY_STATUS = "DIS"
+    STATE = "STATE"
+
+    # Education
+    EDUCATION_LEVEL = "SCHL"
+    ENROLLMENT_STATUS = "SCH"
+    ENROLLMENT_TYPE = "SCHG"
+    FIELD_OF_DEGREE = "FOD1P"
+    HAS_SCIENCE_DEGREE = "SCIENGP"
+
+    # Employment & Work
+    EMPLOYMENT_STATUS = "ESR"
+    EMPLOYMENT_CLASS = "COW"
+    INDUSTRY = "INDP"
+    PLACE_OF_WORK = "POWSP"
+    HOURS_PER_WEEK = "WKHP"
+    WORK_WEEKS = "WKWN"
+    LAST_WORKED = "WKL"
+    MAJOR_INDUSTRY = "NAICSP"
+    MAJOR_OCCUPATION = "OCCP"
+
+    # Income & Earnings
+    ANNUAL_INCOME = "PINCP"
+
+    # Health & Insurance
+    HAS_HEALTH_INSURANCE = "HICOV"
+
+
+  # Target variable
+  ORIGINAL_TARGET = Fields.ANNUAL_INCOME
+  SALARY_BAND = "SALARY_BAND"
+  TARGET = SALARY_BAND
+
+
+
+  # Feature categories
+  CATEGORICAL_FEATURES = [
+    Fields.GENDER,
+    Fields.ENROLLMENT_STATUS,
+    Fields.ENROLLMENT_TYPE,
+    Fields.MARITAL_STATUS,
+    Fields.HOUSEHOLD_RELATIONSHIP,
+    Fields.HISPANIC_ETHNICITY,
+    Fields.ASIAN_ETHNICITY,
+    Fields.RACE,
+    Fields.COUNTRY_OF_BIRTH,
+    Fields.CITIZENSHIP_STATUS,
+    Fields.DISABILITY_STATUS,
+    Fields.STATE,
+    Fields.FIELD_OF_DEGREE,
+    Fields.HAS_SCIENCE_DEGREE,
+    Fields.EMPLOYMENT_CLASS,
+    Fields.INDUSTRY,
+    Fields.PLACE_OF_WORK,
+    Fields.LAST_WORKED,
+    Fields.MAJOR_INDUSTRY,
+    Fields.MAJOR_OCCUPATION,
+    Fields.HAS_HEALTH_INSURANCE
+  ]
+
+  NUMERIC_FEATURES = [
+    Fields.WORK_WEEKS,
+    Fields.HOURS_PER_WEEK,
+    Fields.AGE_YEARS,
+  ]
+
+  ORDINAL_FEATURES = [
+    Fields.EDUCATION_LEVEL
+  ]
+
+  FEATURES = CATEGORICAL_FEATURES + NUMERIC_FEATURES + ORDINAL_FEATURES
+  REASSEMBLED_ADULT_FEATURES = [
+    Fields.AGE_YEARS,
+    Fields.EMPLOYMENT_CLASS,
+    Fields.EDUCATION_LEVEL,
+    Fields.MARITAL_STATUS,
+    Fields.MAJOR_OCCUPATION,
+    Fields.COUNTRY_OF_BIRTH,
+    Fields.HOUSEHOLD_RELATIONSHIP,
+    Fields.HOURS_PER_WEEK,
+    Fields.GENDER,
+    Fields.RACE,
+    Fields.FIELD_OF_DEGREE,
+    Fields.HAS_SCIENCE_DEGREE
+  ]

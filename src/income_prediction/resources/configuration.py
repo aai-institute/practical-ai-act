@@ -27,7 +27,7 @@ class MinioConfig(BaseModel):
 class Config(ConfigurableResource):
     """Pipeline configuration."""
 
-    census_asec_dataset_year: int = 2024
+    census_asec_dataset_year: int = 2023
 
     salary_bands: list[int] = [
         35000,  # Entry level
