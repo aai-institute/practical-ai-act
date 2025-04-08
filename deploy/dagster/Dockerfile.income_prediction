@@ -16,7 +16,7 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
     --mount=target=/var/cache/apt,type=cache,sharing=locked \
     <<EOS
         apt-get update
-        apt-get install -yqq --no-install-recommends ca-certificates curl
+        apt-get install -yqq --no-install-recommends ca-certificates curl git
         install -m 0755 -d /etc/apt/keyrings
         curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
         chmod a+r /etc/apt/keyrings/docker.asc
