@@ -63,31 +63,70 @@ def nannyml_estimator(
     return estimator
 
 
-@dg.asset(kinds={"docker"}, group_name="deployment", deps=["nannyml_estimator"])
+@dg.asset(
+    group_name="deployment",
+)
+def nannyml_drift_calculator(
+    reference_dataset: pd.DataFrame,
+    nanny_ml_config: NannyMLConfig,
+) -> nml.UnivariateDriftCalculator:
+    feature_cols = [
+        col
+        for col in reference_dataset.columns
+        if not col.startswith(("prediction", "prob_", "target"))
+    ]
+    calc = nml.UnivariateDriftCalculator(
+        column_names=feature_cols,
+        treat_as_categorical=CensusASECMetadata.CATEGORICAL_FEATURES,
+        continuous_methods=["kolmogorov_smirnov"],
+        categorical_methods=["chi2"],
+        chunk_size=nanny_ml_config.chunk_size,
+    )
+    calc.fit(reference_dataset)
+    return calc
+
+
+@dg.asset(
+    kinds={"docker"},
+    group_name="deployment",
+    deps=["nannyml_estimator", "nannyml_drift_calculator"],
+)
 def nannyml_container(
     context: dg.AssetExecutionContext,
     model_version: ModelVersion,
     nannyml_estimator: nml.CBPE,
+    nannyml_drift_calculator: nml.UnivariateDriftCalculator,
 ) -> dg.Output:
     build_context = Path(__file__).parents[3]
     image_tags = [f"nannyml:{suffix}" for suffix in [model_version.version, "latest"]]
     context.log.info(f"{image_tags=}")
 
     # Create tempfile inside the build context, so it can be copied into the image
-    with NamedTemporaryFile(
-        prefix="nannyml-cbpe-", suffix=".pkl", dir=build_context
-    ) as tmp_file:
-        pkl_path = Path(tmp_file.name)
+    with (
+        NamedTemporaryFile(
+            prefix="nannyml-cbpe-", suffix=".pkl", dir=build_context
+        ) as cbpe_file,
+        NamedTemporaryFile(
+            prefix="nannyml-drift-", suffix=".pkl", dir=build_context
+        ) as drift_file,
+    ):
+        pickle.dump(nannyml_estimator, cbpe_file)
+        pickle.dump(nannyml_drift_calculator, drift_file)
 
-        with open(pkl_path, "wb") as f:
-            pickle.dump(nannyml_estimator, f)
+        drift_file.flush()
+        cbpe_file.flush()
 
-        context.log.info(f"{pkl_path=}")
-        context.log.info(f"{build_context=}")
         build_result = build_container_image(
             build_context,
             image_tags,
-            build_args={"NANNYML_ESTIMATOR": str(pkl_path.name)},
+            build_args={
+                "NANNYML_ESTIMATOR": str(
+                    Path(cbpe_file.name).relative_to(build_context)
+                ),
+                "NANNYML_DRIFT_CALCULATOR": str(
+                    Path(drift_file.name).relative_to(build_context)
+                ),
+            },
             docker_file=build_context / "deploy" / "nannyml" / "Dockerfile",
         )
 

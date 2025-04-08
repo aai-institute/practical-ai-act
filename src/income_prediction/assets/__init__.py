@@ -19,6 +19,7 @@ from ..utils.mlflow import log_fairness_metrics
 from .fairness import evaluate_fairness
 from .model import model_container as model_container
 from .monitoring import nannyml_container as nannyml_container
+from .monitoring import nannyml_drift_calculator as nannyml_drift_calculator
 from .monitoring import nannyml_estimator as nannyml_estimator
 from .monitoring import reference_dataset as reference_dataset
 
@@ -111,16 +112,6 @@ def optuna_search_xgb(
             )
             mlflow.log_input(test_ds)
 
-            mlflow.sklearn.log_model(
-                best_model,
-                artifact_path="model",
-                registered_model_name=model_name,
-                code_paths=["src/asec"],
-                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
-                    5
-                ),
-            )
-
             mlflow.evaluate(
                 model=best_model.predict,
                 data=test_ds,
@@ -138,4 +129,13 @@ def optuna_search_xgb(
             fairness_metrics = evaluate_fairness(test_data, y_pred)
             log_fairness_metrics(fairness_metrics)
 
+            mlflow.sklearn.log_model(
+                best_model,
+                artifact_path="model",
+                registered_model_name=model_name,
+                code_paths=["src/asec"],
+                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
+                    5
+                ),
+            )
             return best_model
