@@ -793,16 +793,12 @@ wheels = [
 [[package]]
 name = "folktables"
 version = "0.0.12"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/samgalen/folktables?branch=archive_url#f9bc939a3f8815cb0ee1f8544f377c8497b97f2a" }
 dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "requests" },
     { name = "scikit-learn" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/81/a4/1a299dc31ab9a6ba79ea2e2beebc61798bc6c031d6c69faa06321a413323/folktables-0.0.12.tar.gz", hash = "sha256:e83dde0cbcdd54c7c39b175006a50bdfc4adc351f69d4389f82aaba3eee02115", size = 18836 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8e/b4/b2b7bf25966eb058be47559f9b44691b0c6811d0b21368e688e864caa869/folktables-0.0.12-py3-none-any.whl", hash = "sha256:979cda1900094b845ab3a8a3ae1b848f0138b780d5f8d17eeb6eb04c3c0c6617", size = 17332 },
 ]
 
 [[package]]
@@ -1368,7 +1364,7 @@ train = [
     { name = "dagster-obstore", specifier = ">=0.2.0" },
     { name = "dagster-postgres", specifier = ">=0.26.2" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },
-    { name = "folktables", specifier = ">=0.0.12" },
+    { name = "folktables", git = "https://github.com/samgalen/folktables?branch=archive_url" },
     { name = "kaleido", specifier = "==0.2.1" },
     { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "lightgbm", specifier = ">=4.5.0" },

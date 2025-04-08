@@ -44,7 +44,7 @@ train = [
     "aif360>=0.6.1",
     "shap>=0.47.0",
     "numba>=0.61.0",
-    "folktables>=0.0.12",
+    "folktables",
 ]
 deploy = [
     "fastapi>=0.110",
@@ -100,3 +100,6 @@ ignore = [
 [tool.dagster]
 module_name = "income_prediction"
 code_location_name = "income_prediction"
+
+[tool.uv.sources]
+folktables = { git = "https://github.com/samgalen/folktables", branch = "archive_url" }
