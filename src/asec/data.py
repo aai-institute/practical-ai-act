@@ -574,7 +574,8 @@ def download_pums_data(year: int, base_dir: str | PathLike = "data"):
   data_source = ACSDataSource(survey_year=year,
                               horizon='1-Year',
                               survey='person',
-                              root_dir=base_dir)
+                              root_dir=base_dir,
+                              use_archive=True)
   return data_source.get_data(download=True)
 
 def filter_pums_data(df: pd.DataFrame, features: list[str]) -> tuple[pd.DataFrame, pd.DataFrame]:
