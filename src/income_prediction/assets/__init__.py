@@ -26,7 +26,10 @@ from .monitoring import reference_dataset as reference_dataset
 @dg.asset(io_manager_key="lakefs_io_manager")
 def census_asec_dataset(experiment_config: Config):
     """Downloads and filters the Census ASEC dataset based on the UCI Adult dataset criteria."""
-    return download_and_filter_census_data(experiment_config.census_asec_dataset_year)
+    return download_and_filter_census_data(
+        experiment_config.census_asec_dataset_year,
+        use_archive=experiment_config.census_asec_dataset_use_archive,
+    )
 
 
 @dg.asset(io_manager_key="lakefs_io_manager")
