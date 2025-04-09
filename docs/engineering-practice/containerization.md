@@ -16,7 +16,7 @@ hide:
         - |Art. 15(1)|
         - |Art. 15(4)|, containers provide a consistent runtime environment, allow for redundancy
 
-## Rationale
+## Motivation
 
 Deploying and running applications in a reproducible and reliable manner is a crucial part of the software development lifecycle.
 Inconsistencies in the runtime environment can lead to unexpected behavior, bugs, and security vulnerabilities.
