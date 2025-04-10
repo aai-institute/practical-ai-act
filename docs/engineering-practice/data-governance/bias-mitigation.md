@@ -33,7 +33,7 @@ As such, data governance activities should include practices to cover these requ
 
 ### Mitigation Techniques
 
-Bias mitigation broadly fall into three categories, based on their applicability during the machine learning lifecycle:
+Bias mitigation techniques broadly fall into three categories, based on their applicability during the machine learning lifecycle:
 
 ```mermaid
 flowchart LR
