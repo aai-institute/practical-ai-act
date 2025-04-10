@@ -29,5 +29,5 @@ hide:
 [Post Deployment Monitoring]: ../showcase/system-overview.md/#post-deployment-monitoring
 [Model Registry and Tracking]: ../showcase/system-overview.md/#model-registry-and-tracking-mlflow
 [Model Training Pipeline]: ../showcase/system-overview.md/#model-training-pipeline-dagster
-[Technical Documentation]: ./documents/technical-documentation.md
-[Transparency and<br>Provision of Information<br>to the Deployers]: ./documents/instructions-for-use.md
+[Technical Documentation]: technical-documentation.md
+[Transparency and<br>Provision of Information<br>to the Deployers]: instructions-for-use.md

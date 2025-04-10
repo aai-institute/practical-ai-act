@@ -37,10 +37,8 @@ nav:
           - engineering-practice/data-governance/bias-mitigation.md
   - AI Act Conformity:
       - conformity/index.md
-      - Documents:
-          - conformity/documents/index.md
-          - conformity/documents/technical-documentation.md
-          - conformity/documents/instructions-for-use.md
+      - conformity/technical-documentation.md
+      - conformity/instructions-for-use.md
   - Tags:
       - tags.md
   - acknowledgments.md

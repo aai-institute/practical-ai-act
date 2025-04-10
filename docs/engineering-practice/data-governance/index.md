@@ -13,7 +13,7 @@ In general, data governance encompasses all methodologies for managing data thro
 While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.
 
 To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centered on process and documentation,
-see [Technical Documentation](../../conformity/documents/technical-documentation.md).
+see [Technical Documentation](../../conformity/technical-documentation.md).
 This is not a simple mapping of paragraphs to either or, moreover each paragraph
 of |Art. 10| can include both types of tasks.
 
