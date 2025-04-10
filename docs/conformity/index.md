@@ -24,7 +24,7 @@ hide:
 [Explainability]: ../engineering-practice/explainability.md
 [Experiment Tracking]: ../engineering-practice/experiment-tracking.md
 [Containerization]: ../engineering-practice/containerization.md
-[Bias Mitigation]: ../engineering-practice/bias-mitigation.md
+[Bias Mitigation]: ../engineering-practice/data-governance/bias-mitigation.md
 [Inference Logging Service]: ../showcase/system-overview.md/#inference-logging-service
 [Post Deployment Monitoring]: ../showcase/system-overview.md/#post-deployment-monitoring
 [Model Registry and Tracking]: ../showcase/system-overview.md/#model-registry-and-tracking-mlflow
