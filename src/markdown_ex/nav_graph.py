@@ -100,8 +100,7 @@ def _to_mermaid(graph: dict[str, list[str]]) -> str:
 
     # Add all nodes without a subgraph id
     for node in all_nodes:
-        if not _subgraph_id(node):
-            mermaid += f'  {_node_name(node)}["{_node_title(node)}"]\n'
+        if not _subgraph_id(_node_name(node)):
             mermaid += "\n"
 
     # Add edges to the flowchart
