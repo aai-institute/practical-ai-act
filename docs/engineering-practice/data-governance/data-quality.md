@@ -50,7 +50,7 @@ They need to be accompanied by organizational and governance measures to become 
 -   Ensure data accuracy through automated validation
     -   Logical inconsistencies (e.g., negative age values).
     -   Outliers and anomalies using statistical methods (e.g., z-score, IQR analysis).
--   Produce automated data quality reports for human review and inclusion in [technical documentation](../../conformity/documents/technical-documentation.md).
+-   Produce automated data quality reports for human review and inclusion in [technical documentation](../../conformity/technical-documentation.md).
 -   [Monitor for data drift over time](../model-monitoring.md)
     -   Set up periodic validation checks to see if the data distribution changes over time.
     -   Retrain models if significant drift is detected.
