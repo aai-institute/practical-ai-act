@@ -43,6 +43,9 @@ nav:
 plugins:
   - callouts
   - section-index
+  - mkdocs-backlinks:
+      ignored_pages:
+        ["Engineering Practice", "Data Governance", "Reader's Guide", "Home"]
   - mkdocstrings:
       handlers:
         python:

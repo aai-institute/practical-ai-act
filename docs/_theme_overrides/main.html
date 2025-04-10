@@ -10,7 +10,14 @@ information, please
 {%- endif -%}
 {% endblock %}
 
- {% block footer %}
- {% include "partials/disclaimer.html" %}
- {{ super() }}
- {% endblock %}
+{% block content %}
+{% if backlinks %}
+{% include "partials/backlinks.html" %}
+{% endif %}
+{{ super() }}
+{% endblock %}
+
+{% block footer %}
+{% include "partials/disclaimer.html" %}
+{{ super() }}
+{% endblock %}
