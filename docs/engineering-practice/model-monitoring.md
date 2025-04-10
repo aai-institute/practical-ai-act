@@ -1,3 +1,9 @@
+---
+tags:
+    - Art. 12
+    - Art. 15
+---
+
 !!! danger "Work in Progress"
 
     The information on this page is incomplete and meant to illustrate the structure of these pages

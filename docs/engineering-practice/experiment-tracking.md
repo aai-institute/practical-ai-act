@@ -1,3 +1,8 @@
+---
+tags:
+    - Art. 15
+---
+
 # Experiment tracking
 
 !!! success "Compliance Info"
