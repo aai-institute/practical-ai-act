@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/containerization/">
       
       
-        <link rel="prev" href="../bias-mitigation/">
+        <link rel="prev" href="../reference-architecture/">
       
       
-        <link rel="next" href="../data-versioning/">
+        <link rel="next" href="../experiment-tracking/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -86,6 +86,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#motivation" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -417,28 +422,6 @@ information, please
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../bias-mitigation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Bias mitigation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -448,6 +431,18 @@ information, please
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Containerization
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -460,28 +455,98 @@ information, please
 
       </a>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data-versioning/" class="md-nav__link">
         
-  
-  <span class="md-ellipsis">
-    Data versioning
-    
-  </span>
-  
 
-      </a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#applicability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applicability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traceability-and-reproducibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traceability and Reproducibility
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Security
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -582,6 +647,28 @@ information, please
   
   
     <li class="md-nav__item">
+      <a href="../model-serving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Serving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../inference-log/" class="md-nav__link">
         
   
@@ -604,11 +691,11 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/" class="md-nav__link">
+      <a href="../operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Data Governance
+    Operational Monitoring
     
   </span>
   
@@ -636,6 +723,146 @@ information, please
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orchestration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../data-governance/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Data Governance
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Data Governance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/data-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/data-versioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data versioning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/bias-mitigation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bias mitigation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -857,6 +1084,89 @@ information, please
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#applicability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applicability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traceability-and-reproducibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traceability and Reproducibility
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Security
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -867,6 +1177,14 @@ information, please
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+
+<ul class="backlinks">
+  
+  <li><a href="../model-serving/">Model Serving</a></li>
+  
+</ul>
+
+
                   
   
 
@@ -896,13 +1214,81 @@ information, please
 
 <div class="admonition success">
 <p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
 <p>TODO: This list is incomplete</p>
 <ul>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15</a></strong> (Accuracy, Robustness and Cybersecurity), in particular:<ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(1)</a></li>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(4)</a>, containers provide a consistent runtime environment, allow for redundancy</li>
 </ul>
+</li>
+</ul>
 </div>
-<p>TODO</p>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Deploying and running applications in a reproducible and reliable manner is a crucial part of the software development lifecycle.
+Inconsistencies in the runtime environment can lead to unexpected behavior, bugs, and security vulnerabilities.
+AI systems prove no exception to this rule, as they often rely on complex dependencies and configurations that can vary across different runtime environments.</p>
+<p>Containerization provides a solution to these challenges by encapsulating applications and their runtime dependencies into isolated environments, called <em>containers</em>.</p>
+<p>By controlling the runtime environment, containerization can improve the <em>resilience</em> of AI systems against inconsistencies, as required by <a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(4)</a>.</p>
+<p>Since containers provide a uniform execution model, <a href="../operational-monitoring/">monitoring</a> their lifecycle and performance is easier.
+Failed containers can be restarted automatically, and their logs can be collected and analyzed to identify potential issues, in line with the fault tolerance requirements of the AI Act.</p>
+<p>Scaling of AI systems is also simplified with containerization, as containers can be easily replicated and distributed across multiple nodes.
+This addresses the redundancy requirements of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(4)</a>, as multiple instances of a containerized application can be run in parallel to ensure high availability and fault tolerance.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<h3 id="applicability">Applicability<a class="headerlink" href="#applicability" title="Permanent link">&para;</a></h3>
+<p>Containerization can be applied at multiple stages of the machine learning lifecycle, including:</p>
+<ul>
+<li><strong>MLOps infrastructure</strong>: tooling for data versioning, model training, and deployment</li>
+<li><strong>Data processing</strong>: running data pipelines in isolated environments</li>
+<li><strong>Model training</strong>: training models in isolated environments</li>
+<li><strong>Model serving</strong>: deploying models as microservices</li>
+</ul>
+<h3 id="traceability-and-reproducibility">Traceability and Reproducibility<a class="headerlink" href="#traceability-and-reproducibility" title="Permanent link">&para;</a></h3>
+<p>Special care should be exercises to ensure the traceability and reproducibility of the containerized applications by always using versioned container images,
+if possible with immutable version tags or <a href="https://docs.docker.com/engine/containers/run/#image-digests">image digests</a> (e.g., <code>my-image:1.0.0</code> or even <code>my-image@sha256:...</code>, instead of <code>my-image:latest</code> or <code>my-image</code>).
+This practice, akin to version locking for package dependencies, ensures that the same version of the container image is used for each deployment, reducing the risk of inconsistencies, especially in distributed environments.</p>
+<p>Avoid updating existing tags when building container images, as this can lead to confusion and inconsistencies.</p>
+<p>Similarly, container builds should be as <em>reproducible</em> as possible.
+The following techniques can help you to achieve this goal:</p>
+<ul>
+<li>Use versioned base images, ideally pinning to a specific image digest.</li>
+<li>Specify exact versions of dependencies (e.g., by using lock files or version constraints, if supported by your package manager).</li>
+<li>Avoid using <code>latest</code> tags for dependencies, as they can lead to unexpected changes in behavior.</li>
+<li>Use build arguments to parameterize the build process, if needed.</li>
+<li>Use multi-stage builds to separate build and runtime dependencies, if applicable.</li>
+<li>Use <a href="https://docs.docker.com/reference/dockerfile/#label">labels</a>/<a href="https://specs.opencontainers.org/image-spec/annotations/">annotations</a> to add metadata to the image, e.g., the source code revision identifier, build date, and maintainers (the <a href="https://specs.opencontainers.org/image-spec/annotations/">OpenContainers annotations spec</a> provides guidance on predefined annotation keys).</li>
+</ul>
+<h3 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h3>
+<p>While this document does not cover security aspects of containerization in detail, it is important to consider the following points:</p>
+<ul>
+<li>Use minimal base images to reduce the attack surface.</li>
+<li>Use container vulnerability scanning tools to identify known vulnerabilities in the base images and dependencies.</li>
+<li>Regularly update base images and dependencies to patch known vulnerabilities.</li>
+<li>Minimize runtime privileges by using non-root users and limiting container capabilities.</li>
+</ul>
+<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<p>Container Engines:</p>
+<ul>
+<li><a href="https://www.docker.com/">Docker</a></li>
+<li><a href="https://podman.io/">Podman</a></li>
+</ul>
+<p>Container Orchestration:</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/">Docker Compose</a> for small-scale deployments</li>
+<li><a href="https://kubernetes.io/">Kubernetes</a> or <a href="https://www.openshift.com/">OpenShift</a> for large-scale, multi-node deployments</li>
+</ul>
+<h3 id="container-security">Container Security<a class="headerlink" href="#container-security" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This list only includes open-source software.</p>
+<p>The field of container security is rapidly evolving, and new tools and techniques are constantly being developed, also as part of commercial solutions.</p>
+</div>
+<ul>
+<li><a href="https://snyk.io/product/open-source-security-management/">Snyk Open Source</a></li>
+<li><a href="https://quay.github.io/clair/">Clair</a></li>
+<li><a href="https://github.com/anchore/grype/">Grype</a></li>
+<li><a href="https://trivy.dev/latest/">Trivy</a></li>
+</ul>
 
 
 
@@ -921,6 +1307,7 @@ information, please
 
 
                 
+
               </article>
             </div>
           
@@ -932,7 +1319,7 @@ information, please
         
       </main>
       
- <style>
+<style>
   .content-notice {
     align-self: center;
     font-size: 0.6rem;
@@ -1021,7 +1408,7 @@ information, please
     });
   });
 </script>
- 
+
         <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
@@ -1095,7 +1482,7 @@ information, please
   </div>
 </footer>
       
- 
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>

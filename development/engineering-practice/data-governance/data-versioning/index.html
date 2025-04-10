@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/bias-mitigation/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/data-governance/data-versioning/">
       
       
-        <link rel="prev" href="../reference-architecture/">
+        <link rel="prev" href="../data-quality/">
       
       
-        <link rel="next" href="../containerization/">
+        <link rel="next" href="../bias-mitigation/">
       
       
-      <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
+      <link rel="icon" href="../../../_images/logos/baiaa-icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
-        <title>Bias mitigation - twai-pipeline</title>
+        <title>Data versioning - twai-pipeline</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
   
@@ -51,18 +51,18 @@
         
         
         
-        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
+        <link rel="stylesheet" href="../../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
         <style>:root{--md-text-font:"Source Sans Pro";--md-code-font:"Source Code Pro"}</style>
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../_styles/extra.css">
+      <link rel="stylesheet" href="../../../_styles/extra.css">
     
-      <link rel="stylesheet" href="../../_styles/theme.css">
+      <link rel="stylesheet" href="../../../_styles/theme.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#freestyle" class="md-skip">
+        <a href="#data-versioning" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
 may contain features that have not yet been released. For the most accurate
 information, please
 
-<strong><a href="../../..">access the latest release</a></strong>.
+<strong><a href="../../../..">access the latest release</a></strong>.
           </div>
           
         </aside>
@@ -151,14 +151,14 @@ information, please
 
     <!-- Link to home -->
     <a
-      href="../.."
+      href="../../.."
       title="twai-pipeline"
       class="md-header__button md-logo"
       aria-label="twai-pipeline"
       data-md-component="logo"
     >
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
 
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Bias mitigation</strong>
+              twai-pipeline &mdash; <strong>Data versioning</strong>
             
           </span>
         </div>
@@ -297,6 +297,8 @@ information, please
           
             
               
+                
+              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -306,9 +308,9 @@ information, please
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
+    <a href="../../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
     twai-pipeline
@@ -335,7 +337,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -356,7 +358,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../readers-guide/" class="md-nav__link">
+      <a href="../../../readers-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -391,7 +393,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../reference-architecture/" class="md-nav__link ">
+            <a href="../../reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -420,87 +422,10 @@ information, please
                 
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Bias mitigation
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Bias mitigation
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#freestyle" class="md-nav__link">
-    <span class="md-ellipsis">
-      Freestyle
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reading
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../containerization/" class="md-nav__link">
+      <a href="../../containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -522,29 +447,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-versioning/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data versioning
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../experiment-tracking/" class="md-nav__link">
+      <a href="../../experiment-tracking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -566,7 +469,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../explainability/" class="md-nav__link">
+      <a href="../../explainability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -588,7 +491,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-registry/" class="md-nav__link">
+      <a href="../../model-registry/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -610,7 +513,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-monitoring/" class="md-nav__link">
+      <a href="../../model-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -632,7 +535,29 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../inference-log/" class="md-nav__link">
+      <a href="../../model-serving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Serving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference-log/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -654,11 +579,11 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/" class="md-nav__link">
+      <a href="../../operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Data Governance
+    Operational Monitoring
     
   </span>
   
@@ -676,7 +601,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../accuracy/" class="md-nav__link">
+      <a href="../../accuracy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -686,6 +611,225 @@ information, please
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orchestration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orchestration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Data Governance
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Data Governance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data versioning
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Data versioning
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interoperability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interoperability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key technologies
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bias-mitigation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bias mitigation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -705,7 +849,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../showcase/" class="md-nav__link">
+      <a href="../../../showcase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -738,7 +882,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../conformity/" class="md-nav__link ">
+            <a href="../../../conformity/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -782,7 +926,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../conformity/documents/" class="md-nav__link ">
+            <a href="../../../conformity/documents/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -814,7 +958,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/documents/technical-documentation/" class="md-nav__link">
+      <a href="../../../conformity/documents/technical-documentation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -836,7 +980,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/documents/instructions-for-use/" class="md-nav__link">
+      <a href="../../../conformity/documents/instructions-for-use/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -873,7 +1017,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../acknowledgments/" class="md-nav__link">
+      <a href="../../../acknowledgments/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -895,6 +1039,8 @@ information, please
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -904,6 +1050,8 @@ information, please
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -912,18 +1060,36 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#freestyle" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Freestyle
+      Motivation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
+  <a href="#implementation-notes" class="md-nav__link">
     <span class="md-ellipsis">
-      Reading
+      Implementation notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interoperability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interoperability
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key technologies
     </span>
   </a>
   
@@ -941,123 +1107,151 @@ information, please
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+
+<ul class="backlinks">
+  
+  <li><a href="../../experiment-tracking/">Experiment tracking</a></li>
+  
+</ul>
+
+
                   
+  
+
+
+  <nav class="md-tags" hidden>
+    
+      
+      
+      
+        <span class="md-tag">phase::data engineering</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">phase::modeling</span>
+      
+    
+  </nav>
 
 
   
   
 
 
-  <h1>Bias mitigation</h1>
-
+<h1 id="data-versioning">Data versioning<a class="headerlink" href="#data-versioning" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Compliance Info</p>
-<p>...</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
+<p>TODO: Add article references to provisions addressed by data versioning</p>
 </div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>In fast-moving, complex environments such as the subject of AI, it is vital to keep track of where data and information originated,
+not only to be transparent, or to easily share work with colleagues, but to be able to identify the root cause in the event of a problem with your system.</p>
+<p>In the software engineering world, distributed version control systems (VCS) have seen wide adoption because they address all of these concerns.
+Through a set of basic abstractions, they provide bookkeeping powers by means of unique and immutable references, distributed storage for work sharing, and a graph-based history building for detailed information keeping.
+Consequently, <em>data version control</em> or <em>data versioning</em> systems (DVCS) can be thought of as the similar approach to all data <em>artifacts</em> produced by your machine learning systems.</p>
+<h2 id="implementation-notes">Implementation notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p>To add data versioning to a machine learning project, it is important to figure out a few steps:</p>
+<ol>
+<li><strong>Collaborative development.</strong></li>
+</ol>
+<p>A suitable data version control system needs to accommodate multiple engineers working simultaneously on different versions of the data, and ensure that changes made by one engineer do not invalidate the work of another.
+This can be done for example by using a <em>branch</em> workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).</p>
+<pre class="mermaid"><code>%%{ init: {'theme': 'base'} }%%
+---
+title: Branching in a (data) version control system
+---
+gitGraph
+   commit
+   commit
+   branch develop
+   checkout develop
+   commit
+   commit
+   checkout main
+   merge develop
+   commit
+   commit</code></pre>
+<p><em>Figure 1: A branching data version control approach, with commits (immutable snapshots of the data) shown as dots.</em></p>
+<ol start="2">
+<li><strong>Distributed storage.</strong></li>
+</ol>
+<p>A data version control system should be accessible for all developers, and host the data in an off-device location to ensure easy access, fault tolerance, and availability of backups.</p>
+<ol start="3">
+<li><strong>Communication with users.</strong></li>
+</ol>
+<p>In addition to availability, security, and fault tolerance, it is necessary that the data version control system can be easily interfaced with in AI application code.
+This usually means that a selection of API clients or SDKs is available for a variety of programming languages, which allows developers to efficiently interface with the DVCS.</p>
+<h2 id="interoperability">Interoperability<a class="headerlink" href="#interoperability" title="Permanent link">&para;</a></h2>
 <ul>
-<li>
-<p>Implement measures to identify, monitor, and mitigate potential biases in datasets that could lead to discriminatory outcomes.</p>
-<ul>
-<li><strong>Conduct Exploratory Data Analysis (EDA):</strong> Analyze the dataset for imbalances or patterns that may suggest bias, such as over-representation or under-representation of certain groups.</li>
-<li>
-<p><strong>Fairness Metrics:</strong> Use fairness metrics like demographic parity, equalized odds, and disparate impact to quantify bias in datasets and model outputs.</p>
-<ul>
-<li><strong>Demographic Parity (Statistical Parity):</strong>
-    Ensures that all groups have equal probabilities of receiving a positive outcome.</li>
-</ul>
-<p>$P(Outcome=Positive∣Group=A)=P(Outcome=Positive∣Group=B)$</p>
-<ul>
-<li><strong>Equalized Odds:</strong>
-    Requires equal true positive rates (TPRs) and false positive rates (FPRs) across groups.</li>
-</ul>
-<p>$P(Predicted Positive∣Actual Positive,Group=A)=P(Predicted Positive∣Actual Positive,Group=B)$</p>
-<ul>
-<li><strong>Disparate Impact:</strong>
-    Compares the ratio of favorable outcomes for different groups. Often used to detect discrimination.</li>
-</ul>
-<p>$Disparate Impact=P(Positive Outcome∣Group=B) / P(Positive Outcome∣Group=A)$</p>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Diversity Analysis:</strong> Evaluate the dataset's demographic diversity, ensuring it represents all relevant populations appropriately.</p>
-<ul>
-<li><strong>Group Representation:</strong>
-    Checks whether groups are proportionally represented in the dataset (calculate as fraction of the total dataset size)</li>
-<li><strong>Overall Accuracy Equality:</strong>
-    Ensures that accuracy rates are equal across groups.</li>
-</ul>
-</li>
-<li>
-<p><strong>Open-Source Tools:</strong></p>
-<ul>
-<li>IBM AI Fairness 360</li>
-<li>Microsoft's Fairlearn</li>
-<li>Google's What-If Tool</li>
-</ul>
-</li>
-<li>
-<p><strong>Resampling Techniques:</strong> Use oversampling (e.g., SMOTE) or undersampling to balance the representation of different demographic groups.</p>
-<ul>
-<li><code>imblearn</code> package</li>
-</ul>
-</li>
-<li>
-<p>Synthetic Data Generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.</p>
-</li>
-<li>
-<p>Reweighting: Adjust the weights of data instances to ensure fair representation across groups.</p>
-</li>
-<li>
-<p>Bias-Corrected Features: Transform features to reduce correlations with sensitive attributes (e.g., gender, race).</p>
-</li>
-<li>
-<p>Fair Representations: Use fairness-aware models that explicitly optimize for fairness metrics alongside predictive accuracy.
-    -Learning Fair Representations (LFR): Produces a transformed dataset with minimal bias.</p>
-</li>
-<li>
-<p><strong>Outcome Adjustments:</strong> Adjust decision thresholds or outputs to ensure equitable outcomes across demographic groups.</p>
-<ul>
-<li><strong>Equalized Odds Postprocessing:</strong> Modifies predictions to satisfy equalized odds constraints.</li>
-</ul>
-</li>
-<li>
-<p>Bias Mitigation Strategies: Apply fairness postprocessing methods, such as calibration by group or equalized odds adjustments.</p>
-</li>
-<li>
-<p>Regularly audit data to ensure it is free from systemic errors or biases.</p>
-<ul>
-<li><strong>Segmentation Analysis:</strong> Partition the dataset based on sensitive attributes and assess performance metrics for each segment to detect disparities.</li>
-<li><strong>Subgroup Fairness Checks:</strong> Compare outcomes for different demographic subgroups to identify discrepancies.</li>
-<li><strong>Drift Detection:</strong> Use tools to detect data or model drift that may reintroduce bias over time.</li>
+<li>Where applicable, ensure that datasets and documentation are interoperable with standard regulatory frameworks and can be audited by authorities.<ul>
+<li>Standardize formats (e.g., CSV or Parquet files for tabular data)</li>
+<li>Centralize data storage (e.g., in a data lake or data warehouse) such that access to data sets can be given at any time, and it is not depending on data sets on local machines of ML Engineers and Data Scientists.</li>
 </ul>
 </li>
 </ul>
-<h2 id="freestyle">Freestyle<a class="headerlink" href="#freestyle" title="Permanent link">&para;</a></h2>
+<h2 id="key-technologies">Key technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="https://lakefs.io">lakeFS</a></li>
+</ol>
+<p>lakeFS models a lot of its version control abstractions like the <a href="https://git-scm.com/">git VCS</a> tool.
+It builds a linear history on commits, separates different avenues of work with branches, allows annotating data with tags, and also has supported for a merge workflow.
+It can be set up on either local storage or a cloud storage bucket of one of the larger providers (AWS, GCP, Azure).</p>
+<ol start="2">
+<li><a href="https://dvc.org/">DVC</a></li>
+</ol>
+<p>DVC is a pure-Python command-line interface (CLI) for versioning data and model artifacts resulting from ML pipelines.
+In addition, it has functionality for local experiment tracking, and versioning data pipelines in git together with project source code.</p>
+<ol start="3">
+<li><a href="https://git-lfs.com">git-lfs</a></li>
+</ol>
+<p>Git Large File Storage (LFS) stores large data assets in remote locations, and replaces the data with text pointers in git, so that data and its usage are decoupled on the storage level.
+It integrates with the git command-line interface, augmenting developers' existing git workflows intuitively, and reducing the learning curve that an addition of a standalone tool would bring.</p>
+<!-- TODO remove duplication-->
+
 <ul>
-<li>interpretation of AI Act regarding bias (referencing Annexes)</li>
-<li>definition we use in the project and why</li>
-<li>identifying possible biases</li>
-<li>methods to detect bias</li>
 <li>
-<p>what we choose for this use-case and why</p>
-</li>
-<li>
-<p>AI Act Article X</p>
+<p>Establish a <strong>data management system</strong></p>
 <ul>
-<li>Interpretation of Activity Y in Article X</li>
-<li>Definition of Activity Y in this project</li>
-<li>How is Activity Y relevant for this project</li>
-<li>Methods for Activity Y</li>
-<li>Selected methods and tools for Activity Y</li>
-<li>Findings</li>
+<li>Centralize data storage (e.g., in a Data Lake or Data Warehouse)<ul>
+<li>Implement access control and restrict access to data to authorized personal and systems only</li>
+<li>Avoid storing data on developer machines. Provide discovery tooling. Provide centralized compute with high-speed data access.</li>
 </ul>
 </li>
 </ul>
-<h2 id="reading">Reading<a class="headerlink" href="#reading" title="Permanent link">&para;</a></h2>
-<p>From the book <a href="https://trustworthyml.io/">Trustworthy Machine Learning</a></p>
+</li>
+<li>
+<p><strong>Data versioning:</strong></p>
 <ul>
-<li>Chapter 2.8 - 2.9 (and previous chapter as mentioned in the text)</li>
+<li>Automation:<ul>
+<li>Version datasets on data processing pipelines</li>
+<li>Generate logs on each update</li>
+<li>Execute pipelines on data changes</li>
+</ul>
+</li>
+<li>Depending on the use case and data set properties:<ul>
+<li>Store complete versions (suitable for small data sets only)</li>
+<li>Store increments (new image objects, new partitions in time series, etc)</li>
+<li>Store differences (deltas) between data set versions</li>
+</ul>
+</li>
+<li><strong>Rule of thumb:</strong> You should version data whenever changes to the dataset occur that could impact its use, reproducibility, or compatibility with downstream systems.<ul>
+<li>Initial data set creation</li>
+<li>Data updates (new data, corrections, expansions)</li>
+<li>Data processing: after applying preprocessing steps (evaluate based on compute vs. storage requirements)</li>
+<li>Model training: maintain a version of the data for each trained model</li>
+<li>Performance: after subsampling or aggregating</li>
+<li>Experiments: when experimenting with different versions, including different features, etc.</li>
+<li>Collaboration: track contributions per team/person</li>
+<li>Decommissioning: store the last version of the data</li>
+<li>Scheduled: hourly, daily, weekly, etc.</li>
+</ul>
+</li>
+<li><strong>Tools:</strong> LakeFS, DVC, Delta Lake, Git LFS</li>
+</ul>
+</li>
 </ul>
 
 
@@ -1066,12 +1260,18 @@ information, please
 
 
 
+  
+  
 
 
+
+
+  
 
 
 
                 
+
               </article>
             </div>
           
@@ -1083,7 +1283,7 @@ information, please
         
       </main>
       
- <style>
+<style>
   .content-notice {
     align-self: center;
     font-size: 0.6rem;
@@ -1172,7 +1372,7 @@ information, please
     });
   });
 </script>
- 
+
         <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
@@ -1194,14 +1394,14 @@ information, please
     <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
       <img
         class="logo"
-        src="../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
+        src="../../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
         title="Bayerisches Staatsministerium für Digitales"
       />
     </a>
     <a href="https://appliedai-institute.de" target="_blank">
       <img
         class="logo aai-logo"
-        src="../../_images/logos/aai-logo-cropped.png"
+        src="../../../_images/logos/aai-logo-cropped.png"
         title="appliedAI Institute for Europe gGmbH"
       />
     </a>
@@ -1246,17 +1446,17 @@ information, please
   </div>
 </footer>
       
- 
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

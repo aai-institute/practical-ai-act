@@ -11,10 +11,10 @@
         <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/data-governance/">
       
       
-        <link rel="prev" href="../inference-log/">
+        <link rel="prev" href="../orchestration/">
       
       
-        <link rel="next" href="../accuracy/">
+        <link rel="next" href="data-quality/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -297,6 +297,8 @@ information, please
           
             
               
+                
+              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -423,55 +425,11 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../bias-mitigation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Bias mitigation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Containerization
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data-versioning/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data versioning
     
   </span>
   
@@ -577,6 +535,28 @@ information, please
   
   
     <li class="md-nav__item">
+      <a href="../model-serving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Serving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../inference-log/" class="md-nav__link">
         
   
@@ -596,29 +576,19 @@ information, please
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Data Governance
+    Operational Monitoring
     
   </span>
   
 
       </a>
-      
     </li>
   
 
@@ -641,6 +611,148 @@ information, please
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orchestration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  <span class="md-ellipsis">
+    Data Governance
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Data Governance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data-versioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data versioning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bias-mitigation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bias mitigation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -850,6 +962,8 @@ information, please
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -872,7 +986,11 @@ information, please
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+
+
                   
+  
+
 
 
   
@@ -880,73 +998,31 @@ information, please
 
 
 <h1 id="data-governance">Data Governance<a class="headerlink" href="#data-governance" title="Permanent link">&para;</a></h1>
+<div class="admonition success">
+<p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
 <ul>
-<li>
-<p>Establish a <strong>data management system</strong></p>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Article 10</a></strong></li>
+</ul>
+</div>
+<p><img alt="" src="../../assets/external/placehold.co/600x400.9a99bdb8.svg"></p>
+<p>In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Article 10</a> mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
+While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.</p>
+<p>To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centered on process and documentation,
+see <a href="../../conformity/documents/technical-documentation/">Technical Documentation</a>.
+This is not a simple mapping of paragraphs to either or, moreover each paragraph
+of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a> can include both types of tasks.</p>
+<p>Specific to bias. Refer to the page on <a href="bias-mitigation/">bias mitigation</a> for more information.</p>
+<!-- TODO formulate this without citation, or remove?-->
+<blockquote>
+<ol start="6">
+<li>For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2 to 5 apply only to the testing data sets.</li>
+</ol>
+</blockquote>
+<p>This paragraph addresses high-risk AI systems that are developed without using techniques involving the training of AI models. These systems might rely on alternative approaches, such as rule-based systems, hard-coded algorithms, or pre-existing models that do not require additional training or updates to their parameters.</p>
 <ul>
-<li>Centralize data storage (e.g., in a Data Lake or Data Warehouse)<ul>
-<li>Implement access control and restrict access to data to authorized personal and systems only</li>
-<li>Avoid storing data on developer machines. Provide discovery tooling. Provide centralized compute with high-speed data access.</li>
-</ul>
-</li>
-<li>Establish a organization-wide glossary index<ul>
-<li>Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Document data sources</strong> (in a Data Catalog or in a Data Card):</p>
-<ul>
-<li>Data selection process</li>
-<li>Quality improvement measures</li>
-<li>Data owners</li>
-<li>Description</li>
-<li>Classification (applicable glossary terms)</li>
-<li>Fields (name, type, description, classification) for tabular data</li>
-<li>Data properties (e.g., format, resolution) for non-tabular data</li>
-</ul>
-</li>
-<li>
-<p><strong>Establish data lineage</strong> (i.e., define upstream or downstream data sets) on data set level or on column level for tabular data.</p>
-<ul>
-<li>Define lineage in a data catalog, or have it automatically represented in a workflow/data orchestrator<ul>
-<li>Keep records of the data lifecycle, including the sources of data, selection criteria, and preprocessing steps (all steps to model training).</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Data versioning:</strong></p>
-<ul>
-<li>Automation:🍏<ul>
-<li>Version datasets on data processing pipelines</li>
-<li>Generate logs on each update</li>
-<li>Execute pipelines on data changes</li>
-</ul>
-</li>
-<li>Depending on the use case and data set properties:<ul>
-<li>Store complete versions (suitable for small data sets only)</li>
-<li>Store increments (new image objects, new partitions in time series, etc)</li>
-<li>Store differences (deltas) between data set versions</li>
-</ul>
-</li>
-<li><strong>Rule of thumb:</strong> You should version data whenever changes to the dataset occur that could impact its use, reproducibility, or compatibility with downstream systems.<ul>
-<li>Initial data set creation</li>
-<li>Data updates (new data, corrections, expansions)</li>
-<li>Data processing: after applying preprocessing steps (evaluate based on compute vs. storage requirements)</li>
-<li>Model training: maintain a version of the data for each trained model</li>
-<li>Performance: after subsampling or aggregating</li>
-<li>Experiments: when experimenting with different versions, including different features, etc.</li>
-<li>Collaboration: track contributions per team/person</li>
-<li>Decommissioning: store the last version of the data</li>
-<li>Scheduled: hourly, daily, weekly, etc.</li>
-</ul>
-</li>
-<li><strong>Tools:</strong> LakeFS, DVC, Delta Lake, Git LFS🍏</li>
-<li>🍏What would the user have to think about when choosing between them ( thinking about the methodlodies that define and separate them)</li>
-</ul>
-</li>
+<li><a href="data-versioning/">Data Versioning</a></li>
+<li><a href="data-quality/">Data Quality</a></li>
 </ul>
 
 
@@ -955,12 +1031,18 @@ information, please
 
 
 
+  
+  
 
 
+
+
+  
 
 
 
                 
+
               </article>
             </div>
           
@@ -972,7 +1054,7 @@ information, please
         
       </main>
       
- <style>
+<style>
   .content-notice {
     align-self: center;
     font-size: 0.6rem;
@@ -1061,7 +1143,7 @@ information, please
     });
   });
 </script>
- 
+
         <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
@@ -1135,7 +1217,7 @@ information, please
   </div>
 </footer>
       
- 
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>

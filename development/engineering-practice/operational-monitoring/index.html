@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/reference-architecture/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/operational-monitoring/">
       
       
-        <link rel="prev" href="../../readers-guide/">
+        <link rel="prev" href="../inference-log/">
       
       
-        <link rel="next" href="../containerization/">
+        <link rel="next" href="../accuracy/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Engineering Practice - twai-pipeline</title>
+        <title>Operational Monitoring - twai-pipeline</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#further-resources" class="md-skip">
+        <a href="#operational-monitoring" class="md-skip">
           Skip to content
         </a>
       
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Engineering Practice</strong>
+              twai-pipeline &mdash; <strong>Operational Monitoring</strong>
             
           </span>
         </div>
@@ -297,8 +297,6 @@ information, please
           
             
               
-                
-              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -393,7 +391,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -405,7 +403,7 @@ information, please
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -576,10 +574,31 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../operational-monitoring/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Operational Monitoring
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -589,6 +608,77 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metrics-collection-and-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics Collection and Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -960,9 +1050,7 @@ information, please
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -970,6 +1058,8 @@ information, please
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -979,28 +1069,46 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#further-resources" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Further Resources
+      Motivation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Further Resources">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#training-phase" class="md-nav__link">
+  <a href="#metrics-collection-and-visualization" class="md-nav__link">
     <span class="md-ellipsis">
-      Training Phase
+      Metrics Collection and Visualization
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deployment-phase" class="md-nav__link">
+  <a href="#alerting" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment Phase
+      Alerting
     </span>
   </a>
   
@@ -1024,71 +1132,79 @@ information, please
               <article class="md-content__inner md-typeset">
                 
 
+<ul class="backlinks">
+  
+  <li><a href="../containerization/">Containerization</a></li>
+  
+</ul>
+
 
                   
-  
-
 
 
   
   
 
 
-  <h1>Engineering Practice</h1>
-
-<!-- Need to use embed instead of img to enable hyperlinks in the image -->
-
-<p><embed src="../../_images/reference-architecture.drawio.svg" id="svgFrame"
-style="padding: 32px; width: 100%; box-sizing: border-box;"></embed></p>
-<script>
-const canonicalRootLevel = 3;  // Number of path segments in the canonical URL to strip (need to account for trailing slash)
-const urlParts = new URL(window.location.href);
-const siteRoot = urlParts.pathname.split('/').slice(0, -canonicalRootLevel).join('/') + "/";
-console.debug('siteRoot:', siteRoot);
-
-// Open all local links in the top window (instead of the iframe/embed)
-// and rewrite their targets based on the canonical URL of the current page
-document.getElementById('svgFrame').addEventListener('load', function() {
-    const iframe = this.getSVGDocument();
-    // Need to match attribute name in all XML namespaces, since SVG <2 uses `xlink`
-    const internalLinks = iframe.querySelectorAll('a[*|href^="/"]');
-    internalLinks.forEach(link => {
-        link.setAttribute('target', '_top')
-
-        // Rewrite the link target relative to the site root
-        const href = link.getAttribute('xlink:href');
-        if (href !== null) {
-            const newHref = href.replace(/^\//, siteRoot);
-            console.log("Rewriting link:", href, "to", newHref);
-            link.setAttribute('xlink:href', newHref);
-        }
-    });
-});
-</script>
-
-<h2 id="further-resources">Further Resources<a class="headerlink" href="#further-resources" title="Permanent link">&para;</a></h2>
-<p>The following pages provide more detailed information on the components of the reference architecture, grouped by the phase of the machine learning lifecycle.</p>
-<h3 id="training-phase">Training Phase<a class="headerlink" href="#training-phase" title="Permanent link">&para;</a></h3>
+<h1 id="operational-monitoring">Operational Monitoring<a class="headerlink" href="#operational-monitoring" title="Permanent link">&para;</a></h1>
+<div class="admonition success">
+<p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
+<p>Implementing an operational metrics solution will help you in achieving compliance with the following requirements of the AI Act:</p>
+<p>TODO: Incomplete</p>
 <ul>
-<li><a href="../experiment-tracking/">Experiment Tracking</a></li>
-<li><a href="../model-registry/">Model Registry</a></li>
-<li><a href="../data-governance/">Data Governance</a><ul>
-<li><a href="../data-governance/bias-mitigation/">Bias Mitigation</a></li>
-<li><a href="../data-governance/data-versioning/">Data Versioning</a></li>
-<li><a href="../data-governance/data-quality/">Data Quality</a></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15</a></strong> (Accuracy, Robustness and Cybersecurity), in particular:<ul>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(4)</a></strong> Robustness, monitoring and alerting can help detect and mitigate potential robustness and availability issues</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(5)</a></strong> Cybersecurity, since monitoring is a crucial part of threat detection</li>
 </ul>
 </li>
-<li><a href="../accuracy/">Measuring Accuracy</a></li>
-<li><a href="../orchestration/">Workflow Orchestration</a></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26</a></strong> (Obligations of Deployers of High-Risk AI Systems), in particular:<ul>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26(5)</a></strong> (Monitoring of the AI system's operation by the deployer)</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26(6)</a></strong> (Keeping of system logs by the deployer)</li>
 </ul>
-<h3 id="deployment-phase">Deployment Phase<a class="headerlink" href="#deployment-phase" title="Permanent link">&para;</a></h3>
+</li>
+</ul>
+</div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Besides <a href="../model-monitoring/">monitoring the performance</a> of your machine learning models, it is also important to monitor the performance of the underlying technical infrastructure and services.
+This includes monitoring the health of the servers, databases, and other components that support your machine learning applications.</p>
+<p>These operational metrics can give an indication of the overall health of the system and can help you identify potential issues before they become critical.
+This aligns with the AI Act obligations towards the robustness and cybersecurity of high-risk AI systems.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p>Relevant metrics to monitor include:</p>
 <ul>
-<li><a href="../model-serving/">Model Serving</a></li>
-<li><a href="../inference-log/">Inference Log</a></li>
-<li><a href="../explainability/">Model Explainability</a></li>
-<li><a href="../model-monitoring/">Model Performance Monitoring</a></li>
-<li><a href="../operational-monitoring/">Operational Monitoring</a></li>
-<li><a href="../containerization/">Containerization</a></li>
+<li><strong>Resource usage</strong>: CPU, GPU, memory, disk, network</li>
+<li><strong>Service availability</strong>: uptime, error rates</li>
+<li><strong>Latency</strong>: request/response times</li>
+<li><strong>Throughput</strong>: requests per second</li>
+<li><strong>Custom metrics</strong>: application-specific metrics (e.g., number of processed records, model inference times)</li>
+</ul>
+<p>While it is a crucial part of an operational monitoring solution, this page does not cover the topic of alerting.
+The following activities can provide a starting point to implement an alerting system:</p>
+<ul>
+<li>Determining the thresholds for the metrics</li>
+<li>Defining the escalation process for alerts</li>
+<li>Setting up the alerting channels (e.g., email, Slack, PagerDuty)</li>
+<li>Deploying and setting up the alerting system</li>
+</ul>
+<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<h3 id="metrics-collection-and-visualization">Metrics Collection and Visualization<a class="headerlink" href="#metrics-collection-and-visualization" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://prometheus.io/">Prometheus</a>, an time-series database for event and metrics collection, storage, monitoring, and alerting<ul>
+<li>Many tools and frameworks can expose their operational metrics in the Prometheus format</li>
+</ul>
+</li>
+<li><a href="https://grafana.com/oss/grafana/">Grafana</a>, an open-source analytics solution for visualization of metrics</li>
+<li>The ELK (Elasticsearch, Logstash, Kibana) stack, in particular:<ul>
+<li><a href="https://www.elastic.co/what-is/elasticsearch">Elasticsearch</a>, a distributed search and analytics engine</li>
+<li><a href="https://www.elastic.co/what-is/kibana">Kibana</a>, a data visualization and exploration tool for Elasticsearch</li>
+</ul>
+</li>
+</ul>
+<h3 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Prometheus <a href="https://prometheus.io/docs/alerting/alertmanager/">Alertmanager</a></li>
+<li><a href="https://grafana.com/docs/grafana/latest/alerting/">Grafana Alerting</a></li>
 </ul>
 
 
@@ -1097,13 +1213,8 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 
 
-  
-  
 
 
-
-
-  
 
 
 

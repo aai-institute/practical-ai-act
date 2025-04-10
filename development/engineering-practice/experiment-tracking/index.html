@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/experiment-tracking/">
       
       
-        <link rel="prev" href="../data-versioning/">
+        <link rel="prev" href="../containerization/">
       
       
         <link rel="next" href="../explainability/">
@@ -423,55 +423,11 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../bias-mitigation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Bias mitigation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Containerization
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../data-versioning/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Data versioning
     
   </span>
   
@@ -645,6 +601,28 @@ information, please
   
   
     <li class="md-nav__item">
+      <a href="../model-serving/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Serving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../inference-log/" class="md-nav__link">
         
   
@@ -667,11 +645,11 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/" class="md-nav__link">
+      <a href="../operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Data Governance
+    Operational Monitoring
     
   </span>
   
@@ -699,6 +677,146 @@ information, please
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orchestration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Orchestration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../data-governance/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Data Governance
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_11" id="__nav_3_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Data Governance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/data-quality/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data quality
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/data-versioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data versioning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-governance/bias-mitigation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bias mitigation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -965,6 +1083,14 @@ information, please
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
+
+<ul class="backlinks">
+  
+  <li><a href="../model-registry/">Model registry</a></li>
+  
+</ul>
+
+
                   
 
 
@@ -975,6 +1101,7 @@ information, please
 <h1 id="experiment-tracking">Experiment tracking<a class="headerlink" href="#experiment-tracking" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
 <p>TODO: Add article references to provisions addressed by experiment tracking</p>
 <ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(3)</a>, experiment tracking captures used performance metrics and levels of accuracy</li>
@@ -982,7 +1109,7 @@ information, please
 </div>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
 <p>AI models are typically trained on large amounts of data, using lots of compute resources.
-The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the <a href="../data-versioning/">data versioning</a> section),
+The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the <a href="../data-governance/data-versioning/">data versioning</a> section),
 what configurable attributes (also called <em>hyperparameters</em>) were used for the training, but also training techniques used like batching, which optimization target, and many more.</p>
 <p>The sum of all choices for the training of an AI model is often called an <strong>experiment</strong>.
 Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike.
@@ -996,21 +1123,33 @@ This typically includes, but is not limited to,</p>
 <li>metrics and statistics giving information about the performance of the newly trained model.</li>
 </ul>
 <h2 id="key-technologies">Key technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
-<ol>
-<li><a href="https://mlflow.org/">MLflow</a></li>
-</ol>
+<ul>
+<li>
+<p><a href="https://mlflow.org/">MLflow</a></p>
 <p>MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualizes model performance in different stages of the ML training lifecycle.
 It features a number of pre-configured tracking plugins for popular machine learning libraries called <strong>autologgers</strong>, which allow the collection of metrics and configuration with minimal setup.
 In addition, MLflow comes with a UI that can be used to visualize metadata and results across experiments.</p>
-<ol start="2">
-<li><a href="https://wandb.ai/">Weights &amp; Biases</a></li>
-</ol>
+</li>
+<li>
+<p><a href="https://wandb.ai/">Weights &amp; Biases</a></p>
 <p>Weights &amp; Biases (or WandB) is a managed service for experiment tracking, metrics and metadata logging, and storing model and data artifacts.</p>
-<ol start="3">
-<li><a href="https://neptune.ai">neptune.ai</a></li>
-</ol>
+</li>
+<li>
+<p><a href="https://neptune.ai">neptune.ai</a></p>
 <p>neptune.ai is another managed experiment tracking service for logging, visualizing, and monitoring metrics both in a training run and across multiple runs.
 It supports both managed and on-premise deployments, and offers special functionality for large language models (LLMs).</p>
+</li>
+<li>
+<p><a href="https://clear.ml/docs/">ClearML</a></p>
+<p>ClearML is an open-source experiment tracking and orchestration platform that allows for the management of experiments, data, and models.
+It features a web-based UI for visualizing metrics and metadata, and supports integration with popular machine learning libraries.</p>
+</li>
+<li>
+<p><a href="https://www.comet.com/">Comet</a></p>
+<p>Comet offers a managed experiment tracking service that allows for the logging and visualization of metrics, hyperparameters, and artifacts.
+It features a web-based UI for visualizing metrics and metadata, and supports integration with popular machine learning libraries.</p>
+</li>
+</ul>
 
 
 
@@ -1024,6 +1163,7 @@ It supports both managed and on-premise deployments, and offers special function
 
 
                 
+
               </article>
             </div>
           
@@ -1035,7 +1175,7 @@ It supports both managed and on-premise deployments, and offers special function
         
       </main>
       
- <style>
+<style>
   .content-notice {
     align-self: center;
     font-size: 0.6rem;
@@ -1124,7 +1264,7 @@ It supports both managed and on-premise deployments, and offers special function
     });
   });
 </script>
- 
+
         <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
@@ -1198,7 +1338,7 @@ It supports both managed and on-premise deployments, and offers special function
   </div>
 </footer>
       
- 
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>

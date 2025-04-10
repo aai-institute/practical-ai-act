@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/reference-architecture/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/data-governance/data-quality/">
       
       
-        <link rel="prev" href="../../readers-guide/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../containerization/">
+        <link rel="next" href="../data-versioning/">
       
       
-      <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
+      <link rel="icon" href="../../../_images/logos/baiaa-icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
-        <title>Engineering Practice - twai-pipeline</title>
+        <title>Data quality - twai-pipeline</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
   
@@ -51,18 +51,18 @@
         
         
         
-        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
+        <link rel="stylesheet" href="../../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
         <style>:root{--md-text-font:"Source Sans Pro";--md-code-font:"Source Code Pro"}</style>
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../_styles/extra.css">
+      <link rel="stylesheet" href="../../../_styles/extra.css">
     
-      <link rel="stylesheet" href="../../_styles/theme.css">
+      <link rel="stylesheet" href="../../../_styles/theme.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#further-resources" class="md-skip">
+        <a href="#motivation" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
 may contain features that have not yet been released. For the most accurate
 information, please
 
-<strong><a href="../../..">access the latest release</a></strong>.
+<strong><a href="../../../..">access the latest release</a></strong>.
           </div>
           
         </aside>
@@ -151,14 +151,14 @@ information, please
 
     <!-- Link to home -->
     <a
-      href="../.."
+      href="../../.."
       title="twai-pipeline"
       class="md-header__button md-logo"
       aria-label="twai-pipeline"
       data-md-component="logo"
     >
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
 
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Engineering Practice</strong>
+              twai-pipeline &mdash; <strong>Data quality</strong>
             
           </span>
         </div>
@@ -308,9 +308,9 @@ information, please
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
+    <a href="../../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
     twai-pipeline
@@ -337,7 +337,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -358,7 +358,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../readers-guide/" class="md-nav__link">
+      <a href="../../../readers-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -393,7 +393,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -405,7 +405,7 @@ information, please
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -425,7 +425,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../containerization/" class="md-nav__link">
+      <a href="../../containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -447,7 +447,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../experiment-tracking/" class="md-nav__link">
+      <a href="../../experiment-tracking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -469,7 +469,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../explainability/" class="md-nav__link">
+      <a href="../../explainability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -491,7 +491,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-registry/" class="md-nav__link">
+      <a href="../../model-registry/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -513,7 +513,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-monitoring/" class="md-nav__link">
+      <a href="../../model-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -535,7 +535,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-serving/" class="md-nav__link">
+      <a href="../../model-serving/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -557,7 +557,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../inference-log/" class="md-nav__link">
+      <a href="../../inference-log/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -579,7 +579,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../operational-monitoring/" class="md-nav__link">
+      <a href="../../operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -601,7 +601,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../accuracy/" class="md-nav__link">
+      <a href="../../accuracy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -623,7 +623,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../orchestration/" class="md-nav__link">
+      <a href="../../orchestration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -642,22 +642,24 @@ information, please
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_11" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../data-governance/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -675,7 +677,7 @@ information, please
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_11_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_11">
             <span class="md-nav__icon md-icon"></span>
             Data Governance
@@ -686,10 +688,29 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../data-governance/data-quality/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data quality
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -699,6 +720,75 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Preprocessing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-quality-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Quality Validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -711,7 +801,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/data-versioning/" class="md-nav__link">
+      <a href="../data-versioning/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -733,7 +823,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/bias-mitigation/" class="md-nav__link">
+      <a href="../bias-mitigation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -770,7 +860,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../showcase/" class="md-nav__link">
+      <a href="../../../showcase/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -803,7 +893,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../conformity/" class="md-nav__link ">
+            <a href="../../../conformity/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -847,7 +937,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../conformity/documents/" class="md-nav__link ">
+            <a href="../../../conformity/documents/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -879,7 +969,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/documents/technical-documentation/" class="md-nav__link">
+      <a href="../../../conformity/documents/technical-documentation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -901,7 +991,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/documents/instructions-for-use/" class="md-nav__link">
+      <a href="../../../conformity/documents/instructions-for-use/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -938,7 +1028,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../acknowledgments/" class="md-nav__link">
+      <a href="../../../acknowledgments/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -962,7 +1052,7 @@ information, please
               
                 
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -979,28 +1069,37 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#further-resources" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Further Resources
+      Motivation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Further Resources">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#training-phase" class="md-nav__link">
+  <a href="#data-preprocessing" class="md-nav__link">
     <span class="md-ellipsis">
-      Training Phase
+      Data Preprocessing
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deployment-phase" class="md-nav__link">
+  <a href="#data-quality-validation" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment Phase
+      Data Quality Validation
     </span>
   </a>
   
@@ -1008,6 +1107,15 @@ information, please
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
   
 </li>
       
@@ -1029,66 +1137,99 @@ information, please
   
 
 
+  <nav class="md-tags" hidden>
+    
+      
+      
+      
+        <span class="md-tag">phase::data engineering</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">phase::scoping</span>
+      
+    
+  </nav>
+
 
   
   
 
 
-  <h1>Engineering Practice</h1>
+  <h1>Data quality</h1>
 
-<!-- Need to use embed instead of img to enable hyperlinks in the image -->
-
-<p><embed src="../../_images/reference-architecture.drawio.svg" id="svgFrame"
-style="padding: 32px; width: 100%; box-sizing: border-box;"></embed></p>
-<script>
-const canonicalRootLevel = 3;  // Number of path segments in the canonical URL to strip (need to account for trailing slash)
-const urlParts = new URL(window.location.href);
-const siteRoot = urlParts.pathname.split('/').slice(0, -canonicalRootLevel).join('/') + "/";
-console.debug('siteRoot:', siteRoot);
-
-// Open all local links in the top window (instead of the iframe/embed)
-// and rewrite their targets based on the canonical URL of the current page
-document.getElementById('svgFrame').addEventListener('load', function() {
-    const iframe = this.getSVGDocument();
-    // Need to match attribute name in all XML namespaces, since SVG <2 uses `xlink`
-    const internalLinks = iframe.querySelectorAll('a[*|href^="/"]');
-    internalLinks.forEach(link => {
-        link.setAttribute('target', '_top')
-
-        // Rewrite the link target relative to the site root
-        const href = link.getAttribute('xlink:href');
-        if (href !== null) {
-            const newHref = href.replace(/^\//, siteRoot);
-            console.log("Rewriting link:", href, "to", newHref);
-            link.setAttribute('xlink:href', newHref);
-        }
-    });
-});
-</script>
-
-<h2 id="further-resources">Further Resources<a class="headerlink" href="#further-resources" title="Permanent link">&para;</a></h2>
-<p>The following pages provide more detailed information on the components of the reference architecture, grouped by the phase of the machine learning lifecycle.</p>
-<h3 id="training-phase">Training Phase<a class="headerlink" href="#training-phase" title="Permanent link">&para;</a></h3>
+<div class="admonition success">
+<p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
 <ul>
-<li><a href="../experiment-tracking/">Experiment Tracking</a></li>
-<li><a href="../model-registry/">Model Registry</a></li>
-<li><a href="../data-governance/">Data Governance</a><ul>
-<li><a href="../data-governance/bias-mitigation/">Bias Mitigation</a></li>
-<li><a href="../data-governance/data-versioning/">Data Versioning</a></li>
-<li><a href="../data-governance/data-quality/">Data Quality</a></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a></strong> (Data and Data Governance), in particular:<ul>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(2)(c)</a></strong></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a></strong></li>
 </ul>
 </li>
-<li><a href="../accuracy/">Measuring Accuracy</a></li>
-<li><a href="../orchestration/">Workflow Orchestration</a></li>
 </ul>
-<h3 id="deployment-phase">Deployment Phase<a class="headerlink" href="#deployment-phase" title="Permanent link">&para;</a></h3>
+</div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a> of the AI Act demands a certain quality of data used for training and
+evaluating models, in particular these data sets should be:</p>
 <ul>
-<li><a href="../model-serving/">Model Serving</a></li>
-<li><a href="../inference-log/">Inference Log</a></li>
-<li><a href="../explainability/">Model Explainability</a></li>
-<li><a href="../model-monitoring/">Model Performance Monitoring</a></li>
-<li><a href="../operational-monitoring/">Operational Monitoring</a></li>
-<li><a href="../containerization/">Containerization</a></li>
+<li>relevant,</li>
+<li>sufficiently representative</li>
+<li>complete, and</li>
+<li>free of errors.</li>
+</ul>
+<p>To achieve those qualities, there are different techniques available at different steps in the system lifecycle.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p>Note that the techniques discussed in the section focus on technical approaches for ensuring data quality.
+They need to be accompanied by organizational and governance measures to become fully effective.</p>
+<h3 id="data-preprocessing">Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Detect and handle missing or incomplete data<ul>
+<li>Conduct data analysis to identify missing fields.</li>
+<li>Use statistical methods to assess if missing data skews results.</li>
+<li>Implement appropriate handling (e.g., interpolation, mean/mode imputation).</li>
+</ul>
+</li>
+<li>Perform data consistency checks<ul>
+<li>Enforce data schema for tabular data.</li>
+<li>Identify and remove duplicate records.</li>
+<li>Ensure data formats are consistent (e.g., all dates in correct format).</li>
+<li>Check for missing values and determine handling strategies (imputation or removal).</li>
+</ul>
+</li>
+<li>Keep preprocessing consistent, versioned and reproducible<ul>
+<li>Avoid manual processing steps, rely on data pipelines in a <a href="../../orchestration/">workflow orchestrator</a> instead</li>
+</ul>
+</li>
+</ul>
+<h3 id="data-quality-validation">Data Quality Validation<a class="headerlink" href="#data-quality-validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Validate data against ground truth<ul>
+<li>Cross-check a sample of the dataset against verified real-world sources or domain experts.</li>
+</ul>
+</li>
+<li>Ensure data accuracy through automated validation<ul>
+<li>Logical inconsistencies (e.g., negative age values).</li>
+<li>Outliers and anomalies using statistical methods (e.g., z-score, IQR analysis).</li>
+</ul>
+</li>
+<li>Produce automated data quality reports for human review and inclusion in <a href="../../../conformity/documents/technical-documentation/">technical documentation</a>.</li>
+<li><a href="../../model-monitoring/">Monitor for data drift over time</a><ul>
+<li>Set up periodic validation checks to see if the data distribution changes over time.</li>
+<li>Retrain models if significant drift is detected.</li>
+</ul>
+</li>
+</ul>
+<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://pandas.pydata.org">Pandas</a><ul>
+<li>Other dataframe libraries with similar features exist, e.g., <a href="https://docs.pola.rs/">Polars</a>, <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark <code>DataFrame</code>s</a></li>
+</ul>
+</li>
+<li><a href="https://pandera.readthedocs.io/en/stable/">Pandera</a>, for data quality validation</li>
+<li><a href="https://docs.greatexpectations.io/docs/core/introduction/">Great Expectations / GX Core</a>, for data quality validation</li>
 </ul>
 
 
@@ -1231,14 +1372,14 @@ document.getElementById('svgFrame').addEventListener('load', function() {
     <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
       <img
         class="logo"
-        src="../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
+        src="../../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
         title="Bayerisches Staatsministerium für Digitales"
       />
     </a>
     <a href="https://appliedai-institute.de" target="_blank">
       <img
         class="logo aai-logo"
-        src="../../_images/logos/aai-logo-cropped.png"
+        src="../../../_images/logos/aai-logo-cropped.png"
         title="appliedAI Institute for Europe gGmbH"
       />
     </a>
@@ -1290,10 +1431,10 @@ document.getElementById('svgFrame').addEventListener('load', function() {
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

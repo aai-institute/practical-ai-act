@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/reference-architecture/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/model-serving/">
       
       
-        <link rel="prev" href="../../readers-guide/">
+        <link rel="prev" href="../model-monitoring/">
       
       
-        <link rel="next" href="../containerization/">
+        <link rel="next" href="../inference-log/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Engineering Practice - twai-pipeline</title>
+        <title>Model Serving - twai-pipeline</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#further-resources" class="md-skip">
+        <a href="#model-serving" class="md-skip">
           Skip to content
         </a>
       
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Engineering Practice</strong>
+              twai-pipeline &mdash; <strong>Model Serving</strong>
             
           </span>
         </div>
@@ -297,8 +297,6 @@ information, please
           
             
               
-                
-              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -393,7 +391,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -405,7 +403,7 @@ information, please
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -532,10 +530,31 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../model-serving/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Model Serving
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -545,6 +564,68 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inference-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inference API Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -960,9 +1041,7 @@ information, please
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -970,6 +1049,8 @@ information, please
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -979,28 +1060,28 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#further-resources" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Further Resources
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Further Resources">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#training-phase" class="md-nav__link">
-    <span class="md-ellipsis">
-      Training Phase
+      Motivation
     </span>
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#deployment-phase" class="md-nav__link">
+  <a href="#inference-api-design" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment Phase
+      Inference API Design
     </span>
   </a>
   
@@ -1008,6 +1089,15 @@ information, please
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
   
 </li>
       
@@ -1026,69 +1116,43 @@ information, please
 
 
                   
-  
-
 
 
   
   
 
 
-  <h1>Engineering Practice</h1>
-
-<!-- Need to use embed instead of img to enable hyperlinks in the image -->
-
-<p><embed src="../../_images/reference-architecture.drawio.svg" id="svgFrame"
-style="padding: 32px; width: 100%; box-sizing: border-box;"></embed></p>
-<script>
-const canonicalRootLevel = 3;  // Number of path segments in the canonical URL to strip (need to account for trailing slash)
-const urlParts = new URL(window.location.href);
-const siteRoot = urlParts.pathname.split('/').slice(0, -canonicalRootLevel).join('/') + "/";
-console.debug('siteRoot:', siteRoot);
-
-// Open all local links in the top window (instead of the iframe/embed)
-// and rewrite their targets based on the canonical URL of the current page
-document.getElementById('svgFrame').addEventListener('load', function() {
-    const iframe = this.getSVGDocument();
-    // Need to match attribute name in all XML namespaces, since SVG <2 uses `xlink`
-    const internalLinks = iframe.querySelectorAll('a[*|href^="/"]');
-    internalLinks.forEach(link => {
-        link.setAttribute('target', '_top')
-
-        // Rewrite the link target relative to the site root
-        const href = link.getAttribute('xlink:href');
-        if (href !== null) {
-            const newHref = href.replace(/^\//, siteRoot);
-            console.log("Rewriting link:", href, "to", newHref);
-            link.setAttribute('xlink:href', newHref);
-        }
-    });
-});
-</script>
-
-<h2 id="further-resources">Further Resources<a class="headerlink" href="#further-resources" title="Permanent link">&para;</a></h2>
-<p>The following pages provide more detailed information on the components of the reference architecture, grouped by the phase of the machine learning lifecycle.</p>
-<h3 id="training-phase">Training Phase<a class="headerlink" href="#training-phase" title="Permanent link">&para;</a></h3>
+<h1 id="model-serving">Model Serving<a class="headerlink" href="#model-serving" title="Permanent link">&para;</a></h1>
+<div class="admonition success">
+<p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
+<p>TODO: Incomplete</p>
 <ul>
-<li><a href="../experiment-tracking/">Experiment Tracking</a></li>
-<li><a href="../model-registry/">Model Registry</a></li>
-<li><a href="../data-governance/">Data Governance</a><ul>
-<li><a href="../data-governance/bias-mitigation/">Bias Mitigation</a></li>
-<li><a href="../data-governance/data-versioning/">Data Versioning</a></li>
-<li><a href="../data-governance/data-quality/">Data Quality</a></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15</a></strong> (Accuracy, Robustness and Cybersecurity)</li>
 </ul>
-</li>
-<li><a href="../accuracy/">Measuring Accuracy</a></li>
-<li><a href="../orchestration/">Workflow Orchestration</a></li>
-</ul>
-<h3 id="deployment-phase">Deployment Phase<a class="headerlink" href="#deployment-phase" title="Permanent link">&para;</a></h3>
+</div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Model serving is the process of deploying machine learning models to production environments, where they can be accessed and used by applications or users.</p>
+<p>Not every AI system involves a real-time inference component, for example batch processing systems or offline analytics.
+However, for those that do, model serving is a critical part of the machine learning lifecycle.</p>
+<p>Model serving needs to be designed to ensure that the deployed models are accurate, robust, and secure.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p><a href="../containerization/">Containerization</a> is a common practice for model serving, as it allows for the deployment of models in isolated environments, ensuring consistency and reproducibility.
+It also enables the use of different versions of models and dependencies without conflicts.</p>
+<p>The models to be deployed should be obtained from a <a href="../model-registry/">model registry</a>, in order to preserve the traceability and reproducibility of the models.
+A model serving should be able to expose metadata about the model and its provenance, in order to associate this information with every prediction (see the page on <a href="../inference-log/">inference logs</a>).</p>
+<h3 id="inference-api-design">Inference API Design<a class="headerlink" href="#inference-api-design" title="Permanent link">&para;</a></h3>
+<p>Real-time inference APIs provide the interface for applications to interact with the deployed models.</p>
+<p>Designing the API for an interface is a trade-off between flexibility and usability.</p>
+<p>While a bespoke API can be designed for a single model (which might be tied to a specific input data schema), a more generic API can be designed to support multiple models and input data schemas.</p>
+<p>One such generic API is specified as the <a href="https://github.com/kserve/open-inference-protocol">Open Inference Protocol</a>, which is supported by several model serving frameworks.
+It provides API endpoints and type definitions for inference requests (with a flexible data schema), model metadata, and model management.</p>
+<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../model-serving/">Model Serving</a></li>
-<li><a href="../inference-log/">Inference Log</a></li>
-<li><a href="../explainability/">Model Explainability</a></li>
-<li><a href="../model-monitoring/">Model Performance Monitoring</a></li>
-<li><a href="../operational-monitoring/">Operational Monitoring</a></li>
-<li><a href="../containerization/">Containerization</a></li>
+<li><a href="https://mlserver.readthedocs.io/en/latest/">MLServer</a></li>
+<li><a href="https://docs.bentoml.org/en/latest/">BentoML</a></li>
+<li><a href="https://docs.seldon.io/projects/seldon-core/en/latest/">Seldon Core</a></li>
+<li><a href="https://kserve.github.io/website/">KServe</a></li>
 </ul>
 
 
@@ -1097,13 +1161,8 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 
 
-  
-  
 
 
-
-
-  
 
 
 

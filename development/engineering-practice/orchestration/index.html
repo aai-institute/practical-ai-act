@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/reference-architecture/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/orchestration/">
       
       
-        <link rel="prev" href="../../readers-guide/">
+        <link rel="prev" href="../accuracy/">
       
       
-        <link rel="next" href="../containerization/">
+        <link rel="next" href="../data-governance/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Engineering Practice - twai-pipeline</title>
+        <title>Orchestration - twai-pipeline</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#further-resources" class="md-skip">
+        <a href="#motivation" class="md-skip">
           Skip to content
         </a>
       
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Engineering Practice</strong>
+              twai-pipeline &mdash; <strong>Orchestration</strong>
             
           </span>
         </div>
@@ -297,8 +297,6 @@ information, please
           
             
               
-                
-              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -393,7 +391,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -405,7 +403,7 @@ information, please
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -620,10 +618,29 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../orchestration/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Orchestration
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -633,6 +650,84 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-orchestrators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Orchestrators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mlops-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      MLOps Platforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-software-as-a-service-offerings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform-/Software-as-a-Service Offerings
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -960,9 +1055,7 @@ information, please
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -979,28 +1072,55 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#further-resources" class="md-nav__link">
+  <a href="#motivation" class="md-nav__link">
     <span class="md-ellipsis">
-      Further Resources
+      Motivation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Further Resources">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Technologies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#training-phase" class="md-nav__link">
+  <a href="#workflow-orchestrators" class="md-nav__link">
     <span class="md-ellipsis">
-      Training Phase
+      Workflow Orchestrators
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deployment-phase" class="md-nav__link">
+  <a href="#mlops-platforms" class="md-nav__link">
     <span class="md-ellipsis">
-      Deployment Phase
+      MLOps Platforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-software-as-a-service-offerings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Platform-/Software-as-a-Service Offerings
     </span>
   </a>
   
@@ -1024,71 +1144,60 @@ information, please
               <article class="md-content__inner md-typeset">
                 
 
+<ul class="backlinks">
+  
+  <li><a href="../data-governance/data-quality/">Data quality</a></li>
+  
+</ul>
+
 
                   
-  
-
 
 
   
   
 
 
-  <h1>Engineering Practice</h1>
+  <h1>Orchestration</h1>
 
-<!-- Need to use embed instead of img to enable hyperlinks in the image -->
-
-<p><embed src="../../_images/reference-architecture.drawio.svg" id="svgFrame"
-style="padding: 32px; width: 100%; box-sizing: border-box;"></embed></p>
-<script>
-const canonicalRootLevel = 3;  // Number of path segments in the canonical URL to strip (need to account for trailing slash)
-const urlParts = new URL(window.location.href);
-const siteRoot = urlParts.pathname.split('/').slice(0, -canonicalRootLevel).join('/') + "/";
-console.debug('siteRoot:', siteRoot);
-
-// Open all local links in the top window (instead of the iframe/embed)
-// and rewrite their targets based on the canonical URL of the current page
-document.getElementById('svgFrame').addEventListener('load', function() {
-    const iframe = this.getSVGDocument();
-    // Need to match attribute name in all XML namespaces, since SVG <2 uses `xlink`
-    const internalLinks = iframe.querySelectorAll('a[*|href^="/"]');
-    internalLinks.forEach(link => {
-        link.setAttribute('target', '_top')
-
-        // Rewrite the link target relative to the site root
-        const href = link.getAttribute('xlink:href');
-        if (href !== null) {
-            const newHref = href.replace(/^\//, siteRoot);
-            console.log("Rewriting link:", href, "to", newHref);
-            link.setAttribute('xlink:href', newHref);
-        }
-    });
-});
-</script>
-
-<h2 id="further-resources">Further Resources<a class="headerlink" href="#further-resources" title="Permanent link">&para;</a></h2>
-<p>The following pages provide more detailed information on the components of the reference architecture, grouped by the phase of the machine learning lifecycle.</p>
-<h3 id="training-phase">Training Phase<a class="headerlink" href="#training-phase" title="Permanent link">&para;</a></h3>
+<div class="admonition success">
+<p class="admonition-title">Compliance Info</p>
+<p>TODO: Explain the "Compliance Info" box.</p>
 <ul>
-<li><a href="../experiment-tracking/">Experiment Tracking</a></li>
-<li><a href="../model-registry/">Model Registry</a></li>
-<li><a href="../data-governance/">Data Governance</a><ul>
-<li><a href="../data-governance/bias-mitigation/">Bias Mitigation</a></li>
-<li><a href="../data-governance/data-versioning/">Data Versioning</a></li>
-<li><a href="../data-governance/data-quality/">Data Quality</a></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(2)(c)</a></strong>: Consistent and versioned data preprocessing operations</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/11" rel="noopener noreferrer" target="_blank">Art. 11(1)</a></strong> in conjunction with <strong><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV</a></strong> (Technical Documentation), in particular:<ul>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV(2)(c)</a>: Description of the system and overall processing architecture</li>
 </ul>
 </li>
-<li><a href="../accuracy/">Measuring Accuracy</a></li>
-<li><a href="../orchestration/">Workflow Orchestration</a></li>
 </ul>
-<h3 id="deployment-phase">Deployment Phase<a class="headerlink" href="#deployment-phase" title="Permanent link">&para;</a></h3>
+</div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>The orchestration of machine learning workflows is a critical aspect of the machine learning lifecycle.</p>
+<p>In essence, it concerns the automated execution of tasks such as data preprocessing, model training, evaluation, and deployment.</p>
+<p>A workflow orchestrator takes care to execute these tasks in the correct order, manage dependencies between tasks, and handle failures or retries as needed.
+It keeps a permanent record of the execution history, which is essential for reproducibility, transparency, and auditability.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p>TODO</p>
+<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<h3 id="workflow-orchestrators">Workflow Orchestrators<a class="headerlink" href="#workflow-orchestrators" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="../model-serving/">Model Serving</a></li>
-<li><a href="../inference-log/">Inference Log</a></li>
-<li><a href="../explainability/">Model Explainability</a></li>
-<li><a href="../model-monitoring/">Model Performance Monitoring</a></li>
-<li><a href="../operational-monitoring/">Operational Monitoring</a></li>
-<li><a href="../containerization/">Containerization</a></li>
+<li><a href="https://dagster.io/">Dagster</a></li>
+<li><a href="https://airflow.apache.org/">Apache Airflow</a></li>
+<li><a href="https://prefect.io/">Prefect</a></li>
+<li><a href="https://flyte.org/">Flyte</a></li>
+</ul>
+<h3 id="mlops-platforms">MLOps Platforms<a class="headerlink" href="#mlops-platforms" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://kubeflow.org/">Kubeflow</a></li>
+<li><a href="https://metaflow.org/">Metaflow</a></li>
+<li><a href="https://zenml.io/">ZenML</a></li>
+<li><a href="https://kedro.readthedocs.io/en/stable/">Kedro</a></li>
+</ul>
+<h3 id="platform-software-as-a-service-offerings">Platform-/Software-as-a-Service Offerings<a class="headerlink" href="#platform-software-as-a-service-offerings" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://aws.amazon.com/step-functions/">AWS Step Functions</a></li>
+<li><a href="https://cloud.google.com/workflows">Google Cloud Workflows</a></li>
+<li><a href="https://www.databricks.com/product/workflows">Databricks Workflows</a></li>
 </ul>
 
 
@@ -1097,13 +1206,8 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 
 
-  
-  
 
 
-
-
-  
 
 
 
