@@ -48,6 +48,9 @@ The following activities can provide a starting point to implement an alerting s
 -   [Prometheus](https://prometheus.io/), an time-series database for event and metrics collection, storage, monitoring, and alerting
     -   Many tools and frameworks can expose their operational metrics in the Prometheus format
 -   [Grafana](https://grafana.com/oss/grafana/), an open-source analytics solution for visualization of metrics
+-   The ELK (Elasticsearch, Logstash, Kibana) stack, in particular:
+    -   [Elasticsearch](https://www.elastic.co/what-is/elasticsearch), a distributed search and analytics engine
+    -   [Kibana](https://www.elastic.co/what-is/kibana), a data visualization and exploration tool for Elasticsearch
 
 ### Alerting
 
