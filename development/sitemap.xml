@@ -13,19 +13,19 @@
          <lastmod>2025-04-10</lastmod>
     </url>
     <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/tags/</loc>
+         <lastmod>2025-04-10</lastmod>
+    </url>
+    <url>
          <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/</loc>
          <lastmod>2025-04-10</lastmod>
     </url>
     <url>
-         <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/documents/</loc>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/instructions-for-use/</loc>
          <lastmod>2025-04-10</lastmod>
     </url>
     <url>
-         <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/documents/instructions-for-use/</loc>
-         <lastmod>2025-04-10</lastmod>
-    </url>
-    <url>
-         <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/documents/technical-documentation/</loc>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/conformity/technical-documentation/</loc>
          <lastmod>2025-04-10</lastmod>
     </url>
     <url>
@@ -90,6 +90,14 @@
     </url>
     <url>
          <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/</loc>
+         <lastmod>2025-04-10</lastmod>
+    </url>
+    <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/risk-classification/</loc>
+         <lastmod>2025-04-10</lastmod>
+    </url>
+    <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/system-overview/</loc>
          <lastmod>2025-04-10</lastmod>
     </url>
 </urlset>

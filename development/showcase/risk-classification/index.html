@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/engineering-practice/model-monitoring/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/showcase/risk-classification/">
       
       
-        <link rel="prev" href="../model-registry/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../model-serving/">
+        <link rel="next" href="../system-overview/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Model monitoring - twai-pipeline</title>
+        <title>Risk classification - twai-pipeline</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#model-performance-monitoring" class="md-skip">
+        <a href="#risk-classification-under-the-eu-ai-act" class="md-skip">
           Skip to content
         </a>
       
@@ -179,7 +179,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Model monitoring</strong>
+              twai-pipeline &mdash; <strong>Risk classification</strong>
             
           </span>
         </div>
@@ -374,22 +374,24 @@ information, please
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../showcase/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -407,7 +409,7 @@ information, please
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Showcase
@@ -418,10 +420,29 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../showcase/risk-classification/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Risk classification
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -431,6 +452,120 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#risk-classification-under-the-eu-ai-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Classification Under the EU AI Act
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Assessment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Assessment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risk-of-bias-and-discrimination" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk of Bias and Discrimination
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-transparency-and-explainability" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Transparency and Explainability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-accuracy-and-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Accuracy and Reliability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-overreliance-on-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Overreliance on Automation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-data-privacy-and-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Data Privacy and Governance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-risk-of-exclusion-and-reduced-opportunities" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Risk of Exclusion and Reduced Opportunities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-feasibility-and-harm-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Feasibility and Harm Prevention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Final Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -443,7 +578,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../showcase/system-overview/" class="md-nav__link">
+      <a href="../system-overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -469,24 +604,22 @@ information, please
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../reference-architecture/" class="md-nav__link ">
+            <a href="../../engineering-practice/reference-architecture/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -504,7 +637,7 @@ information, please
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Engineering Practice
@@ -518,7 +651,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../containerization/" class="md-nav__link">
+      <a href="../../engineering-practice/containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,7 +673,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../experiment-tracking/" class="md-nav__link">
+      <a href="../../engineering-practice/experiment-tracking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -562,7 +695,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../explainability/" class="md-nav__link">
+      <a href="../../engineering-practice/explainability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -584,7 +717,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-registry/" class="md-nav__link">
+      <a href="../../engineering-practice/model-registry/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -603,31 +736,10 @@ information, please
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Model monitoring
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../engineering-practice/model-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -637,95 +749,6 @@ information, please
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#motivation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Motivation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#implementation-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Implementation Notes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Implementation Notes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#model-performance" class="md-nav__link">
-    <span class="md-ellipsis">
-      Model Performance
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-quality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Data Quality
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reporting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reporting
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alerting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Alerting
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-technologies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Technologies
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -738,7 +761,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../model-serving/" class="md-nav__link">
+      <a href="../../engineering-practice/model-serving/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -760,7 +783,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../inference-log/" class="md-nav__link">
+      <a href="../../engineering-practice/inference-log/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -782,7 +805,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../operational-monitoring/" class="md-nav__link">
+      <a href="../../engineering-practice/operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -804,7 +827,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../accuracy/" class="md-nav__link">
+      <a href="../../engineering-practice/accuracy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -826,7 +849,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../orchestration/" class="md-nav__link">
+      <a href="../../engineering-practice/orchestration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -860,7 +883,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../data-governance/" class="md-nav__link ">
+            <a href="../../engineering-practice/data-governance/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -892,7 +915,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/data-quality/" class="md-nav__link">
+      <a href="../../engineering-practice/data-governance/data-quality/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -914,7 +937,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/data-versioning/" class="md-nav__link">
+      <a href="../../engineering-practice/data-governance/data-versioning/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -936,7 +959,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../data-governance/bias-mitigation/" class="md-nav__link">
+      <a href="../../engineering-practice/data-governance/bias-mitigation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1120,8 +1143,6 @@ information, please
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1130,55 +1151,91 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#motivation" class="md-nav__link">
+  <a href="#risk-classification-under-the-eu-ai-act" class="md-nav__link">
     <span class="md-ellipsis">
-      Motivation
+      Risk Classification Under the EU AI Act
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#implementation-notes" class="md-nav__link">
+  <a href="#risk-assessment" class="md-nav__link">
     <span class="md-ellipsis">
-      Implementation Notes
+      Risk Assessment
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Implementation Notes">
+    <nav class="md-nav" aria-label="Risk Assessment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#model-performance" class="md-nav__link">
+  <a href="#risk-of-bias-and-discrimination" class="md-nav__link">
     <span class="md-ellipsis">
-      Model Performance
+      Risk of Bias and Discrimination
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-quality" class="md-nav__link">
+  <a href="#2-transparency-and-explainability" class="md-nav__link">
     <span class="md-ellipsis">
-      Data Quality
+      2. Transparency and Explainability
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#reporting" class="md-nav__link">
+  <a href="#3-accuracy-and-reliability" class="md-nav__link">
     <span class="md-ellipsis">
-      Reporting
+      3. Accuracy and Reliability
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#alerting" class="md-nav__link">
+  <a href="#4-overreliance-on-automation" class="md-nav__link">
     <span class="md-ellipsis">
-      Alerting
+      4. Overreliance on Automation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-data-privacy-and-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Data Privacy and Governance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-risk-of-exclusion-and-reduced-opportunities" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Risk of Exclusion and Reduced Opportunities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-feasibility-and-harm-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Feasibility and Harm Prevention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Final Recommendations
     </span>
   </a>
   
@@ -1186,15 +1243,6 @@ information, please
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-technologies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Technologies
-    </span>
-  </a>
   
 </li>
       
@@ -1211,108 +1259,119 @@ information, please
               <article class="md-content__inner md-typeset">
                 
 
-<ul class="backlinks">
-  
-  <li><a href="../../conformity/">AI Act Conformity</a></li>
-  
-  <li><a href="../inference-log/">Inference Log</a></li>
-  
-  <li><a href="../operational-monitoring/">Operational Monitoring</a></li>
-  
-  <li><a href="../data-governance/data-quality/">Data quality</a></li>
-  
-</ul>
-
 
                   
 
-  <nav class="md-tags" >
-    
-      
-      
-      
-        <a href="../../tags/#tag:art-12" class="md-tag">Art. 12</a>
-      
-    
-      
-      
-      
-        <a href="../../tags/#tag:art-15" class="md-tag">Art. 15</a>
-      
-    
-  </nav>
-
 
   
   
 
 
-<div class="admonition danger">
-<p class="admonition-title">Work in Progress</p>
-<p>The information on this page is incomplete and meant to illustrate the structure of these pages</p>
-</div>
-<h1 id="model-performance-monitoring">Model Performance Monitoring<a class="headerlink" href="#model-performance-monitoring" title="Permanent link">&para;</a></h1>
-<div class="admonition success">
-<p class="admonition-title">Compliance Info</p>
-<p>TODO: Explain the "Compliance Info" box.</p>
-<p>Implementing a model performance solution will help you in achieving compliance with the following regulations:</p>
+  <h1>Risk classification</h1>
+
+<h2 id="risk-classification-under-the-eu-ai-act">Risk Classification Under the EU AI Act<a class="headerlink" href="#risk-classification-under-the-eu-ai-act" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12</a></strong> (Record-Keeping)<ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12(1)</a></strong> (Documentation of the AI system)</li>
+<li><strong>Determine if the system is considered AI under the EU AI Act (see <a class="aia-ref" href="https://artificialintelligenceact.eu/article/2" rel="noopener noreferrer" target="_blank">Article 2</a>)</strong><ul>
+<li><strong>Reasoning</strong>: The system uses machine learning methods (a classification model) to estimate candidates’ likely income. Machine learning is explicitly covered by the definition of AI in the EU AI Act.</li>
+<li><strong>Outcome</strong>: Yes, this system is within scope because it qualifies as an AI system.</li>
 </ul>
 </li>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26(5)</a></strong> (Monitoring of the AI system's operation by the deployer)</li>
-<li>
-<p><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/72" rel="noopener noreferrer" target="_blank">Art. 72(2)</a></strong> (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.</p>
+<li><strong>Check whether the AI system falls under any excluded or exempted categories</strong><ul>
+<li><strong>Reasoning</strong>: Some AI systems, such as research prototypes, are excluded from the regulatory requirements. This recruitment system is a commercial application used by recruiters and hiring managers, so it does not qualify for exemption.</li>
+<li><strong>Outcome</strong>: The system is not exempt; it is still in scope.</li>
+</ul>
 </li>
-<li>
-<p>TODO: Art. 15(4), robustness through continuous monitoring of operations and performance</p>
+<li><strong>Determine if the AI system poses an ‘unacceptable risk’</strong><ul>
+<li><strong>Reasoning</strong>: Under Article 5 of the EU AI Act, ‘unacceptable risk’ systems typically involve manipulative or exploitative practices, social scoring, or contraventions of fundamental rights. A recruitment filter based on estimated salary ranges does not constitute a form of social scoring or manipulative practice aimed at harming individuals.</li>
+<li><strong>Outcome</strong>: The system is not considered ‘unacceptable risk.’</li>
+</ul>
+</li>
+<li><strong>Assess whether the AI system is considered ‘high risk’</strong><ul>
+<li><strong>Reasoning</strong>: The EU AI Act (in Annex III, point 4) lists AI systems used in the employment and management of workers (e.g., for recruitment or selection) as high risk. This system directly assists with filtering and selecting candidates for roles, thereby influencing employment opportunities.</li>
+<li><strong>Outcome</strong>: The system falls under the ‘high risk’ category.</li>
+</ul>
+</li>
+<li><strong>If not high risk, classify as ‘limited’ or ‘minimal risk’</strong><ul>
+<li><strong>Reasoning</strong>: Since we have already determined it is high risk due to its recruitment use case, there is no need to downgrade to ‘limited’ or ‘minimal risk.’</li>
+<li><strong>Outcome</strong>: Classification remains ‘high risk.’</li>
+</ul>
 </li>
 </ul>
-</div>
-<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<p>TODO: Explain why model performance monitoring is important.</p>
-<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<h3 id="model-performance">Model Performance<a class="headerlink" href="#model-performance" title="Permanent link">&para;</a></h3>
-<p>Estimating the performance of a model is a crucial part of the machine learning lifecycle.</p>
-<p>For supervised learning application, the availability of labeled data poses a significant challenge.
-Algorithms that can estimate a model's performance in the absence of ground truth data can help in these scenarios.</p>
-<p>The NannyML library implements two approaches to model performance estimation:</p>
+<p><strong>Final Outcome</strong></p>
+<p>Based on the criteria outlined in the EU AI Act, the proposed recruitment AI system qualifies as a high-risk system. Although it does not engage in manipulative practices or social scoring that would render it unacceptable, it does fall squarely under the employment-related use cases the EU AI Act classifies as high risk. Consequently, the system will be subject to additional legal and compliance obligations (once the EU AI Act is in force), including risk management, data governance, documentation and traceability, transparency requirements, and human oversight.</p>
+<h2 id="risk-assessment">Risk Assessment<a class="headerlink" href="#risk-assessment" title="Permanent link">&para;</a></h2>
+<h3 id="risk-of-bias-and-discrimination"><strong>Risk of Bias and Discrimination</strong><a class="headerlink" href="#risk-of-bias-and-discrimination" title="Permanent link">&para;</a></h3>
 <ul>
-<li><em>Confidence-based performance estimation</em> (CBPE) for classification tasks</li>
-<li><em>Direct Loss Estimation</em> (DLE) for regression tasks</li>
-</ul>
-<h3 id="data-quality">Data Quality<a class="headerlink" href="#data-quality" title="Permanent link">&para;</a></h3>
-<p>Changes in the distribution of input or ground thrust data can lead to a decrease in model performance.
-<strong>Data drift detection</strong> aims to identify these changes after model deployment and is crucial to maintaining the model's performance.</p>
-<h3 id="reporting">Reporting<a class="headerlink" href="#reporting" title="Permanent link">&para;</a></h3>
-<p>NannyML performance estimators operate on <em>chunks</em> of model predictions, which can be used to generate reports on the model's performance.</p>
-<p>It is therefore straightforward to generate periodic reports on the model's performance.
-These reports can be used to monitor the model's performance over time and identify potential issues (see the next section).</p>
-<h3 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h3>
-<p>When a model's performance drops below a certain threshold or data drift occurs, it is essential to alert the responsible team.
-NannyML allows threshold-based alerting for both performance and drift metrics, which can serve as the decision basis for the alerting system.</p>
-<p>The concrete implementation of the alerting system depends on the organization's requirements and the available infrastructure.
-Examples include sending an email or Slack message, creating a ticket in a ticketing system, or invoking a webhook.</p>
-<h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://www.nannyml.com/library">NannyML</a>, used in the showcase implementation</li>
-<li>Alternatives for model and data quality monitoring:<ul>
-<li><a href="https://www.evidentlyai.com/evidently-oss">Evidently</a>, for model performance and data quality monitoring</li>
-<li><a href="https://docs.seldon.io/projects/alibi-detect/en/stable/">Alibi Detect</a>, for outlier and drift detection</li>
-</ul>
+<li><strong>Reasoning</strong>: A classification model that predicts salary bands can inadvertently learn biased patterns from historical or non-representative data. If the training dataset underrepresents certain groups or if it carries historical inequalities, the model might systematically discriminate. This could result in unfair exclusion of qualified candidates from certain demographic or socioeconomic backgrounds.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Data Quality and Diversity</strong>: Ensure the dataset is representative of different demographic groups. Perform data audits to identify and remove or mitigate biases.</li>
+<li><strong>Bias Detection and Monitoring</strong>: Use fairness metrics (e.g., disparate impact ratio, equalized odds) to assess and continually monitor the model’s outputs across different groups.</li>
+<li><strong>Fairness-Aware Algorithms</strong>: Employ techniques such as reweighing or adversarial debiasing to reduce or eliminate learned biases.</li>
+<li><strong>Human Review</strong>: Maintain a human-in-the-loop for critical decisions, ensuring that final filtering choices are not made solely by the AI.</li>
+</ol>
 </li>
-<li>Prometheus <a href="https://prometheus.io/docs/alerting/alertmanager/">Alertmanager</a>, as an alerting middleware</li>
 </ul>
+<h3 id="2-transparency-and-explainability">2. <strong>Transparency and Explainability</strong><a class="headerlink" href="#2-transparency-and-explainability" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reasoning</strong>: Users (recruiters, hiring managers) and candidates may not understand why certain salary band predictions are made, raising concerns about opaque or “black-box” decision-making. Under the AI Act, high-risk systems are required to provide clear information about how decisions are reached.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Explainable AI Techniques</strong>: Implement model-agnostic explainability tools such as LIME or SHAP to show which features significantly influenced the classification.</li>
+<li><strong>User-Friendly Explanations</strong>: Provide recruiters with straightforward explanations or scoring breakdowns to facilitate oversight and accountability.</li>
+<li><strong>Documentation and Transparency</strong>: Maintain proper documentation on data sources, model training methodologies, and known limitations, and make this documentation available to relevant stakeholders.</li>
+</ol>
+</li>
+</ul>
+<h3 id="3-accuracy-and-reliability">3. <strong>Accuracy and Reliability</strong><a class="headerlink" href="#3-accuracy-and-reliability" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reasoning</strong>: Inaccurate classification could prevent qualified candidates from advancing, or it might lead to oversights in filtering out those misaligned with salary expectations. Ensuring the system’s reliability is crucial to protect both the employer’s interests and the candidate’s opportunities.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Robust Model Validation</strong>: Use cross-validation, hold-out tests, and performance benchmarking to ensure the model is consistently accurate across various subpopulations and roles.</li>
+<li><strong>Continuous Learning and Updates</strong>: Periodically retrain and update the model to reflect market changes, salary trends, and evolving job roles.</li>
+<li><strong>Fallback Procedures</strong>: If the system’s confidence in a candidate’s classification is below a certain threshold, trigger a human review rather than an automatic rejection.</li>
+</ol>
+</li>
+</ul>
+<h3 id="4-overreliance-on-automation">4. <strong>Overreliance on Automation</strong><a class="headerlink" href="#4-overreliance-on-automation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reasoning</strong>: There is a risk that recruiters might rely too heavily on automated filters and fail to exercise human judgment or contextual understanding. This could further marginalize candidates who do not fit the typical patterns learned by the AI.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Human-in-the-Loop</strong>: Ensure the final decision is made or reviewed by a human, with the AI acting as a supportive tool.</li>
+<li><strong>Defined Escalation Paths</strong>: Create processes that allow candidates to challenge or appeal decisions, or for recruiters to spot-check questionable outcomes.</li>
+<li><strong>Training for Recruiters</strong>: Provide guidance and training so that hiring managers understand the AI’s limitations and know when to override its recommendations.</li>
+</ol>
+</li>
+</ul>
+<h3 id="5-data-privacy-and-governance">5. <strong>Data Privacy and Governance</strong><a class="headerlink" href="#5-data-privacy-and-governance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reasoning</strong>: Because the model uses personal data (e.g., job history, educational background) to infer salary bands, it must comply with GDPR and the EU AI Act’s provisions on data governance.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Data Minimization and Purpose Limitation</strong>: Collect and process only the data necessary for salary classification, and clearly define the scope.</li>
+<li><strong>Consent and Transparency</strong>: Inform candidates about how their data will be used and processed, ensuring clear consent where appropriate.</li>
+<li><strong>Secure Infrastructure and Protocols</strong>: Implement strong data encryption, secure data storage, and controlled data access.</li>
+<li><strong>Regular Audits</strong>: Conduct data protection impact assessments (DPIAs) and AI audits to ensure ongoing compliance.</li>
+</ol>
+</li>
+</ul>
+<h3 id="6-risk-of-exclusion-and-reduced-opportunities">6. <strong>Risk of Exclusion and Reduced Opportunities</strong><a class="headerlink" href="#6-risk-of-exclusion-and-reduced-opportunities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reasoning</strong>: Automated filtering could inadvertently exclude individuals who might be excellent fits despite having atypical backgrounds or career trajectories. This risk combines elements of bias and overreliance on automation.</li>
+<li><strong>Mitigation Strategies</strong>:<ol>
+<li><strong>Holistic Profiling</strong>: Use multiple factors beyond just historical average salaries or titles—consider special projects, alternative educational backgrounds, or unique skills.</li>
+<li><strong>Conservative Threshold Setting</strong>: When filtering, apply conservative decision thresholds to reduce false negatives, then have humans review borderline cases.</li>
+<li><strong>Feedback Mechanisms</strong>: Enable candidates to provide additional information or context if they believe the AI misclassified them.</li>
+</ol>
+</li>
+</ul>
+<h3 id="implementation-feasibility-and-harm-prevention">Implementation Feasibility and Harm Prevention<a class="headerlink" href="#implementation-feasibility-and-harm-prevention" title="Permanent link">&para;</a></h3>
+<p>Given the high-risk nature of AI systems in recruitment, strict compliance with the EU AI Act is essential. However, with appropriate bias mitigation, transparency, data governance, and human oversight mechanisms in place, the potential harm to individuals—especially those filtered out of the recruitment pipeline—can be significantly reduced. By designing the system to encourage regular audits, explainability, and opportunities for appeal, candidates and recruiters alike can retain trust in the process and minimize the adverse effects of automation.</p>
+<h3 id="final-recommendations"><strong>Final Recommendations</strong><a class="headerlink" href="#final-recommendations" title="Permanent link">&para;</a></h3>
+<p>Implementing this AI-based recruitment filter is viable if the above mitigation strategies are rigorously followed. In line with the EU AI Act’s requirements for high-risk AI systems, organizations should adopt robust data governance, regular bias and performance audits, and ensure clear documentation on model decision-making. Maintaining a human-in-the-loop at critical decision points—supported by transparency measures and candidate feedback channels—will help safeguard against discriminatory outcomes and maintain fairness. If these steps are properly executed and continuously monitored, the recruitment AI system can enhance efficiency without causing undue harm to individuals.</p>
 
 
 
 
 
 
-
-  
-  
 
 
 
