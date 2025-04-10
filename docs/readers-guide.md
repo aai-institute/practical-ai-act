@@ -86,7 +86,3 @@ Although some of the engineering practices on this website also help you comply 
 -   Familiarity with Python programming, if you want to follow along with the code examples
 -   Software engineering best practices for ML:
     -   See the [Beyond Jupyter series](https://transferlab.ai/trainings/beyond-jupyter/) for an introduction
-
-```
-
-```
