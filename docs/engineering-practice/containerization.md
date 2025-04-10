@@ -24,7 +24,7 @@ AI systems prove no exception to this rule, as they often rely on complex depend
 
 Containerization provides a solution to these challenges by encapsulating applications and their runtime dependencies into isolated environments, called _containers_.
 
-By controlling the runtime environment, containerization can improve the _resiliency_ of AI systems against inconsistencies, as required by |Art. 15(4)|.
+By controlling the runtime environment, containerization can improve the _resilience_ of AI systems against inconsistencies, as required by |Art. 15(4)|.
 
 Since containers provide a uniform execution model, [monitoring](operational-monitoring.md) their lifecycle and performance is easier.
 Failed containers can be restarted automatically, and their logs can be collected and analyzed to identify potential issues, in line with the fault tolerance requirements of the AI Act.
