@@ -14,6 +14,10 @@ validation:
 nav:
   - Home: index.md
   - Reader's Guide: readers-guide.md
+  - Showcase:
+      - showcase/index.md
+      - showcase/risk-classification.md
+      - showcase/system-overview.md
   - Engineering Practice:
       - engineering-practice/reference-architecture.md
       - engineering-practice/bias-mitigation.md
@@ -26,14 +30,14 @@ nav:
       - engineering-practice/inference-log.md
       - engineering-practice/data-governance.md
       - engineering-practice/accuracy.md
-  - Showcase:
-      - showcase/index.md
   - AI Act Conformity:
       - conformity/index.md
       - Documents:
           - conformity/documents/index.md
           - conformity/documents/technical-documentation.md
           - conformity/documents/instructions-for-use.md
+  - Tags:
+      - tags.md
   - acknowledgments.md
 
 plugins:
