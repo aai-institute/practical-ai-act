@@ -7,7 +7,7 @@ tags:
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     TODO: Add article references to provisions addressed by experiment tracking
 
@@ -16,7 +16,7 @@ tags:
 ## Motivation
 
 AI models are typically trained on large amounts of data, using lots of compute resources.
-The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the [data versioning](data-versioning.md) section),
+The outputs that a trained model generates depend on many factors, like which version of a dataset was used (for more information, refer to the [data versioning](data-governance/data-versioning.md) section),
 what configurable attributes (also called _hyperparameters_) were used for the training, but also training techniques used like batching, which optimization target, and many more.
 
 The sum of all choices for the training of an AI model is often called an **experiment**.
@@ -34,17 +34,27 @@ This typically includes, but is not limited to,
 
 ## Key technologies
 
-1. [MLflow](https://mlflow.org/)
+-   [MLflow](https://mlflow.org/)
 
-MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualizes model performance in different stages of the ML training lifecycle.
-It features a number of pre-configured tracking plugins for popular machine learning libraries called **autologgers**, which allow the collection of metrics and configuration with minimal setup.
-In addition, MLflow comes with a UI that can be used to visualize metadata and results across experiments.
+    MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualizes model performance in different stages of the ML training lifecycle.
+    It features a number of pre-configured tracking plugins for popular machine learning libraries called **autologgers**, which allow the collection of metrics and configuration with minimal setup.
+    In addition, MLflow comes with a UI that can be used to visualize metadata and results across experiments.
 
-2. [Weights & Biases](https://wandb.ai/)
+-   [Weights & Biases](https://wandb.ai/)
 
-Weights & Biases (or WandB) is a managed service for experiment tracking, metrics and metadata logging, and storing model and data artifacts.
+    Weights & Biases (or WandB) is a managed service for experiment tracking, metrics and metadata logging, and storing model and data artifacts.
 
-3. [neptune.ai](https://neptune.ai)
+-   [neptune.ai](https://neptune.ai)
 
-neptune.ai is another managed experiment tracking service for logging, visualizing, and monitoring metrics both in a training run and across multiple runs.
-It supports both managed and on-premise deployments, and offers special functionality for large language models (LLMs).
+    neptune.ai is another managed experiment tracking service for logging, visualizing, and monitoring metrics both in a training run and across multiple runs.
+    It supports both managed and on-premise deployments, and offers special functionality for large language models (LLMs).
+
+-   [ClearML](https://clear.ml/docs/)
+
+    ClearML is an open-source experiment tracking and orchestration platform that allows for the management of experiments, data, and models.
+    It features a web-based UI for visualizing metrics and metadata, and supports integration with popular machine learning libraries.
+
+-   [Comet](https://www.comet.com/)
+
+    Comet offers a managed experiment tracking service that allows for the logging and visualization of metrics, hyperparameters, and artifacts.
+    It features a web-based UI for visualizing metrics and metadata, and supports integration with popular machine learning libraries.

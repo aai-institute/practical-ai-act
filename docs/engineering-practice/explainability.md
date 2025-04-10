@@ -8,7 +8,7 @@ tags:
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     - **|Art. 13|** (Transparency and Provision of Information to Deployers), in particular:
         - |Art. 13(1)|: Explainability techniques contribute to a transparent system operation
@@ -21,7 +21,7 @@ tags:
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - |Annex IV(3)|: Explainability techniques can be part of the instructions for use to the deployer
 
-## Rationale
+## Motivation
 
 Although there is no explicit demand for using explainability methods within the AI Act, they can aid compliance with the regulation, by providing insights into the system's decision-making process.
 
