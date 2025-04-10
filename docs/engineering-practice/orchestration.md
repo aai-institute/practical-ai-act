@@ -1,3 +1,9 @@
+---
+tags:
+    - Art. 10
+    - Art. 11
+---
+
 !!! success "Compliance Info"
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"

@@ -1,7 +1,6 @@
 ---
 tags:
-    - phase::scoping
-    - phase::data engineering
+    - Art. 10
 ---
 
 !!! success "Compliance Info"
@@ -17,10 +16,10 @@ tags:
 |Art. 10(3)| of the AI Act demands a certain quality of data used for training and
 evaluating models, in particular these data sets should be:
 
-- relevant,
-- sufficiently representative
-- complete, and
-- free of errors.
+-   relevant,
+-   sufficiently representative
+-   complete, and
+-   free of errors.
 
 To achieve those qualities, there are different techniques available at different steps in the system lifecycle.
 
@@ -57,7 +56,7 @@ They need to be accompanied by organizational and governance measures to become 
 
 ## Key Technologies
 
-- [Pandas](https://pandas.pydata.org)
-    - Other dataframe libraries with similar features exist, e.g., [Polars](https://docs.pola.rs/), [Spark `DataFrame`s](https://spark.apache.org/docs/latest/sql-programming-guide.html)
+-   [Pandas](https://pandas.pydata.org)
+    -   Other dataframe libraries with similar features exist, e.g., [Polars](https://docs.pola.rs/), [Spark `DataFrame`s](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 -   [Pandera](https://pandera.readthedocs.io/en/stable/), for data quality validation
 -   [Great Expectations / GX Core](https://docs.greatexpectations.io/docs/core/introduction/), for data quality validation

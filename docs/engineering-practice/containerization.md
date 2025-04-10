@@ -1,7 +1,6 @@
 ---
 tags:
-    - robustness
-    - deployment
+    - Art. 15
 hide:
     - tags # TODO: enable when ready
 ---

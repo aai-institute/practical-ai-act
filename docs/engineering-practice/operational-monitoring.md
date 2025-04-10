@@ -1,3 +1,9 @@
+---
+tags:
+    - Art. 15
+    - Art. 26
+---
+
 # Operational Monitoring
 
 !!! success "Compliance Info"

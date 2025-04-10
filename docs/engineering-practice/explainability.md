@@ -1,9 +1,10 @@
 ---
 tags:
-- Art. 11
-- Art. 13
-- Art. 14
+    - Art. 11
+    - Art. 13
+    - Art. 14
 ---
+
 # Explainability
 
 !!! success "Compliance Info"

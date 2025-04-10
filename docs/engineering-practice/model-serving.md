@@ -1,3 +1,8 @@
+---
+tags:
+    - Art. 15
+---
+
 # Model Serving
 
 !!! success "Compliance Info"
