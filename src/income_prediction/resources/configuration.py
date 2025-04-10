@@ -28,6 +28,8 @@ class Config(ConfigurableResource):
     """Pipeline configuration."""
 
     census_asec_dataset_year: int = 2024
+    # FIXME: Use the Internet Archive snapshot of the dataset due to Census web page unavailability as of 2025-04-08
+    census_asec_dataset_use_archive: bool = True
 
     salary_bands: list[int] = [
         35000,  # Entry level
