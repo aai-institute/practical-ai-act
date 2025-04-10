@@ -25,6 +25,6 @@ A noteworthy standardization of this is the [Open Inference Protocol](https://do
 ## Key Technologies
 
 Since the task of versioning and storing models is tightly coupled to the training and tracking process itself, many experiment trackers (refer to the documentation on them [here](experiment-tracking.md)) come with a builtin model registry.
-All of the experiment trackers listed in the mentioned documentation provide support for a model registry as well.
+All the experiment trackers listed in the mentioned documentation provide support for a model registry as well.
 
 An example of a model server implementing the Open Inference Protocol is [MLServer by Seldon](https://mlserver.readthedocs.io/en/latest/), which offers supported for multi-model serving, batched requests, and parallel inference.
