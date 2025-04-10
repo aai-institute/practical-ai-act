@@ -41,6 +41,9 @@ nav:
           - conformity/documents/instructions-for-use.md
   - acknowledgments.md
 
+hooks:
+  - src/markdown_ex/nav_graph.py
+
 plugins:
   - callouts
   - section-index
