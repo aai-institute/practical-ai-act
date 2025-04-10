@@ -21,6 +21,7 @@ nav:
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
       - engineering-practice/model-monitoring.md
+      - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
       - engineering-practice/operational-monitoring.md
       - engineering-practice/accuracy.md
