@@ -1,9 +1,112 @@
 # Technical Documentation
 
-- Article 11
+!!! success "Compliance Info"
 
-Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market. This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements. It should include a general description of the AI system, its intended purpose, design specifications, and information on performance evaluation. Small and medium-sized enterprises (SMEs) may provide this information in a simplified form, as specified by the EU. 
+    --8<-- "docs/how-to/_compliance-info-box.partial"
 
+        |Art. 11|
+        |Art. 10(2)(b)|
+
+Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market.
+This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements.
+It should include a general description of the AI system, its intended purpose, design specifications, and information on performance evaluation.
+Small and medium-sized enterprises (SMEs) may provide this information in a simplified form, as specified by the EU.
+
+## Data Documentation
+
+See also below, under "Dataset Information"
+
+
+-   Data selection process
+-   Quality improvement measures
+-   Data owners
+-   Description
+-   Classification (applicable glossary terms)
+-   Fields (name, type, description, classification) for tabular data
+-   Data properties (e.g., format, resolution) for non-tabular data
+
+
+> |Art. 10(2)(a)| the relevant design choices;
+
+Any specific decisions made during the design and development of a high-risk AI system must be documented. Such decisions can include:
+
+-   Architecture specific: These are choices related to the architecture, algorithms, data handling, and setup of the AI System. Depending on the architecture, different preprocessing techniques might need to be used.
+-   Impact on performance: These choices influence how well the AI system performs. Techniques can be applied to increase accuracy, reliability, or to reduce bias.
+-   Compliance-specific decisions: These choices are made to ensure compliance with laws and ethical guidelines. For example, anonymizing PIIs.
+
+**Ensuring Data Relevance**
+
+To ensure the dataset is relevant to the AI system's intended purpose, consider the following:
+
+-   Clearly Define the AI System's Purpose
+
+    -   What problem is the AI solving?
+    -   Who are the end-users?
+    -   What decisions will be influenced by the AI?
+
+-   Specify Key Attributes & Variables
+
+    -   Identify the critical features required for accurate predictions.
+    -   Ensure the data captures the necessary demographic, contextual, or domain-specific factors.
+
+-   Check for Domain Alignment
+
+    -   Ensure the data is collected from sources that reflect the real-world environment of deployment.
+
+-   Assess Temporal & Geographic Relevance
+
+    -   Is the data up-to-date?
+    -   Is it from the correct geographical region?
+
+-   Validate Coverage of Target Population
+
+    -   Ensure the dataset represents the groups the AI will serve.
+    -   Avoid underrepresentation of critical demographics.
+
+-   Assess Data Labeling and Context
+
+    -   Verify if the labels or classifications align with domain expertise.
+    -   Ensure human annotations are validated by experts where necessary.
+
+-   **Establish data lineage** (i.e., define upstream or downstream data sets) on data set level or on column level for tabular data.
+    Before model training, data often undergoes various preprocessing steps. For example, datasets may be created by merging multiple datasets or combining different features. Simply documenting the final dataset is insufficient, as it does not allow the origin of the data to be traced. Proper documentation of data lineage is essential to maintain traceability and accountability.
+
+    -   Define lineage in a data catalog, or have it automatically represented in a workflow/data orchestrator
+        -   Keep records of the data lifecycle, including the sources of data, selection criteria, and preprocessing steps (all steps to model training).
+
+> |Art. 10(2)(b)| data collection processes and the origin of data, and in the case of personal data, the original purpose of the data collection;
+
+From the documentation, it shall be understood:
+
+-   How the data is collected. Which methods and procedures where used to gather the data (survey, sensor, scraping, etc.)? Which conditions apply to the data collection (consent, regulatory compliance)? How does it align with best practices and ethical standards.
+-   What is the source of the data? Is it publicly available, proprietary, collected from third parties (e.g., via an API)? What are the geographical, cultural, and demographic origins of the data?
+-   To ensure compliance with the GDPR, personal data can only be collected for a specific purpose and cannot be repurposed.
+
+-   Establish an organization-wide glossary index
+    -   Define terms (including definition/description) and use those to annotate data set and fields in the data sets. Single source of truth for interpreting data sets and fields.
+
+> |Art. 10(2)(c)| relevant data-preparation processing operations, such as annotation, labelling, cleaning, updating, enrichment and aggregation;
+
+The documentation of all data preparation is essential for traceability and transparency. See the point above on implementing data lineage.
+
+Being specific and precise when documenting datasets is essential to minimize the risk of misinterpretation, both of the documentation itself and when using the data. A common approach to reduce ambiguity is to create a company-wide glossary that provides detailed definitions for terms. Datasets or fields linked to a glossary term should adhere strictly to the defined meaning, ensuring consistency and clarity.
+
+> (d) the formulation of assumptions, in particular with respect to the information that the data are supposed to measure and represent;
+
+The article mandates that any assumptions made are explicitly documented. The goal is to capture how the data aligns with the purpose of the AI system.
+
+-   Understanding what the data represents: Identify and define specific concepts that the data is intended to measure. Especially important when data used as a proxy (e.g., income as a proxy for economic status).
+-   Assumptions: Define the beliefs, whether they are implicit or explicit, about the dataset. This may include assumptions about the accuracy, scope, and relevance of the dataset.
+-   Purpose alignment: Verify that the understanding (definitions) and the assumptions align with the intended use of the AI system.
+-   Misinterpretation: Recognize and document any (potential) limitations (e.g., underrepresented classes).
+
+> (e) an assessment of the availability, quantity and suitability of the data sets that are needed;
+
+This assessment ensures that the data meets the quality standards such that it can be used.
+
+-   Availability: Does the data exist? Is the data accessible (both technically and from the perspective of access rights)? Are there any practical, legal, or ethical restrictions that have to be resolved before accessing the data.
+-   Quantity: Assess whether the dataset contains enough data points for training and validation. Is the data set large enough that is represents all relevant groups or scenarios (i.e., system boundaries)?
+-   Suitability: Is the data representative of the target population and for the application/use? Is the data quality and accuracy fitting the goals of the AI System?
 
 ## Model cards
 
@@ -62,4 +165,11 @@ A good **model card** is a structured document that provides clear, concise, and
 
 ## Annex IV: Technical Documentation Details
 
-Annex IV provides a comprehensive list of elements that must be included in the technical documentation referred to in Article 11. This includes detailed descriptions of the AI system's design specifications, algorithms, training data sets, risk management systems, validation and testing procedures, performance metrics, and cybersecurity measures. The annex ensures that all relevant information is available to assess the system's compliance with the AI Act.
+|Annex IV| provides a comprehensive list of elements that must be included in the technical documentation referred to in |Article 11|.
+This includes detailed descriptions of the AI system's design specifications, algorithms, training data sets, risk management systems, validation and testing procedures, performance metrics, and cybersecurity measures.
+The annex ensures that all relevant information is available to assess the system's compliance with the AI Act.
+
+
+## Readings:
+- [Datasheets for Datasets](https://arxiv.org/abs/1803.09010)
+- [The Data Cards Playbook](https://sites.research.google/datacardsplaybook/)

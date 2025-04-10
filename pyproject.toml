@@ -21,6 +21,7 @@ docs = [
   "mkdocs-section-index",
   "mkdocs-material",
   "mkdocstrings[python]",
+  "mkdocs-backlinks>=0.9.1",
 ]
 train = [
   "mlflow>=2.19.0",

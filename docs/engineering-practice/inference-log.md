@@ -2,7 +2,7 @@
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     Implementing an inference log will help you in achieving compliance with the following regulations:
 
@@ -10,10 +10,12 @@
         - **|Art. 12(1)|**, since the inference log enables the recording of events
         - **|Art. 12(2)|**, since the inference log allows the identification of potentially harmful situations and facilitates the post-market monitoring
     - **|Art. 19|** (Automatically Generated Logs)
-    - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+    - **|Art. 26|** (Obligations of Deployers of High-Risk AI Systems), in particular:
+        - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+        - **|Art. 26(6)|** (Keeping of system logs by the deployer)
     - **|Art. 72|** (Post-Market Monitoring)
 
-## Rationale
+## Motivation
 
 An inference log is a permanent record of all inferences made by the AI system, including the input and output data, the model used, and relevant additional metadata.
 

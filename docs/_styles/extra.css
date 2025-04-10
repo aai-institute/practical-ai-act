@@ -90,3 +90,27 @@ table {
     max-height: 64px;
   }
 }
+
+.backlinks {
+  display: flex !important;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  gap: 1em;
+
+  li {
+    font-size: 0.7rem;
+
+    display: inline;
+    list-style: none;
+    margin: 0 !important;
+
+    a {
+      color: grey;
+    }
+    :before {
+      content: "↙";
+      margin-right: 1ch;
+    }
+  }
+}

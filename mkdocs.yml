@@ -16,16 +16,21 @@ nav:
   - Reader's Guide: readers-guide.md
   - Engineering Practice:
       - engineering-practice/reference-architecture.md
-      - engineering-practice/bias-mitigation.md
       - engineering-practice/containerization.md
-      - engineering-practice/data-versioning.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
       - engineering-practice/model-monitoring.md
+      - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
-      - engineering-practice/data-governance.md
+      - engineering-practice/operational-monitoring.md
       - engineering-practice/accuracy.md
+      - engineering-practice/orchestration.md
+      - Data Governance:
+          - engineering-practice/data-governance/index.md
+          - engineering-practice/data-governance/data-quality.md
+          - engineering-practice/data-governance/data-versioning.md
+          - engineering-practice/data-governance/bias-mitigation.md
   - Showcase:
       - showcase/index.md
   - AI Act Conformity:
@@ -39,6 +44,9 @@ nav:
 plugins:
   - callouts
   - section-index
+  - mkdocs-backlinks:
+      ignored_pages:
+        ["Engineering Practice", "Data Governance", "Reader's Guide", "Home"]
   - mkdocstrings:
       handlers:
         python:
@@ -56,6 +64,7 @@ plugins:
             filters: ["!^_{1,2}"]
   - mike:
       canonical_version: latest
+  - meta
   - privacy
   - search:
   - tags

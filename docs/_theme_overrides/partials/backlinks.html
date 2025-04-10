@@ -1,0 +1,5 @@
+<ul class="backlinks">
+  {% for backlink in backlinks %}
+  <li><a href="{{ backlink.url | url }}">{{ backlink.title }}</a></li>
+  {% endfor %}
+</ul>

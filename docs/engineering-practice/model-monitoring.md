@@ -6,7 +6,7 @@
 
 !!! success "Compliance Info"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     Implementing a model performance solution will help you in achieving compliance with the following regulations:
 
@@ -17,7 +17,7 @@
 
     - TODO: Art. 15(4), robustness through continuous monitoring of operations and performance
 
-## Rationale
+## Motivation
 
 TODO: Explain why model performance monitoring is important.
 
@@ -61,6 +61,4 @@ Examples include sending an email or Slack message, creating a ticket in a ticke
 -   Alternatives for model and data quality monitoring:
     -   [Evidently](https://www.evidentlyai.com/evidently-oss), for model performance and data quality monitoring
     -   [Alibi Detect](https://docs.seldon.io/projects/alibi-detect/en/stable/), for outlier and drift detection
-    -   [Pandera](https://pandera.readthedocs.io/en/stable/), for data quality validation
-    -   [Great Expectations / GX Core](https://docs.greatexpectations.io/docs/core/introduction/), for data quality validation
 -   Prometheus [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/), as an alerting middleware
