@@ -1136,6 +1136,28 @@ information, please
 
                   
 
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <a href="../../tags/#tag:annex-iv" class="md-tag">Annex IV</a>
+      
+    
+      
+      
+      
+        <a href="../../tags/#tag:art-11" class="md-tag">Art. 11</a>
+      
+    
+      
+      
+      
+        <a href="../../tags/#tag:art-72" class="md-tag">Art. 72</a>
+      
+    
+  </nav>
+
 
   
   
@@ -1145,28 +1167,43 @@ information, please
 <div class="admonition success">
 <p class="admonition-title">Compliance Info</p>
 <p>TODO: Explain the "Compliance Info" box.</p>
-<p>TODO: Add article references to provisions addressed by a model registry</p>
+<ul>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/11" rel="noopener noreferrer" target="_blank">Art. 11(1)</a></strong> in conjunction with <strong><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV</a></strong> (Technical Documentation), in particular:<ul>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV(2)(a)</a>: Description of the methods used for development of the system</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV(2)(c)</a>: Description of the system and overall processing architecture</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV(3)</a>: Description of the data and model lifecycle management</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV(6)</a>: References to model versions can help in describing relevant changes to the system through its lifecycle</li>
+</ul>
+</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/72" rel="noopener noreferrer" target="_blank">Art. 72</a></strong> (Post-Market Monitoring by Providers): a model registry can be used to correlate post-market monitoring data with specific model versions</li>
+</ul>
 </div>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<p>After training, the resulting models are persisted to a preconfigured, often remote storage location, to make the raw models available for (internal) use.
-Frequently, multiple versions of a given model are trained to assess the influence of certain parameters on the quality of the model outputs.
-This, together with the requirement for reproducibility in many AI projects, necessitates a solution for managing multiple versions of models side-by-side, that is also highly available, reliable, and can be queried efficiently for any specific version.</p>
+<p>After training and evaluation, the resulting machine learning models need to be stored for later use (e.g. for deployment in production environments).
+Frequently, multiple versions of a given model are trained in parallel to assess the influence of certain parameters on the quality of the model outputs.</p>
+<p>This, together with the requirement for reproducibility in many AI projects, necessitates a solution for managing multiple versions of models side-by-side, that is also highly available, reliable, and can be queried efficiently for any specific version.</p>
+<p>Model registries are designed to fulfill this need by providing a repository for storing and managing machine learning models, their metadata, and lineage.
+Advanced functionality can include the ability to manage the lifecycle of models, including versioning, deployment, and monitoring.</p>
+<p>The model registry fills a crucial role as the bridge between the development and operational phases of the machine learning lifecycle.
+They API is typically provided to allow for easy integration with other tools and processes, such as continuous deployment pipelines, validation activities, and triggering of workflows in an orchestration system.</p>
 <h2 id="implementation-notes">Implementation notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
 <p>Capabilities of a model registry can vary quite widely depending on how much of the stated responsibilities are handled by other tools in the practitioner's AI tool stack of choice.</p>
 <p>In the simplest case, a model registry can just be a local or remote storage bucket, that keeps track of model metadata and versions by indexing them and storing the information in a database or similar systems.
 If more responsibilities for the AI model lifecycle need to be handled, it is possible to use a tool that combines the storage of artifacts with their deployment, e.g. as a web application or a local assistant type of model.</p>
-<p>Importantly, some model servers provide endpoints to query the underlying model registry for information on specific models and versions.
-A noteworthy standardization of this is the <a href="https://docs.seldon.io/projects/seldon-core/en/latest/reference/apis/v2-protocol.html">Open Inference Protocol</a>, which specifies an API that model servers can support to allow the user of an AI model to query versions, health, and general metadata of models.</p>
+<p>In any case, the model registry should be able to store the model artifacts in a versioned manner, so that it is possible to retrieve any version of a model at any time.</p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
-<p>Since the task of versioning and storing models is tightly coupled to the training and tracking process itself, many experiment trackers (refer to the documentation on them <a href="../experiment-tracking/">here</a>) come with a builtin model registry.
-All the experiment trackers listed in the mentioned documentation provide support for a model registry as well.</p>
-<p>An example of a model server implementing the Open Inference Protocol is <a href="https://mlserver.readthedocs.io/en/latest/">MLServer by Seldon</a>, which offers supported for multi-model serving, batched requests, and parallel inference.</p>
+<p>Since the task of versioning and storing models is tightly coupled to the tracking of metadata and metrics about the model training process, many <a href="../experiment-tracking/">experiment tracking</a>) solutions come with a builtin model registry that allows for models resulting from an experiment run to be tracked.</p>
+<p>Additionally, model registry functionality is commonly included in MLOps platforms, which are designed to cover the entire machine learning lifecycle (see the page on <a href="../orchestration/">workflow orchestration</a>).</p>
+<p>Besides bespoke model registry solutions, models can also be stored in a suitable <a href="../data-governance/data-versioning/">versioned data storage</a> system or container registry (for <a href="../containerization/">containerized</a> ML models), as long as the accompanying model metadata is stored in a way that allows for easy retrieval and traceability.</p>
 
 
 
 
 
 
+
+  
+  
 
 
 
