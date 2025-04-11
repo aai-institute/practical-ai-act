@@ -34,6 +34,8 @@ When deciding on a workflow orchestrator, consider the following guiding questio
 -   Does it enable seamless transition between development and production environments?
     -   Does it support local development and testing of workflows?
     -   Can workflows execute both in a cloud environment and on-premise?
+-   Does it provide built-in support for conditional execution or dynamic workflows (i.e., adding or removing subtasks based on conditions)?
+-   Does it support cached execution results to prevent redundant computation, either on-device and remotely?
 -   How does it handle task dependencies and execution order?
 -   How does it handle resource management?
     -   Most importantly for machine learning workloads, how does it manage GPU resources?
