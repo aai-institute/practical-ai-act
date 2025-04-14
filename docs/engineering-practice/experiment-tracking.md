@@ -12,7 +12,6 @@ tags:
 
     - |Art. 14(4)(a)|, understand the limitation of the underlying model by
             interpreting performance on reference data
-
     - |Art. 15(3)|, experiment tracking captures used performance metrics and levels of accuracy
 
 ## Motivation

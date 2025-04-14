@@ -1,7 +1,10 @@
 ---
 tags:
     - Art. 12
+    - Art. 14
     - Art. 15
+    - Art. 26
+    - Art. 72
 ---
 
 !!! danger "Work in Progress"
@@ -23,10 +26,10 @@ tags:
             helps to understand the capacities of the system during its lifetime
         -   |Art. 14(4)(e)|, observing degradation overtime enables to intervene and
             initialize a retraining, for example
+    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - |Art. 15(4)|, resilience and robustness through continuous monitoring of model performance
     - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
     - **|Art. 72(2)|** (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.
-
-    - TODO: Art. 15(4), robustness through continuous monitoring of operations and performance
 
 ## Motivation
 

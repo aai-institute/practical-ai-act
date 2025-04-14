@@ -2,6 +2,7 @@
 tags:
     - Art. 10
     - Art. 11
+    - Art. 12
 ---
 
 !!! success "Compliance Info"
@@ -11,6 +12,9 @@ tags:
     - **|Art. 10(2)(c)|**: Consistent and versioned data preprocessing operations
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - |Annex IV(2)(c)|: Description of the system and overall processing architecture
+    - **|Art. 12|**, in particular:
+        - |Art. 12(2)(a)|: Reconstructing a complete model generation process through usage
+            of a unique run id
 
 ## Motivation
 

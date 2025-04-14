@@ -13,8 +13,6 @@ tags:
 
     Implementing an operational metrics solution will help you in achieving compliance with the following requirements of the AI Act:
 
-    TODO: Incomplete
-
     - **|Art. 14|** (Human Oversight), in particular:
         - |Art. 14(4)(e)|, continuous monitoring the operation of the systems helps
             to detect conditions requiring potential intervention
@@ -55,7 +53,7 @@ The following activities can provide a starting point to implement an alerting s
 
 ### Metrics Collection and Visualization
 
--   [Prometheus](https://prometheus.io/), an time-series database for event and metrics collection, storage, monitoring, and alerting
+-   [Prometheus](https://prometheus.io/), a time-series database for event and metrics collection, storage, monitoring, and alerting
     -   Many tools and frameworks can expose their operational metrics in the Prometheus format
 -   [Grafana](https://grafana.com/oss/grafana/), an open-source analytics solution for visualization of metrics
 -   The ELK (Elasticsearch, Logstash, Kibana) stack, in particular:
