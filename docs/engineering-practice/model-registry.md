@@ -16,6 +16,8 @@ tags:
         - |Annex IV(2)(c)|: Description of the system and overall processing architecture
         - |Annex IV(3)|: Description of the data and model lifecycle management
         - |Annex IV(6)|: References to model versions can help in describing relevant changes to the system through its lifecycle
+    - **|Art. 13|, in particular:
+        - |Art. 13(3)(b)(iv)|: Logging the model architecture and hyperparameters makes the system characteristics transparent
     - **|Art. 72|** (Post-Market Monitoring by Providers): a model registry can be used to correlate post-market monitoring data with specific model versions
 
 ## Motivation

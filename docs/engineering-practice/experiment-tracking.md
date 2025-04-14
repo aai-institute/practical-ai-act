@@ -1,5 +1,6 @@
 ---
 tags:
+    - Art. 13
     - Art. 14
     - Art. 15
 ---
@@ -9,10 +10,9 @@ tags:
 !!! success "Compliance Info"
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
-
+    - |Art. 13(3)(b)(ii)|, |Art. 15(3)| experiment tracking captures used performance metrics and levels of accuracy
     - |Art. 14(4)(a)|, understand the limitation of the underlying model by
             interpreting performance on reference data
-    - |Art. 15(3)|, experiment tracking captures used performance metrics and levels of accuracy
 
 ## Motivation
 

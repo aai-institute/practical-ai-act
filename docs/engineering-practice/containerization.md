@@ -1,8 +1,6 @@
 ---
 tags:
     - Art. 15
-hide:
-    - tags # TODO: enable when ready
 ---
 
 !!! success "Compliance Info"
