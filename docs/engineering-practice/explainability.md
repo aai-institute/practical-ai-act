@@ -16,8 +16,12 @@ tags:
         - |Art. 13(3)(b)(iv)|: Explainability techniques directly provide information relevant to explain the system's output
         - |Art. 13(3)(d)|: Explainability techniques can be used in the human oversight process to interpret the system's behavior
     - **|Art. 14|** (Human Oversight), in particular:
-        -   |Art. 14(4)(c)|, since explainability approaches enable human interpretation of the system output
-        -   |Art. 14(4)(d)|, explainability helps to decide if the output of the system should be disregarded
+        - |Art. 14(3)(a)|: automated XAI features can be built directly into
+            the system to generate explanations
+        - |Art. 14(4)(c)|: explainability approaches provide the necessary information
+            to enable human interpretation of system outputs
+        - |Art. 14(4)(d)|: automated explanations provide the basis for humans
+            to decide whether to use or disregard outputs
     - **|Art. 86(3)|** (Right to Explanation of Individual Decision-Making)
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - |Annex IV(3)|: Explainability techniques can be part of the instructions for use to the deployer

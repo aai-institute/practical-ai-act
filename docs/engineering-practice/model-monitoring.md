@@ -17,7 +17,12 @@ tags:
     Implementing a model performance solution will help you in achieving compliance with the following regulations:
 
     - **|Art. 12|** (Record-Keeping)
-        - **|Art. 12(1)|** (Documentation of the AI system)
+        - |Art. 12(1)| (Documentation of the AI system)
+    - **|Art. 14|** (Human Oversight), in particular:
+        -   |Art. 14(4)(a)|, automated tracking of drift and performance degradation
+            helps to understand the capacities of the system during its lifetime
+        -   |Art. 14(4)(e)|, observing degradation overtime enables to intervene and
+            initialize a retraining, for example
     - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
     - **|Art. 72(2)|** (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.
 
