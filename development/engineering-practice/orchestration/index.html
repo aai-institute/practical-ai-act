@@ -1355,25 +1355,67 @@ information, please
 <p>A workflow orchestrator takes care to execute these tasks in the correct order, manage dependencies between tasks, and handle failures or retries as needed.
 It keeps a permanent record of the execution history, which is essential for reproducibility, transparency, and auditability.</p>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<p>TODO</p>
+<p>Which workflow operator to choose depends on the specific requirements for a given project, such as the complexity of the workflows, the scale of the data, and the available infrastructure.
+Some orchestrators are designed for specific environments (e.g., cloud-native, on-premise), while others are more flexible and can be deployed in various settings.</p>
+<p>When deciding on a workflow orchestrator, consider the following guiding questions:</p>
+<ul>
+<li>Does the orchestrator support the programming language and libraries you are using?<ul>
+<li>Some orchestrators are designed for specific languages or frameworks (e.g., Python, R, TensorFlow, PyTorch), while others allow you to mix and match different languages and libraries, even within a single workflow.</li>
+<li>Some orchestrators can delegate specific task types to other platforms (e.g., running an ETL job on Snowflake).</li>
+</ul>
+</li>
+<li>Does it enable seamless transition between development and production environments?<ul>
+<li>Does it support local development and testing of workflows?</li>
+<li>Can workflows execute both in a cloud environment and on-premise?</li>
+</ul>
+</li>
+<li>Does it provide built-in support for conditional execution or dynamic workflows (i.e., adding or removing subtasks based on conditions)?</li>
+<li>Does it support cached execution results to prevent redundant computation, either on-device and remotely?</li>
+<li>How does it handle task dependencies and execution order?</li>
+<li>How does it handle resource management?<ul>
+<li>Most importantly for machine learning workloads, how does it manage GPU resources?</li>
+</ul>
+</li>
+<li>How can you access the execution history and logs for debugging and auditing purposes?</li>
+<li>Does it provide built-in support for monitoring and alerting on workflow execution?</li>
+<li>If required by your organization, does it support role-based access control (RBAC) and other security features?</li>
+</ul>
+<p>These questions are somewhat orthogonal to the requirements of the AI Act.
+In essence, basically any orchestrator that allows for consistent execution of workflows and maintains a permanent record of the execution history can be used to comply with the requirements of the AI Act.</p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Workflow orchestration tools come in various shapes and sizes, from lightweight libraries to full-fledged platforms.</p>
+<p>The following list is not exhaustive, but it provides a good starting point for exploring the available options and their respective features and tradeoffs.</p>
+</div>
 <h3 id="workflow-orchestrators">Workflow Orchestrators<a class="headerlink" href="#workflow-orchestrators" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://dagster.io/">Dagster</a></li>
 <li><a href="https://airflow.apache.org/">Apache Airflow</a></li>
+<li><a href="https://argoproj.github.io/argo-workflows/">Argo Workflows</a></li>
 <li><a href="https://prefect.io/">Prefect</a></li>
 <li><a href="https://flyte.org/">Flyte</a></li>
 </ul>
 <h3 id="mlops-platforms">MLOps Platforms<a class="headerlink" href="#mlops-platforms" title="Permanent link">&para;</a></h3>
+<p>While the above orchestrators can be used for general-purpose workflow orchestration, there are also platforms specifically designed for machine learning operations (MLOps) that provide additional features and integrations tailored to the needs of ML workflows, not limited to just orchestration:</p>
 <ul>
 <li><a href="https://kubeflow.org/">Kubeflow</a></li>
 <li><a href="https://metaflow.org/">Metaflow</a></li>
 <li><a href="https://zenml.io/">ZenML</a></li>
 <li><a href="https://kedro.readthedocs.io/en/stable/">Kedro</a></li>
+<li><a href="https://www.tensorflow.org/tfx">TFX</a></li>
 </ul>
 <h3 id="platform-software-as-a-service-offerings">Platform-/Software-as-a-Service Offerings<a class="headerlink" href="#platform-software-as-a-service-offerings" title="Permanent link">&para;</a></h3>
+<p>If you are already using a cloud provider, you may want to consider their ML pipeline orchestration products:</p>
+<ul>
+<li><a href="https://aws.amazon.com/sagemaker/pipelines/">AWS SageMaker Pipelines</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/machine-learning/concept-ml-pipelines">Azure Machine Learning Pipelines</a></li>
+<li><a href="https://cloud.google.com/ai-platform/pipelines/docs">Google Vertex AI Pipelines</a></li>
+</ul>
+<p>Or, on a lower level, you can use the workflow orchestration services provided by the cloud providers:</p>
 <ul>
 <li><a href="https://aws.amazon.com/step-functions/">AWS Step Functions</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/data-factory/">Azure Data Factory</a></li>
 <li><a href="https://cloud.google.com/workflows">Google Cloud Workflows</a></li>
 <li><a href="https://www.databricks.com/product/workflows">Databricks Workflows</a></li>
 </ul>
