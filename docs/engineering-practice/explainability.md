@@ -11,6 +11,8 @@ tags:
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
+    - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
+        - |Annex IV(3)|: Explainability techniques can be part of the instructions for use to the deployer
     - **|Art. 13|** (Transparency and Provision of Information to Deployers), in particular:
         - |Art. 13(1)|: Explainability techniques contribute to a transparent system operation
         - |Art. 13(3)(b)(iv)|: Explainability techniques directly provide information relevant to explain the system's output
@@ -23,8 +25,6 @@ tags:
         - |Art. 14(4)(d)|: automated explanations provide the basis for humans
             to decide whether to use or disregard outputs
     - **|Art. 86(3)|** (Right to Explanation of Individual Decision-Making)
-    - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
-        - |Annex IV(3)|: Explainability techniques can be part of the instructions for use to the deployer
 
 ## Motivation
 
