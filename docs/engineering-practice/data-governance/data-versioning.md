@@ -13,7 +13,7 @@ tags:
     - **|Art. 10|** (Data and Data Governance), in particular:
         - **|Art. 10(2)(b)|**: tracking the origin of data,
         - **|Art. 10(2)(e)|**: assessment of availability, quantity and suitability of the data sets, and
-        - **|Art. 12(2)(a)|**: Satisfying traceability of model risks back to its training inputs.
+        - **|Art. 12(2)(a)|**: Identifying used datasets (training and reference data) by a unique identifier
 
 ## Motivation
 

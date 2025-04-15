@@ -10,8 +10,7 @@
     - [Experiment Tracking]:
         - |Art. 12(2)(a)|: Backtracking to used training data
     - [Data Versioning]:
-        - |Art. 10(2)(b)|: Tracking the origin of training and test data
-        - |Art. 10(2)(e)|: Assessment of availability, quantity and suitability of the data sets
+        - |Art. 12(2)(a)|: Identifying used datasets (training and reference data) by a unique identifier
     - [Orchestration]:
         - |Art. 12(2)(a)|: Reconstructing a complete model generation process through usage
             of a unique run id
