@@ -23,7 +23,7 @@ from .assets.model import ModelVersion
 from .sensors import model_version_trigger
 
 RANDOM_STATE = 495
-experiment_config = Config(random_state=RANDOM_STATE)
+experiment_config = Config(random_state=RANDOM_STATE, test_size=0.25)
 optuna_cv_config = StratifiedShuffleCVConfig(
     n_trials=10,
     verbose=2,

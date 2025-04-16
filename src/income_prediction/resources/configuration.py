@@ -44,6 +44,8 @@ class Config(ConfigurableResource):
 
     log_model_explainability: bool = True
 
+    test_size: float = 0.25
+
 
 class OptunaCVConfig(ConfigurableResource):
     """
