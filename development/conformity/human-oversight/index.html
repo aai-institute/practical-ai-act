@@ -1029,6 +1029,18 @@ information, please
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Human Oversight
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1039,6 +1051,43 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#non-technical-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-technical Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-other-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relation to other Articles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1136,6 +1185,32 @@ information, please
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#non-technical-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-technical Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-other-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relation to other Articles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1171,7 +1246,11 @@ of oversight—interpretation, decision-making, and intervention—must remain h
 <p class="admonition-title">Engineering Info</p>
 <p>Below we map specific engineering practices and system components from our showcase
 implementation to demonstrate practical automation possibilities that support
-EU AI Act compliance:</p>
+EU AI Act compliance.</p>
+<p>Related engineering practice focus on implementing comprehensive oversight measures
+that enable human supervision of AI systems. These measures must be integrated
+throughout the system's lifecycle—from design to deployment and
+operation—ensuring humans can make informed interventions.</p>
 <ul>
 <li><a href="../../engineering-practice/experiment-tracking/">Experiment Tracking</a>:<ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14(4)(a)</a>, understand the limitation of the underlying model by
@@ -1201,6 +1280,25 @@ EU AI Act compliance:</p>
 </li>
 </ul>
 </div>
+<h2 id="non-technical-requirements">Non-technical Requirements<a class="headerlink" href="#non-technical-requirements" title="Permanent link">&para;</a></h2>
+<p>The text of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14</a> itself focuses on the suitability of oversight measures,
+which should enable human operators. There is a rather implicit requirement, namely
+that the designated person has to be able to digest, interpret and launch appropriate
+actions based on the bespoken oversight measures. While the technical features
+of oversight (e.g. explainability, monitoring, alerts) provide the means, they
+must be matched with human readiness to act on them. This is also connected to
+the requirements stated in <a class="aia-ref" href="https://artificialintelligenceact.eu/article/4" rel="noopener noreferrer" target="_blank">Art. 4 (AI literacy)</a>.</p>
+<h2 id="relation-to-other-articles">Relation to other Articles<a class="headerlink" href="#relation-to-other-articles" title="Permanent link">&para;</a></h2>
+<p>In addition to <a class="aia-ref" href="https://artificialintelligenceact.eu/article/4" rel="noopener noreferrer" target="_blank">Art. 4</a>, the following connections are prevalent:</p>
+<ul>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/9" rel="noopener noreferrer" target="_blank">Art. 9</a> (Risk Management System): Oversight measures should be embedded into
+    the risk management strategy, particularly for monitoring risks during operation.</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/11" rel="noopener noreferrer" target="_blank">Art. 11</a> (Technical Documentation): For oversight to be actionable and traceable,
+    systems must be accompanied by clear, structured, and accessible documentation.</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/13" rel="noopener noreferrer" target="_blank">Art. 13</a> (Transparency and Provision of Information to Deployers): Provide
+    the context necessary for humans to interpret system behavior and make informed
+    decisions about its use.</li>
+</ul>
 <!-- Reference Links -->
 
 
