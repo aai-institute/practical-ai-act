@@ -37,7 +37,7 @@ of oversight—interpretation, decision-making, and intervention—must remain h
 ## Non-technical Requirements
 The text of |Art. 14| itself focuses on the suitability of oversight measures,
 which should enable human operators. There is a rather implicit requirement, namely
-that the designated person has to be able to digest, interpret and launch appropriate
+that the designated person has to be able to digest, interpret those and launch appropriate
 actions based on the bespoken oversight measures. While the technical features
 of oversight (e.g. explainability, monitoring, alerts) provide the means, they
 must be matched with human readiness to act on them. This is also connected to
