@@ -27,7 +27,9 @@ The outputs that a trained model generates depend on many factors, like which ve
 what configurable attributes (also called _hyperparameters_) were used for the training, but also training techniques used like batching, which optimization target, and many more.
 
 The sum of all choices for the training of an AI model is often called an **experiment**.
-Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike.
+Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike. Moreover, tracking all this information is necessary
+to achieve **reproducibility** of an experiment.
+
 A lot of ML/AI projects therefore use some form of _experiment tracking_ solution to help with visualizing experiments, evaluate model performance, and compare the performance in different experiments.
 
 ## Implementation notes
@@ -40,6 +42,8 @@ This typically includes, but is not limited to,
 -   metrics and statistics giving information about the performance of the newly trained model.
 
 ## Key technologies
+
+--8<-- "docs/engineering-practice/_key-technologies-info.partial"
 
 -   [MLflow](https://mlflow.org/)
 
