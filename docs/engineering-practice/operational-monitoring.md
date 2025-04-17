@@ -12,6 +12,7 @@ tags:
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     Implementing an operational metrics solution will help you in achieving compliance with the following requirements of the AI Act:
+
     - **|Art. 13|** (Transparency and Provision of Information to Deployers), in particular:
         - |Art. 13(3)(e)|, monitoring the operation of the system enables to provide statistics about the system resource usage
     - **|Art. 14|** (Human Oversight), in particular:
