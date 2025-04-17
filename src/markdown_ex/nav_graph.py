@@ -1,3 +1,5 @@
+import json
+import textwrap
 from collections import defaultdict
 from pathlib import Path
 
@@ -53,6 +55,80 @@ def on_post_page(output, /, *, page: Page, config):
     if not key.startswith("/"):
         key = "/" + key
     _nav_graph[key] = _extract_internal_links(page)
+
+
+def _to_force_graph(graph: dict[str, list[str]]) -> str:
+    page_template = textwrap.dedent("""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/force-graph"></script>
+</head>
+
+<body>
+  <div id="graph"></div>
+
+  <script>
+    const data = {DATA};
+
+    const Graph = new ForceGraph(document.getElementById('graph'))
+      .graphData(data)
+      .nodeId('id')
+      .nodeAutoColorBy('group')
+      .nodeCanvasObject((node, ctx, globalScale) => {
+        const label = node.name;
+        const fontSize = 12/globalScale;
+        ctx.font = `${fontSize}px Sans-Serif`;
+        const textWidth = ctx.measureText(label).width;
+        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = node.color;
+        ctx.fillText(label, node.x, node.y);
+
+        node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
+      })
+      .nodePointerAreaPaint((node, color, ctx) => {
+        ctx.fillStyle = color;
+        const bckgDimensions = node.__bckgDimensions;
+        bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+      });
+  </script>
+</body>
+</html>""")
+
+    def _node_name(url: str) -> str:
+        """
+        Converts a URL to a node name for Mermaid.
+        """
+        return url.replace("/", "_").strip("_") or "root"
+
+    render_graph = {
+        "nodes": [],
+        "links": [],
+    }
+
+    for node, targets in graph.items():
+        render_graph["nodes"].append({
+            "id": _node_name(node),
+            "name": node,
+            "group": node.split("/")[1] if "/" in node else "root",
+        })
+
+        for target in targets:
+            render_graph["links"].append({
+                "source": _node_name(node),
+                "target": _node_name(target),
+            })
+
+    page = page_template.replace("{DATA}", json.dumps(render_graph, indent=2))
+    return page
 
 
 def _to_mermaid(graph: dict[str, list[str]]) -> str:
@@ -115,4 +191,8 @@ def _to_mermaid(graph: dict[str, list[str]]) -> str:
 
 
 def on_post_build(*, config):
-    Path("nav_graph.mmd").write_text(_to_mermaid(_nav_graph))
+    exclude_pages = ["/tags/"]
+    filtered_graph = {k: v for k, v in _nav_graph.items() if k not in exclude_pages}
+
+    Path("nav_graph.mmd").write_text(_to_mermaid(filtered_graph))
+    Path("nav_graph.html").write_text(_to_force_graph(filtered_graph))
