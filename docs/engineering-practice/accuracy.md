@@ -1,4 +1,22 @@
+---
+tags:
+    - Art. 11
+    - Art. 15
+    - Annex IV
+---
+
 # Accuracy
+
+!!! success "Compliance Info"
+
+    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
+
+    Implementing a data versioning solution will help you in achieving compliance with the following requirements of the AI Act:
+
+    - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
+        - **|Annex IV(2)(g)|**: Documentation of used accuracy metrics
+    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - **|Art. 15(3)|** Relevant accuracy metrics
 
 This article requires that high-risk AI systems be designed to achieve appropriate levels of accuracy, robustness, and cybersecurity. Systems should perform consistently throughout their lifecycle, be resilient to errors and faults, and have measures in place to mitigate risks associated with cybersecurity threats. The accuracy of AI systems should be declared in their instructions, and systems should be designed to minimize risks of producing biased outputs.
 

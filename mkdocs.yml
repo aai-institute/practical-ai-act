@@ -14,6 +14,10 @@ validation:
 nav:
   - Home: index.md
   - Reader's Guide: readers-guide.md
+  - Showcase:
+      - showcase/index.md
+      - showcase/risk-classification.md
+      - showcase/system-overview.md
   - Engineering Practice:
       - engineering-practice/reference-architecture.md
       - engineering-practice/containerization.md
@@ -31,14 +35,17 @@ nav:
           - engineering-practice/data-governance/data-quality.md
           - engineering-practice/data-governance/data-versioning.md
           - engineering-practice/data-governance/bias-mitigation.md
-  - Showcase:
-      - showcase/index.md
   - AI Act Conformity:
       - conformity/index.md
-      - Documents:
-          - conformity/documents/index.md
-          - conformity/documents/technical-documentation.md
-          - conformity/documents/instructions-for-use.md
+      - conformity/risk-management-system.md
+      - conformity/data-governance.md
+      - conformity/technical-documentation.md
+      - conformity/record-keeping.md
+      - conformity/instructions-for-use.md
+      - conformity/human-oversight.md
+      - conformity/accuracy-robustness-cybersecurity.md
+  - Tags:
+      - tags.md
   - acknowledgments.md
 
 hooks:
@@ -49,7 +56,13 @@ plugins:
   - section-index
   - mkdocs-backlinks:
       ignored_pages:
-        ["Engineering Practice", "Data Governance", "Reader's Guide", "Home"]
+        [
+          "AI Act Conformity",
+          "Engineering Practice",
+          "Data Governance",
+          "Reader's Guide",
+          "Home",
+        ]
   - mkdocstrings:
       handlers:
         python:
@@ -118,6 +131,7 @@ theme:
     repo: fontawesome/brands/github
     admonition:
       success: octicons/law-24
+      info: octicons/tools-24
   features:
     - content.tabs.link
     - content.code.copy

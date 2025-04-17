@@ -1,3 +1,8 @@
+---
+tags:
+    - Art. 12
+---
+
 # Inference Log
 
 !!! success "Compliance Info"

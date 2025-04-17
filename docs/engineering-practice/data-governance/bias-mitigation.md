@@ -1,11 +1,18 @@
+---
+tags:
+    - Art. 10
+---
+
 !!! success "Compliance Info"
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     - **|Art. 10|** (Data and Data Governance), in particular:
-        - **|Art. 10(2)(g)|**: Appropriate measures for bias detection, prevention, and mitigation
-        - **|Art. 10(3)|**: Assert appropriate statistical properties regarding natural persons related to the use of the high-risk AI system
-        - **|Art. 10(5)|**: Use of special categories of personal data in bias detection and correction
+        - |Art. 10(2)(g)|: Appropriate measures for bias detection, prevention, and mitigation
+        - |Art. 10(3)|: Assert appropriate statistical properties regarding natural persons related to the use of the high-risk AI system
+        - |Art. 10(5)|: Use of special categories of personal data in bias detection and correction
+    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - |Art. 15(4)|, bias mitigation increases resilience against bias-related errors and inconsistencies
 
 ## Motivation
 

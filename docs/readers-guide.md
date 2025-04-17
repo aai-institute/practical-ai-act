@@ -20,6 +20,32 @@ The project is structured into three key areas, each addressing different aspect
 -   [**Engineering Practice**](engineering-practice/reference-architecture.md): Following software engineering best practice lay the foundation for achieving compliance.
 -   [**AI Act Conformity**](conformity/index.md): Background information connecting technical artifacts to the obligations of the AI Act
 
+## Conventions
+
+### Page Backlinks
+
+You might notice that some pages contain hyperlinks to other pages marked with an <em>↙</em> arrow at the top of the page:
+
+<figure markdown="span">
+![Backlinks](_images/backlinks.png){ align=center }
+</figure>
+
+These links point to other pages on this website that contain links to the current page and help you discover and navigate related content more easily.
+
+### Compliance Information Boxes
+
+The engineering practices contain information boxes that provide references to applicable parts of the AI Act, like the at the bottom of this section.
+This information is intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.
+
+Note that these references do not imply that following a given engineering practice will guarantee compliance with the reference parts of the AI Act.
+
+!!! success "Compliance Info"
+
+    This is an example for the Compliance Info box.
+
+    - **|Art. 1|** (Subject Matter)
+    - **|Art. 2(1)|** (Scope)
+
 ## What is out of scope?
 
 ### Assessing your use case's risk category

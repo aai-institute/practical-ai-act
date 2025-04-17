@@ -1,5 +1,19 @@
 # Transparency and Provision of Information
 
+!!! info "Engineering Info"
+    --8<-- "docs/conformity/_engineering-info-box.partial"
+
+    - [Explainability]:
+        - |Art. 13(1)|: Explainability techniques contribute to a transparent system operation
+        - |Art. 13(3)(b)(iv)(vii)|: Explainability techniques directly provide information relevant to explain the system's output
+        - |Art. 13(3)(d)|: Explainability techniques can be used in the human oversight process to interpret the system's behavior
+    - [Experiment Tracking]:
+        - |Art. 13(3)(b)(ii)|: Experiment tracking captures used performance metrics and levels of accuracy
+    - [Model Registry]:
+        - |Art. 13(3)(b)(iv)|: Logging the model architecture and hyperparameters makes the system characteristics transparent
+    - [Operational Monitoring]:
+        - |Art. 13(3)(e)|: Monitoring the operation of the system enables to provide statistics about the system resource usage
+
 To get a more hands-on reading of Article 13, we shall assume, that there
 is a fix use-case to solve and the input data have a specified format
 (does this makes sense?).
@@ -76,7 +90,7 @@ a long time:
     * this information might be about the data collection process, any data transformation, basically the information collected from the data governance view point. Here it might be more challenging to find a good format for providing it
       to the user, but maybe it also makes sense to make it available via an API?
     * We should make the connection to Article 11 and Annex IV
-    
+
 
 ## Information about the output for a specific input
 
@@ -107,7 +121,7 @@ which is specific to a single input.
 * Art. 13(3), (b)(iv): Get a sense for "technical characteristics and capabilities" - what's the intention and rationale behind this phrasing?
 * What is the connection between Article 11, Annex IV and Article 13.3 b(v, vi)? Is it instruction for use vs. technical documentation (what is the difference)?
 * The meaning and intention of Article 13.3 c is completely unclear (is this something like a "diff")
-* What is the difference between the terms "misuse", "abuse" and "attack" in the context of the AI act?  
+* What is the difference between the terms "misuse", "abuse" and "attack" in the context of the AI act?
 
 ## Potential tasks
 * Set up an event logging system and document its architecture in line with Art. 13(3), (f) and Art. 12
@@ -126,3 +140,10 @@ Related Norms:
 * [ISO/IEC TS 4213](https://www.iso.org/standard/79799.html)
 * [ISO/IEC AWI 4213](https://www.iso.org/standard/89455.html)
 * [ISO/IEC DTS 6254](https://www.iso.org/standard/82148.html)
+
+
+<!-- Reference Links -->
+[Explainability]: ../engineering-practice/explainability.md
+[Experiment Tracking]: ../engineering-practice/experiment-tracking.md
+[Model Registry]: ../engineering-practice/model-registry.md
+[Operational Monitoring]: ../engineering-practice/operational-monitoring.md
