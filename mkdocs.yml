@@ -19,7 +19,7 @@ nav:
       - showcase/risk-classification.md
       - showcase/system-overview.md
   - Engineering Practice:
-      - engineering-practice/reference-architecture.md
+      - engineering-practice/index.md
       - engineering-practice/containerization.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
