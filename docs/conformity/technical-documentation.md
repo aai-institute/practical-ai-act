@@ -1,11 +1,14 @@
 # Technical Documentation
 
-!!! success "Compliance Info"
+!!! info "Engineering Info"
+    --8<-- "docs/conformity/_engineering-info-box.partial"
 
-    --8<-- "docs/how-to/_compliance-info-box.partial"
+    - [Experiment Tracking]:
+        - |Art. 11(1)| & |Annex IV(2)(g)|: Logging of validation process, in particular,
+            characteristics of validation and test datasets
+    - [Model Registry]:
+        - |Art. 11(1)| & |Annex IV(2)(b)|: Logging the model architecture and hyperparameters makes it available for documentation
 
-        |Art. 11|
-        |Art. 10(2)(b)|
 
 Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market.
 This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements.
@@ -173,3 +176,9 @@ The annex ensures that all relevant information is available to assess the syste
 ## Readings:
 - [Datasheets for Datasets](https://arxiv.org/abs/1803.09010)
 - [The Data Cards Playbook](https://sites.research.google/datacardsplaybook/)
+
+
+<!-- Reference Links -->
+[Experiment Tracking]: ../engineering-practice/experiment-tracking.md
+[Model Registry]: ../engineering-practice/model-registry.md
+[Explainability]: ../engineering-practice/explainability.md

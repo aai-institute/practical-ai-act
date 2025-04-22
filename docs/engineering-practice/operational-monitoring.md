@@ -1,5 +1,6 @@
 ---
 tags:
+    - Art. 14
     - Art. 15
     - Art. 26
 ---
@@ -12,14 +13,17 @@ tags:
 
     Implementing an operational metrics solution will help you in achieving compliance with the following requirements of the AI Act:
 
-    TODO: Incomplete
-
+    - **|Art. 13|** (Transparency and Provision of Information to Deployers), in particular:
+        - |Art. 13(3)(e)|, monitoring the operation of the system enables to provide statistics about the system resource usage
+    - **|Art. 14|** (Human Oversight), in particular:
+        - |Art. 14(4)(e)|, continuous monitoring the operation of the systems helps
+            to detect conditions requiring potential intervention
     - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
-        - **|Art. 15(4)|** Robustness, monitoring and alerting can help detect and mitigate potential robustness and availability issues
-        - **|Art. 15(5)|** Cybersecurity, since monitoring is a crucial part of threat detection
+        - |Art. 15(4)| robustness, monitoring and alerting can help detect and mitigate potential robustness and availability issues
+        - |Art. 15(5)| cybersecurity, since monitoring is a crucial part of threat detection
     - **|Art. 26|** (Obligations of Deployers of High-Risk AI Systems), in particular:
-        - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
-        - **|Art. 26(6)|** (Keeping of system logs by the deployer)
+        - |Art. 26(5)| (Monitoring of the AI system's operation by the deployer)
+        - |Art. 26(6)| (Keeping of system logs by the deployer)
 
 ## Motivation
 
@@ -51,7 +55,7 @@ The following activities can provide a starting point to implement an alerting s
 
 ### Metrics Collection and Visualization
 
--   [Prometheus](https://prometheus.io/), an time-series database for event and metrics collection, storage, monitoring, and alerting
+-   [Prometheus](https://prometheus.io/), a time-series database for event and metrics collection, storage, monitoring, and alerting
     -   Many tools and frameworks can expose their operational metrics in the Prometheus format
 -   [Grafana](https://grafana.com/oss/grafana/), an open-source analytics solution for visualization of metrics
 -   The ELK (Elasticsearch, Logstash, Kibana) stack, in particular:

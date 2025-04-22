@@ -1,5 +1,7 @@
 ---
 tags:
+    - Art. 13
+    - Art. 14
     - Art. 15
 ---
 
@@ -8,10 +10,11 @@ tags:
 !!! success "Compliance Info"
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
-
-    TODO: Add article references to provisions addressed by experiment tracking
-
-    - |Art. 15(3)|, experiment tracking captures used performance metrics and levels of accuracy
+    - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
+        - |Annex IV(3)|: Documentation of accuracy measures on a reference dataset as an expected level of accuracy
+    - |Art. 13(3)(b)(ii)|, |Art. 15(3)| experiment tracking captures used performance metrics and levels of accuracy
+    - |Art. 14(4)(a)|, understand the limitation of the underlying model by
+            interpreting performance on reference data
 
 ## Motivation
 

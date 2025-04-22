@@ -92,14 +92,16 @@ table {
 }
 
 .backlinks {
+  /* Aligned with .md-tags */
   display: flex !important;
   flex-direction: row;
-  margin: 0;
+  flex-wrap: wrap;
+  margin: 0.75em 0 -0.125em 0;
   padding: 0;
-  gap: 1em;
+  gap: 0.5em;
 
   li {
-    font-size: 0.7rem;
+    font-size: min(0.8em, 0.64rem);
 
     display: inline;
     list-style: none;
@@ -110,7 +112,7 @@ table {
     }
     :before {
       content: "↙";
-      margin-right: 1ch;
+      margin-right: 0.5ch;
     }
   }
 }

@@ -1,8 +1,6 @@
 ---
 tags:
     - Art. 15
-hide:
-    - tags # TODO: enable when ready
 ---
 
 !!! success "Compliance Info"
@@ -12,8 +10,8 @@ hide:
     TODO: This list is incomplete
 
     - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
-        - |Art. 15(1)|
-        - |Art. 15(4)|, containers provide a consistent runtime environment, allow for redundancy
+        - |Art. 15(1)|, containers provide a consistent and isolated runtime environment
+        - |Art. 15(4)|, containers allow for redundant, reproducible and reliable application execution
 
 ## Motivation
 

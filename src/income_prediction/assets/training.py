@@ -16,19 +16,22 @@ from ..utils.mlflow import log_fairness_metrics
 
 GROUP_NAME = "training"
 
+
 @dg.multi_asset(
     outs={
         "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
         "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
     },
-  group_name=GROUP_NAME
+    group_name=GROUP_NAME,
 )
 def train_test_data(
     experiment_config: Config, preprocessed_features: pd.DataFrame
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Splits the dataset for income prediction into training and test sets."""
     train_data, test_data = train_test_split(
-      preprocessed_features, random_state=experiment_config.random_state
+        preprocessed_features,
+        random_state=experiment_config.random_state,
+        test_size=experiment_config.test_size,
     )
     return train_data, test_data
 
@@ -85,7 +88,6 @@ def optuna_search_xgb(
                 ),
             )
             mlflow.log_input(test_ds)
-
 
             mlflow.evaluate(
                 model=best_model.predict,
