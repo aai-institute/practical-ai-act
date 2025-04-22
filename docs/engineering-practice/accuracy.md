@@ -15,8 +15,14 @@ tags:
 
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - **|Annex IV(2)(g)|**: Documentation of used accuracy metrics
-    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
-        - **|Art. 15(3)|** Relevant accuracy metrics
+    - **|Art. 15(5)|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - **|Art. 15(5)(a)|** Systems should be designed to be resilient to errors and faults
+        - **|Art. 15(5)(b)|** Systems should have measures in place to mitigate risks associated with cybersecurity threats
+    - **|Art. 15(4)|** (Accuracy of AI systems), in particular:
+        - **|Art. 15(4)(a)|** Accuracy of AI systems should be declared in their instructions
+        - **|Art. 15(4)(b)|** Systems should be designed to minimize risks of producing biased outputs
+  
+ - **|ISO /IEC TR 24029-1| **( Artifical Intelligence[AI]- Assesment of the robustness of neural networks)
 
 This article requires that high-risk AI systems be designed to achieve appropriate levels of accuracy, robustness, and cybersecurity. Systems should perform consistently throughout their lifecycle, be resilient to errors and faults, and have measures in place to mitigate risks associated with cybersecurity threats. The accuracy of AI systems should be declared in their instructions, and systems should be designed to minimize risks of producing biased outputs.
 

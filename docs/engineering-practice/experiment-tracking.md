@@ -26,17 +26,17 @@ A lot of ML/AI projects therefore use some form of _experiment tracking_ solutio
 ## Implementation notes
 
 A vital aspect of experiment tracking software is to diligently mark the outputs (_artifacts_) of your training workflows to ensure reproducibility and a good overview on the situation.
-This typically includes, but is not limited to,
+This typically includes, but is not limited to:
 
--   versions of training and evaluation data, either raw or pre-processed, ideally in conjunction with data versioning,
--   hyperparameters giving as much information as possible in order to accurately reproduce experiments across platforms,
--   metrics and statistics giving information about the performance of the newly trained model.
+-   Versions of training and evaluation data, either raw or pre-processed, ideally in conjunction with data versioning,
+-   Hyperparameters giving as much information as possible in order to accurately reproduce experiments across platforms,
+-   Metrics and statistics giving information about the performance of the newly trained model.
 
 ## Key technologies
 
 -   [MLflow](https://mlflow.org/)
 
-    MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualizes model performance in different stages of the ML training lifecycle.
+    MLflow is an open-source experiment tracking platform that stores data and model artifacts, (hyper)parameters, and visualises model performance in different stages of the ML training lifecycle.
     It features a number of pre-configured tracking plugins for popular machine learning libraries called **autologgers**, which allow the collection of metrics and configuration with minimal setup.
     In addition, MLflow comes with a UI that can be used to visualize metadata and results across experiments.
 
