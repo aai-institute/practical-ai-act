@@ -1,4 +1,4 @@
-!!! success "Legal Disclaimer"
+!!! warning "Legal Disclaimer"
 
     The information provided on this website is for informational purposes only and does not constitute legal advice.
     The tools, practices, and mappings presented here reflect our interpretation of the EU AI Act and are intended to support understanding and implementation of trustworthy AI principles.
@@ -14,13 +14,64 @@ The information is applicable to low- and high-risk AI systems, since it provide
 
 ## Syllabus
 
-The project is structured into three key areas, each addressing different aspects of AI system development and compliance with the EU AI Act. The content is not meant to be consumed in linear order.
+This project is structured around three interconnected areas, each addressing a key aspect of AI system development in the context of EU AI Act compliance. The content is modular and designed for flexible navigation—readers are encouraged to explore the connections between legal requirements, engineering practices, and implementation choices.
 
--   [**Showcase**](showcase/index.md): This section introduces a demonstrational use-case that we use to develop the content. It also includes a risk classification according to the EU AI Act.
--   [**Engineering Practice**](engineering-practice/reference-architecture.md): Following software engineering best practice lay the foundation for achieving compliance.
--   [**AI Act Conformity**](conformity/index.md): Background information connecting technical artifacts to the obligations of the AI Act
+A central aim of this work is to bridge the gap between regulatory obligations and technical execution. By making the relationships between legal texts, software engineering practice, and actual implementations explicit, we hope to support teams in building AI systems that are not only effective, but also aligned with compliance goals from the ground up.
 
-## Conventions
+-   [**Showcase**](showcase/index.md): Presents a practical use case that runs throughout the project. It illustrates the application of compliance concepts in context and includes a risk classification based on the EU AI Act.
+-   [**Engineering Practice**](engineering-practice/index.md): Provides a set of software engineering best practices that form the technical foundation for compliance. Each practice is mapped to relevant AI Act provisions to guide implementation.
+-   [**AI Act Conformity**](conformity/index.md): Breaks down the legal requirements of the EU AI Act and connects them to concrete engineering actions, helping translate regulatory language into actionable guidance.
+
+Depending on your background, different entry points may make more sense.
+If you're from a technical or engineering background, you might start with [Engineering Practice](engineering-practice/index.md). If you're approaching from a legal, regulatory, or policy perspective, [AI Act Conformity](conformity/index.md) may be the best starting point.
+If you prefer to see things in context first, the [Showcase](showcase/index.md) offers a concrete example that ties the other sections together.
+
+## Navigation
+
+A key goal of this project is making connections between AI Act requirements and engineering best practices explicit.
+Since these relationships are often many-to-many rather than one-to-one, the website uses multiple navigation tools to help you explore these connections:
+
+-   _Overview Tables_: Both the [Engineering practice](engineering-practice/index.md) and [AI Act Conformity](conformity/index.md) sections contain summary tables showing the relationships between practices and requirements.
+
+-   _Information Boxes_: Each page in these sections includes specialized information boxes:
+    -   Pages in [Engineering practice](engineering-practice/index.md) include [Compliance Information Boxes](#compliance-information-boxes) linking to _relevant AI Act requirements_
+    -   Pages in [AI Act Conformity](conformity/index.md) include [Engineering Information Boxes](#engineering-information-boxes) linking to _relevant engineering practices_
+
+These tools help you navigate the complexity of implementing AI Act requirements through sound engineering practices, allowing you to move seamlessly between legal requirements and their technical implementations.
+
+### Compliance Information Boxes
+
+The engineering practices contain information boxes that provide references to applicable parts of the AI Act, like the one at the bottom of this section.
+This information is intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.
+
+Note that these references do not imply that following a given engineering practice will guarantee compliance with the reference parts of the AI Act.
+
+!!! success "Compliance Info"
+
+    This is an example for the Compliance Info box.
+
+    - **|Art. 14|** (Human Oversight), in particular:
+        - |Art. 14(4)(e)|, continuous monitoring the operation of the systems helps
+            to detect conditions requiring potential intervention
+
+### Engineering Information Boxes
+
+Coming from requirements induced by the AI Act, it is of interest to link
+certain aspects of the respective requirement to corresponding engineering practices.
+This is represented by information boxes, like the one at the bottom of this section.
+You can think of them as the reverse direction of the connections collected
+in [Compliance Information Boxes](#compliance-information-boxes).
+
+Again, following these practices may not guarantee compliance, as there might be
+parts of the requirement, which are not amenable to automation.
+
+!!! info "Engineering Info"
+
+    This is an example for the Compliance Info box.
+
+    - [**Operational Monitoring**](engineering-practice/operational-monitoring.md):
+        -   |Art. 14(4)(e)|, continuous monitoring the operation of the systems helps
+            to detect conditions requiring potential intervention
 
 ### Page Backlinks
 
@@ -30,21 +81,7 @@ You might notice that some pages contain hyperlinks to other pages marked with a
 ![Backlinks](_images/backlinks.png){ align=center }
 </figure>
 
-These links point to other pages on this website that contain links to the current page and help you discover and navigate related content more easily.
-
-### Compliance Information Boxes
-
-The engineering practices contain information boxes that provide references to applicable parts of the AI Act, like the at the bottom of this section.
-This information is intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.
-
-Note that these references do not imply that following a given engineering practice will guarantee compliance with the reference parts of the AI Act.
-
-!!! success "Compliance Info"
-
-    This is an example for the Compliance Info box.
-
-    - **|Art. 1|** (Subject Matter)
-    - **|Art. 2(1)|** (Scope)
+These links point to other pages on this website that contain links to the current page and help you discover and navigate related content more easily, even if it is not mentioned in the info box of the page.
 
 ## What is out of scope?
 
