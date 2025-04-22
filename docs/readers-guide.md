@@ -57,7 +57,7 @@ Note that these references do not imply that following a given engineering pract
             to detect conditions requiring potential intervention
 
 ### Engineering Information Boxes
-Coming from requirements induced by the AI Act, it is off interest to link
+Coming from requirements induced by the AI Act, it is of interest to link
 certain aspects of the respective requirement to corresponding engineering practices.
 This is represented by information boxes, like the one at the bottom of this section.
 You can think of them as the reverse direction of the connections collected
