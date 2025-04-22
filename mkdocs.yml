@@ -166,3 +166,7 @@ extra:
 extra_css:
   - _styles/extra.css
   - _styles/theme.css
+
+extra_javascript:
+  # TODO: Fix for problems with privacy plugin and site_url set (see https://github.com/squidfunk/mkdocs-material/issues/3742)
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
