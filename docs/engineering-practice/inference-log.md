@@ -94,10 +94,12 @@ The middleware should intercept all incoming inference requests, log the relevan
 When using the FastAPI, the inference log can be injected as a _dependency_ into the application's route handlers or other dependencies.
 By further encapsulating the interface to the model itself in another dependency, the inference log can be easily integrated into the application's request handling pipeline.
 
+<figure>
 ```mermaid
 flowchart TD
     A[Route Handler] --> B[Model Inference Dependency] --> C[Inference Log Dependency]
 ```
+</figure>
 
 ## Key Technologies
 

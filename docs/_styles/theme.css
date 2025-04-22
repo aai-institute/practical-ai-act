@@ -14,6 +14,10 @@
 
   --card-bg-color: var(--md-primary-bg-color);
   --bg-gradient-color: rgba(255, 255, 255, 70%);
+
+  --md-mermaid-node-fg-color: var(--md-primary-fg-color--dark);
+  --md-mermaid-node-bg-color: #abcbff; /* derived from --md-primary-fg-color */
+  --md-mermaid-edge-color: var(--md-primary-fg-color--dark);
 }
 
 /* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
