@@ -28,18 +28,16 @@ If you prefer to see things in context first, the [Showcase](showcase/index.md) 
 
 ## Navigation
 
-Due to the connections between requirements originating from the AI Act and engineering best
-practice being a core value of this project, we want to provide an easy navigation
-between these sections. As there is no clear one-to-one relation (it is more many-to-one or one-to-many) between requirements and engineering practice, the challenge is
-to find a good representation, which makes it easier to handle the complexity.
-If you view this as a network and the practices and requirements
-are being the knots, then it is import to make the edges between those explicit.
+A key goal of this project is making connections between AI Act requirements and engineering best practices explicit.
+Since these relationships are often many-to-many rather than one-to-one, the website uses multiple navigation tools to help you explore these connections:
 
-On the section pages [Engineering practice](engineering-practice/index.md) resp. [AI Act Conformity](conformity/index.md), you will find overview tables, which summarize
-these connections. Moreover, on every page in these sections you find info boxes
-([Compliance Information Boxes](#compliance-information-boxes) in the [Engineering practice](engineering-practice/index.md) section, resp. [Engineering Information Boxes](#engineering-information-boxes) in the [AI Act Conformity](conformity/index.md) section) giving more details on the linking.
+-   _Overview Tables_: Both the [Engineering practice](engineering-practice/index.md) and [AI Act Conformity](conformity/index.md) sections contain summary tables showing the relationships between practices and requirements.
 
+-   _Information Boxes_: Each page in these sections includes specialized information boxes:
+    -   Pages in [Engineering practice](engineering-practice/index.md) include [Compliance Information Boxes](#compliance-information-boxes) linking to _relevant AI Act requirements_
+    -   Pages in [AI Act Conformity](conformity/index.md) include [Engineering Information Boxes](#engineering-information-boxes) linking to _relevant engineering practices_
 
+These tools help you navigate the complexity of implementing AI Act requirements through sound engineering practices, allowing you to move seamlessly between legal requirements and their technical implementations.
 
 ### Compliance Information Boxes
 
@@ -57,6 +55,7 @@ Note that these references do not imply that following a given engineering pract
             to detect conditions requiring potential intervention
 
 ### Engineering Information Boxes
+
 Coming from requirements induced by the AI Act, it is of interest to link
 certain aspects of the respective requirement to corresponding engineering practices.
 This is represented by information boxes, like the one at the bottom of this section.
