@@ -30,7 +30,7 @@ The sum of all choices for the training of an AI model is often called an **expe
 Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike. Moreover, tracking all this information is necessary
 to achieve **reproducibility** of an experiment.
 
-A lot of ML/AI projects therefore use some form of _experiment tracking_ solution to help with visualizing experiments, evaluate model performance, and compare the performance in different experiments.
+A lot of ML/AI projects therefore use some form of _experiment tracking_ solution to help with visualizing experiments, evaluating model performance, and comparing the performance between different experiments.
 
 ## Implementation notes
 
@@ -40,6 +40,10 @@ This typically includes, but is not limited to,
 -   versions of training and evaluation data, either raw or pre-processed, ideally in conjunction with data versioning,
 -   hyperparameters giving as much information as possible in order to accurately reproduce experiments across platforms,
 -   metrics and statistics giving information about the performance of the newly trained model.
+
+Additionally, many experiment trackers contain functionality to directly upload (or "push") models and training artifacts to remote storage, establishing a link between written artifacts and model versions for easy accessibility.
+This aspect is important when setting up a [model registry](model-registry.md) to keep track of the history of your trained models.
+In general, many experiment trackers can also function as model registries at the same time.
 
 ## Key technologies
 

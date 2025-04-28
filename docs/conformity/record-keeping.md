@@ -14,6 +14,7 @@
     - [Orchestration]:
         - |Art. 12(2)(a)|: Reconstructing a complete model generation process through usage
             of a unique run id
+    <!-- TODO: Add a bullet for model registry --> 
 
 
 <!-- Reference Links -->
