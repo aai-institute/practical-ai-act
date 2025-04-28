@@ -22,5 +22,14 @@ As such, it might be more sensible to interpret this article not as a requiremen
 In general, a lot of the responsibilities of the AI system implementer depends on the interpretation of the word "reasonable". Only the risks that can be reasonably estimated (and mitigated) need to be guarded against.
 Since the threat vectors of each system are different, it is in general not feasible to automate these risk assessments.
 
+## Relation to other Articles
+
+The most important articles related to Article 9 are:
+
+- |Art. 14| (Human Oversight): Risks should be assessed, evaluated, and mitigated by knowledgeable personnel.
+- |Art. 15| (Accuracy, Robustness and Cybersecurity): As unauthorized access to AI systems and hardware is a great risk,
+    it must be continuously assessed.
+
+
 <!-- Reference Links -->
 [Containerization]: ../engineering-practice/containerization.md
