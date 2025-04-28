@@ -1,5 +1,7 @@
 ---
 tags:
+    - Art. 11
+    - Art. 12
     - Art. 13
     - Art. 14
     - Art. 15
@@ -12,8 +14,10 @@ tags:
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
     - **|Art. 11(1)|** in conjunction with **|Annex IV|** (Technical Documentation), in particular:
         - |Annex IV(3)|: Documentation of accuracy measures on a reference dataset as an expected level of accuracy
-    - |Art. 13(3)(b)(ii)|, |Art. 15(3)| experiment tracking captures used performance metrics and levels of accuracy
-    - |Art. 14(4)(a)|, understand the limitation of the underlying model by
+    - **|Art. 12|**, in particular:
+        - |Art. 12(2)(a)|: Backtracking to used training data
+    - **|Art. 13(3)(b)(ii)|**, **|Art. 15(3)|** experiment tracking captures used performance metrics and levels of accuracy
+    - **|Art. 14(4)(a)|**, understand the limitation of the underlying model by
             interpreting performance on reference data
 
 ## Motivation
@@ -23,8 +27,10 @@ The outputs that a trained model generates depend on many factors, like which ve
 what configurable attributes (also called _hyperparameters_) were used for the training, but also training techniques used like batching, which optimization target, and many more.
 
 The sum of all choices for the training of an AI model is often called an **experiment**.
-Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike.
-A lot of ML/AI projects therefore use some form of _experiment tracking_ solution to help with visualizing experiments, evaluate model performance, and compare the performance in different experiments.
+Consequently, with so many moving parts and choices in an experiment, extensive documentation is needed to make training workflows transparent to practitioners, decision makers, and users alike. Moreover, tracking all this information is necessary
+to achieve **reproducibility** of an experiment.
+
+A lot of ML/AI projects therefore use some form of _experiment tracking_ solution to help with visualizing experiments, evaluating model performance, and comparing the performance between different experiments.
 
 ## Implementation notes
 
@@ -35,7 +41,13 @@ This typically includes, but is not limited to,
 -   hyperparameters giving as much information as possible in order to accurately reproduce experiments across platforms,
 -   metrics and statistics giving information about the performance of the newly trained model.
 
+Additionally, many experiment trackers contain functionality to directly upload (or "push") models and training artifacts to remote storage, establishing a link between written artifacts and model versions for easy accessibility.
+This aspect is important when setting up a [model registry](model-registry.md) to keep track of the history of your trained models.
+In general, many experiment trackers can also function as model registries at the same time.
+
 ## Key technologies
+
+--8<-- "docs/engineering-practice/_key-technologies-info.partial"
 
 -   [MLflow](https://mlflow.org/)
 
