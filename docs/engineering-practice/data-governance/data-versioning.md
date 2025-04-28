@@ -64,9 +64,9 @@ A data version control system should be accessible for all developers, and host 
 In addition to availability, security, and fault tolerance, it is necessary that the data version control system can be easily interfaced with in AI application code.
 This usually means that a selection of API clients or SDKs is available for a variety of programming languages, which allows developers to efficiently interface with the data VCS.
 
-4. **Security**
+4. **Security.**
 
-A data version control system should implement role-based access control (RBAC) and restrict access to data to authorized personal and systems only.
+A data version control system should implement role-based access control (RBAC) and restrict access to data to authorized personnel and systems only.
 
 ## Interoperability
 
