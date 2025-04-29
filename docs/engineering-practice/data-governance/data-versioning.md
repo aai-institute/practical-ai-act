@@ -24,7 +24,7 @@ In the software engineering world, distributed version control systems (VCS) hav
 Through a set of basic abstractions, they provide bookkeeping powers by means of unique and immutable references, distributed storage for work sharing, and a graph-based history building for detailed information keeping.
 Consequently, _data version control_ or _data versioning_ systems can be thought of as the similar approach to all data _artifacts_ produced by your machine learning systems.
 
-In addition, a data version control system should come with security features such as role-based access control (RBAC) and restrict access to data to authorized personal and systems only.
+In addition, a data version control system should come with security features such as role-based access control (RBAC) and restrict access to data to authorized personnel and systems only. This is a requirement of |Art. 15(5)| (measures to prevent manipulation of the training data set).
 
 ## Implementation notes
 
@@ -79,8 +79,8 @@ A data version control system should implement role-based access control (RBAC) 
 ## Usage considerations
 
 While data version control and "regular" version control sound similar, and the general operational model is the same, data versioning systems face unique challenges.
-Most importantly, data assets can become very large in size, which makes storing "whole" versions of data sets infeasible, unless very small data sets are used.
-Furthermore, data comes in lots of different formats (images, tables, videos, ...), which makes it harder to test for changes (commonly called "diffing").
+Most importantly, data assets can become very large in size, which makes storing entire data sets for each revision infeasible because of duplication, unless very small data sets are used.
+Furthermore, data comes in lots of different formats, both structured (tables) or unstructured (raw text, images, videos), which makes it harder to test for changes (commonly called "diffing").
 As such, it is a hard problem to design a data version control system capable of efficiently computing changes between data sets, while keeping the storage footprint of all data set diffs small.
 
 In general, the following considerations can help you decide how to make good use of your data version control system:
@@ -90,6 +90,7 @@ In general, the following considerations can help you decide how to make good us
 * As a rule of thumb, create versions when initially uploading data, when updating (new data, corrections, imputation), or after applying preprocessing steps (evaluate based on compute vs. storage requirements).
 * For other reasons (experimentation on a new model, feature engineering, subsampling, ...), data versions can also be created to simplify bookkeeping, and to provide a clear relation between different use cases and their data.
 * Use scheduled jobs (garbage collection) to remove stale versions, free up storage space, and declutter the version control view.
+* When available, use auditing and annotation features to attach metadata to revisions, enabling you to keep track of modifications and their authors over time.
 
 ## Key technologies
 
