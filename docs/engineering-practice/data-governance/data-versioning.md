@@ -35,6 +35,7 @@ To add data versioning to a machine learning project, it is important to figure 
 A suitable data version control system needs to accommodate multiple engineers working simultaneously on different versions of the data, and ensure that changes made by one engineer do not invalidate the work of another.
 This can be done for example by using a _branch_ workflow, where each person has their own siloed copy of the data, and can make changes to it without changing the canonical version (the "main" branch in this model).
 
+<figure markdown="span">
 ```mermaid
 %%{ init: {'theme': 'base'} }%%
 ---
@@ -52,8 +53,9 @@ gitGraph
    commit
    commit
 ```
+  <figcaption>A branching data version control approach, with commits (immutable snapshots of the data) shown as dots.</figcaption>
+</figure>
 
-_Figure 1: A branching data version control approach, with commits (immutable snapshots of the data) shown as dots._
 
 2. **Distributed storage.**
 
