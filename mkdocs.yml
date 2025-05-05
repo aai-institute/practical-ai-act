@@ -46,7 +46,6 @@ nav:
       - conformity/accuracy-robustness-cybersecurity.md
   - Tags:
       - tags.md
-  - acknowledgments.md
 
 plugins:
   - callouts
