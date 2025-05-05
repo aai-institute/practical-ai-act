@@ -3,21 +3,22 @@ hide:
     - toc
 ---
 
-| Engineering Practice     | Related AI Act Articles                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Bias Mitigation]        | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Data and Data Governance]</span><span style="flex: 1 1 20%;">          [Accuracy, Robustness<br>and Cybersecurity]</span></div>                                                                                                                                                                                                          |
-| [Containerization]       | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Accuracy, Robustness<br>and Cybersecurity]</span></div>                                                                                                                                                                                                                                                                                  |
-| [Data Quality]           | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Data and Data Governance]</span></div>                                                                                                                                                                                                                                                                                                   |
-| [Data Versioning]        | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Data and Data Governance]</span><span style="flex: 1 1 20%;">          [Record-Keeping]</span></div>                                                                                                                                                                                                                                     |
-| [Experiment Tracking]    | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Technical Documentation]</span><span style="flex: 1 1  20%;"> [Record-Keeping]</span><span style="flex: 1 1 25%;"> [Transparency and<br>Provision of Information<br>to the Deployers]</span><span style="flex: 1 1 20%;"> [Human Oversight]</span><span style="flex: 1 1 20%;"> [Accuracy, Robustness<br>and Cybersecurity]</span></div> |
-| [Explainability]         | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 20%;">          [Technical Documentation]</span><span style="flex: 1 1 25%;"> [Transparency and<br>Provision of Information<br>to the Deployers]</span><span style="flex: 1 1 20%;"> [Human Oversight]</span></div>                                                                                                                                       |
-| [Inference Log]          | <div style="display: flex; flex-wrap: wrap; gap: 20px;"></span><span style="flex: 1 1 20%;"> [Record-Keeping]</span></div>                                                                                                                                                                                                                                                                                                               |
-| [Model Monitoring]       | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 25%;"> [Human Oversight]</span><span style="flex: 1 1 20%;"> [Accuracy, Robustness<br>and Cybersecurity]</span></div>                                                                                                                                                                                                                                     |
-| [Model Registry]         | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 25%;"> [Technical Documentation]</span><span style="flex: 1 1 20%;"> [Transparency and<br>Provision of Information<br>to the Deployers]</span></div>                                                                                                                                                                                                      |
-| [Model Serving]          | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 25%;"> [Accuracy, Robustness<br>and Cybersecurity]</span></div>                                                                                                                                                                                                                                                                                           |
-| [Operational Monitoring] | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 25%;"> [Transparency and<br>Provision of Information<br>to the Deployers]</span><span style="flex: 1 1 25%;"> [Human Oversight]</span><span style="flex: 1 1 20%;"> [Accuracy, Robustness<br>and Cybersecurity]</span></div>                                                                                                                              |
-| [Orchestration]          | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 25%;"> [Record-Keeping]</span></div>                                                                                                                                                                                                                                                                                                                      |
-<!-- Reference Links -->
+| Engineering Practice     | Related AI Act Articles |
+|--------------------------|------------------------|
+| [Bias Mitigation]        | <div style="display: flex; flex-direction: column; gap: 8px;">[Data and Data Governance]<br>[Accuracy, Robustness and Cybersecurity]</div> |
+| [Containerization]       | <div style="display: flex; flex-direction: column; gap: 8px;">[Accuracy, Robustness and Cybersecurity]</div> |
+| [Data Quality]           | <div style="display: flex; flex-direction: column; gap: 8px;">[Data and Data Governance]</div> |
+| [Data Versioning]        | <div style="display: flex; flex-direction: column; gap: 8px;">[Data and Data Governance]<br>[Record-Keeping]</div> |
+| [Experiment Tracking]    | <div style="display: flex; flex-direction: column; gap: 8px;">[Technical Documentation]<br>[Record-Keeping]<br>[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
+| [Explainability]         | <div style="display: flex; flex-direction: column; gap: 8px;">[Technical Documentation]<br>[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]</div> |
+| [Inference Log]          | <div style="display: flex; flex-direction: column; gap: 8px;">[Record-Keeping]</div> |
+| [Model Monitoring]       | <div style="display: flex; flex-direction: column; gap: 8px;">[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
+| [Model Registry]         | <div style="display: flex; flex-direction: column; gap: 8px;">[Technical Documentation]<br>[Transparency and Provision of Information to the Deployers]</div> |
+| [Model Serving]          | <div style="display: flex; flex-direction: column; gap: 8px;">[Accuracy, Robustness and Cybersecurity]</div> |
+| [Operational Monitoring] | <div style="display: flex; flex-direction: column; gap: 8px;">[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
+| [Orchestration]          | <div style="display: flex; flex-direction: column; gap: 8px;">[Record-Keeping]</div> |
+
+
 [Inference Log]: inference-log.md
 [Model Monitoring]: model-monitoring.md
 [Model Registry]: model-registry.md
@@ -30,12 +31,10 @@ hide:
 [Data Versioning]: data-governance/data-versioning.md
 [Operational Monitoring]: operational-monitoring.md
 [Orchestration]: orchestration.md
-
 [Technical Documentation]: ../conformity/technical-documentation.md
-[Transparency and<br>Provision of Information<br>to the Deployers]: ../conformity/instructions-for-use.md
+[Transparency and Provision of Information to the Deployers]: ../conformity/instructions-for-use.md
 [Human Oversight]: ../conformity/human-oversight.md
 [Data and Data Governance]: ../conformity/data-governance.md
 [Record-Keeping]: ../conformity/record-keeping.md
-[Accuracy, Robustness<br>and Cybersecurity]: ../conformity/accuracy-robustness-cybersecurity.md
+[Accuracy, Robustness and Cybersecurity]: ../conformity/accuracy-robustness-cybersecurity.md
 [Risk Management System]: ../conformity/risk-management-system.md
-
