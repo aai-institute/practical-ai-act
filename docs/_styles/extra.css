@@ -116,3 +116,9 @@ table {
     }
   }
 }
+
+.engineering-practice-table-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
