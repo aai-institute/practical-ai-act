@@ -1,25 +1,28 @@
 ---
 hide:
-- toc
+    - toc
 ---
-
 
 # Cross-Reference: AI Act Articles to Engineering Practices and System Components
 
+<!-- List of practices is wrapped automatically through CSS, no need for manual formatting -->
 
-| Article                                                                            | Relevant Engineering Practices                                                                                                                                                                                                                                                                                                                                                                                | Automation Feasibility                                                                                               |
-|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
-| **Art. 9**:<br>[Risk Management System]                                            |                                                                                                                                                                                                                                                                                                                                                                                                               | 🔴 Low<br>*Requires human judgment for risk assessment, <br>but frameworks can partially automate the process.*      |
-| **Art. 10**:<br>[Data and Data Governance]                                         | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;">          [Data Quality]</span><span style="flex: 1 1 45%;"> [Data Versioning]</span><span style="flex: 1 1 45%;"> [Bias Mitigation]</span></div>                                                                                                                                                                        | 🟢 High<br>*Data governance processes can be highly automated <br>with validation pipelines and quality checks.*     |
-| **Art. 11**:<br>[Technical Documentation]                                          | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;">      [Model Registry]  </span></span><span style="flex: 1 1 45%;"> [Experiment Tracking]</span><span style="flex: 1 1 45%;"> [Explainability]</span>                                                                                                                                                                    | 🔴 Low<br>*Documentation generation can be partially automated, <br>but requires human input for context.*           |
-| **Art. 12**:<br>[Record-Keeping]                                                   | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;">  [Inference Log]</span><span style="flex: 1 1 45%;"> [Data Versioning]  </span><span style="flex: 1 1 45%;"> [Experiment Tracking]  </span><span style="flex: 1 1 45%;"> [Orchestration]  </span>                                                                                                                       | 🟢 High<br>*Logging and record-keeping are highly automatable <br>through dedicated services.*                       |
-| **Art. 13**:<br>[Transparency and<br>Provision of Information<br>to the Deployers] | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;"> [Explainability]</span><span style="flex: 1 1 45%;"> [Experiment Tracking]</span><span style="flex: 1 1 45%;">      [Model Registry]  </span></span><span style="flex: 1 1 45%;"> [Operational Monitoring]</span>                                                                                                       | 🟠 Medium<br>*Automated generation of model cards and explanations <br>is feasible, but requires validation.*        |
-| **Art. 14**:<br>[Human Oversight]                                                  | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;"> [Experiment Tracking]</span><span style="flex: 1 1 45%;"> [Explainability]</span><span style="flex: 1 1 45%;"> [Model Monitoring]</span><span style="flex: 1 1 45%;"> [Operational Monitoring]</span></div>                                                                                                             | 🔴 Low<br>*Human oversight is, by definition, human-centered, <br>though tools can support the process.*             |br> [Operational Monitoring] | 🔴 Low<br>*Human oversight is, by definition, human-centered, <br>though tools can support the process.*                        |
-| **Art. 15**:<br>[Accuracy, Robustness<br>and Cybersecurity]                        | <div style="display: flex; flex-wrap: wrap; gap: 20px;"><span style="flex: 1 1 45%;"> [Experiment Tracking]</span><span style="flex: 1 1 45%;"> [Containerization]</span><span style="flex: 1 1 45%;"> [Bias Mitigation]</span><span style="flex: 1 1 45%;"> [Model Monitoring]</span><span style="flex: 1 1 45%;"> [Operational Monitoring]</span><span style="flex: 1 1 45%;"> [Model Serving]</span></div> | 🟢 High<br>*Testing for accuracy and robustness can be largely automated, <br>but security requires human analysis.* |
+/// html | div.conformity-table
 
+| Article                                                                        | Relevant Engineering Practices                                                                                                     | Automation Feasibility                                                                                           |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Art. 9**:<br>[Risk Management System][]                                      |                                                                                                                                    | 🔴 Low<br>_Requires human judgment for risk assessment, but frameworks can partially automate the process._      |
+| **Art. 10**:<br>[Data and Data Governance][]                                   | [Data Quality][] [Data Versioning][] [Bias Mitigation][]                                                                           | 🟢 High<br>_Data governance processes can be highly automated with validation pipelines and quality checks._     |
+| **Art. 11**:<br>[Technical Documentation][]                                    | [Model Registry][] [Experiment Tracking][] [Explainability][]                                                                      | 🔴 Low<br>_Documentation generation can be partially automated, but requires human input for context._           |
+| **Art. 12**:<br>[Record-Keeping][]                                             | [Inference Log][] [Data Versioning][] [Experiment Tracking][] [Orchestration][]                                                    | 🟢 High<br>_Logging and record-keeping are highly automatable through dedicated services._                       |
+| **Art. 13**:<br>[Transparency and Provision of Information to the Deployers][] | [Explainability][] [Experiment Tracking][] [Model Registry][] [Operational Monitoring][]                                           | 🟠 Medium<br>_Automated generation of model cards and explanations is feasible, but requires validation._        |
+| **Art. 14**:<br>[Human Oversight][]                                            | [Experiment Tracking][] [Explainability][] [Model Monitoring][] [Operational Monitoring][]                                         | 🔴 Low<br>_Human oversight is, by definition, human-centered, though tools can support the process._             |
+| **Art. 15**:<br>[Accuracy, Robustness and Cybersecurity][]                     | [Experiment Tracking][] [Containerization][] [Bias Mitigation][] [Model Monitoring][] [Operational Monitoring][] [Model Serving][] | 🟢 High<br>_Testing for accuracy and robustness can be largely automated, but security requires human analysis._ |
 
+///
 
 <!-- Reference Links -->
+
 [Inference Log]: ../engineering-practice/inference-log.md
 [Model Monitoring]: ../engineering-practice/model-monitoring.md
 [Model Registry]: ../engineering-practice/model-registry.md
@@ -32,11 +35,10 @@ hide:
 [Data Versioning]: ../engineering-practice/data-governance/data-versioning.md
 [Operational Monitoring]: ../engineering-practice/operational-monitoring.md
 [Orchestration]: ../engineering-practice/orchestration.md
-
 [Technical Documentation]: technical-documentation.md
-[Transparency and<br>Provision of Information<br>to the Deployers]: instructions-for-use.md
+[Transparency and Provision of Information to the Deployers]: instructions-for-use.md
 [Human Oversight]: human-oversight.md
 [Data and Data Governance]: data-governance.md
 [Record-Keeping]: record-keeping.md
-[Accuracy, Robustness<br>and Cybersecurity]: accuracy-robustness-cybersecurity.md
+[Accuracy, Robustness and Cybersecurity]: accuracy-robustness-cybersecurity.md
 [Risk Management System]: risk-management-system.md
