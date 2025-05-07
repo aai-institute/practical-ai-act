@@ -40,7 +40,8 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
    To keep track of data artifacts across the machine learning lifecycle, we use lakeFS, a distributed data version control solution.
    That way, we can clearly separate different versions of data, and annotate them with metadata and information, which helps to create a clear overview of the project.
-   We choose to run lakeFS on top of MinIO, an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models.
+   We choose to run lakeFS on top of MinIO, an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models. 
+   It can also be deployed locally, which means this example can be run self-contained without the need for cloud infrastructure.
 
    - Raw data is ingested and version-controlled using lakeFS.
    - Processed data is also stored and versioned after preprocessing.
@@ -48,13 +49,13 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Model Training Pipeline (Dagster)
 
-   To express our model training strategy, we use the machine learning workflow or pipeline approach. This includes expressing the different steps (data sourcing, preprocessing, model training, ...) as tasks in a directed acyclic graph (DAG).
-   In addition to this graph view, we get some more benefits from workflow orchestration, among them better observability (logging), scheduled jobs, caching steps and outputs, and a dashboard for powerful visualizations of pipeline runs.
-   We each assume the data processing, model training, and serving/deployment to be independent workloads, leading to one pipeline for each of them.
+   We use a machine learning pipeline approach to orchestrate the different steps (data sourcing, preprocessing, model training, ...) as tasks in a workflow.
+   In addition to a graph view, we get some more benefits from workflow orchestration, among them better observability (logging), scheduled jobs, caching steps and outputs, and a dashboard for powerful visualizations of pipeline runs.
+   We each assume the data processing, model training, and serving/deployment to be independent parts of the machine learning lifecycle, and model each of them as one pipeline.
 
    The data processing pipeline handles the following steps:
 
-   - Data filtering
+   - Data preprocessing and cleaning
    - Feature engineering
 
    The model training pipeline contains the following steps:
@@ -65,36 +66,42 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
    The serving pipeline contains these steps:
 
-   - Versioning and packaging of deployments into Docker containers
-   - Creating a scalable inference server for a model
-   - Giving fairness information about a prediction
-   - Logging predictions to analyze performance for data drift, degradations, and error rates.
+   - Versioning and packaging of deployments into container images
+   - Giving fairness information on the model
+   - Preparing auxiliary models and datasets (using NannyML) to analyze performance for data drift, degradations, and error rates.
 
 ## Model Registry and Tracking (MLflow)
 
    To get an overview on the performance of our trained models, and to keep track of our model artifacts in a registry, we use MLflow, an open-source experiment tracking platform.
-   This provides us with out-of-the-box visualizations for our metrics of interest, as well as a central storage to retrieve model versions from. As mentioned above, MLflow storage is kept in MinIO.
+   This provides us with out-of-the-box visualizations for our metrics of interest, as well as a central storage to retrieve model versions from.
+   As mentioned above, MLflow storage is kept in MinIO.
 
    MLflow covers the following points of our ML experiment:
 
-   - Accuracy & fairness metrics tracking
+   - Tracking of:
+     - Training environment
+     - Model (hyper-)parameter
+     - Accuracy & fairness metrics
    - A central model artifact registry
 
 ## Deployment Infrastructure (Docker + MLServer)
 
-   To deploy our models, we use a combination of Docker containers and MLServer, an open-source inference server with a REST/gRPC interface for deployed models.
+   To deploy our models we use container images with MLserver, an open-source machine learning inference server with standardized REST/gRPC APIs.
    MLServer is, at the very basic level, a combination of runtime and server components, the former of which is a modular implementation of a model serving for a specific ML framework, like scikit-learn and xgboost.
-   The server component contains functionality to host multiple versions of the same model kind, as well as the REST/gRPC interface implementing the V2 Inference Protocol.
+   The server component contains functionality to host multiple versions of the same model kind, as well as the REST/gRPC interface implementing the Open Inference Protocol.
 
-   Additionally, it enables the followin features for our serving pipeline:
+   Additionally, it enables the following features for our serving pipeline:
 
-   - Trained models are packaged as Docker containers using MLServer-compatible images, and then deployed to a scalable inference endpoint, allowing real-time access for prediction.
-   - The endpoint supports the output of SHAP values to indicate fairness evaluation of predictions (see below).
+   - Creating a scalable inference server for a model.
+   - Trained models are packaged as container images and then deployed to provide a scalable inference endpoint, allowing real-time access for prediction.
+   - The endpoint supports the output of SHAP values to indicate fairness evaluation of predictions through a custom MLserver runtime (see below).
 
 ## Application Interface (FastAPI)
 
-   Our ML models are exposed as a REST API built with FastAPI. By design, it is a middleware between the client and the aforementioned inference server, handling additional tasks around the inference request.
-   Importantly, due to provisions in the AI Act, we need to log every request and response in a database. In addition to that, we provide an additional fairness assessment to explain the user how each feature contributes to their salary band prediction.
+   Our ML models are used by a REST API service built with FastAPI that represents an HR assistant system. 
+   By design, it acts as a middleware between the client and the aforementioned inference server, handling additional tasks around the inference request.
+   Importantly, due to provisions in the AI Act ensuring the right to an explanation of AI system predictions, we need to log every request and response in a database.
+   In addition to that, we provide an additional fairness assessment to explain the user how each feature contributes to their salary band prediction.
 
    The most important aspects of the API:
 
@@ -102,16 +109,16 @@ document.getElementById('svgFrame').addEventListener('load', function() {
    - Sending data to the inference endpoint, either as a single or batch request.
    - Returning the predicted salary band and explanation of the prediction (i.e. top contributing features).
 
-## Inference Logging Service
+## Inference Logging
 
    Due to record-keeping provisions in the AI Act, we need to log inference requests and responses to ensure traceability and an overview of failures and errors throughout the system lifetime.
    In this example, all inference requests and responses are logged into an PostgreSQL database. This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.
 
 ## Post-deployment Monitoring
 
-   After deployment, we use a cloud-native observation stack to keep track of model performance, data drift, and errors during serving operations.
+   After deployment, we use an observability tool stack to keep track of model performance, data drift, and operational metrics like HTTP errors or request latencies.
    This stack consists of Grafana, Prometheus, and NannyML, where the former two are responsible for streaming logs and metrics, and for visualizing them, respectively.
-   NannyML is our data drift detection tool of choice, allowing us to alert on triggers set to mark unacceptable performance losses.
+   NannyML is our data drift detection and model performance estimation tool of choice, allowing us to alert on triggers set to mark unacceptable performance losses.
 
    To summarize, below are the most important points of our post-deployment monitoring service:
 
