@@ -117,8 +117,16 @@ table {
   }
 }
 
-.engineering-practice-table-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.engineering-practice-table table tr {
+  /* First column: Name of the practice */
+  td:nth-child(1) {
+    font-weight: bold;
+  }
+
+  /* Second column: Links to articles, wrapped in <a> */
+  td:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }

@@ -95,6 +95,7 @@ markdown_extensions:
       permalink: true
       toc_depth: 3
   # pymdown-extensions: https://facelessuser.github.io/pymdown-extensions/
+  - pymdownx.blocks.html
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji

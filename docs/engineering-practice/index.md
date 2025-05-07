@@ -3,21 +3,24 @@ hide:
     - toc
 ---
 
-| Engineering Practice     | Related AI Act Articles |
-|--------------------------|------------------------|
-| [Bias Mitigation]        | <div class="engineering-practice-table-cell">[Data and Data Governance]<br>[Accuracy, Robustness and Cybersecurity]</div> |
-| [Containerization]       | <div class="engineering-practice-table-cell">[Accuracy, Robustness and Cybersecurity]</div> |
-| [Data Quality]           | <div class="engineering-practice-table-cell">[Data and Data Governance]</div> |
-| [Data Versioning]        | <div class="engineering-practice-table-cell">[Data and Data Governance]<br>[Record-Keeping]</div> |
-| [Experiment Tracking]    | <div class="engineering-practice-table-cell">[Technical Documentation]<br>[Record-Keeping]<br>[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
-| [Explainability]         | <div class="engineering-practice-table-cell">[Technical Documentation]<br>[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]</div> |
-| [Inference Log]          | <div class="engineering-practice-table-cell">[Record-Keeping]</div> |
-| [Model Monitoring]       | <div class="engineering-practice-table-cell">[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
-| [Model Registry]         | <div class="engineering-practice-table-cell">[Technical Documentation]<br>[Transparency and Provision of Information to the Deployers]</div> |
-| [Model Serving]          | <div class="engineering-practice-table-cell">[Accuracy, Robustness and Cybersecurity]</div> |
-| [Operational Monitoring] | <div class="engineering-practice-table-cell">[Transparency and Provision of Information to the Deployers]<br>[Human Oversight]<br>[Accuracy, Robustness and Cybersecurity]</div> |
-| [Orchestration]          | <div class="engineering-practice-table-cell">[Record-Keeping]</div> |
+/// html | div.engineering-practice-table
 
+| Engineering Practice     | Related AI Act Articles                                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Bias Mitigation]        | [Data and Data Governance] [Accuracy, Robustness and Cybersecurity]                                                                                                |
+| [Containerization]       | [Accuracy, Robustness and Cybersecurity]                                                                                                                           |
+| [Data Quality]           | [Data and Data Governance]                                                                                                                                         |
+| [Data Versioning]        | [Data and Data Governance] [Record-Keeping]                                                                                                                        |
+| [Experiment Tracking]    | [Technical Documentation] [Record-Keeping] [Transparency and Provision of Information to the Deployers] [Human Oversight] [Accuracy, Robustness and Cybersecurity] |
+| [Explainability]         | [Technical Documentation] [Transparency and Provision of Information to the Deployers] [Human Oversight]                                                           |
+| [Inference Log]          | [Record-Keeping]                                                                                                                                                   |
+| [Model Monitoring]       | [Human Oversight] [Accuracy, Robustness and Cybersecurity]                                                                                                         |
+| [Model Registry]         | [Technical Documentation] [Transparency and Provision of Information to the Deployers]                                                                             |
+| [Model Serving]          | [Accuracy, Robustness and Cybersecurity]                                                                                                                           |
+| [Operational Monitoring] | [Transparency and Provision of Information to the Deployers] [Human Oversight] [Accuracy, Robustness and Cybersecurity]                                            |
+| [Orchestration]          | [Record-Keeping]                                                                                                                                                   |
+
+///
 
 [Inference Log]: inference-log.md
 [Model Monitoring]: model-monitoring.md
