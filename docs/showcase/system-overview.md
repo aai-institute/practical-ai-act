@@ -38,9 +38,9 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Data Layer (lakeFS + MinIO)
 
-   To keep track of data artifacts across the machine learning lifecycle, we use lakeFS, a distributed data version control solution.
+   To keep track of data artifacts across the machine learning lifecycle, we use [lakeFS](https://lakefs.io), a distributed data version control solution.
    That way, we can clearly separate different versions of data, and annotate them with metadata and information, which helps to create a clear overview of the project.
-   We choose to run lakeFS on top of MinIO, an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models. 
+   We choose to run lakeFS on top of [MinIO](https://min.io), an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models. 
    It can also be deployed locally, which means this example can be run self-contained without the need for cloud infrastructure.
 
    - Raw data is ingested and version-controlled using lakeFS.
@@ -75,7 +75,7 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Model Registry and Tracking (MLflow)
 
-   To get an overview of all model training runs and their outcomes, we use MLflow, an open-source experiment tracking platform.
+   To get an overview of all model training runs and their outcomes, we use [MLflow](https://mlflow.org/), an open-source experiment tracking platform.
    It also allows us to keep track of our model artifacts in a versioned registry, providing a direct link between runs and their resulting models.
    In this showcase, MLflow uses MinIO for persistent storage of artifacts.
 
@@ -89,7 +89,7 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Deployment Infrastructure (Docker + MLServer)
 
-   To deploy our models we use container images with MLserver, an open-source machine learning inference server with standardized REST/gRPC APIs.
+   To deploy our models we use container images with [MLserver](https://mlserver.readthedocs.io), an open-source machine learning inference server with standardized REST/gRPC APIs.
    MLServer is, at the very basic level, a combination of runtime and server components, the former of which is a modular implementation of a model serving for a specific ML framework, like scikit-learn and xgboost.
    The server component contains functionality to host multiple versions of the same model kind, as well as the REST/gRPC interface implementing the Open Inference Protocol.
 
@@ -101,7 +101,7 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Business application (FastAPI)
 
-   The business logic of the HR assistant system in the showcase is implemented as a REST API service built with FastAPI.
+   The business logic of the HR assistant system in the showcase is implemented as a REST API service built with [FastAPI](https://fastapi.tiangolo.com).
    In order to make predictions, this service calls the aforementioned inference server, and handles additional tasks around the inference request:
    In order to fulfill the record-keeping requirements of the AI Act, all inference requests and responses are logged to a database (see below).
    In addition to that, the FastAPI application provides functionality to explain any of its decisions to the user, by showing how each feature of the input data contributes to their predicted salary band.
@@ -116,14 +116,14 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 ## Inference Logging
 
    Due to record-keeping provisions in the AI Act, the system logs all inference requests and responses to ensure traceability and an overview of failures and errors throughout its lifetime.
-   In this example, all inference requests and responses are logged into an PostgreSQL database.
+   In this example, all inference requests and responses are logged into an [PostgreSQL](https://www.postgresql.org/) database.
    This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.
    This inference log also serves a secondary purpose by enabling post-deployment monitoring, as described in the next section.
 
 ## Post-deployment Monitoring
 
    After deployment, we use an observability tool stack to keep track of model performance, data drift, and operational metrics like HTTP errors or request latencies.
-   This stack consists of Grafana, Prometheus, and NannyML, where the former two are responsible for streaming logs and metrics, and for visualizing them, respectively.
+   This stack consists of [Grafana](https://grafana.com/oss/grafana/), [Prometheus](https://prometheus.io/), and [NannyML](https://www.nannyml.com/library), where the former two are responsible for streaming logs and metrics, and for visualizing them, respectively.
    NannyML is our data drift detection and model performance estimation tool of choice, allowing us to alert on triggers set to mark unacceptable performance losses.
 
    To summarize, below are the most important points of our post-deployment monitoring service:
