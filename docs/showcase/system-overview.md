@@ -49,9 +49,12 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Model Training Pipeline (Dagster)
 
-   We use a machine learning pipeline approach to orchestrate the different steps (data sourcing, preprocessing, model training, ...) as tasks in a workflow.
+   We use a machine learning pipeline approach to orchestrate the different steps (data loading, preprocessing, model training, performance evaluation, ...) as tasks in a workflow.
    In addition to a graph view, we get some more benefits from workflow orchestration, among them better observability (logging), scheduled jobs, caching steps and outputs, and a dashboard for powerful visualizations of pipeline runs.
    We each assume the data processing, model training, and serving/deployment to be independent parts of the machine learning lifecycle, and model each of them as one pipeline.
+
+   The showcase uses [Dagster](https://dagster.io/) as a workflow orchestration engine.
+   Its focus on data assets makes it well suited for machine learning workflows.
 
    The data processing pipeline handles the following steps:
 
@@ -72,15 +75,15 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Model Registry and Tracking (MLflow)
 
-   To get an overview on the performance of our trained models, and to keep track of our model artifacts in a registry, we use MLflow, an open-source experiment tracking platform.
-   This provides us with out-of-the-box visualizations for our metrics of interest, as well as a central storage to retrieve model versions from.
-   As mentioned above, MLflow storage is kept in MinIO.
+   To get an overview of all model training runs and their outcomes, we use MLflow, an open-source experiment tracking platform.
+   It also allows us to keep track of our model artifacts in a versioned registry, providing a direct link between runs and their resulting models.
+   In this showcase, MLflow uses MinIO for persistent storage of artifacts.
 
-   MLflow covers the following points of our ML experiment:
+   MLflow covers the following concerns:
 
    - Tracking of:
      - Training environment
-     - Model (hyper-)parameter
+     - Model (hyper-)parameters
      - Accuracy & fairness metrics
    - A central model artifact registry
 
@@ -96,12 +99,13 @@ document.getElementById('svgFrame').addEventListener('load', function() {
    - Trained models are packaged as container images and then deployed to provide a scalable inference endpoint, allowing real-time access for prediction.
    - The endpoint supports the output of SHAP values to indicate fairness evaluation of predictions through a custom MLserver runtime (see below).
 
-## Application Interface (FastAPI)
+## Business application (FastAPI)
 
-   Our ML models are used by a REST API service built with FastAPI that represents an HR assistant system. 
-   By design, it acts as a middleware between the client and the aforementioned inference server, handling additional tasks around the inference request.
-   Importantly, due to provisions in the AI Act ensuring the right to an explanation of AI system predictions, we need to log every request and response in a database.
-   In addition to that, we provide an additional fairness assessment to explain the user how each feature contributes to their salary band prediction.
+   The business logic of the HR assistant system in the showcase is implemented as a REST API service built with FastAPI.
+   In order to make predictions, this service calls the aforementioned inference server, and handles additional tasks around the inference request:
+   In order to fulfill the record-keeping requirements of the AI Act, all inference requests and responses are logged to a database (see below).
+   In addition to that, the FastAPI application provides functionality to explain any of its decisions to the user, by showing how each feature of the input data contributes to their predicted salary band.
+   This supports the right to explanation of the system's decision making as required by the AI Act for certain classes of AI systems.
 
    The most important aspects of the API:
 
@@ -111,8 +115,10 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 
 ## Inference Logging
 
-   Due to record-keeping provisions in the AI Act, we need to log inference requests and responses to ensure traceability and an overview of failures and errors throughout the system lifetime.
-   In this example, all inference requests and responses are logged into an PostgreSQL database. This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.
+   Due to record-keeping provisions in the AI Act, the system logs all inference requests and responses to ensure traceability and an overview of failures and errors throughout its lifetime.
+   In this example, all inference requests and responses are logged into an PostgreSQL database.
+   This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.
+   This inference log also serves a secondary purpose by enabling post-deployment monitoring, as described in the next section.
 
 ## Post-deployment Monitoring
 
