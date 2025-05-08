@@ -43,7 +43,7 @@ It provides API endpoints and type definitions for inference requests (with a fl
 
 ## Key Technologies
 
--   [MLServer](https://mlserver.readthedocs.io/en/latest/)
+-   [MLServer](https://mlserver.readthedocs.io/)
 -   [BentoML](https://docs.bentoml.org/en/latest/)
 -   [Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest/)
 -   [KServe](https://kserve.github.io/website/)
