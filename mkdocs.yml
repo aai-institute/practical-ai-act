@@ -18,6 +18,10 @@ nav:
       - showcase/index.md
       - showcase/risk-classification.md
       - showcase/system-overview.md
+      - Implementation Notes:
+          - showcase/implementation-notes/index.md
+          - showcase/implementation-notes/explainability.md
+          - showcase/implementation-notes/inference-logging.md
   - Engineering Practice:
       - engineering-practice/index.md
       - engineering-practice/containerization.md

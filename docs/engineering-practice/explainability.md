@@ -37,28 +37,11 @@ As part of the instructions for use to the deployer (see |Art. 13(3)(b)(iv)|), t
 
 Furthermore, specific methods are easily available through existing software packages and utilizing them could be considered as best practice (see upcoming [ISO norm](#iso6254)).
 
-Our showcase implementation focusses on a single explainability technique, the [SHAP](https://shap.readthedocs.io/en/latest/) (SHapley Additive exPlanations) approach.
-This game-theoretic approach allows for post-hoc explanations in the form of highlighting each input feature's contribution to the model prediction.
-
 ## Implementation Notes
 
-### Automatically Generated Explanations in MLServer
+TODO: Explain different explainability methods and their use cases (post-hoc, inherently explainable models, etc.).
 
-This section describes the exemplary implementation of a system that automatically generates explanations for every prediction made by the underlying model.
-A custom [inference server](model-serving.md) runtime implementation in MLserver is used to attach these SHAP explanations to every model prediction.
-
-See the [showcase](../showcase/index.md) for a complete example of the implementation in practice.
-
-This design of predictions linked with explanations ensures that every prediction made by the system can be explained at a later point in time, without the need for the original input data or model revision at the time of the explanation.
-Contrast this with an implementation that requires access to the deployed model revision when an explanation is requested.
-In such a case, the model revision would need to be available (or deployed on demand) to generate the explanation post-hoc.
-
-The AI system exposes an API endpoint (`/model/explain`) that allows a user to request explanations for a given model prediction.
-Predictions are identified by their request ID, which is automatically attached to the system's response in the `X-Request-ID` HTTP header.
-
-For a given inference request ID, the system retrieves the corresponding input, output, and explanation data from the [inference log](./inference-log.md), and returns a visual representation of the SHAP explanation for the prediction to the user:
-
-![SHAP waterfall plot for a single record](../_images/shap_single_prediction.png)
+See the [showcase](../showcase/implementation-notes/explainability.md) for an example how explainability techniques can be integrated into the AI system, with a possibility for users to request explanations for any given model prediction.
 
 ## Key Technologies
 
