@@ -4,7 +4,7 @@
 Also, it requires a risk assessment for the case in which the AI system is used outside of its intended purpose, for example by a malicious actor.
 
 !!! info "Engineering Info"
-    --8<-- "docs/conformity/_engineering-info-box.partial"
+--8<-- "docs/conformity/\_engineering-info-box.partial"
 
     - This document does not directly reference other articles in the AI Act, since it is mostly out of scope for the engineering practices described in this project.s
 
@@ -22,10 +22,12 @@ Since the threat vectors of each system are different, it is in general not feas
 One clear requirement however is that high-risk AI systems should be tested continuously, but at the latest before they are productionized and made available to end users (see Sections (6) to (8)).
 We highlight that the risk management system as presented in Article 9 is not directly tied to, but in fact a requirement for a lot of the engineering practices showcased in this repository, since they require prior knowledge about the relevant risks of the project.
 
+In particular, as Art. 9 requires a comprehensive assessment of the risks of the AI system, a cybersecurity risk assessment of the AI system and its components should be performed as well.
+
 ## Relation to other Articles
 
 The most important articles related to Article 9 are:
 
-- |Art. 14| (Human Oversight): Risks should be assessed, evaluated, and mitigated by knowledgeable personnel.
-- |Art. 15| (Accuracy, Robustness and Cybersecurity): As unauthorized access to AI systems and hardware is a great risk,
+-   |Art. 14| (Human Oversight): Risks should be assessed, evaluated, and mitigated by knowledgeable personnel.
+-   |Art. 15| (Accuracy, Robustness and Cybersecurity): As unauthorized access to AI systems and hardware is a great risk,
     it must be continuously assessed.
