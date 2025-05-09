@@ -4,7 +4,8 @@
 Also, it requires a risk assessment for the case in which the AI system is used outside of its intended purpose, for example by a malicious actor.
 
 !!! info "Engineering Info"
---8<-- "docs/conformity/\_engineering-info-box.partial"
+
+    --8<-- "docs/conformity/\_engineering-info-box.partial"
 
     - This document does not directly reference other articles in the AI Act, since it is mostly out of scope for the engineering practices described in this project.s
 
