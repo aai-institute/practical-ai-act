@@ -628,6 +628,21 @@ information, please
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatically-generated-explanations-in-mlserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatically Generated Explanations in MLServer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1204,6 +1219,21 @@ information, please
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatically-generated-explanations-in-mlserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatically Generated Explanations in MLServer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1253,6 +1283,12 @@ information, please
       
       
       
+        <a href="../../tags/#tag:annex-iv" class="md-tag">Annex IV</a>
+      
+    
+      
+      
+      
         <a href="../../tags/#tag:art-11" class="md-tag">Art. 11</a>
       
     
@@ -1266,6 +1302,12 @@ information, please
       
       
         <a href="../../tags/#tag:art-14" class="md-tag">Art. 14</a>
+      
+    
+      
+      
+      
+        <a href="../../tags/#tag:art-86" class="md-tag">Art. 86</a>
       
     
   </nav>
@@ -1311,12 +1353,15 @@ As part of the instructions for use to the deployer (see <a class="aia-ref" href
 <p>Our showcase implementation focusses on a single explainability technique, the <a href="https://shap.readthedocs.io/en/latest/">SHAP</a> (SHapley Additive exPlanations) approach.
 This game-theoretic approach allows for post-hoc explanations in the form of highlighting each input feature's contribution to the model prediction.</p>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<!-- TODO: Link to inference server sub-page, when available -->
-
-<p>A custom inference server runtime implementation in MLserver is used to attach SHAP explanations to every model prediction.
-This design ensures that every prediction made by the system can be explained at a later point in time, without the need for the original input data or model revision at the time of the explanation.
-Contrast this with an implementation that would require access to the deployed model revision when an explanation is requested. In such a case, the model revision would need to be available (or deployed on demand) to generate the explanation.</p>
-<p>The system exposes an <code>/model/explain</code> API endpoint, that allows a user to request explanations for a given model prediction (as identified by its request ID, which is automatically attached to any prediction output through an HTTP <code>X-Request-ID</code> header).</p>
+<h3 id="automatically-generated-explanations-in-mlserver">Automatically Generated Explanations in MLServer<a class="headerlink" href="#automatically-generated-explanations-in-mlserver" title="Permanent link">&para;</a></h3>
+<p>This section describes the exemplary implementation of a system that automatically generates explanations for every prediction made by the underlying model.
+A custom <a href="../model-serving/">inference server</a> runtime implementation in MLserver is used to attach these SHAP explanations to every model prediction.</p>
+<p>See the <a href="../../showcase/">showcase</a> for a complete example of the implementation in practice.</p>
+<p>This design of predictions linked with explanations ensures that every prediction made by the system can be explained at a later point in time, without the need for the original input data or model revision at the time of the explanation.
+Contrast this with an implementation that requires access to the deployed model revision when an explanation is requested.
+In such a case, the model revision would need to be available (or deployed on demand) to generate the explanation post-hoc.</p>
+<p>The AI system exposes an API endpoint (<code>/model/explain</code>) that allows a user to request explanations for a given model prediction.
+Predictions are identified by their request ID, which is automatically attached to the system's response in the <code>X-Request-ID</code> HTTP header.</p>
 <p>For a given inference request ID, the system retrieves the corresponding input, output, and explanation data from the <a href="../inference-log/">inference log</a>, and returns a visual representation of the SHAP explanation for the prediction to the user:</p>
 <p><img alt="SHAP waterfall plot for a single record" src="../../_images/shap_single_prediction.png" /></p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
