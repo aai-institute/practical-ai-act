@@ -36,7 +36,14 @@ In addition to these auditability and traceability requirements, the inference l
 
 ## Implementation Notes
 
-TODO: Replace with high-level overview of how an inference log fits into the overall architecture of the AI system.
+Rather than put inference logs as a purely static archive in a storage location, it is useful for the reasons mentioned to use a database system that allows the data to be queried efficiently and in a performant manner.
+
+One way to achieve this is a document database (PostgreSQL, MongoDB, ...), which can be deployed as a managed service to allow the inference data to be accessed in other parts of the lifecycle, for example in a case like continuous (re-)training.
+Many cloud providers offer managed PostgreSQL deployments, but there also exist Software as a Service (SaaS) companies offering such solutions to be deployed on private infrastructure as well (e.g. [Supabase](https://supabase.com/)).
+
+In the case of a smaller-scale infrastructure of multiple machines or even a single machine, it is also possible to keep inference logs in memory for even faster access, for example using an in-memory database like [redis](https://redis.io/).
+
+With regards to traceability of inference data, it is advisable in general to place inference logs under data version control just like the training data used in the initial training of the AI system. For a guide on how to use data version control in your project, see the [engineering practice on data versioning](data-governance/data-versioning.md).
 
 See the [showcase](../showcase/implementation-notes/inference-logging.md) for an example how to integrate an inference log into an AI system.
 
@@ -47,4 +54,4 @@ See the [showcase](../showcase/implementation-notes/inference-logging.md) for an
     -   Other choice include [ElasticSearch](https://www.elastic.co/elasticsearch/), [MongoDB](https://www.mongodb.com/), or [SQLite](https://www.sqlite.org/index.html)
 -   [Open Inference Protocol specification](https://github.com/kserve/open-inference-protocol/), as a standardized data structure for the input and output data
 -   [FastAPI](https://fastapi.tiangolo.com/) for building the AI system's application code
--   TODO: Databricks Inference Tables
+-   [Databricks Inference Tables](https://www.databricks.com/blog/announcing-inference-tables-simplified-monitoring-and-diagnostics-ai-models) for monitoring models after deployment

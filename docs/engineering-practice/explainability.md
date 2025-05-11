@@ -39,7 +39,22 @@ Furthermore, specific methods are easily available through existing software pac
 
 ## Implementation Notes
 
-TODO: Explain different explainability methods and their use cases (post-hoc, inherently explainable models, etc.).
+### Inherently explainable models
+
+Some machine-learning models and algorithms are *inherently interpretable*, meaning their prediction outputs can be interpreted in terms of humanly understandable concepts.
+One such example is the **k-nearest-neighbor** (KNN) classification algorithm, where the resulting model classifies any datapoint as a weighted sum of its most similar (i.e. "nearest", for a specific definition of near) points in a given feature space.
+
+Inherent interpretability usually requires a well-established mathematical theory on the problem and the used algorithms in question.
+Sometimes, this limits the feasibility of such solutions, since "black-box" approaches that are not directly interpretable compare favorably in terms of compute performance and accuracy.
+
+### Post-hoc explanations
+
+For models that are not directly interpretable ("black box" models) like deep neural networks, gradient boosting algorithms, etc., post-hoc explainability provides a means to evaluate the model decisions *after* they made a prediction.
+
+These methods are more widely applicable in general, since they do not require interpretability of the model.
+One possible angle of post-hoc explainability is measuring **feature importance**, which gives an idea about which input features influence the model's decision, and how big their individual influences are.
+
+When offering explanations for predictions to the users of an AI system, it is important to present the values concise and in a sensible way. One such option is to render the results in a visualization (plot), which tends to work well for feature importance scores such as SHAP explanations.
 
 See the [showcase](../showcase/implementation-notes/explainability.md) for an example how explainability techniques can be integrated into the AI system, with a possibility for users to request explanations for any given model prediction.
 
