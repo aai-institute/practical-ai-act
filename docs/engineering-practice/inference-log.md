@@ -36,22 +36,46 @@ In addition to these auditability and traceability requirements, the inference l
 
 ## Implementation Notes
 
-Rather than put inference logs as a purely static archive in a storage location, it is useful for the reasons mentioned to use a database system that allows the data to be queried efficiently and in a performant manner.
+When it comes to implementing an inference log, there are several key considerations to keep in mind:
 
-One way to achieve this is a document database (PostgreSQL, MongoDB, ...), which can be deployed as a managed service to allow the inference data to be accessed in other parts of the lifecycle, for example in a case like continuous (re-)training.
-Many cloud providers offer managed PostgreSQL deployments, but there also exist Software as a Service (SaaS) companies offering such solutions to be deployed on private infrastructure as well (e.g. [Supabase](https://supabase.com/)).
+-   _Data structure_: The inference log should be designed to accommodate the specific data types and structures used in the AI system. This may include JSON or JSONB fields for input and output data, as well as additional metadata. Evolution of the data schema should be considered, as the AI system and its input and outputs may change over time.
+-   _Data retention_: The inference log should be designed to accommodate the data retention requirements of the AI system (e.g., the retention periods set out in |Art. 19| of the AI Act, or any other legal or regulatory requirements, such as under the GDPR).
+-   _Data protection and privacy_: Access to the inference log should be restricted to authorized personnel only, and the data should be protected against unauthorized access or tampering. This may include encryption of sensitive data, as well as access controls and audit trails.
+-   _Performance and scalability_: Since every inference made by the AI system will be logged, the inference log should be designed to handle the foreseeable load (both in terms of data rate and volume) and to support efficient querying and analysis. This may include the use of indexing, partitioning, or other techniques to optimize performance.
 
-In the case of a smaller-scale infrastructure of multiple machines or even a single machine, it is also possible to keep inference logs in memory for even faster access, for example using an in-memory database like [redis](https://redis.io/).
+Especially for LLM applications, a variety of existing tools exist that provide tracing and logging capabilities.
 
-With regards to traceability of inference data, it is advisable in general to place inference logs under data version control just like the training data used in the initial training of the AI system. For a guide on how to use data version control in your project, see the [engineering practice on data versioning](data-governance/data-versioning.md).
-
-See the [showcase](../showcase/implementation-notes/inference-logging.md) for an example how to integrate an inference log into an AI system.
+See the [showcase](../showcase/implementation-notes/inference-logging.md) for an example how to implement and integrate an inference log into an AI system.
 
 ## Key Technologies
+
+### Data Observability
+
+-   [whylogs](https://whylogs.readthedocs.io/en/latest/), an open-source library for data logging
+-   [Seldon Core](https://docs.seldon.ai/seldon-core-2), an open-source platform for deploying and managing machine learning models on Kubernetes, implements a [data flow paradigm](https://docs.seldon.ai/seldon-core-2/user-guide/data-science-monitoring/dataflow) that facilitates the logging of inference data
+
+### Custom Implementation
 
 -   Any database or storage solution that supports the required data structure
     -   The showcase implementation uses [PostgreSQL](https://www.postgresql.org/)
     -   Other choice include [ElasticSearch](https://www.elastic.co/elasticsearch/), [MongoDB](https://www.mongodb.com/), or [SQLite](https://www.sqlite.org/index.html)
+    -   For high-performance workloads, an event-based architecture using a message broker (e.g., [Kafka](https://kafka.apache.org/) or [RabbitMQ](https://www.rabbitmq.com/)) and a stream processing framework (e.g., [Apache Flink](https://flink.apache.org/) or [Apache Spark](https://spark.apache.org/)) may be more suitable to asynchronously log the inference data
 -   [Open Inference Protocol specification](https://github.com/kserve/open-inference-protocol/), as a standardized data structure for the input and output data
--   [FastAPI](https://fastapi.tiangolo.com/) for building the AI system's application code
+
+### LLM Tracing and Observability
+
+!!! note
+
+    The field of LLM tracing and observability is rapidly evolving, so this list may not be exhaustive.
+
+-   [MLFlow Tracing](https://mlflow.org/docs/latest/tracing/), LLM tracing functionality is part of the MLflow platform
+-   [Langfuse](https://www.langfuse.com/), an open-source LLM engineering platform
+-   [Langtrace](https://docs.langtrace.ai/introduction), an open-source LLM observability tool based on the [OpenTelemetry](https://opentelemetry.io/) standard
+-   [Langchain Tracing](https://python.langchain.com/docs/guides/tracing)
+-   [Phoenix](https://docs.arize.com/phoenix), an open-source LLM observability tool, based on OpenTelemetry
+-   [Tracely](https://github.com/evidentlyai/tracely) by Evidently (see above), a LLM application tracing tool based on OpenTelemetry
+
+### Cloud ML Platforms
+
 -   [Databricks Inference Tables](https://docs.databricks.com/aws/en/machine-learning/model-serving/inference-tables) for monitoring models after deployment (and its [Azure Databricks counterpart](https://learn.microsoft.com/en-us/azure/databricks/machine-learning/model-serving/inference-tables))
+-   [Evidently](https://evidentlyai.com/) provides tracing and dataset logging functionality as part of its paid offering
