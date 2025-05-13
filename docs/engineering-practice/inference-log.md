@@ -54,4 +54,4 @@ See the [showcase](../showcase/implementation-notes/inference-logging.md) for an
     -   Other choice include [ElasticSearch](https://www.elastic.co/elasticsearch/), [MongoDB](https://www.mongodb.com/), or [SQLite](https://www.sqlite.org/index.html)
 -   [Open Inference Protocol specification](https://github.com/kserve/open-inference-protocol/), as a standardized data structure for the input and output data
 -   [FastAPI](https://fastapi.tiangolo.com/) for building the AI system's application code
--   [Databricks Inference Tables](https://www.databricks.com/blog/announcing-inference-tables-simplified-monitoring-and-diagnostics-ai-models) for monitoring models after deployment
+-   [Databricks Inference Tables](https://docs.databricks.com/aws/en/machine-learning/model-serving/inference-tables) for monitoring models after deployment (and its [Azure Databricks counterpart](https://learn.microsoft.com/en-us/azure/databricks/machine-learning/model-serving/inference-tables))
