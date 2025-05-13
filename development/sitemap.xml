@@ -116,4 +116,16 @@
          <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/system-overview/</loc>
          <lastmod>2025-05-13</lastmod>
     </url>
+    <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/</loc>
+         <lastmod>2025-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/explainability/</loc>
+         <lastmod>2025-05-13</lastmod>
+    </url>
+    <url>
+         <loc>https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/inference-logging/</loc>
+         <lastmod>2025-05-13</lastmod>
+    </url>
 </urlset>

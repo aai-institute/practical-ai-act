@@ -14,7 +14,7 @@
         <link rel="prev" href="../risk-classification/">
       
       
-        <link rel="next" href="../../engineering-practice/">
+        <link rel="next" href="../implementation-notes/">
       
       
       <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
@@ -563,6 +563,102 @@ information, please
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../implementation-notes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Implementation Notes
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Implementation Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation-notes/explainability/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Explainability
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementation-notes/inference-logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inference Logging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -1335,12 +1431,26 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 });
 </script>
 
+<div class="toc">
+<ul>
+<li><a href="#system-components">System Components</a><ul>
+<li><a href="#data-layer-lakefs-minio">Data Layer (lakeFS + MinIO)</a></li>
+<li><a href="#model-training-pipeline-dagster">Model Training Pipeline (Dagster)</a></li>
+<li><a href="#model-registry-and-tracking-mlflow">Model Registry and Tracking (MLflow)</a></li>
+<li><a href="#deployment-infrastructure-docker-mlserver">Deployment Infrastructure (Docker + MLServer)</a></li>
+<li><a href="#business-application-fastapi">Business application (FastAPI)</a></li>
+<li><a href="#inference-logging">Inference Logging</a></li>
+<li><a href="#post-deployment-monitoring">Post-deployment Monitoring</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <h1 id="system-components">System Components<a class="headerlink" href="#system-components" title="Permanent link">&para;</a></h1>
 <h2 id="data-layer-lakefs-minio">Data Layer (lakeFS + MinIO)<a class="headerlink" href="#data-layer-lakefs-minio" title="Permanent link">&para;</a></h2>
 <p>To keep track of data artifacts across the machine learning lifecycle, we use <a href="https://lakefs.io">lakeFS</a>, a distributed data version control solution.
-   That way, we can clearly separate different versions of data, and annotate them with metadata and information, which helps to create a clear overview of the project.
-   We choose to run lakeFS on top of <a href="https://min.io">MinIO</a>, an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models. 
-   It can also be deployed locally, which means this example can be run self-contained without the need for cloud infrastructure.</p>
+That way, we can clearly separate different versions of data, and annotate them with metadata and information, which helps to create a clear overview of the project.
+We choose to run lakeFS on top of <a href="https://min.io">MinIO</a>, an S3-compatible object store, since that can also be used to store other artifacts than data, like trained models.
+It can also be deployed locally, which means this example can be run self-contained without the need for cloud infrastructure.</p>
 <ul>
 <li>Raw data is ingested and version-controlled using lakeFS.</li>
 <li>Processed data is also stored and versioned after preprocessing.</li>
@@ -1348,10 +1458,10 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 </ul>
 <h2 id="model-training-pipeline-dagster">Model Training Pipeline (Dagster)<a class="headerlink" href="#model-training-pipeline-dagster" title="Permanent link">&para;</a></h2>
 <p>We use a machine learning pipeline approach to orchestrate the different steps (data loading, preprocessing, model training, performance evaluation, ...) as tasks in a workflow.
-   In addition to a graph view, we get some more benefits from workflow orchestration, among them better observability (logging), scheduled jobs, caching steps and outputs, and a dashboard for powerful visualizations of pipeline runs.
-   We each assume the data processing, model training, and serving/deployment to be independent parts of the machine learning lifecycle, and model each of them as one pipeline.</p>
+In addition to a graph view, we get some more benefits from workflow orchestration, among them better observability (logging), scheduled jobs, caching steps and outputs, and a dashboard for powerful visualizations of pipeline runs.
+We each assume the data processing, model training, and serving/deployment to be independent parts of the machine learning lifecycle, and model each of them as one pipeline.</p>
 <p>The showcase uses <a href="https://dagster.io/">Dagster</a> as a workflow orchestration engine.
-   Its focus on data assets makes it well suited for machine learning workflows.</p>
+Its focus on data assets makes it well suited for machine learning workflows.</p>
 <p>The data processing pipeline handles the following steps:</p>
 <ul>
 <li>Data preprocessing and cleaning</li>
@@ -1371,8 +1481,8 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 </ul>
 <h2 id="model-registry-and-tracking-mlflow">Model Registry and Tracking (MLflow)<a class="headerlink" href="#model-registry-and-tracking-mlflow" title="Permanent link">&para;</a></h2>
 <p>To get an overview of all model training runs and their outcomes, we use <a href="https://mlflow.org/">MLflow</a>, an open-source experiment tracking platform.
-   It also allows us to keep track of our model artifacts in a versioned registry, providing a direct link between runs and their resulting models.
-   In this showcase, MLflow uses MinIO for persistent storage of artifacts.</p>
+It also allows us to keep track of our model artifacts in a versioned registry, providing a direct link between runs and their resulting models.
+In this showcase, MLflow uses MinIO for persistent storage of artifacts.</p>
 <p>MLflow covers the following concerns:</p>
 <ul>
 <li>Tracking of:<ul>
@@ -1385,35 +1495,36 @@ document.getElementById('svgFrame').addEventListener('load', function() {
 </ul>
 <h2 id="deployment-infrastructure-docker-mlserver">Deployment Infrastructure (Docker + MLServer)<a class="headerlink" href="#deployment-infrastructure-docker-mlserver" title="Permanent link">&para;</a></h2>
 <p>To deploy our models we use container images with <a href="https://mlserver.readthedocs.io">MLserver</a>, an open-source machine learning inference server with standardized REST/gRPC APIs.
-   MLServer is, at the very basic level, a combination of runtime and server components, the former of which is a modular implementation of a model serving for a specific ML framework, like scikit-learn and xgboost.
-   The server component contains functionality to host multiple versions of the same model kind, as well as the REST/gRPC interface implementing the Open Inference Protocol.</p>
+MLServer is, at the very basic level, a combination of runtime and server components, the former of which is a modular implementation of a model serving for a specific ML framework, like scikit-learn and xgboost.
+The server component contains functionality to host multiple versions of the same model kind, as well as the REST/gRPC interface implementing the Open Inference Protocol.</p>
 <p>Additionally, it enables the following features for our serving pipeline:</p>
 <ul>
 <li>Creating a scalable inference server for a model.</li>
 <li>Trained models are packaged as container images and then deployed to provide a scalable inference endpoint, allowing real-time access for prediction.</li>
-<li>The endpoint supports the output of SHAP values to indicate fairness evaluation of predictions through a custom MLserver runtime (see below).</li>
+<li>The endpoint supports the output of SHAP values to indicate fairness evaluation of predictions through a custom MLserver runtime. See the <a href="../implementation-notes/explainability/">implementation notes</a> for more details.</li>
 </ul>
 <h2 id="business-application-fastapi">Business application (FastAPI)<a class="headerlink" href="#business-application-fastapi" title="Permanent link">&para;</a></h2>
 <p>The business logic of the HR assistant system in the showcase is implemented as a REST API service built with <a href="https://fastapi.tiangolo.com">FastAPI</a>.
-   In order to make predictions, this service calls the aforementioned inference server, and handles additional tasks around the inference request:
-   In order to fulfill the record-keeping requirements of the AI Act, all inference requests and responses are logged to a database (see below).
-   In addition to that, the FastAPI application provides functionality to explain any of its decisions to the user, by showing how each feature of the input data contributes to their predicted salary band.
-   This supports the right to explanation of the system's decision making as required by the AI Act for certain classes of AI systems.</p>
+In order to make predictions, this service calls the aforementioned inference server, and handles additional tasks around the inference request:
+In order to fulfill the record-keeping requirements of the AI Act, all inference requests and responses are logged to a database (see below).
+In addition to that, the FastAPI application provides functionality to explain any of its decisions to the user, by showing how each feature of the input data contributes to their predicted salary band.
+This supports the right to explanation of the system's decision making as required by the AI Act for certain classes of AI systems.</p>
 <p>The most important aspects of the API:</p>
 <ul>
 <li>Accepting incoming candidate data for inference.</li>
 <li>Sending data to the inference endpoint, either as a single or batch request.</li>
-<li>Returning the predicted salary band and explanation of the prediction (i.e. top contributing features).</li>
+<li>Returning the predicted salary band and explanation of the prediction (i.e. top contributing features). See the <a href="../implementation-notes/explainability/">implementation notes</a> for more details.</li>
 </ul>
 <h2 id="inference-logging">Inference Logging<a class="headerlink" href="#inference-logging" title="Permanent link">&para;</a></h2>
 <p>Due to record-keeping provisions in the AI Act, the system logs all inference requests and responses to ensure traceability and an overview of failures and errors throughout its lifetime.
-   In this example, all inference requests and responses are logged into an <a href="https://www.postgresql.org/">PostgreSQL</a> database.
-   This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.
-   This inference log also serves a secondary purpose by enabling post-deployment monitoring, as described in the next section.</p>
+In this example, all inference requests and responses are logged into an <a href="https://www.postgresql.org/">PostgreSQL</a> database.
+This includes input features, output predictions, SHAP values explaining the output through feature contributions, and metadata.</p>
+<p>The <a href="../implementation-notes/inference-logging/">implementation notes</a> describe the data structure of the inference log and its integration with the rest of the AI system in detail.</p>
+<p>This inference log also serves a secondary purpose by enabling post-deployment monitoring, as described in the next section.</p>
 <h2 id="post-deployment-monitoring">Post-deployment Monitoring<a class="headerlink" href="#post-deployment-monitoring" title="Permanent link">&para;</a></h2>
 <p>After deployment, we use an observability tool stack to keep track of model performance, data drift, and operational metrics like HTTP errors or request latencies.
-   This stack consists of <a href="https://grafana.com/oss/grafana/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, and <a href="https://www.nannyml.com/library">NannyML</a>, where the former two are responsible for streaming logs and metrics, and for visualizing them, respectively.
-   NannyML is our data drift detection and model performance estimation tool of choice, allowing us to alert on triggers set to mark unacceptable performance losses.</p>
+This stack consists of <a href="https://grafana.com/oss/grafana/">Grafana</a>, <a href="https://prometheus.io/">Prometheus</a>, and <a href="https://www.nannyml.com/library">NannyML</a>, where the former two are responsible for streaming logs and metrics, and for visualizing them, respectively.
+NannyML is our data drift detection and model performance estimation tool of choice, allowing us to alert on triggers set to mark unacceptable performance losses.</p>
 <p>To summarize, below are the most important points of our post-deployment monitoring service:</p>
 <ul>
 <li>NannyML monitors data drift, model degradation, and performance drops post-deployment by analyzing logs and inference data.</li>
