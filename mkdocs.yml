@@ -18,12 +18,13 @@ nav:
       - showcase/index.md
       - showcase/risk-classification.md
       - showcase/system-overview.md
-  - Engineering Practice:
+  - Engineering Practices:
       - engineering-practice/index.md
       - engineering-practice/containerization.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
+      - engineering-practice/model-cards.md
       - engineering-practice/model-monitoring.md
       - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
