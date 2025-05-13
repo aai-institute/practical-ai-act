@@ -3,6 +3,8 @@ tags:
     - Art. 11
     - Art. 13
     - Art. 14
+    - Art. 86
+    - Annex IV
 ---
 
 # Explainability
@@ -40,13 +42,19 @@ This game-theoretic approach allows for post-hoc explanations in the form of hig
 
 ## Implementation Notes
 
-<!-- TODO: Link to inference server sub-page, when available -->
+### Automatically Generated Explanations in MLServer
 
-A custom inference server runtime implementation in MLserver is used to attach SHAP explanations to every model prediction.
-This design ensures that every prediction made by the system can be explained at a later point in time, without the need for the original input data or model revision at the time of the explanation.
-Contrast this with an implementation that would require access to the deployed model revision when an explanation is requested. In such a case, the model revision would need to be available (or deployed on demand) to generate the explanation.
+This section describes the exemplary implementation of a system that automatically generates explanations for every prediction made by the underlying model.
+A custom [inference server](model-serving.md) runtime implementation in MLserver is used to attach these SHAP explanations to every model prediction.
 
-The system exposes an `/model/explain` API endpoint, that allows a user to request explanations for a given model prediction (as identified by its request ID, which is automatically attached to any prediction output through an HTTP `X-Request-ID` header).
+See the [showcase](../showcase/index.md) for a complete example of the implementation in practice.
+
+This design of predictions linked with explanations ensures that every prediction made by the system can be explained at a later point in time, without the need for the original input data or model revision at the time of the explanation.
+Contrast this with an implementation that requires access to the deployed model revision when an explanation is requested.
+In such a case, the model revision would need to be available (or deployed on demand) to generate the explanation post-hoc.
+
+The AI system exposes an API endpoint (`/model/explain`) that allows a user to request explanations for a given model prediction.
+Predictions are identified by their request ID, which is automatically attached to the system's response in the `X-Request-ID` HTTP header.
 
 For a given inference request ID, the system retrieves the corresponding input, output, and explanation data from the [inference log](./inference-log.md), and returns a visual representation of the SHAP explanation for the prediction to the user:
 
