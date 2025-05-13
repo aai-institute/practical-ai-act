@@ -18,6 +18,10 @@ nav:
       - showcase/index.md
       - showcase/risk-classification.md
       - showcase/system-overview.md
+      - Implementation Notes:
+          - showcase/implementation-notes/index.md
+          - showcase/implementation-notes/explainability.md
+          - showcase/implementation-notes/inference-logging.md
   - Engineering Practices:
       - engineering-practice/index.md
       - engineering-practice/containerization.md
@@ -160,9 +164,6 @@ extra:
       link: https://github.com/aai-institute/twai-pipeline
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/appliedai-institute-for-europe-ggmbh/
-    - icon: fontawesome/solid/section
-      link: https://appliedai-institute.de/impressum
-      name: Impressum / Imprint
 
 extra_css:
   - _styles/extra.css

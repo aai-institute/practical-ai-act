@@ -1,0 +1,3 @@
+{% if node.parent %} {% with node=node.parent %} {% include
+"partials/backlink-breadcrumb.html" %} {% endwith %} &nbsp;&raquo;&nbsp; {%
+endif %} {{ node.title }}

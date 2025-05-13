@@ -1,5 +1,10 @@
 <ul class="backlinks">
   {% for backlink in backlinks %}
-  <li><a href="{{ backlink.url | url }}">{{ backlink.title }}</a></li>
+  <li>
+    <a href="{{ backlink.url | url }}">
+      {% with node=backlink %} {% include "partials/backlink-breadcrumb.html" %}
+      {% endwith %}
+    </a>
+  </li>
   {% endfor %}
 </ul>
