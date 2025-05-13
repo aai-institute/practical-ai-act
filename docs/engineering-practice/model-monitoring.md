@@ -7,10 +7,6 @@ tags:
     - Art. 72
 ---
 
-!!! danger "Work in Progress"
-
-    The information on this page is incomplete and meant to illustrate the structure of these pages
-
 # Model Performance Monitoring
 
 !!! success "Compliance Info"
@@ -33,9 +29,19 @@ tags:
 
 ## Motivation
 
-TODO: Explain why model performance monitoring is important.
+Monitoring is important to ensure that after a deployment to production, AI systems continue to work as expected from the performance measured during the training phase.
+Performance (i.e., the quality of predictions / outputs) can degrade for a number of reasons:
+For example due to data drift, where the inference data is sufficiently dissimilar from the training data that predictions are off, or due to concept drift, where the probability distributions of the prediction target changes over time.
+Another metric of interest is the amount (or frequency) of HTTP errors, which can be monitored to recognize unhealthy inference servers or more severe outages.
+
+Identifying these degradations early is key to mitigate accuracy and safety concerns due to inaccuracies of deployed AI systems, especially high-risk systems presented here.
 
 ## Implementation Notes
+
+Creating an accurate and responsive monitoring service can be challenging for multiple reasons.
+Depending on the target metrics, a meaningful and easily interpretable visualization needs to be crafted, which might depend on the nature of the AI system.
+
+As inference data and logs should be easily accessible and need to be processed efficiently for monitoring purposes (see the [inference log](inference-log.md) engineering practice), many monitoring solutions build on scalable, high-performance database systems.
 
 ### Model Performance
 
