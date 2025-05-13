@@ -159,9 +159,6 @@ extra:
       link: https://github.com/aai-institute/twai-pipeline
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/appliedai-institute-for-europe-ggmbh/
-    - icon: fontawesome/solid/section
-      link: https://appliedai-institute.de/impressum
-      name: Impressum / Imprint
 
 extra_css:
   - _styles/extra.css
