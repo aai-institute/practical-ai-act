@@ -35,39 +35,56 @@ Although there is no explicit demand for using explainability methods within the
 In particular, these explanation approaches can assist the operator of the system in interpreting the system's behavior, as part of the human oversight process (see |Art. 14|) and allow affected third parties to request an explanation of the system's output (see |Art. 86(3)|).
 As part of the instructions for use to the deployer (see |Art. 13(3)(b)(iv)|), they can be used to provide information relevant to explain the system's output.
 
-Furthermore, specific methods are easily available through existing software packages and utilizing them could be considered as best practice (see upcoming [ISO norm](#iso6254)).
+Furthermore, specific methods are easily available through existing software packages and utilizing them could be considered as best practice (see the upcoming [ISO/IEC DTS 6254](#iso6254) technical specification, which gives an overview of the taxonomy and techniques for explainability).
 
 ## Implementation Notes
 
-### Inherently explainable models
+See the [showcase](../showcase/implementation-notes/explainability.md) for an example how explainability techniques can be integrated into the AI system, with a possibility for users to request explanations for any given model prediction.
 
-Some machine-learning models and algorithms are *inherently interpretable*, meaning their prediction outputs can be interpreted in terms of humanly understandable concepts.
-One such example is the **k-nearest-neighbor** (KNN) classification algorithm, where the resulting model classifies any datapoint as a weighted sum of its most similar (i.e. "nearest", for a specific definition of near) points in a given feature space.
+One important consideration when implementing explainability techniques is way in which the explanations are presented to the user, which has a direct impact on the requirement for human oversight in the AI Act.
+
+### Explainability Techniques
+
+#### Inherently interpretable models
+
+Some machine-learning models and algorithms are _inherently interpretable_, meaning their prediction outputs can be interpreted in terms of humanly understandable concepts.
+One such example is the _k-nearest-neighbor_ (KNN) classification algorithm, where the resulting model classifies any datapoint as a weighted sum of its most similar (i.e. "nearest", for a specific definition of near) points in a given feature space.
 
 Inherent interpretability usually requires a well-established mathematical theory on the problem and the used algorithms in question.
 Sometimes, this limits the feasibility of such solutions, since "black-box" approaches that are not directly interpretable compare favorably in terms of compute performance and accuracy.
 
-### Post-hoc explanations
+#### Post-hoc explanations
 
-For models that are not directly interpretable ("black box" models) like deep neural networks, gradient boosting algorithms, etc., post-hoc explainability provides a means to evaluate the model decisions *after* they made a prediction.
+For models that are not directly interpretable ("black-box" models) like deep neural networks, gradient boosting algorithms, etc., post-hoc explainability provides a means to evaluate the model decisions _after_ they made a prediction.
 
-These methods are more widely applicable in general, since they do not require interpretability of the model.
-One possible angle of post-hoc explainability is measuring **feature importance**, which gives an idea about which input features influence the model's decision, and how big their individual influences are.
+Post-hoc methods can provide explanations on two distinct levels, _global_ and _local_.
+Local methods explain the model's behavior for a single instance, while global methods provide an overview of the model's behavior across an entire dataset.
 
-When offering explanations for predictions to the users of an AI system, it is important to present the values concise and in a sensible way. One such option is to render the results in a visualization (plot), which tends to work well for feature importance scores such as SHAP explanations.
+Post-hoc methods are more widely applicable in general, since they do not require direct interpretability of the model.
+One possible angle of post-hoc explainability is measuring _feature importance_, which gives an idea about which input features influence the model's decision, and how big their individual influences are (with _SHAP_ being a commonly used technique from this class, see [below](#key-technologies)).
 
-See the [showcase](../showcase/implementation-notes/explainability.md) for an example how explainability techniques can be integrated into the AI system, with a possibility for users to request explanations for any given model prediction.
+A second class of post-hoc explainability methods are _surrogate models_, which use inherently interpretable models that approximate the behavior of a black-box model in the neighborhood of a given input (one widely used technique is _LIME_, see [below](#key-technologies)).
+
+When offering explanations for predictions to the users of an AI system, it is important to present the values concise and in a sensible way.
+One such option is to render the results in a visualization (plot), which tends to work well for feature importance scores such as SHAP explanations.
+
+#### Empirical analysis methods
+
+Empirical analysis methods are a class of post-hoc explainability techniques that rely on the empirical evaluation of the model's behavior.
+Techniques like statistical analysis of the model's prediction errors or the response to modifications of the system (e.g., in ablation experiments, where performance is analyzed before and after the removal of a part of the model, such as an input feature) fall into this category.
+
+Another empirical technique is the use of challenge datasets, which are datasets that are specifically designed to test the limits of a model's performance on, without the goal of testing the model's generalization performance or being representative of the targeted domain.
 
 ## Key Technologies
 
 -   The [`shap`](https://shap.readthedocs.io/en/latest/) Python package, implements the SHAP (SHapley Additive exPlanations) method
 -   The [`lime`](https://lime-ml.readthedocs.io/en/latest/index.html) Python package, another popular model-agnostic explainability method (Local Interpretable Model-agnostic Explanations)
--   Use of intrinsically explainable models:
-    -   The [`interpret`](https://interpret.ml/) Python package providing implementation for such glassbox models
+-   Intrinsically explainable models:
+    -   The [`interpret`](https://interpret.ml/) Python package providing implementations for such glassbox models
 
 ## Resources
 
 -   As a primer, [appliedAI TransferLab series on Explainable AI](https://transferlab.ai/series/explainable-ai/)
     and the accompanying [training](https://github.com/aai-institute/tfl-training-explainable-ai)
--   From the book [Trustworthy Machine Learning](https://trustworthyml.io/), Chapter about Explainability
--   <a name="iso6254"></a> The upcoming revision of the [ISO/IEC DTS 6254](https://www.iso.org/standard/82148.html) standard will describe approaches and methods used to achieve explainability objectives.
+-   The chapter on explainability in the [Trustworthy Machine Learning](https://trustworthyml.io/) book
+-   <a name="iso6254"></a> The upcoming revision of the [ISO/IEC DTS 6254](https://www.iso.org/standard/82148.html) standard describes approaches and methods used to achieve explainability objectives.
