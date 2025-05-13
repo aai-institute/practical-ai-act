@@ -1037,6 +1037,18 @@ information, please
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data and Data Governance
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1047,6 +1059,43 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#non-technical-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-technical requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-other-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relation to other Articles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1211,6 +1260,32 @@ information, please
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#non-technical-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-technical requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-other-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Relation to other Articles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1250,11 +1325,29 @@ EU AI Act compliance.</p>
 </li>
 <li><a href="../../engineering-practice/data-governance/data-quality/">Data Quality</a>:<ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(2)(c)</a>: Tracking data preparation steps like labelling, cleaning, imputation, enrichment;</li>
-<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a>: Ensuring complete, error-free, and complete (for the respective application) training and testing data sets</li>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a>: Ensuring complete, error-free, and sufficiently representative (for the respective application) training and testing data sets</li>
 </ul>
 </li>
 </ul>
 </div>
+<h2 id="non-technical-requirements">Non-technical requirements<a class="headerlink" href="#non-technical-requirements" title="Permanent link">&para;</a></h2>
+<p>Data governance measures serve two purposes in general in a high-risk AI use case: Transparency and accountability as well as quality assurance.
+The former is important for ensuring that no systematic biases in the data influence the behavior of the AI system, and to ensure reproducibility to allow ML engineers to identify issues in the training and evaluation process.
+The latter, meanwhile, is important to set up a rigorous performance evaluation ("benchmarking") process to ensure that an AI system performs as expected, and meets quality and safety standards.</p>
+<p><em>Datasheets</em> can be used to document training methodologies, metadata and relevant features and characteristics of the used datasets,
+as well as other non-technical aspects around the system such as the data provenance, how labels were obtained, and cleaning methods used.</p>
+<p>In practice, an organizational focus on thorough data management pays dividends in other areas of the machine learning lifecycle as well.
+Advantages of this include better awareness on different forms and versions of data, helping in crafting reproducible machine learning experiments, and higher availability of data assets to different teams, resulting in more efficient parallel workflows.</p>
+<p>A point to remember is that since there are different aspects of data governance, this usually results in the adoption of one or more software tools to manage data.
+In many cases, this means additional complexity in managing deployments, cloud operations, and/or higher staffing costs when employing personnel dedicated to managing data infrastructure.
+It is therefore important to weigh the benefits of the chosen solution against its estimated complexity and costs, especially for smaller companies and teams.</p>
+<h2 id="relation-to-other-articles">Relation to other Articles<a class="headerlink" href="#relation-to-other-articles" title="Permanent link">&para;</a></h2>
+<p>Data governance is linked to the following articles:</p>
+<ul>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12</a> (Record Keeping): For transparency on how high-risk AI systems perform in practice,
+    and logging of events and input data over the course of the system's lifetime.</li>
+<li><a href="https://artificialintelligenceact.eu/annex/4/">Annex 4</a> (Technical Documentation): To ensure the quality (especially correctness and completeness) of input data and to document engineering practices around the used data.</li>
+</ul>
 <!-- Reference Links -->
 
 
