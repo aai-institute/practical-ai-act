@@ -81,6 +81,7 @@ Another empirical technique is the use of challenge datasets, which are datasets
 -   The [`lime`](https://lime-ml.readthedocs.io/en/latest/index.html) Python package, another popular model-agnostic explainability method (Local Interpretable Model-agnostic Explanations)
 -   Intrinsically explainable models:
     -   The [`interpret`](https://interpret.ml/) Python package providing implementations for such glassbox models
+-   The [Alibi Explain (`alibi`)](https://docs.seldon.io/projects/alibi/en/stable/) Python package, which provides a collection of black-/white-box, local and global explainability methods
 
 ## Resources
 
