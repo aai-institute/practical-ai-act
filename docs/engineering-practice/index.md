@@ -16,6 +16,7 @@ hide:
 | [Experiment Tracking][]    | [Technical Documentation][] [Record-Keeping][] [Transparency and Provision of Information to the Deployers][] [Human Oversight][] [Accuracy, Robustness and Cybersecurity][] |
 | [Explainability][]         | [Technical Documentation][] [Transparency and Provision of Information to the Deployers][] [Human Oversight][]                                                               |
 | [Inference Log][]          | [Record-Keeping][]                                                                                                                                                           |
+| [Model Cards][]            | [Technical Documentation][] [Transparency and Provision of Information to the Deployers][]                                                                                   |
 | [Model Monitoring][]       | [Human Oversight][] [Accuracy, Robustness and Cybersecurity][]                                                                                                               |
 | [Model Registry][]         | [Technical Documentation][] [Transparency and Provision of Information to the Deployers][]                                                                                   |
 | [Model Serving][]          | [Accuracy, Robustness and Cybersecurity][]                                                                                                                                   |
@@ -28,6 +29,7 @@ hide:
 [Model Monitoring]: model-monitoring.md
 [Model Registry]: model-registry.md
 [Model Serving]: model-serving.md
+[Model Cards]: model-cards.md
 [Explainability]: explainability.md
 [Experiment Tracking]: experiment-tracking.md
 [Containerization]: containerization.md

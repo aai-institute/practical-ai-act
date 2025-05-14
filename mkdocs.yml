@@ -22,12 +22,13 @@ nav:
           - showcase/implementation-notes/index.md
           - showcase/implementation-notes/explainability.md
           - showcase/implementation-notes/inference-logging.md
-  - Engineering Practice:
+  - Engineering Practices:
       - engineering-practice/index.md
       - engineering-practice/containerization.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
+      - engineering-practice/model-cards.md
       - engineering-practice/model-monitoring.md
       - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
@@ -58,7 +59,7 @@ plugins:
       ignored_pages:
         [
           "AI Act Conformity",
-          "Engineering Practice",
+          "Engineering Practices",
           "Data Governance",
           "Reader's Guide",
           "Home",
