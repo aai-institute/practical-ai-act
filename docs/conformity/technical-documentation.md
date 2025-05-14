@@ -9,11 +9,18 @@
     - [Model Registry]:
         - |Art. 11(1)| & |Annex IV(2)(b)|: Logging the model architecture and hyperparameters makes it available for documentation
 
+## Motivation
 
 Providers of high-risk AI systems are required to prepare detailed technical documentation before placing the system on the market.
 This documentation must be kept up to date and should demonstrate the system's compliance with the AI Act's requirements.
 It should include a general description of the AI system, its intended purpose, design specifications, and information on performance evaluation.
 Small and medium-sized enterprises (SMEs) may provide this information in a simplified form, as specified by the EU.
+
+Thorough documentation can greatly improve users' and also practitioners' (i.e. deployers and implementers) understanding of the AI system, and thus make it easier to interact with the system, as well as diagnosse any unexpected behavior that is observed during its operation.
+
+On the engineering level, documentation can also be a powerful tool to make the evolution of an AI project (and software engineering projects in general) transparent, and to explain architectural and design decisions that, when studied, can be used to onboard new practitioners more quickly, and to re-evaluate central decisions during the project's lifecycle.
+
+## Non-technical requirements
 
 ## Data Documentation
 
