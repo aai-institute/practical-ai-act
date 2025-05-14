@@ -15,6 +15,9 @@ A number of engineering practices can help providers to comply with the requirem
         - |Art. 13(3)(d)|: Explainability techniques can be used in the human oversight process to interpret the system's behavior
     - [Experiment Tracking]:
         - |Art. 13(3)(b)(ii)|: Experiment tracking captures used performance metrics and levels of accuracy
+    - [Model Cards]:
+        - |Art. 13(3)(b)|: Model-specific information can be documented in a model card
+        - |Art. 13(3)(e)|: Computational/hardware resources needed can be documented in a model card
     - [Model Registry]:
         - |Art. 13(3)(b)(iv)|: Logging the model architecture and hyperparameters makes the system characteristics transparent
     - [Operational Monitoring]:
@@ -22,14 +25,16 @@ A number of engineering practices can help providers to comply with the requirem
     - [Data Versioning]:
         - |Art. 13(3)(b)(vi)|: Data versioning ensures that the data used for training and validation is documented and can be traced back
 
-    TODO: Add and link model cards to Engineering Practice
-
 ## Contents
 
 The information contained in the instructions for use roughly falls into two categories:
 
--   Information about the system in general
--   Information about the system that is specific to the model used
+-   Information about the system in [general](#generic-information)
+-   Information about the system that is [specific to the model used](#model-specific-information)
+
+There is significant overlap between the information required for the instructions for use and the information required for the [technical documentation](technical-documentation.md) of high-risk AI systems.
+
+Both documents can benefit from a structured approach to documentation, such as the use of [model cards](../engineering-practice/model-cards.md) or [experiment tracking](../engineering-practice/experiment-tracking.md).
 
 ### Generic information
 
@@ -37,10 +42,10 @@ All information which is not specific for a single model or may be stable over
 a long time:
 
 -   |Art. 13(3)(a)|: the identity and contact details of provider
--   |Art. 13(3)(b)|
+-   |Art. 13(3)(b)|:
     -   (i): intended purpose of the system
     -   (iii): reasonably foreseeable misuse of the system
-    -   (vi) information about the expected input data schema; relevant information about training/validation data sets
+    -   (vi): information about the expected input data schema; relevant information about training/validation data sets
 -   |Art. 13(3)(e)|:
     -   Computational/hardware resources needed
     -   Expected lifetime of the system
@@ -50,14 +55,16 @@ a long time:
 
 Other parts of the information to be included in the instructions for use refer to characteristics of the actual machine learning model employed in the system.
 
--   |Art. 13(3)(ii)|: expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics
--   |Art. 13(3)(iv)|: technical characteristics and capabilities of the system relevant to explain its outputs
--   |Art. 13(3)(v)|: statistics about the system's performance regarding specific (groups of) persons
+-   |Art. 13(3)(b)|:
+    -   (ii): expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics
+    -   (iv): technical characteristics and capabilities of the system relevant to explain its outputs
+    -   (v): statistics about the system's performance regarding specific (groups of) persons
 -   |Art. 13(3)(d)|: [Human-oversight measures] under |Art. 14|; technical measures that aid the interpretation of system outputs
 -   |Art. 13(3)(f)|: Information about [record-keeping] mechanisms under |Art. 12| (collection, storage, and interpretation)
 
 [Explainability]: ../engineering-practice/explainability.md
 [Experiment Tracking]: ../engineering-practice/experiment-tracking.md
+[Model Cards]: ../engineering-practice/model-cards.md
 [Model Registry]: ../engineering-practice/model-registry.md
 [Operational Monitoring]: ../engineering-practice/operational-monitoring.md
 [Data Versioning]: ../engineering-practice/data-governance/data-versioning.md
