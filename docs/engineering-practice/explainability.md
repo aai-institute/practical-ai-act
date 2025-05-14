@@ -86,5 +86,6 @@ Another empirical technique is the use of challenge datasets, which are datasets
 
 -   As a primer, [appliedAI TransferLab series on Explainable AI](https://transferlab.ai/series/explainable-ai/)
     and the accompanying [training](https://github.com/aai-institute/tfl-training-explainable-ai)
--   The chapter on explainability in the [Trustworthy Machine Learning](https://trustworthyml.io/) book
+-   [Molnar (2025) - Interpretable Machine Learning](https://christophm.github.io/interpretable-ml-book/), a comprehensive book on interpretability and explainability methods
+-   The chapter on explainability in [Mucsányi, et al. (2023) - Trustworthy Machine Learning](https://trustworthyml.io/)
 -   <a name="iso6254"></a> The upcoming revision of the [ISO/IEC DTS 6254](https://www.iso.org/standard/82148.html) standard describes approaches and methods used to achieve explainability objectives.
