@@ -59,7 +59,7 @@ plugins:
       ignored_pages:
         [
           "AI Act Conformity",
-          "Engineering Practice",
+          "Engineering Practices",
           "Data Governance",
           "Reader's Guide",
           "Home",
