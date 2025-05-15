@@ -6,3 +6,4 @@ The following topics are covered:
 
 -   [Inference Logging](inference-logging.md)
 -   [Explainability](explainability.md)
+-   [Model Monitoring](model-monitoring.md)
