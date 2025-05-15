@@ -13,18 +13,19 @@ tags:
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
-    Implementing a model performance solution will help you in achieving compliance with the following regulations:
+    Implementing a model monitoring solution will help you in achieving compliance with the following regulations:
 
-    - **|Art. 12|** (Record-Keeping)
-        - |Art. 12(1)| (Documentation of the AI system)
+    - **|Art. 12|** (Record-Keeping), in particular:
+        - |Art. 12(1)|, allows detecting and recording incidents related to model degradation
     - **|Art. 14|** (Human Oversight), in particular:
         -   |Art. 14(4)(a)|, automated tracking of drift and performance degradation
             helps to understand the capacities of the system during its lifetime
         -   |Art. 14(4)(e)|, observing degradation overtime enables to intervene and
-            initialize a retraining, for example
+            initialize a retraining of the model
     - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
         - |Art. 15(4)|, resilience and robustness through continuous monitoring of model performance
-    - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer)
+    - **|Art. 26(5)|** (Monitoring of the AI system's operation by the deployer), to ensure a model is
+    operating according to the instructions for use
     - **|Art. 72(2)|** (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.
 
 ## Motivation
@@ -77,7 +78,7 @@ For supervised learning applications, the availability of labeled data poses a s
 When collecting previously unseen inference data in production (see the page on [inference logging](inference-log.md)), it is often not possible to collect the corresponding labels (either due to cost limitation of manual labeling or because the true labels are not known until a later point in time).
 
 Algorithms that can estimate a model's performance in the absence of ground truth data can help in these scenarios.
-See the section on [model monitoring](../showcase/implementation-notes/model-monitoring.md) for an example of classification performance estimation without ground truth data using the NannyML library.
+See the section on [model monitoring](../showcase/implementation-notes/model-monitoring.md) in the implementation notes for an example of classification performance estimation without ground truth data using the NannyML library.
 
 ### Data Drift Detection
 
@@ -120,3 +121,4 @@ Alerting middlewares, such as [Prometheus Alertmanager](https://prometheus.io/do
 ## Additional Resources
 
 -   The appliedAI TransferLab [workshop on practical anomaly detection](https://transferlab.ai/trainings/practical-anomaly-detection/) and the [accompanying material](https://github.com/aai-institute/tfl-training-practical-anomaly-detection)
+-   Evidently AI's [Model Monitoring in Production guide](https://www.evidentlyai.com/ml-in-production/model-monitoring)
