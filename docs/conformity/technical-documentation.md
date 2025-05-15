@@ -22,7 +22,7 @@ On the engineering level, documentation can also be a powerful tool to make the 
 
 ## Non-technical requirements
 
-There are a number of important features of the AI system that need to be documented as per [Annex IV](https://artificialintelligenceact.eu/annex/4/) of the AI Act.
+There are a number of important features of the AI system that need to be documented as per |Annex IV| of the AI Act.
 
 Firstly, model metadata such as purpose, name of the provider, and versions of software used to run it need to be given (like a Software Bill of Materials or [SBOM](https://www.cisa.gov/sbom)).
 
