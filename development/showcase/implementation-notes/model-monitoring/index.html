@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/model-monitoring/">
       
       
-        <link rel="prev" href="../system-overview/">
+        <link rel="prev" href="../inference-logging/">
       
       
-        <link rel="next" href="explainability/">
+        <link rel="next" href="../../../engineering-practice/">
       
       
-      <link rel="icon" href="../../_images/logos/baiaa-icon.svg">
+      <link rel="icon" href="../../../_images/logos/baiaa-icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
-        <title>Implementation Notes - twai-pipeline</title>
+        <title>Model Monitoring - twai-pipeline</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
   
@@ -54,18 +54,18 @@
         
         
         
-        <link rel="stylesheet" href="../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
+        <link rel="stylesheet" href="../../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
         <style>:root{--md-text-font:"Source Sans Pro";--md-code-font:"Source Code Pro"}</style>
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../_styles/extra.css">
+      <link rel="stylesheet" href="../../../_styles/extra.css">
     
-      <link rel="stylesheet" href="../../_styles/theme.css">
+      <link rel="stylesheet" href="../../../_styles/theme.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#implementation-notes" class="md-skip">
+        <a href="#model-monitoring" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
 may contain features that have not yet been released. For the most accurate
 information, please
 
-<strong><a href="../../..">access the latest release</a></strong>.
+<strong><a href="../../../..">access the latest release</a></strong>.
           </div>
           
         </aside>
@@ -154,14 +154,14 @@ information, please
 
     <!-- Link to home -->
     <a
-      href="../.."
+      href="../../.."
       title="twai-pipeline"
       class="md-header__button md-logo"
       aria-label="twai-pipeline"
       data-md-component="logo"
     >
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
 
@@ -182,7 +182,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Implementation Notes</strong>
+              twai-pipeline &mdash; <strong>Model Monitoring</strong>
             
           </span>
         </div>
@@ -309,9 +309,9 @@ information, please
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
+    <a href="../../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
       
-  <img src="../../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
     twai-pipeline
@@ -338,7 +338,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -359,7 +359,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../readers-guide/" class="md-nav__link">
+      <a href="../../../readers-guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -394,7 +394,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -426,7 +426,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../risk-classification/" class="md-nav__link">
+      <a href="../../risk-classification/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -448,7 +448,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../system-overview/" class="md-nav__link">
+      <a href="../../system-overview/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -484,7 +484,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -496,7 +496,7 @@ information, please
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -516,7 +516,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="explainability/" class="md-nav__link">
+      <a href="../explainability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -538,7 +538,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="inference-logging/" class="md-nav__link">
+      <a href="../inference-logging/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -557,10 +557,31 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="model-monitoring/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Model Monitoring
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -570,6 +591,53 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model-performance-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Performance Estimation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-drift-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Drift Detection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reporting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -609,7 +677,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../engineering-practice/" class="md-nav__link ">
+            <a href="../../../engineering-practice/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -641,7 +709,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/containerization/" class="md-nav__link">
+      <a href="../../../engineering-practice/containerization/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -663,7 +731,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/experiment-tracking/" class="md-nav__link">
+      <a href="../../../engineering-practice/experiment-tracking/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -685,7 +753,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/explainability/" class="md-nav__link">
+      <a href="../../../engineering-practice/explainability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -707,7 +775,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/model-registry/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-registry/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -729,7 +797,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/model-cards/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-cards/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -751,7 +819,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/model-monitoring/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -773,7 +841,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/model-serving/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-serving/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -795,7 +863,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/inference-log/" class="md-nav__link">
+      <a href="../../../engineering-practice/inference-log/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -817,7 +885,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/operational-monitoring/" class="md-nav__link">
+      <a href="../../../engineering-practice/operational-monitoring/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -839,7 +907,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/accuracy/" class="md-nav__link">
+      <a href="../../../engineering-practice/accuracy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -861,7 +929,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/orchestration/" class="md-nav__link">
+      <a href="../../../engineering-practice/orchestration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -895,7 +963,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../engineering-practice/data-governance/" class="md-nav__link ">
+            <a href="../../../engineering-practice/data-governance/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -927,7 +995,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/data-governance/data-quality/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/data-quality/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -949,7 +1017,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/data-governance/data-versioning/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/data-versioning/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -971,7 +1039,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../engineering-practice/data-governance/bias-mitigation/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/bias-mitigation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1020,7 +1088,7 @@ information, please
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../conformity/" class="md-nav__link ">
+            <a href="../../../conformity/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1052,7 +1120,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/risk-management-system/" class="md-nav__link">
+      <a href="../../../conformity/risk-management-system/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1074,7 +1142,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/data-governance/" class="md-nav__link">
+      <a href="../../../conformity/data-governance/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1096,7 +1164,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/technical-documentation/" class="md-nav__link">
+      <a href="../../../conformity/technical-documentation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1118,7 +1186,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/record-keeping/" class="md-nav__link">
+      <a href="../../../conformity/record-keeping/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1140,7 +1208,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/instructions-for-use/" class="md-nav__link">
+      <a href="../../../conformity/instructions-for-use/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1162,7 +1230,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/human-oversight/" class="md-nav__link">
+      <a href="../../../conformity/human-oversight/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1184,7 +1252,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../conformity/accuracy-robustness-cybersecurity/" class="md-nav__link">
+      <a href="../../../conformity/accuracy-robustness-cybersecurity/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1213,7 +1281,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../../tags/" class="md-nav__link">
+      <a href="../../../tags/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1247,6 +1315,41 @@ information, please
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#model-performance-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Performance Estimation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-drift-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Drift Detection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reporting
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1258,6 +1361,24 @@ information, please
               <article class="md-content__inner md-typeset">
                 
 
+<ul class="backlinks">
+  
+  <li>
+    <a href="../../../engineering-practice/model-monitoring/">
+          Engineering Practices  &nbsp;&raquo;&nbsp;  Model Monitoring
+      
+    </a>
+  </li>
+  
+  <li>
+    <a href="../">
+          Showcase  &nbsp;&raquo;&nbsp;  Implementation Notes
+      
+    </a>
+  </li>
+  
+</ul>
+
 
                   
 
@@ -1266,14 +1387,22 @@ information, please
   
 
 
-<h1 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h1>
-<p>This section discusses the interesting aspects of the implementation of the showcase system.</p>
-<p>The following topics are covered:</p>
+<h1 id="model-monitoring">Model Monitoring<a class="headerlink" href="#model-monitoring" title="Permanent link">&para;</a></h1>
+<h2 id="model-performance-estimation">Model Performance Estimation<a class="headerlink" href="#model-performance-estimation" title="Permanent link">&para;</a></h2>
+<p>The NannyML library implements two approaches to model performance estimation:</p>
 <ul>
-<li><a href="inference-logging/">Inference Logging</a></li>
-<li><a href="explainability/">Explainability</a></li>
-<li><a href="model-monitoring/">Model Monitoring</a></li>
+<li><em>Confidence-based performance estimation</em> (CBPE) for <a href="https://nannyml.readthedocs.io/en/stable/tutorials/performance_estimation/binary_performance_estimation.html">binary</a> and <a href="https://nannyml.readthedocs.io/en/stable/tutorials/performance_estimation/multiclass_performance_estimation.html">multiclass</a> classification tasks</li>
+<li><em>Direct Loss Estimation</em> (DLE) for <a href="https://nannyml.readthedocs.io/en/stable/tutorials/performance_estimation/regression_performance_estimation.html">regression</a> tasks</li>
 </ul>
+<p>Since the ML problem for the showcase is a classification task, the CBPE approach is applied.</p>
+<h2 id="data-drift-detection">Data Drift Detection<a class="headerlink" href="#data-drift-detection" title="Permanent link">&para;</a></h2>
+<p>NannyML implements a variety of data drift detection algorithms for <a href="https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/univariate_drift_detection.html">univariate</a> and <a href="https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/multivariate_drift_detection.html">multivariate</a> data.</p>
+<p>TODO: How do we use the data drift detection algorithms in the showcase?</p>
+<h2 id="reporting">Reporting<a class="headerlink" href="#reporting" title="Permanent link">&para;</a></h2>
+<p>Both model performance estimation and data drift detection algorithm in NannyML operate on <em>chunks</em> of model predictions.
+Therefore, it is straightforward to generate periodic reports on the model's performance as part of a monitoring workflow.</p>
+<p>The showcase implements a simple reporting mechanism that builds a containerized monitoring dashboard of the reported performance metrics based on the prediction stored in the <a href="../inference-logging/">inference log</a>.</p>
+<p>Similarly, these reports could be implemented as a scheduled workflow that generates reports on a daily, weekly, or monthly basis.</p>
 
 
 
@@ -1411,14 +1540,14 @@ information, please
     <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
       <img
         class="logo"
-        src="../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
+        src="../../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
         title="Bayerisches Staatsministerium für Digitales"
       />
     </a>
     <a href="https://appliedai-institute.de" target="_blank">
       <img
         class="logo aai-logo"
-        src="../../_images/logos/aai-logo-cropped.png"
+        src="../../../_images/logos/aai-logo-cropped.png"
         title="appliedAI Institute for Europe gGmbH"
       />
     </a>
@@ -1462,12 +1591,12 @@ information, please
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "development", "provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "development", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
-        <script src="../../assets/external/unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+        <script src="../../../assets/external/unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
       
     
   </body>

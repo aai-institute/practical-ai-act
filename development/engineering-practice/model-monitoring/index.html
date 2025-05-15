@@ -22,7 +22,7 @@
     
     
       
-        <title>Model monitoring - twai-pipeline</title>
+        <title>Model Monitoring - twai-pipeline</title>
       
     
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#model-performance-monitoring" class="md-skip">
+        <a href="#model-monitoring" class="md-skip">
           Skip to content
         </a>
       
@@ -182,7 +182,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Model monitoring</strong>
+              twai-pipeline &mdash; <strong>Model Monitoring</strong>
             
           </span>
         </div>
@@ -549,6 +549,28 @@ information, please
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../showcase/implementation-notes/model-monitoring/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model Monitoring
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -740,7 +762,7 @@ information, please
           
   
   <span class="md-ellipsis">
-    Model monitoring
+    Model Monitoring
     
   </span>
   
@@ -752,7 +774,7 @@ information, please
         
   
   <span class="md-ellipsis">
-    Model monitoring
+    Model Monitoring
     
   </span>
   
@@ -794,18 +816,27 @@ information, please
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#model-performance" class="md-nav__link">
+  <a href="#model-performance-estimation" class="md-nav__link">
     <span class="md-ellipsis">
-      Model Performance
+      Model Performance Estimation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-quality" class="md-nav__link">
+  <a href="#data-drift-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      Data Quality
+      Data Drift Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-quality-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Quality Monitoring
     </span>
   </a>
   
@@ -838,6 +869,15 @@ information, please
   <a href="#key-technologies" class="md-nav__link">
     <span class="md-ellipsis">
       Key Technologies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
     </span>
   </a>
   
@@ -1359,18 +1399,27 @@ information, please
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#model-performance" class="md-nav__link">
+  <a href="#model-performance-estimation" class="md-nav__link">
     <span class="md-ellipsis">
-      Model Performance
+      Model Performance Estimation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-quality" class="md-nav__link">
+  <a href="#data-drift-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      Data Quality
+      Data Drift Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-quality-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Quality Monitoring
     </span>
   </a>
   
@@ -1403,6 +1452,15 @@ information, please
   <a href="#key-technologies" class="md-nav__link">
     <span class="md-ellipsis">
       Key Technologies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
     </span>
   </a>
   
@@ -1509,69 +1567,103 @@ information, please
   
 
 
-<div class="admonition danger">
-<p class="admonition-title">Work in Progress</p>
-<p>The information on this page is incomplete and meant to illustrate the structure of these pages</p>
-</div>
-<h1 id="model-performance-monitoring">Model Performance Monitoring<a class="headerlink" href="#model-performance-monitoring" title="Permanent link">&para;</a></h1>
+<h1 id="model-monitoring">Model Monitoring<a class="headerlink" href="#model-monitoring" title="Permanent link">&para;</a></h1>
 <div class="admonition success">
 <p class="admonition-title">Compliance Info</p>
 <p>Below we map the engineering practice to articles
 of the AI Act, which benefit from following the practice.</p>
-<p>Implementing a model performance solution will help you in achieving compliance with the following regulations:</p>
+<p>Implementing a model monitoring solution will help you in achieving compliance with the following regulations:</p>
 <ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12</a></strong> (Record-Keeping)<ul>
-<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12(1)</a> (Documentation of the AI system)</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12</a></strong> (Record-Keeping), in particular:<ul>
+<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/12" rel="noopener noreferrer" target="_blank">Art. 12(1)</a>, allows detecting and recording incidents related to model degradation</li>
 </ul>
 </li>
 <li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14</a></strong> (Human Oversight), in particular:<ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14(4)(a)</a>, automated tracking of drift and performance degradation
     helps to understand the capacities of the system during its lifetime</li>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14(4)(e)</a>, observing degradation overtime enables to intervene and
-    initialize a retraining, for example</li>
+    initialize a retraining of the model</li>
 </ul>
 </li>
 <li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15</a></strong> (Accuracy, Robustness and Cybersecurity), in particular:<ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(4)</a>, resilience and robustness through continuous monitoring of model performance</li>
 </ul>
 </li>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26(5)</a></strong> (Monitoring of the AI system's operation by the deployer)</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/26" rel="noopener noreferrer" target="_blank">Art. 26(5)</a></strong> (Monitoring of the AI system's operation by the deployer), to ensure a model is
+operating according to the instructions for use</li>
 <li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/72" rel="noopener noreferrer" target="_blank">Art. 72(2)</a></strong> (Post-market Monitoring), since a model monitoring solution allows for the continuous monitoring of the AI system's performance and compliance with legal requirements.</li>
 </ul>
 </div>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<p>TODO: Explain why model performance monitoring is important.</p>
-<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
-<h3 id="model-performance">Model Performance<a class="headerlink" href="#model-performance" title="Permanent link">&para;</a></h3>
-<p>Estimating the performance of a model is a crucial part of the machine learning lifecycle.</p>
-<p>For supervised learning application, the availability of labeled data poses a significant challenge.
-Algorithms that can estimate a model's performance in the absence of ground truth data can help in these scenarios.</p>
-<p>The NannyML library implements two approaches to model performance estimation:</p>
+<p>Monitoring is important to ensure that an AI system continues to operate as expected (that is, safely and reliably) after its deployment to production.
+In practice, an AI system's performance can degrade over time for a number of reasons:</p>
 <ul>
-<li><em>Confidence-based performance estimation</em> (CBPE) for classification tasks</li>
-<li><em>Direct Loss Estimation</em> (DLE) for regression tasks</li>
+<li><em>Covariate shift</em>, where the distribution of inference inputs is sufficiently dissimilar from the training data.</li>
+<li><em>Label shift</em>, where the distribution of inference outputs is sufficiently dissimilar from the training data.</li>
+<li><em>Concept drift</em>, where the relationship between inference inputs and outputs changes over time.</li>
+<li>Previously <em>unseen data</em>, which can lead to unexpected behavior of the model.</li>
+<li><em>Data quality issues</em>, such as missing or corrupted inference input data.</li>
+<li><em>Adversarial attacks</em>, where the model is intentionally abused by malicious actors.</li>
+<li><em>Badly calibrated models</em>, which can lead to overconfident predictions, especially in the case of out-of-distribution data.</li>
 </ul>
-<h3 id="data-quality">Data Quality<a class="headerlink" href="#data-quality" title="Permanent link">&para;</a></h3>
-<p>Changes in the distribution of input or ground thrust data can lead to a decrease in model performance.
-<strong>Data drift detection</strong> aims to identify these changes after model deployment and is crucial to maintaining the model's performance.</p>
+<p>Identifying these degradations early is key to mitigate accuracy and safety concerns due to inaccuracies of deployed AI systems, especially high-risk systems.</p>
+<p>Monitoring is the first step in a feedback loop that can be used to trigger retraining of the model or other corrective actions.
+By setting appropriate thresholds for the monitored metrics, the monitoring system can also be used to trigger alerts when the model's performance drops below an acceptable level.</p>
+<p>Note that besides the ML-specific aspects, monitoring is also important for the overall system performance, see the page on <a href="../operational-monitoring/">operational monitoring</a>.</p>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p>See the <a href="../../showcase/implementation-notes/model-monitoring/">showcase implementation</a> for a concrete example of how to implement a model monitoring solution using the NannyML library.</p>
+<p>Model monitoring is a complex task that requires a combination of different techniques and tools.
+The following diagram illustrates the key components of a model monitoring solution:</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph monitoring[Model Monitoring]
+        direction LR
+        B[Model Performance Estimation]
+        C[Data Drift Detection]
+        qual[Data Quality Monitoring]
+    end
+
+    A@{ shape: db, label: "Inference Log"}
+    A --&gt; monitoring
+    monitoring --&gt; D[Reporting]
+    monitoring --&gt; E[Alerting]
+    monitoring --&gt; F[Model Retraining]
+</code></pre>
+<h3 id="model-performance-estimation">Model Performance Estimation<a class="headerlink" href="#model-performance-estimation" title="Permanent link">&para;</a></h3>
+<p>For supervised learning applications, the availability of labeled data poses a significant challenge.
+When collecting previously unseen inference data in production (see the page on <a href="../inference-log/">inference logging</a>), it is often not possible to collect the corresponding labels (either due to cost limitation of manual labeling or because the true labels are not known until a later point in time).</p>
+<p>Algorithms that can estimate a model's performance in the absence of ground truth data can help in these scenarios.
+See the section on <a href="../../showcase/implementation-notes/model-monitoring/">model monitoring</a> in the implementation notes for an example of classification performance estimation without ground truth data using the NannyML library.</p>
+<h3 id="data-drift-detection">Data Drift Detection<a class="headerlink" href="#data-drift-detection" title="Permanent link">&para;</a></h3>
+<p>Data drift detection is a key component of model monitoring.
+It allows to identify when the distribution of inference inputs or outputs changes over time, which can lead to degraded performance.</p>
+<h3 id="data-quality-monitoring">Data Quality Monitoring<a class="headerlink" href="#data-quality-monitoring" title="Permanent link">&para;</a></h3>
+<p>Identifying data quality issues is essential for ensuring the reliability of the model's predictions.
+Data quality monitoring can be used to identify issues such as missing or corrupted data, outliers, and other anomalies in the inference data.</p>
+<p>Techniques for data quality monitoring include:</p>
+<ul>
+<li><em>Statistical tests</em>, such as the Kolmogorov-Smirnov and chi-squared tests, to identify changes in the distribution of the data.</li>
+<li><em>Anomaly detection algorithms</em>, such as isolation forests, to identify outliers in the data.</li>
+<li><em>Data validation techniques</em>, such as schema validation, to ensure that the data conforms to the expected format and structure. (see the page on <a href="../data-governance/data-quality/">data quality</a> for more details)</li>
+</ul>
 <h3 id="reporting">Reporting<a class="headerlink" href="#reporting" title="Permanent link">&para;</a></h3>
-<p>NannyML performance estimators operate on <em>chunks</em> of model predictions, which can be used to generate reports on the model's performance.</p>
-<p>It is therefore straightforward to generate periodic reports on the model's performance.
-These reports can be used to monitor the model's performance over time and identify potential issues (see the next section).</p>
+<p>The reporting component of a model monitoring solution is responsible for generating overview reports on the model's performance and data drift.
+These reports can be used to track the model's performance over time and identify trends or anomalies and trigger alerts when the model's performance drops below an acceptable level (see the next section).</p>
+<p>Reports can be generated on a regular basis (e.g., daily, weekly, monthly) or on-demand, ideally as part of the common <a href="../orchestration/">workflow orchestration approach</a>.</p>
 <h3 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h3>
-<p>When a model's performance drops below a certain threshold or data drift occurs, it is essential to alert the responsible team.
-NannyML allows threshold-based alerting for both performance and drift metrics, which can serve as the decision basis for the alerting system.</p>
+<p>When a model's performance drops below a certain threshold or significant data drift occurs, it is essential to alert the responsible team for further action.</p>
 <p>The concrete implementation of the alerting system depends on the organization's requirements and the available infrastructure.
 Examples include sending an email or Slack message, creating a ticket in a ticketing system, or invoking a webhook.</p>
+<p>Alerting middlewares, such as <a href="https://prometheus.io/docs/alerting/latest/alertmanager/">Prometheus Alertmanager</a> or <a href="https://www.pagerduty.com/">PagerDuty</a>, can be used to manage alerts and notifications.</p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://www.nannyml.com/library">NannyML</a>, used in the showcase implementation</li>
-<li>Alternatives for model and data quality monitoring:<ul>
 <li><a href="https://www.evidentlyai.com/evidently-oss">Evidently</a>, for model performance and data quality monitoring</li>
 <li><a href="https://docs.seldon.io/projects/alibi-detect/en/stable/">Alibi Detect</a>, for outlier and drift detection</li>
 </ul>
-</li>
-<li>Prometheus <a href="https://prometheus.io/docs/alerting/alertmanager/">Alertmanager</a>, as an alerting middleware</li>
+<h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The appliedAI TransferLab <a href="https://transferlab.ai/trainings/practical-anomaly-detection/">workshop on practical anomaly detection</a> and the <a href="https://github.com/aai-institute/tfl-training-practical-anomaly-detection">accompanying material</a></li>
+<li>Evidently AI's <a href="https://www.evidentlyai.com/ml-in-production/model-monitoring">Model Monitoring in Production guide</a></li>
 </ul>
 
 
