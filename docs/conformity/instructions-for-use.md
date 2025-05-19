@@ -32,7 +32,8 @@ The information contained in the instructions for use roughly falls into two cat
 -   Information about the system in [general](#generic-information)
 -   Information about the system that is [specific to the model used](#model-specific-information)
 
-There is significant overlap between the information required for the instructions for use and the information required for the [technical documentation](technical-documentation.md) of high-risk AI systems.
+There is significant overlap between the information required for the instructions for use and the information required for the [technical documentation](technical-documentation.md) of high-risk AI systems. While the kind of information
+is the same, the intended audiences are different. Article 13 requires the instructions of use to be accessible and comprehensible to the deployer. In other words, providers must give some thought to the technical capabilities and knowledge of the deployer before drafting the instructions.
 
 Both documents can benefit from a structured approach to documentation, such as the use of [model cards](../engineering-practice/model-cards.md) or [experiment tracking](../engineering-practice/experiment-tracking.md).
 
@@ -44,7 +45,6 @@ a long time:
 -   |Art. 13(3)(a)|: the identity and contact details of provider
 -   |Art. 13(3)(b)|:
     -   (i): intended purpose of the system
-    -   (iii): reasonably foreseeable misuse of the system
     -   (vi): information about the expected input data schema; relevant information about training/validation data sets
 -   |Art. 13(3)(e)|:
     -   Computational/hardware resources needed
@@ -56,7 +56,8 @@ a long time:
 Other parts of the information to be included in the instructions for use refer to characteristics of the actual machine learning model employed in the system.
 
 -   |Art. 13(3)(b)|:
-    -   (ii): expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics
+    -   (ii): expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics (|Art. 15|)
+    -   (iii): known or forseeable circumstances which may lead to a risk (|Art. 9|); can depend on the model's type
     -   (iv): technical characteristics and capabilities of the system relevant to explain its outputs
     -   (v): statistics about the system's performance regarding specific (groups of) persons
 -   |Art. 13(3)(d)|: [Human-oversight measures] under |Art. 14|; technical measures that aid the interpretation of system outputs
