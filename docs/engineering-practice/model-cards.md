@@ -29,7 +29,7 @@ The general structure of a model card encompasses the following sections:
 -   Used datasets
 -   Evaluation results (datasets, metrics, factors, etc.)
 -   Ethical considerations
--   Caveats and recommendations
+-   Licenses and compliance information
 
 This information greatly overlaps with the information required for the [technical documentation](../conformity/technical-documentation.md) of high-risk AI systems and the necessary information that should be supplied to deployers of such systems as part of the [instructions for use](../conformity/instructions-for-use.md).
 

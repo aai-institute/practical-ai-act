@@ -36,7 +36,7 @@ Data governance is linked to the following articles:
 
 - |Art. 12| (Record Keeping): For transparency on how high-risk AI systems perform in practice,
     and logging of events and input data over the course of the system's lifetime.
-- [Annex 4](https://artificialintelligenceact.eu/annex/4/) (Technical Documentation): To ensure the quality (especially correctness and completeness) of input data and to document engineering practices around the used data.
+- |Annex IV| (Technical Documentation): To ensure the quality (especially correctness and completeness) of input data and to document engineering practices around the used data.
 
 <!-- Reference Links -->
 [Bias Mitigation]: ../engineering-practice/data-governance/bias-mitigation.md
