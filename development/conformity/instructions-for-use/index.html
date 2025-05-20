@@ -1432,7 +1432,8 @@ information, please
 <li>Information about the system in <a href="#generic-information">general</a></li>
 <li>Information about the system that is <a href="#model-specific-information">specific to the model used</a></li>
 </ul>
-<p>There is significant overlap between the information required for the instructions for use and the information required for the <a href="../technical-documentation/">technical documentation</a> of high-risk AI systems.</p>
+<p>There is significant overlap between the information required for the instructions for use and the information required for the <a href="../technical-documentation/">technical documentation</a> of high-risk AI systems. While the kind of information
+is the same, the intended audiences are different. Article 13 requires the instructions of use to be accessible and comprehensible to the deployer. In other words, providers must give some thought to the technical capabilities and knowledge of the deployer before drafting the instructions.</p>
 <p>Both documents can benefit from a structured approach to documentation, such as the use of <a href="../../engineering-practice/model-cards/">model cards</a> or <a href="../../engineering-practice/experiment-tracking/">experiment tracking</a>.</p>
 <h3 id="generic-information">Generic information<a class="headerlink" href="#generic-information" title="Permanent link">&para;</a></h3>
 <p>All information which is not specific for a single model or may be stable over
@@ -1441,7 +1442,6 @@ a long time:</p>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/13" rel="noopener noreferrer" target="_blank">Art. 13(3)(a)</a>: the identity and contact details of provider</li>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/13" rel="noopener noreferrer" target="_blank">Art. 13(3)(b)</a>:<ul>
 <li>(i): intended purpose of the system</li>
-<li>(iii): reasonably foreseeable misuse of the system</li>
 <li>(vi): information about the expected input data schema; relevant information about training/validation data sets</li>
 </ul>
 </li>
@@ -1456,7 +1456,8 @@ a long time:</p>
 <p>Other parts of the information to be included in the instructions for use refer to characteristics of the actual machine learning model employed in the system.</p>
 <ul>
 <li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/13" rel="noopener noreferrer" target="_blank">Art. 13(3)(b)</a>:<ul>
-<li>(ii): expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics</li>
+<li>(ii): expected level of accuracy, metrics, robustness, and cybersecurity, used for testing and validation of the system; potential circumstances that may impact these characteristics (<a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15</a>)</li>
+<li>(iii): known or forseeable circumstances which may lead to a risk (<a class="aia-ref" href="https://artificialintelligenceact.eu/article/9" rel="noopener noreferrer" target="_blank">Art. 9</a>); can depend on the model's type</li>
 <li>(iv): technical characteristics and capabilities of the system relevant to explain its outputs</li>
 <li>(v): statistics about the system's performance regarding specific (groups of) persons</li>
 </ul>
