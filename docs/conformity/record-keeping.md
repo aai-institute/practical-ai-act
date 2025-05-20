@@ -122,20 +122,7 @@ Special provisions apply to law enforcement authorities and financial institutio
 |Art. 26(6)| requires the automatically generated logs to be kept for a period appropriate to the intended use of the system, but at least 6 months.
 If any other legal requirements apply (e.g., recording requirements under GDPR), the logs must be kept for the longer of the two periods.
 
-## Checklist
 
-The following checklist can help you assess the compliance of your record-keeping system with the requirements of the AI Act:
-
-### |Art. 12(2)(a)| requirements
-
--   [ ] Conditions under which a risk is deemed unacceptable in relation to the (reasonably foreseeable) intended use have been identified
--   [ ] Conditions under which a system might be substantially modified have been identified
--   [ ] Log metrics to track events that might lead to these conditions have been identified and documented
-
-### |Art. 12(2)(b) and (c)| requirements
-
--   [ ] Events that could affect compliance have been identified and relevant log metrics have been prepared
--   [ ] Events that could affect the performance of the system have been identified and relevant log metrics have been identified and documented
 
 <!-- Reference Links -->
 

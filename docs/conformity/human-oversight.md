@@ -1,7 +1,15 @@
 # Human Oversight
 
 |Article 14| of the EU AI Act establishes requirements for human oversight of high-risk
-AI systems. When implementing human oversight requirements,
+AI systems. It essentially imposes three types of obligations.
+
+First, that the system is observable/monitorable by the human overseer. In other words, they must be able to monitor its operation to detect and address anomalies, dysfunctions and unexpected performance. For example through warnings in a dashboard. Almost all engineering practices we present are connected to this type.
+
+Second, that the system is designed/provided such that the overseer is informed. In other words, they should not over-rely on the AI system and should be able to understand its outputs. This could be either through features built into the system, shared through instructions of use, or through corporate up-skilling.
+
+Finally, that the system is controllable by the overseer. In other words, they should be able to disregard, override or reverse the outputs and intervene or interrupt the system. For example by manually editing the output of a system.
+
+When implementing human oversight requirements,
 it's crucial to understand that automation opportunities are primarily limited to the
 collection of metrics and supporting information. The substantive aspects
 of oversight—interpretation, decision-making, and intervention—must remain human-driven.
@@ -46,12 +54,7 @@ the requirements stated in |Art. 4 (AI literacy)|.
 
 ## Relation to other Articles
 
-In addition to |Art. 4|, the following connections are prevalent:
-
-- |Art. 9| (Risk Management System): Oversight measures should be embedded into
-    the risk management strategy, particularly for monitoring risks during operation.
-- |Art. 11| (Technical Documentation): For oversight to be actionable and traceable,
-    systems must be accompanied by clear, structured, and accessible documentation.
+- |Art. 4| (AI literacy): Persons involved in designing and operating AI systems are appropriately trained. 
 - |Art. 13| (Transparency and Provision of Information to Deployers): Provide
     the context necessary for humans to interpret system behavior and make informed
     decisions about its use.
