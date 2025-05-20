@@ -1191,6 +1191,18 @@ information, please
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Accuracy, Robustness and Cybersecurity
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1201,6 +1213,76 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accuracy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#robustness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robustness
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Robustness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prevention-of-bias-feedback-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevention of Bias Feedback Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cybersecurity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1255,6 +1337,65 @@ information, please
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accuracy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accuracy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#robustness" class="md-nav__link">
+    <span class="md-ellipsis">
+      Robustness
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Robustness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prevention-of-bias-feedback-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevention of Bias Feedback Loops
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cybersecurity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1275,6 +1416,7 @@ information, please
 
 
 <h1 id="accuracy-robustness-and-cybersecurity">Accuracy, Robustness and Cybersecurity<a class="headerlink" href="#accuracy-robustness-and-cybersecurity" title="Permanent link">&para;</a></h1>
+<p>This article requires that high-risk AI systems be designed to achieve appropriate levels of accuracy, robustness, and cybersecurity. However, these terms are not clearly defined within the context of the AI Act. It makes sense to get an understanding, which dimensions of the AI systems shall be addressed.</p>
 <div class="admonition info">
 <p class="admonition-title">Engineering Info</p>
 <p>Below we map specific engineering practices and system components from our showcase
@@ -1305,7 +1447,58 @@ EU AI Act compliance.</p>
 </li>
 </ul>
 </div>
+<h2 id="accuracy">Accuracy<a class="headerlink" href="#accuracy" title="Permanent link">&para;</a></h2>
+<p><a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(2)</a> makes it clear that <em>accuracy</em> in the context of the AI Act <em>does not</em> equal the established metric by the same name, but rather should be understood as a set of quality measures of a system.
+In the case of a classification the accuracy metric might one but not the only applicable quality measure.</p>
+<p>Which specific metric is most suitable as quality measure heavily depends on the problem type at hand.
+A good overview for the case of classification problems can be found in the norm document <a href="#iso4213">ISO/IEC TS 4213:2022</a>.
+The upcoming replacement of this specification broadens the scope to include measures of performance for classification, regression, clustering and recommendation tasks.</p>
+<p><a class="aia-ref" href="https://artificialintelligenceact.eu/annex/4" rel="noopener noreferrer" target="_blank">Annex IV</a> mandates that the technical documentation must include a description of the metrics used to measure the accuracy of the system.
+In order to achieve a better level of transparency, information about the accuracy of AI systems should also be included in their <a href="../instructions-for-use/">instructions for use</a>.</p>
+<h2 id="robustness">Robustness<a class="headerlink" href="#robustness" title="Permanent link">&para;</a></h2>
+<p>Systems should perform consistently throughout their lifecycle, be resilient to errors and faults, and have measures in place to mitigate risks associated with cybersecurity threats.</p>
+<p>ISO/IEC 25059:2023 (<em>Artificial intelligence concepts and terminology</em>) defines robustness as the "ability of a system to maintain its level of performance under any circumstances".
+This contrasts with the definition of accuracy, which focuses on the performance on a distinct evaluation data set.</p>
+<p>In practice, this means that there is a trade-off between maximizing the accuracy of a system, as evaluated on a test set, and ensuring its robustness in the real world.</p>
+<p>A valuable synergy emerges from making AI systems more <a href="../../engineering-practice/explainability/">interpretable and explainable</a> as this can also help to improve their robustness, by providing measures which allow to identify and mitigate potential issues with the system's performance.
+<a href="../../engineering-practice/model-monitoring/">Model monitoring techniques</a> like anomaly detection can also be used to identify potential issues with the system's performance.</p>
+<p>See chapter 10 of the <a href="#iso25058">ISO/IEC TS 25058:2024</a> (<em>Guidance for quality evaluation of artificial intelligence (AI) systems</em>) for guidance on how to evaluate the robustness of AI systems.
+For neural networks in particular, also refer to the <a href="#iso24029">ISO/IEC TR 24029</a> (<em>Assessment of the robustness of neural networks</em>) series for concrete assessment methods.</p>
+<h3 id="prevention-of-bias-feedback-loops">Prevention of Bias Feedback Loops<a class="headerlink" href="#prevention-of-bias-feedback-loops" title="Permanent link">&para;</a></h3>
+<p>High-risk AI systems that continually learn after being put in production should be designed to minimize risks of producing biased outputs based on feedback loops. </p>
+<p>To make this more concrete, consider our <a href="../../showcase/">use-case</a> example of an assistant system for hiring processes. If the system (without proper mitigation measures) is biased against applicants from a certain demographic, it may negatively affect the hiring chances for the applicants.
+If the output of the HR system is subsequently used to retrain the AI system, it may lead to a feedback loop that further amplifies the pre-existing bias.</p>
+<p>See the page on <a href="../../engineering-practice/data-governance/bias-mitigation/">bias mitigation</a> to understand how to address bias concerns when building an AI system.</p>
+<h2 id="cybersecurity">Cybersecurity<a class="headerlink" href="#cybersecurity" title="Permanent link">&para;</a></h2>
+<p>Besides the classical issues of cybersecurity, such as confidentiality, integrity, and availability, the AI Act also requires that high-risk AI systems be designed to be resilient attacks specific to AI systems:</p>
+<ul>
+<li>Data poisoning</li>
+<li>Model poisoning</li>
+<li>Adversarial attacks / model evasion</li>
+<li>Confidentiality attacks, like model inversion or model theft</li>
+</ul>
+<p>In practice, this means that the cybersecurity measures for high-risk AI systems should encompass both traditional cybersecurity measures and the tactics, techniques, and procedures that are unique to AI systems.
+Framework like <a href="https://atlas.mitre.org">MITRE ATLAS</a> can help to identify and mitigate these risks.</p>
+<p>It is worth noting that the cybersecurity provisions of the AI Act interact with other legal frameworks, such as the EU Cyber Resilience Act (see below), which also impose requirements on the cybersecurity of software and hardware products.</p>
 <!-- Reference Links -->
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>According to <a class="aia-ref" href="https://artificialintelligenceact.eu/article/15" rel="noopener noreferrer" target="_blank">Art. 15(2)</a>, we can expect concrete guidance for the implementation of these requirements in the form of upcoming benchmarks and measurement methodologies.</p>
+</div>
+<ul>
+<li><a name="iso4213" /><a href="https://www.iso.org/standard/79799.html">ISO/IEC TS 4213:2022</a>:<ul>
+<li>provides a broad overview of statistical metrics suitable for various forms of classification problems.</li>
+<li>The upcoming replacement, currently in its draft stage as <a href="https://www.iso.org/standard/89455.html">ISO/IEC AWI 4213</a> broadens the scope to include measures of performance for classification, regression, clustering and recommendation tasks</li>
+</ul>
+</li>
+<li><a name="iso25058" /><a href="https://www.iso.org/standard/89454.html">ISO/IEC TS 25058:2024</a> (<em>Guidance for quality evaluation of artificial intelligence (AI) systems</em>)</li>
+<li><a name="iso24029" /><a href="https://www.iso.org/standard/77609.html">ISO/IEC TR 24029</a> (<em>Artificial Intelligence (AI) — Assessment of the robustness of neural networks</em>)</li>
+<li><a href="https://publications.jrc.ec.europa.eu/repository/handle/JRC119336">Hamon, et al. (2020) - Robustness and Explainability of Artificial Intelligence, EUR 30040 EN, Publications Office of the European Union</a></li>
+<li><a href="https://mltop10.info/">OWASP Machine Learning Security Top Ten</a></li>
+<li><a href="https://atlas.mitre.org">MITRE ATLAS (Adversarial Threat Landscape for Artificial-Intelligence Systems)</a></li>
+<li><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202402847&amp;qid=1747733433953#anx_I">Annex I of the EU Cyber Resilience Act</a> list essential requirements for the cybersecurity of products with digital elements.</li>
+</ul>
 
 
 
