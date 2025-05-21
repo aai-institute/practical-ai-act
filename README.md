@@ -3,53 +3,57 @@
   <img src="docs/_images/logos/baiaa-logo-black.svg">
 </picture>
 
-# twai-pipeline
+# An example of a high-risk AI system
+
+This repository contains an implementation of a high-risk AI system as per Chapter III of the EU Artificial Intelligence Act.
+It demonstrates how different personas, like providers and deployers, can design their AI systems to ensure compliance with the AI Act.
+
+The showcase is built as a machine learning pipeline, capturing the continuous nature of the ML lifecycle from data sourcing and processing to model training, deployment, inference, and monitoring in production.
+All tools used in this project were selected with a modular software stack in mind, allowing readers to switch out components to their liking with little effort for their own use cases.
+All software tools used in this showcase are open-source.
 
 ## Setting up the environment
 
-The project uses [uv](https://github.com/astral-sh/uv) as a package
-manager. Follow the [installation instructions](https://docs.astral.sh/uv/getting-started/installation/)
-to have uv available on your machine.
+The project uses [uv](https://github.com/astral-sh/uv) as a package manager.
+Follow the [installation instructions](https://docs.astral.sh/uv/getting-started/installation/) to make uv available on your machine.
 
 ## Build documentation
 
-In your terminal:
+To build and serve the documentation, run the following command in your terminal:
 
-```
+```console
 uv run --group docs mkdocs serve
 ```
 
-Once the server is up, the documentation should be available on port [8000](http://127.0.0.1:8000/).
+Once the server is up, the documentation will be available locally on port [8000](http://127.0.0.1:8000/).
 
-## Simple example
+## A simple example
 
-Change to the project's directory.
-
-Start a mlflow server in a terminal:
+Change to the project's directory, and start an mlflow server in a terminal:
 
 ```
 uv run mlflow server --host 127.0.0.1 --port 5000
 ```
 
-Train a simple classifier:
+Then, proceed to train a simple classifier by doing the following:
 
 ```
 MLFLOW_TRACKING_URI=http://127.0.0.1:5000 PYTHONPATH=src uv run python scripts/run_train_classifier.py
 ```
 
-In a different terminal start the FastAPI app:
+In a different terminal, start the FastAPI app:
 
 ```
 MLFLOW_TRACKING_URI=http://127.0.0.1:5000 uv run --group deploy uvicorn --reload hr_assistant.main:app
 ```
 
-Run a simple request to the app:
+You can make a simple request to the app by running the following Python script:
 
 ```
 python scripts/run_simple_request.py
 ```
 
-Or, to fire off a batch of inference requests at once:
+Or, to fire off a batch of inference requests at once, run:
 
 ```
 python scripts/fill_record_db.py
