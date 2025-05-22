@@ -24,24 +24,24 @@ docs = [
   "mkdocs-backlinks>=0.9.1",
 ]
 train = [
-  "mlflow>=2.19.0",
+  "mlflow>=2.22.0",
   "kaleido==0.2.1",
   "dagster>=1.9.10",
   "dagster-webserver>=1.9.10",
+  "dagster-obstore>=0.2.0",
   "lightgbm>=4.5.0",
   "sensai-utils>=1.4.0",
-  "scikit-learn<1.6",                   # to avoid errors with xgboost related to sklearn tags, cf. https://stackoverflow.com/questions/79290968/super-object-has-no-attribute-sklearn-tags
+  "scikit-learn>=1.5,<2",
   "ucimlrepo>=0.0.7",
-  "xgboost==2.1.3",                     # highest supported version by MLflow autologger
+  "xgboost>=2,<3",
   "optuna>=4.2.1",
   "optuna-integration[sklearn]>=4.2.1",
   "lakefs-spec>=0.11.2",
   "dagster-postgres>=0.26.2",
   "s3fs>=2025.2.0",
-  "dagster-obstore>=0.2.0",
   "nannyml>=0.13.0",
-  "mlserver>=1.7.0rc0",
-  "mlserver-mlflow>=1.7.0rc0",
+  "mlserver>=1.7.0",
+  "mlserver-mlflow>=1.7.0",
   "aif360>=0.6.1",
   "shap>=0.47.0",
   "numba>=0.61.0",
@@ -49,26 +49,31 @@ train = [
 ]
 deploy = [
   "fastapi>=0.110",
-  "mlserver>=1.7.0rc0",
-  "mlserver-mlflow>=1.7.0rc0",
-  "duckdb>=1.1.3",
+  "mlserver>=1.7.0",
+  "mlserver-mlflow>=1.7.0",
   "httpx>=0.28.1",
   "prometheus-fastapi-instrumentator>=7.0.2",
   "psycopg2-binary>=2.9.10",
   "pydantic-settings>=2.8.0",
   "nannyml>=0.13.0",
-  "mlserver-sklearn>=1.7.0rc0",
+  "mlserver-sklearn>=1.7.0",
   "matplotlib>=3.10.0",
 ]
 monitoring = [
   "fastapi>=0.115.8",
-  "mlserver>=1.7.0rc0",
-  "mlserver-sklearn>=1.7.0rc0",
+  "mlserver>=1.7.0",
+  "mlserver-mlflow>=1.7.0",
+  "mlserver-sklearn>=1.7.0",
   "nannyml>=0.13.0",
   "psycopg2-binary>=2.9.10",
 ]
-dev = ["ipython>=8.32.0", "pytest>=8.3.4", "ruff>=0.9.3"]
+dev = ["ipython>=8.32.0", "pre-commit>=4.2.0", "pytest>=8.3.4", "ruff>=0.9.3"]
 
+[tool.uv.sources]
+# Resolve NannyML from Git so we can get the relaxed Jinja2 dependency
+# (see https://github.com/NannyML/nannyml/pull/441)
+# TODO: Remove this when NannyML releases a new version on PyPI
+nannyml = { git = "https://github.com/NannyML/nannyml?ref=main" }
 
 [tool.ruff]
 preview = true
