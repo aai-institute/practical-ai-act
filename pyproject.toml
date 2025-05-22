@@ -75,9 +75,6 @@ preview = true
 exclude = ["openapi_client"]
 line-length = 88
 
-# FIXME: Exclude existing non-compliant code for now
-extend-exclude = ["scripts/**"]
-
 [tool.ruff.lint]
 select = [
   "E",
