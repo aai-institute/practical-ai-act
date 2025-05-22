@@ -1,0 +1,30 @@
+name: Python code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  code-quality:
+    name: Run code checks and formatting hooks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: ./.github/actions/python-deps
+        with:
+          pythonVersion: "3.12"
+      - name: Run pre-commit checks
+        run: uv run pre-commit run --all-files --verbose --show-diff-on-failure
+      - name: Run Python tests
+        run: uv run pytest

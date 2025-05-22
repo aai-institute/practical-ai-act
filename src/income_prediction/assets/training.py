@@ -7,12 +7,11 @@ from sklearn.model_selection import train_test_split
 from asec.data import CensusASECMetadata
 from asec.model_factory import ModelFactory
 
-from ..resources.configuration import Config
+from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
-from .fairness import evaluate_fairness
-from ..resources.configuration import OptunaCVConfig
 from ..utils.dagster import canonical_lakefs_uri_for_input
 from ..utils.mlflow import log_fairness_metrics
+from .fairness import evaluate_fairness
 
 GROUP_NAME = "training"
 

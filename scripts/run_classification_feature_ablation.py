@@ -1,8 +1,8 @@
+from collections.abc import Callable, Sequence
 from functools import partial
-from typing import Sequence, Callable
 
+from config import FILE_NAME_ADULT, MLFLOW_SUBFOLDER, RESULT_SUBFOLDER
 from more_itertools import powerset
-
 from sensai import VectorClassificationModel
 from sensai.evaluation import (
     ClassificationEvaluatorParams,
@@ -10,16 +10,14 @@ from sensai.evaluation import (
     VectorModelCrossValidatorParams,
 )
 from sensai.evaluation.eval_stats import ClassificationMetricAccuracy
+from sensai.tracking.mlflow_tracking import MLFlowExperiment
 from sensai.util import logging
 from sensai.util.io import ResultWriter
 from sensai.util.logging import datetime_tag
-from sensai.tracking.mlflow_tracking import MLFlowExperiment
 
-
-from config import FILE_NAME_ADULT, RESULT_SUBFOLDER, MLFLOW_SUBFOLDER
 from adult.data import AdultData
-from adult.model_factory import ModelFactory
 from adult.features import AdultFeatureRegistry
+from adult.model_factory import ModelFactory
 
 
 def create_feature_combinations(
