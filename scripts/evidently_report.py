@@ -25,7 +25,14 @@ def fetch_test_data(model_uri: str) -> pd.DataFrame:
         raise ValueError(f"Run not found: {model.run_id}")
 
     client = mlflow.client.MlflowClient()
-    dataset = next((a.path for a in client.list_artifacts(run.info.run_id) if a.path.endswith("test.parquet")), None)
+    dataset = next(
+        (
+            a.path
+            for a in client.list_artifacts(run.info.run_id)
+            if a.path.endswith("test.parquet")
+        ),
+        None,
+    )
     if dataset is None:
         raise ValueError(f"MLflow artifact not found: {run.info.run_id}")
 
@@ -92,7 +99,12 @@ mlflow.set_tracking_uri("http://localhost:5000")
 
 db = sqlite3.connect(PREDICTIONS_DB_FILE)
 
-model_versions = [row[0] for row in db.execute(f'SELECT DISTINCT metadata->>"model_version" from {PREDICTIONS_TABLE}').fetchall()]
+model_versions = [
+    row[0]
+    for row in db.execute(
+        f'SELECT DISTINCT metadata->>"model_version" from {PREDICTIONS_TABLE}'
+    ).fetchall()
+]
 assert len(model_versions) == 1, "Multiple model versions found in the database"
 
 print(f"Fetching test data for model {model_versions[0]}")
