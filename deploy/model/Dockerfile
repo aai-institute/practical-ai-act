@@ -10,8 +10,8 @@ COPY download_model_artifacts.py /
 
 # Minimal dependencies to access MLflow model registry
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv venv --seed && \
-    uv pip install --prerelease=allow mlflow 'mlserver>=1.7.0rc0' 'mlserver-sklearn>=1.7.0rc0' 'shap'
+  uv venv --seed && \
+  uv pip install --prerelease=allow mlflow 'mlserver>=1.7.0' 'mlserver-sklearn>=1.7.0' 'shap'
 
 ARG MLFLOW_TRACKING_URI
 ENV MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI
@@ -24,9 +24,9 @@ ENV MODEL_VERSION=$MODEL_VERSION
 
 # Download the model artifacts and install the model serving Python requirements
 # FIXME: Exclude `hr-assistant` package since its code will be added to PYTHONPATH at runtime from the model artifacts
-RUN --mount=type=cache,target=/root/.cache/uv \ 
-    PYTHONUNBUFFERED=1 uv run python /download_model_artifacts.py && \
-    grep -v "hr-assistant" /model/requirements.txt | uv pip install -r -
+RUN --mount=type=cache,target=/root/.cache/uv \
+  PYTHONUNBUFFERED=1 uv run python /download_model_artifacts.py && \
+  grep -v "hr-assistant" /model/requirements.txt | uv pip install -r -
 
 FROM python:3.12-slim
 

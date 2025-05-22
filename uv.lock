@@ -1288,6 +1288,7 @@ docs = [
 monitoring = [
     { name = "fastapi" },
     { name = "mlserver" },
+    { name = "mlserver-mlflow" },
     { name = "mlserver-sklearn" },
     { name = "nannyml" },
     { name = "psycopg2-binary" },
@@ -1330,9 +1331,9 @@ deploy = [
     { name = "fastapi", specifier = ">=0.110" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "matplotlib", specifier = ">=3.10.0" },
-    { name = "mlserver", specifier = ">=1.7.0rc0" },
-    { name = "mlserver-mlflow", specifier = ">=1.7.0rc0" },
-    { name = "mlserver-sklearn", specifier = ">=1.7.0rc0" },
+    { name = "mlserver", specifier = ">=1.7.0" },
+    { name = "mlserver-mlflow", specifier = ">=1.7.0" },
+    { name = "mlserver-sklearn", specifier = ">=1.7.0" },
     { name = "nannyml", specifier = ">=0.13.0" },
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.2" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
@@ -1357,8 +1358,9 @@ docs = [
 ]
 monitoring = [
     { name = "fastapi", specifier = ">=0.115.8" },
-    { name = "mlserver", specifier = ">=1.7.0rc0" },
-    { name = "mlserver-sklearn", specifier = ">=1.7.0rc0" },
+    { name = "mlserver", specifier = ">=1.7.0" },
+    { name = "mlserver-mlflow", specifier = ">=1.7.0" },
+    { name = "mlserver-sklearn", specifier = ">=1.7.0" },
     { name = "nannyml", specifier = ">=0.13.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
 ]
@@ -1372,8 +1374,8 @@ train = [
     { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "lightgbm", specifier = ">=4.5.0" },
     { name = "mlflow", specifier = ">=2.19.0" },
-    { name = "mlserver", specifier = ">=1.7.0rc0" },
-    { name = "mlserver-mlflow", specifier = ">=1.7.0rc0" },
+    { name = "mlserver", specifier = ">=1.7.0" },
+    { name = "mlserver-mlflow", specifier = ">=1.7.0" },
     { name = "nannyml", specifier = ">=0.13.0" },
     { name = "numba", specifier = ">=0.61.0" },
     { name = "optuna", specifier = ">=4.2.1" },
@@ -2116,7 +2118,7 @@ wheels = [
 
 [[package]]
 name = "mlserver"
-version = "1.7.0rc1"
+version = "1.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
@@ -2145,35 +2147,36 @@ dependencies = [
     { name = "uvicorn" },
     { name = "uvloop", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/c9/da14ebc551982aee1ae547a60dfee3426d6a1d136832230927ae113d7c6d/mlserver-1.7.0rc1.tar.gz", hash = "sha256:8a8ac079cf267a30d0d013dc0b734d78f5339c1492a9a17a91bf72f5a0fd6456", size = 96652, upload-time = "2025-02-06T15:14:01.218Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/be/8c/850f6f971ed01609fc5fd1fa863b5c8c94794a78e582d1ea01db52252a83/mlserver-1.7.0.tar.gz", hash = "sha256:51c3854813acc4f4010791e14273846ed42a005218127785cdfa576ec1ae2a21", size = 96882, upload-time = "2025-04-11T15:16:04.708Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/54/42/0103f8fba8acbbedb2bea7919d9375c256a2d77af43856f81b58f910b5c5/mlserver-1.7.0rc1-py3-none-any.whl", hash = "sha256:190557816ea227e42f8a62e3368b707cfa8676ab5372d5ec491282a7b56cd5d8", size = 129048, upload-time = "2025-02-06T15:13:57.086Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/80/162a8a4388b562a39587632a14353238b57cedf35b2bb3a2dfdf9d621519/mlserver-1.7.0-py3-none-any.whl", hash = "sha256:3c852da377e158a4affa426a79aaabf3a8b523ad88739be656b24fcc7b6ba742", size = 129381, upload-time = "2025-04-11T15:16:03.072Z" },
 ]
 
 [[package]]
 name = "mlserver-mlflow"
-version = "1.7.0rc1"
+version = "1.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "mlflow" },
     { name = "mlserver" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/44/da/3820b08fdf1919bd1b6e34d8eca89c2716797cc8aed9c1cc12c334581ea5/mlserver_mlflow-1.7.0.tar.gz", hash = "sha256:23b1956091f260ce59543db49db5f875a30a264dbc30f2843ff7d71b1d44113e", size = 8453, upload-time = "2025-04-11T15:16:58.563Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fb/22/41045cd05539f405de70142ce0cc399cfa2961236b7367fdd7d99323c193/mlserver_mlflow-1.7.0rc1-py3-none-any.whl", hash = "sha256:108382fcc16c5cedf84e44d39dd4c21929e893a0adb2092d9246ccd9c71623a9", size = 10182, upload-time = "2025-02-06T15:16:12.604Z" },
+    { url = "https://files.pythonhosted.org/packages/8c/b9/da2904ac57bac1298f8b41325507b3b747946d87280049eacdf4f00a1986/mlserver_mlflow-1.7.0-py3-none-any.whl", hash = "sha256:1e00de1a0173dace379eef86db994750fd9fd2ce0ff025f0e3451d6996a5d278", size = 10201, upload-time = "2025-04-11T15:16:57.675Z" },
 ]
 
 [[package]]
 name = "mlserver-sklearn"
-version = "1.7.0rc1"
+version = "1.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "joblib" },
     { name = "mlserver" },
     { name = "scikit-learn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/7d/c9bda250e95eb5d0f3960440d499c413be2620117024964cf31f1bf66667/mlserver_sklearn-1.7.0rc1.tar.gz", hash = "sha256:1eb9534413637a2abcac0d8dc5094b0326ecf08e6a2e81c1272d8d4b56ad40cd", size = 6861, upload-time = "2025-02-06T15:16:08.096Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/b0/459bd6c0b324de17b483767d5a1943aa002509267b022f8b1a141b09f916/mlserver_sklearn-1.7.0.tar.gz", hash = "sha256:4f9bf8db8e8052fffb162777484618c91262c14dc4621c4d44c7b394a344e15d", size = 6851, upload-time = "2025-04-11T15:17:12.837Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4e/e2/afda7757bdb04c57cb820bb2a3a8a2e5bbfb76d8b8bdfb526541df6142e2/mlserver_sklearn-1.7.0rc1-py3-none-any.whl", hash = "sha256:f5b6b14dc85e52f0f730d13c2d0f56f3410926d0e1c82de09fbb77c3983ab8f3", size = 8055, upload-time = "2025-02-06T15:16:06.172Z" },
+    { url = "https://files.pythonhosted.org/packages/05/30/589a48cd857ce4b76e27e5dcca52d59e8098d714fec566b3dba90eff2ad7/mlserver_sklearn-1.7.0-py3-none-any.whl", hash = "sha256:3542a88b1d14c755d9eeef409dd9fd3f54dfe0c4a071e9b3c0301335b8622045", size = 8018, upload-time = "2025-04-11T15:17:11.609Z" },
 ]
 
 [[package]]
