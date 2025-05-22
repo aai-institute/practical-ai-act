@@ -70,6 +70,11 @@ monitoring = [
 ]
 dev = ["ipython>=8.32.0", "pytest>=8.3.4", "ruff>=0.9.3"]
 
+[tool.uv.sources]
+# Resolve NannyML from Git so we can get the relaxed Jinja2 dependency
+# (see https://github.com/NannyML/nannyml/pull/441)
+# TODO: Remove this when NannyML releases a new version on PyPI
+nannyml = { git = "https://github.com/NannyML/nannyml?ref=main" }
 
 [tool.ruff]
 preview = true

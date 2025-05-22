@@ -1347,7 +1347,7 @@ deploy = [
     { name = "mlserver", specifier = ">=1.7.0" },
     { name = "mlserver-mlflow", specifier = ">=1.7.0" },
     { name = "mlserver-sklearn", specifier = ">=1.7.0" },
-    { name = "nannyml", specifier = ">=0.13.0" },
+    { name = "nannyml", git = "https://github.com/NannyML/nannyml" },
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.2" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "pydantic-settings", specifier = ">=2.8.0" },
@@ -1374,7 +1374,7 @@ monitoring = [
     { name = "mlserver", specifier = ">=1.7.0" },
     { name = "mlserver-mlflow", specifier = ">=1.7.0" },
     { name = "mlserver-sklearn", specifier = ">=1.7.0" },
-    { name = "nannyml", specifier = ">=0.13.0" },
+    { name = "nannyml", git = "https://github.com/NannyML/nannyml" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
 ]
 train = [
@@ -1389,7 +1389,7 @@ train = [
     { name = "mlflow", specifier = ">=2.22.0" },
     { name = "mlserver", specifier = ">=1.7.0" },
     { name = "mlserver-mlflow", specifier = ">=1.7.0" },
-    { name = "nannyml", specifier = ">=0.13.0" },
+    { name = "nannyml", git = "https://github.com/NannyML/nannyml" },
     { name = "numba", specifier = ">=0.61.0" },
     { name = "optuna", specifier = ">=4.2.1" },
     { name = "optuna-integration", extras = ["sklearn"], specifier = ">=4.2.1" },
@@ -1559,14 +1559,14 @@ wheels = [
 
 [[package]]
 name = "jinja2"
-version = "3.0.3"
+version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markupsafe" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/91/a5/429efc6246119e1e3fbf562c00187d04e83e54619249eb732bb423efa6c6/Jinja2-3.0.3.tar.gz", hash = "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7", size = 269196, upload-time = "2021-11-09T20:27:29.541Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/9a/e5d9ec41927401e41aea8af6d16e78b5e612bca4699d417f646a9610a076/Jinja2-3.0.3-py3-none-any.whl", hash = "sha256:077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8", size = 133630, upload-time = "2021-11-09T20:27:27.116Z" },
+    { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
 ]
 
 [[package]]
@@ -1999,7 +1999,7 @@ wheels = [
 
 [[package]]
 name = "mkdocs-material"
-version = "9.6.9"
+version = "9.6.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -2014,9 +2014,9 @@ dependencies = [
     { name = "pymdown-extensions" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/11/cb/6dd3b6a7925429c0229738098ee874dbf7fa02db55558adb2c5bf86077b2/mkdocs_material-9.6.9.tar.gz", hash = "sha256:a4872139715a1f27b2aa3f3dc31a9794b7bbf36333c0ba4607cf04786c94f89c", size = 3948083, upload-time = "2025-03-17T09:28:50.879Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b3/fa/0101de32af88f87cf5cc23ad5f2e2030d00995f74e616306513431b8ab4b/mkdocs_material-9.6.14.tar.gz", hash = "sha256:39d795e90dce6b531387c255bd07e866e027828b7346d3eba5ac3de265053754", size = 3951707, upload-time = "2025-05-13T13:27:57.173Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/db/7c/ea5a671b2ff5d0e3f3108a7f7d75b541d683e4969aaead2a8f3e59e0fc27/mkdocs_material-9.6.9-py3-none-any.whl", hash = "sha256:6e61b7fb623ce2aa4622056592b155a9eea56ff3487d0835075360be45a4c8d1", size = 8697935, upload-time = "2025-03-17T09:28:47.481Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/a1/7fdb959ad592e013c01558822fd3c22931a95a0f08cf0a7c36da13a5b2b5/mkdocs_material-9.6.14-py3-none-any.whl", hash = "sha256:3b9cee6d3688551bf7a8e8f41afda97a3c39a12f0325436d76c86706114b721b", size = 8703767, upload-time = "2025-05-13T13:27:54.089Z" },
 ]
 
 [[package]]
@@ -2042,7 +2042,7 @@ wheels = [
 
 [[package]]
 name = "mkdocstrings"
-version = "0.29.0"
+version = "0.29.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -2052,9 +2052,9 @@ dependencies = [
     { name = "mkdocs-autorefs" },
     { name = "pymdown-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/4d/a9484dc5d926295bdf308f1f6c4f07fcc99735b970591edc414d401fcc91/mkdocstrings-0.29.0.tar.gz", hash = "sha256:3657be1384543ce0ee82112c3e521bbf48e41303aa0c229b9ffcccba057d922e", size = 1212185, upload-time = "2025-03-10T13:10:11.445Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/e8/d22922664a627a0d3d7ff4a6ca95800f5dde54f411982591b4621a76225d/mkdocstrings-0.29.1.tar.gz", hash = "sha256:8722f8f8c5cd75da56671e0a0c1bbed1df9946c0cef74794d6141b34011abd42", size = 1212686, upload-time = "2025-03-31T08:33:11.997Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/47/eb876dfd84e48f31ff60897d161b309cf6a04ca270155b0662aae562b3fb/mkdocstrings-0.29.0-py3-none-any.whl", hash = "sha256:8ea98358d2006f60befa940fdebbbc88a26b37ecbcded10be726ba359284f73d", size = 1630824, upload-time = "2025-03-10T13:10:09.712Z" },
+    { url = "https://files.pythonhosted.org/packages/98/14/22533a578bf8b187e05d67e2c1721ce10e3f526610eebaf7a149d557ea7a/mkdocstrings-0.29.1-py3-none-any.whl", hash = "sha256:37a9736134934eea89cbd055a513d40a020d87dfcae9e3052c2a6b8cd4af09b6", size = 1631075, upload-time = "2025-03-31T08:33:09.661Z" },
 ]
 
 [package.optional-dependencies]
@@ -2245,7 +2245,7 @@ wheels = [
 [[package]]
 name = "nannyml"
 version = "0.13.0"
-source = { registry = "https://pypi.org/simple" }
+source = { git = "https://github.com/NannyML/nannyml#2089f7a622ab771db417ecfd08aed7c3a1977a94" }
 dependencies = [
     { name = "apscheduler" },
     { name = "category-encoders" },
@@ -2272,10 +2272,6 @@ dependencies = [
     { name = "scipy" },
     { name = "seaborn" },
     { name = "segment-analytics-python" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/7d/5a/fd9973306e46f78bd49261daf7f389b0246a650cddbc79f986680aa211ae/nannyml-0.13.0.tar.gz", hash = "sha256:809e8e60373bc80365b3490488d90bed3f9c498ba6ceb80b8467a9af8afcf413", size = 22555058, upload-time = "2025-01-14T22:41:45.964Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/19/e8/7dcd7c5bc1cae5be492e26e38aff788582ab7926bd2c6751b969262156ff/nannyml-0.13.0-py3-none-any.whl", hash = "sha256:b8bc23b7b84b25ce07b9acd6415285d54e21a44dd0b58813666fdca87c8073e4", size = 23023247, upload-time = "2025-01-14T22:41:40.116Z" },
 ]
 
 [[package]]
