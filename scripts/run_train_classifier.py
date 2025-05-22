@@ -47,5 +47,10 @@ if __name__ == "__main__":
 
     # track result
     model_uri = mlflow_track(
-        pipeline, evaluation_result, exp_name, model_name, art_path, reference_data=reference_df,
+        pipeline,
+        evaluation_result,
+        exp_name,
+        model_name,
+        art_path,
+        reference_data=reference_df,
     )
