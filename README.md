@@ -6,7 +6,7 @@
 # An example of a high-risk AI system
 
 This repository contains an implementation of a high-risk AI system as per Chapter III of the EU Artificial Intelligence Act.
-It demonstrates how different personas, like providers and deployers, can design their AI systems to ensure compliance with the AI Act.
+It demonstrates how different personas, especially providers of AI systems, can design their systems to ensure compliance with the AI Act.
 
 The showcase is built as a machine learning pipeline, capturing the continuous nature of the ML lifecycle from data sourcing and processing to model training, deployment, inference, and monitoring in production.
 All tools used in this project were selected with a modular software stack in mind, allowing readers to switch out components to their liking with little effort for their own use cases.
@@ -19,13 +19,13 @@ Follow the [installation instructions](https://docs.astral.sh/uv/getting-started
 
 ## Build documentation
 
-To build and serve the documentation, run the following command in your terminal:
+To build and serve the documentation locally, run the following command in your terminal:
 
 ```console
 uv run --group docs mkdocs serve
 ```
 
-Once the server is up, the documentation will be available locally on port [8000](http://127.0.0.1:8000/).
+Once the server is up, the documentation will be available at <http://127.0.0.1:8000/>.
 
 ## A simple example
 
