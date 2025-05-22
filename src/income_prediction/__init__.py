@@ -19,7 +19,6 @@ from income_prediction.resources.configuration import (
 )
 from income_prediction.resources.mlflow_session import MlflowSession
 
-from .assets.model import ModelVersion
 from .jobs import e2e_pipeline_job
 from .sensors import model_version_trigger
 
@@ -104,7 +103,6 @@ definitions = dg.Definitions(
         ),
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
-        "model_version": ModelVersion.configure_at_launch(),
         "nanny_ml_config": nanny_ml_config,
     },
 )

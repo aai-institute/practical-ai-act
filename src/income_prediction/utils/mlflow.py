@@ -1,5 +1,8 @@
 import mlflow
+import mlflow.sklearn
 from aif360.metrics import ClassificationMetric
+
+from income_prediction.types import ModelVersion
 
 
 def start_mlflow_run(
@@ -60,3 +63,19 @@ def log_fairness_metrics(fairness_metrics: ClassificationMetric, prefix: str = "
         f"{prefix}tpr_unprivileged",
         fairness_metrics.true_positive_rate(privileged=False),
     )
+
+
+def load_model(version: ModelVersion):
+    """Downloads the model from MLflow and returns the local path.
+
+    Parameters
+    ----------
+    version : ModelVersion
+        The version of the model to download.
+
+    Returns
+    -------
+    str
+        The local path to the downloaded model.
+    """
+    return mlflow.sklearn.load_model(version.uri)

@@ -18,5 +18,5 @@ nannyml_container_job = dg.define_asset_job(
 e2e_pipeline_job = dg.define_asset_job(
     name="e2e_pipeline_job",
     description="End-to-end model training pipeline job",
-    selection=dg.AssetSelection.groups("data_processing", "training"),
+    selection=dg.AssetSelection.groups().all(),
 )
