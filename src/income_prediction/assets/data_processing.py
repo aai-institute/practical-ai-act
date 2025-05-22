@@ -3,8 +3,8 @@ import pandas as pd
 
 from asec.data import download_census_data, filter_relevant_census_data
 from asec.features import assign_salary_bands, binarize_marital_status, select_features
-from ..resources.configuration import Config
 
+from ..resources.configuration import Config
 
 GROUP_NAME = "data_processing"
 
