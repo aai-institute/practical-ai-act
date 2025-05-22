@@ -3,16 +3,15 @@
 import json
 import sqlite3
 from pathlib import Path
-import sys
 
 import mlflow
 import mlflow.models
 import pandas as pd
-
 from evidently import ColumnMapping
 from evidently.metric_preset import DataDriftPreset, DataQualityPreset
 from evidently.report import Report
 from evidently.ui.workspace import Workspace
+
 
 def fetch_test_data(model_uri: str) -> pd.DataFrame:
     """Fetch the test data for the given model from MLflow."""
@@ -20,7 +19,7 @@ def fetch_test_data(model_uri: str) -> pd.DataFrame:
     model = mlflow.models.get_model_info(model_uri)
     if model is None:
         raise ValueError(f"Model not found: {model_uri}")
-    
+
     run = mlflow.get_run(model.run_id)
     if run is None:
         raise ValueError(f"Run not found: {model.run_id}")
@@ -34,6 +33,7 @@ def fetch_test_data(model_uri: str) -> pd.DataFrame:
     df = pd.read_parquet(local_path)
     print(df.head())
     return df
+
 
 def predictions_to_dataset(predictions: list, columns: list[str]) -> pd.DataFrame:
     """Convert the logged predictions to a dataset for analysis."""

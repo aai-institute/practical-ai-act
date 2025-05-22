@@ -1,17 +1,17 @@
 import logging
 
+from config import FILE_NAME_ADULT
+
+from asec.data import AdultData
 from asec.evaluation import (
     ClassificationEvaluation,
     ClassificationEvaluationParams,
 )
 from asec.features import FeatureName
+from asec.model_factory import ModelFactory
 from asec.nannyml import build_reference_data
 from asec.tracking import mlflow_track
 
-from asec.model_factory import ModelFactory
-from asec.data import AdultData
-
-from config import FILE_NAME_ADULT
 #
 
 
@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     # track result
     model_uri = mlflow_track(
-        pipeline, evaluation_result, exp_name, model_name, art_path, reference_data = reference_df,
+        pipeline, evaluation_result, exp_name, model_name, art_path, reference_data=reference_df,
     )
