@@ -27,6 +27,12 @@ uv run --group docs mkdocs serve
 
 Once the server is up, the documentation will be available at <http://127.0.0.1:8000/>.
 
+## Linting and testing
+
+This repository contains a pre-commit configuration.
+To ensure that changes conform to the rules, run `uv run pre-commit run --all-files` after staging your changes.
+To run the project's test suite, you can use the `uv run pytest` command.
+
 ## A simple example
 
 Change to the project's directory, and start an mlflow server in a terminal:
