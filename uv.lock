@@ -1286,7 +1286,6 @@ docs = [
     { name = "mkdocs-backlinks" },
     { name = "mkdocs-callouts" },
     { name = "mkdocs-gen-files" },
-    { name = "mkdocs-include-dir-to-nav" },
     { name = "mkdocs-literate-nav" },
     { name = "mkdocs-material" },
     { name = "mkdocs-section-index" },
@@ -1357,7 +1356,6 @@ docs = [
     { name = "mkdocs-backlinks", specifier = ">=0.9.1" },
     { name = "mkdocs-callouts" },
     { name = "mkdocs-gen-files" },
-    { name = "mkdocs-include-dir-to-nav" },
     { name = "mkdocs-literate-nav" },
     { name = "mkdocs-material" },
     { name = "mkdocs-section-index" },
@@ -1977,18 +1975,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mkdocs-include-dir-to-nav"
-version = "1.2.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "mkdocs" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/f9/d9/899622cb7cd99d0d53e696b63294c2a8e73196d17c7941fd9cfefbe575f2/mkdocs_include_dir_to_nav-1.2.0.tar.gz", hash = "sha256:2d7b0bb581471fce6f215b6381f1f4d90a3a069829281b7f5d01a5b7abee15d0", size = 5279, upload-time = "2022-03-01T08:50:48.713Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/78/4f/4e48a2757eb3d271084823cbafc2993ce0dede4f4b05f03fe8f77f14c763/mkdocs_include_dir_to_nav-1.2.0-py3-none-any.whl", hash = "sha256:b09de17ad754aa93aec7ba64acf8fdd53f7a2ceb92e8cffe21646b0e97f4ddf0", size = 5993, upload-time = "2022-03-01T08:50:46.155Z" },
-]
-
-[[package]]
 name = "mkdocs-literate-nav"
 version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2033,14 +2019,14 @@ wheels = [
 
 [[package]]
 name = "mkdocs-section-index"
-version = "0.3.9"
+version = "0.3.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "mkdocs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/86/09/3cfcfec56740fba157991cd098c76dd08ef9c211db292c7c7d820d16c351/mkdocs_section_index-0.3.9.tar.gz", hash = "sha256:b66128d19108beceb08b226ee1ba0981840d14baf8a652b6c59e650f3f92e4f8", size = 13941, upload-time = "2024-04-20T14:40:58.164Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/93/40/4aa9d3cfa2ac6528b91048847a35f005b97ec293204c02b179762a85b7f2/mkdocs_section_index-0.3.10.tar.gz", hash = "sha256:a82afbda633c82c5568f0e3b008176b9b365bf4bd8b6f919d6eff09ee146b9f8", size = 14446, upload-time = "2025-04-05T20:56:45.387Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/19/16f6368f69949ea2d0086197a86beda4d4f27f09bb8c59130922f03d335d/mkdocs_section_index-0.3.9-py3-none-any.whl", hash = "sha256:5e5eb288e8d7984d36c11ead5533f376fdf23498f44e903929d72845b24dfe34", size = 8728, upload-time = "2024-04-20T14:40:56.864Z" },
+    { url = "https://files.pythonhosted.org/packages/01/53/76c109e6f822a6d19befb0450c87330b9a6ce52353de6a9dda7892060a1f/mkdocs_section_index-0.3.10-py3-none-any.whl", hash = "sha256:bc27c0d0dc497c0ebaee1fc72839362aed77be7318b5ec0c30628f65918e4776", size = 8796, upload-time = "2025-04-05T20:56:43.975Z" },
 ]
 
 [[package]]

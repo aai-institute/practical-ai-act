@@ -87,8 +87,6 @@ plugins:
   - privacy
   - search:
   - tags
-  - include_dir_to_nav:
-      file_pattern: '.*\.(md|ipynb)$'
 
 markdown_extensions:
   # Render textual references to AI Act as links
