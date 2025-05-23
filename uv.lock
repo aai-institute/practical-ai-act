@@ -1302,6 +1302,7 @@ monitoring = [
 train = [
     { name = "aif360" },
     { name = "dagster" },
+    { name = "dagster-graphql" },
     { name = "dagster-obstore" },
     { name = "dagster-postgres" },
     { name = "dagster-webserver" },
@@ -1372,6 +1373,7 @@ monitoring = [
 train = [
     { name = "aif360", specifier = ">=0.6.1" },
     { name = "dagster", specifier = ">=1.9.10" },
+    { name = "dagster-graphql", specifier = ">=1.10.15" },
     { name = "dagster-obstore", specifier = ">=0.2.0" },
     { name = "dagster-postgres", specifier = ">=0.26.2" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },

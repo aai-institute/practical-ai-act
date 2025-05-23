@@ -1,14 +1,40 @@
 import logging
-import os
+import time
 
-# Must set before importing Dagster definitions, since the env var is used to determine the environment
-os.environ["DAGSTER_IS_DEV_CLI"] = "1"
+import dagster as dg
+from dagster_graphql import DagsterGraphQLClient
 
-from income_prediction import definitions
-from income_prediction.jobs import e2e_pipeline_job
+log = logging.getLogger(__name__)
+
+_TERMINAL_STATES = {
+    dg.DagsterRunStatus.SUCCESS,
+    dg.DagsterRunStatus.FAILURE,
+    dg.DagsterRunStatus.CANCELED,
+}
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    # Trigger Dagster e2e training pipeline
-    definitions.get_job_def(e2e_pipeline_job.name).execute_in_process()
+    # The GraphQL client logger is quite verbose
+    logging.getLogger("gql").setLevel(logging.WARNING)
+
+    client = DagsterGraphQLClient(
+        hostname="localhost",
+        port_number=3000,
+        use_https=False,
+    )
+    run_id = client.submit_job_execution(
+        job_name="e2e_pipeline_job",
+        tags={"source": "cli"},
+    )
+    log.info(f"Dagster run ID: {run_id}")
+
+    # Wait for the job to finish, allowing for a graceful exit on Ctrl+C
+    try:
+        while (status := client.get_run_status(run_id)) not in _TERMINAL_STATES:
+            log.info(f"Run status: {status.value}, waiting for completion...")
+            time.sleep(5)
+        log.info(f"Run finished with status: {status.value}")
+    except KeyboardInterrupt:
+        log.info("Job execution interrupted by user, terminating Dagster run.")
+        client.terminate_run(run_id)
