@@ -26,6 +26,26 @@ Depending on your background, different entry points may make more sense.
 If you're from a technical or engineering background, you might start with [Engineering Practice](engineering-practice/index.md). If you're approaching from a legal, regulatory, or policy perspective, [AI Act Conformity](conformity/index.md) may be the best starting point.
 If you prefer to see things in context first, the [Showcase](showcase/index.md) offers a concrete example that ties the other sections together.
 
+## On the iterative nature of this document
+
+As the legislation and standardization around artificial intelligence in the European Union still evolve, this showcase is subject to changes based on different types of developments.
+These can include, but are not limited to:
+
+1. Community feedback, like corrections and additions of missing content,
+2. Changes and updates to standards on artificial intelligence, such as through CEN-CENELEC (see below),
+3. Changes to the technology stack used in the example high-risk AI system.
+
+Providers of high-risk AI systems specifically may also consider the following note on the future availability of EU harmonized standards.
+
+!!! note
+
+    Providers of high-risk AI systems must build their systems according to the rules in Chapter III, Section 2 of the AI Act as discussed in the [AI Act Conformity](conformity/index.md) section of this website.
+
+    To benefit from a presumption of conformity with these rules, providers must apply harmonized standards in their design and implementation process.
+    These standards are due to be published by CEN-CENELEC between late 2025 and early 2026.
+
+    Please refer to the [CEN-CENELEC JTC 21 website](https://standards.cencenelec.eu/dyn/www/f?p=205:22:0::::FSP_ORG_ID,FSP_LANG_ID:2916257,25&cs=1827B89DA69577BF3631EE2B6070F207D) for up-to-date information.
+
 ## Navigation
 
 A key goal of this project is making connections between AI Act requirements and engineering best practices explicit.
@@ -94,16 +114,21 @@ The following resources can help you with that:
 -   The appliedAI Institute [Risk Classification Database](https://www.appliedai-institute.de/en/risk-classification-database), a comprehensive list of practical examples of high-risk and non high-risk use cases on AI systems under the EU AI Act
 -   The [EU Act Compliance Checker](https://artificialintelligenceact.eu/assessment/eu-ai-act-compliance-checker/), an interactive tool that helps you assess the risk category of your AI system and applicable requirements from the AI Act
 
-### Systems covered under European Harmonized Standards
+### Systems covered under European Union harmonisation legislation
 
-If your system is covered under European Harmonized Standards (see |Annex I|), you should refer to the relevant standards for guidance on compliance.
+If your system is covered under European Union harmonisation legislation (see |Annex I|), both the AI Act and the rules in those laws apply.
+We do not cover these additional requirements in this showcase.
 
-### General-purpose AI systems
+### General-purpose AI models
 
+The AI Act also creates a special category of AI systems, called __general purpose AI systems__, where a general purpose AI model is integrated into a larger software product.
+These are a special category of AI systems, for which the rules for high-risk systems continue to apply.
 If you are building a general-purpose AI system, you will still find the engineering resources useful, since they mirror good software engineering practices.
 
-However, the compliance resources are specifically tailored to the requirements for high-risk AI systems under Chapter III of the AI Act.
+The AI Act also creates separate rules for general purpose AI models (e.g. foundation models like LLMs) and AI systems.
+However, this resource is specifically tailored to the requirements for high-risk AI systems.
 
+The rules for general purpose AI models are contained in [Chapter V](https://artificialintelligenceact.eu/chapter/5/) of the AI Act.
 For guidance on how to comply with Chapter V of the AI Act, you might find the following resources helpful:
 
 -   The [European AI Office](https://digital-strategy.ec.europa.eu/en/policies/ai-office), which oversees the implementation of the AI Act, while ensuring compliance, fostering innovation, and coordinating AI governance across EU Member States.
