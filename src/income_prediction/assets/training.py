@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 
 from asec.data import CensusASECMetadata
 from asec.model_factory import ModelFactory
+from income_prediction.types import ModelVersion
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
@@ -46,7 +47,7 @@ def optuna_search_xgb(
         dict[str, optuna.distributions.BaseDistribution]
     ],
     experiment_config: Config,
-):
+) -> ModelVersion:
     model_name = "xgboost-classifier"
 
     X_train = train_data.drop(columns=CensusASECMetadata.TARGET)
@@ -105,7 +106,7 @@ def optuna_search_xgb(
             fairness_metrics = evaluate_fairness(test_data, y_pred)
             log_fairness_metrics(fairness_metrics)
 
-            mlflow.sklearn.log_model(
+            model_info = mlflow.sklearn.log_model(
                 best_model,
                 artifact_path="model",
                 registered_model_name=model_name,
@@ -115,4 +116,8 @@ def optuna_search_xgb(
                 ),
             )
 
-            return best_model
+            return ModelVersion(
+                version=model_info.registered_model_version,
+                name=model_name,
+                uri=model_info.model_uri,
+            )

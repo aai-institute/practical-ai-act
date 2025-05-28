@@ -1,14 +1,15 @@
 import dagster as dg
 
 from . import MlflowSession
-from .assets.model import ModelVersion
 from .jobs import model_container_job, nannyml_container_job
+from .types import ModelVersion
 
 
+# TODO: This sensor can be removed once the pipeline is transformed
 @dg.sensor(
     jobs=[model_container_job, nannyml_container_job],
     description="Build inference server container image whenever a new model version is registered in the MLflow registry",
-    default_status=dg.DefaultSensorStatus.RUNNING,
+    default_status=dg.DefaultSensorStatus.STOPPED,
 )
 def model_version_trigger(context, mlflow_session: MlflowSession):
     model_name = "xgboost-classifier"

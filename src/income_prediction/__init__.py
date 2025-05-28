@@ -19,7 +19,7 @@ from income_prediction.resources.configuration import (
 )
 from income_prediction.resources.mlflow_session import MlflowSession
 
-from .assets.model import ModelVersion
+from .jobs import e2e_pipeline_job
 from .sensors import model_version_trigger
 
 RANDOM_STATE = 495
@@ -84,6 +84,7 @@ definitions = dg.Definitions(
         dg.load_assets_from_modules(modules=[income_prediction.assets])
     ),
     sensors=[model_version_trigger],
+    jobs=[e2e_pipeline_job],
     resources={
         "experiment_config": experiment_config,
         "mlflow_session": MlflowSession(
@@ -102,7 +103,6 @@ definitions = dg.Definitions(
         ),
         "optuna_cv_config": optuna_cv_config,
         "optuna_xgb_param_distribution": optuna_xgb_param_distribution,
-        "model_version": ModelVersion.configure_at_launch(),
         "nanny_ml_config": nanny_ml_config,
     },
 )

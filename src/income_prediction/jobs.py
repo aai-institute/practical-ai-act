@@ -14,3 +14,9 @@ nannyml_container_job = dg.define_asset_job(
     description="Monitoring service container image build",
     selection=[reference_dataset, nannyml_estimator, nannyml_container],
 )
+
+e2e_pipeline_job = dg.define_asset_job(
+    name="e2e_pipeline_job",
+    description="End-to-end model training pipeline job",
+    selection=dg.AssetSelection.groups().all(),
+)

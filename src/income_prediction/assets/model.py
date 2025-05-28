@@ -2,24 +2,18 @@ from pathlib import Path
 
 import dagster as dg
 
+from income_prediction.types import ModelVersion
 from income_prediction.utils.docker import build_container_image
 
 
-class ModelVersion(dg.ConfigurableResource):
-    version: str
-    uri: str
-
-
 @dg.asset(kinds={"docker"}, group_name="deployment")
-def model_container(context: dg.AssetExecutionContext, model_version: ModelVersion):
-    context.log.info(f"Building container for model version {model_version.version}")
-
-    # Assumes a model URI of the form `models:/<model_name>/<version>``
-    model_name = model_version.uri.rsplit("/")[-2]
+def model_container(context: dg.AssetExecutionContext, optuna_search_xgb: ModelVersion):
+    model_version = optuna_search_xgb
+    context.log.info(f"Building container for model version {model_version}")
 
     build_context = Path(__file__).parents[3] / "deploy" / "model"
     image_tags = [
-        f"{model_name}:{suffix}" for suffix in [model_version.version, "latest"]
+        f"{model_version.name}:{suffix}" for suffix in [model_version.version, "latest"]
     ]
     context.log.info(f"Build context: {build_context}")
     context.log.info(f"Image tags: {image_tags}")
@@ -27,10 +21,11 @@ def model_container(context: dg.AssetExecutionContext, model_version: ModelVersi
     build_result = build_container_image(
         build_context,
         tags=image_tags,
+        network="host",
         build_args={
-            # FIXME: Hardcoded, but should be made configurable
-            "MLFLOW_TRACKING_URI": "http://host.docker.internal:50000",
-            "MODEL_NAME": model_name,
+            # FIXME: Hardcoded based on Compose stack, but should be made configurable
+            "MLFLOW_TRACKING_URI": "http://localhost:50000",
+            "MODEL_NAME": model_version.name,
             "MODEL_VERSION": model_version.version,
         },
     )

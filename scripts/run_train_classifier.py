@@ -1,56 +1,40 @@
 import logging
+import time
 
-from config import FILE_NAME_ADULT
+import dagster as dg
+from dagster_graphql import DagsterGraphQLClient
 
-from asec.data import AdultData
-from asec.evaluation import (
-    ClassificationEvaluation,
-    ClassificationEvaluationParams,
-)
-from asec.features import FeatureName
-from asec.model_factory import ModelFactory
-from asec.nannyml import build_reference_data
-from asec.tracking import mlflow_track
+log = logging.getLogger(__name__)
 
-#
-
+_TERMINAL_STATES = {
+    dg.DagsterRunStatus.SUCCESS,
+    dg.DagsterRunStatus.FAILURE,
+    dg.DagsterRunStatus.CANCELED,
+}
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    test_size = 0.2
-    random_seed = 31
-    exp_name = "income_classification"
-    art_path = "models"
-    model_name = "xgboost-classifier"
+    # The GraphQL client logger is quite verbose
+    logging.getLogger("gql").setLevel(logging.WARNING)
 
-    # create model
-    pipeline = ModelFactory.create_xgb(exclude=[FeatureName.RELATIONSHIP_ENCODED])
-
-    # load data
-    adult_data = AdultData(FILE_NAME_ADULT)
-    X, y = adult_data.load_input_output_data()
-
-    # evaluate the model
-    evaluation_params = ClassificationEvaluationParams(
-        test_size=test_size,
-        random_seed=random_seed,
-        binary_positive_class=AdultData.CLASS_POSITIVE,
+    client = DagsterGraphQLClient(
+        hostname="localhost",
+        port_number=3000,
+        use_https=False,
     )
-    evaluation = ClassificationEvaluation(X, y, evaluation_params, fit_models=True)
-    evaluation_result = evaluation.evaluate(pipeline)
-
-    X_test, y_test = evaluation.get_test_data()
-
-    # Prepare a reference dataset for post-hoc performance evaluation
-    reference_df = build_reference_data(pipeline, X_test, y_test)
-
-    # track result
-    model_uri = mlflow_track(
-        pipeline,
-        evaluation_result,
-        exp_name,
-        model_name,
-        art_path,
-        reference_data=reference_df,
+    run_id = client.submit_job_execution(
+        job_name="e2e_pipeline_job",
+        tags={"source": "cli"},
     )
+    log.info(f"Dagster run ID: {run_id}")
+
+    # Wait for the job to finish, allowing for a graceful exit on Ctrl+C
+    try:
+        while (status := client.get_run_status(run_id)) not in _TERMINAL_STATES:
+            log.info(f"Run status: {status.value}, waiting for completion...")
+            time.sleep(5)
+        log.info(f"Run finished with status: {status.value}")
+    except KeyboardInterrupt:
+        log.info("Job execution interrupted by user, terminating Dagster run.")
+        client.terminate_run(run_id)
