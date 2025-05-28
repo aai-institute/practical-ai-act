@@ -7,11 +7,11 @@ tags:
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
-    TODO: This list is incomplete
-
     - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
         - |Art. 15(1)|, containers provide a consistent and isolated runtime environment
         - |Art. 15(4)|, containers allow for redundant, reproducible and reliable application execution
+        - |Art. 15(5)|, containers provide an isolated runtime environment that limit the access of
+        attackers and unauthorized third parties to the underlying hardware
 
 ## Motivation
 
