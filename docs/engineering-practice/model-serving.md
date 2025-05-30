@@ -9,9 +9,9 @@ tags:
 
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
-    TODO: Incomplete
-
-    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity)
+    - **|Art. 15|** (Accuracy, Robustness and Cybersecurity), in particular:
+        - |Art. 15(4)|, model serving allows to run inference on models remotely, and to deploy models with redundancy
+        to make them more resilient.
 
 ## Motivation
 
