@@ -19,8 +19,8 @@ GROUP_NAME = "training"
 
 @dg.multi_asset(
     outs={
-        "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
-        "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager"),
+        "train_data": dg.AssetOut(io_manager_key="lakefs_io_manager", kinds={"pandas"}),
+        "test_data": dg.AssetOut(io_manager_key="lakefs_io_manager", kinds={"pandas"}),
     },
     group_name=GROUP_NAME,
 )
@@ -36,7 +36,7 @@ def train_test_data(
     return train_data, test_data
 
 
-@dg.asset(group_name=GROUP_NAME)
+@dg.asset(group_name=GROUP_NAME, kinds={"xgboost"})
 def optuna_search_xgb(
     context: dg.AssetExecutionContext,
     mlflow_session: MlflowSession,
