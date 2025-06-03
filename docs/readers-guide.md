@@ -10,7 +10,10 @@
 
 This project is intended for AI practitioners, data scientists, and engineers who are interested in implementing trustworthy AI systems under the European AI Act.
 
-The information is applicable to low- and high-risk AI systems, since it provides a sound engineering foundation for building trustworthy AI systems in general.
+The information is applicable to both low- and high-risk AI systems, since it establishes a sound engineering foundation for developing trustworthy AI systems in general.
+
+Most content is written from the perspective of providers of AI systems under the AI Act.
+Deployers of such AI systems may also find the information useful, as it provides a solid foundation for understanding the requirements and best practices for compliance.
 
 ## Syllabus
 
