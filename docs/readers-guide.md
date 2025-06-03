@@ -64,10 +64,11 @@ These tools help you navigate the complexity of implementing AI Act requirements
 
 ### Compliance Information Boxes
 
-The engineering practices contain information boxes that provide references to applicable parts of the AI Act, like the one at the bottom of this section.
-This information is intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.
+The pages on engineering practices include information boxes that reference applicable parts of the AI Act.
+For an example, see the box at the bottom of this section.
+These references are intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.
 
-Note that these references do not imply that following a given engineering practice will guarantee compliance with the reference parts of the AI Act.
+Please note that these references do not imply that following a given engineering practice will guarantee compliance with the referenced parts of the AI Act.
 
 !!! success "Compliance Info"
 
@@ -79,14 +80,11 @@ Note that these references do not imply that following a given engineering pract
 
 ### Engineering Information Boxes
 
-Coming from requirements induced by the AI Act, it is of interest to link
-certain aspects of the respective requirement to corresponding engineering practices.
-This is represented by information boxes, like the one at the bottom of this section.
-You can think of them as the reverse direction of the connections collected
-in [Compliance Information Boxes](#compliance-information-boxes).
+Given the requirements of the AI Act, it is interesting to link certain requirements to the corresponding engineering practices.
+These connections are represented by information boxes, like the one at the bottom of this section.
+You can think of them as the reverse direction of the connections collected in [Compliance Information Boxes](#compliance-information-boxes).
 
-Again, following these practices may not guarantee compliance, as there might be
-parts of the requirement, which are not amenable to automation.
+Following these practices does not guarantee compliance, as there may be parts of a requirement that are not amenable to automation.
 
 !!! info "Engineering Info"
 
@@ -104,7 +102,8 @@ You might notice that some pages contain hyperlinks to other pages marked with a
 ![Backlinks](_images/backlinks.png){ align=center }
 </figure>
 
-These links point to other pages on this website that contain links to the current page and help you discover and navigate related content more easily, even if it is not mentioned in the info box of the page.
+These links point to other pages on this website that contain links to the current page.
+They help you easily discover and navigate related content, even if it is not mentioned in the info box of the page.
 
 ## What is out of scope?
 
@@ -124,7 +123,7 @@ We do not cover these additional requirements in this showcase.
 
 ### General-purpose AI models
 
-The AI Act also creates a special category of AI systems, called __general purpose AI systems__, where a general purpose AI model is integrated into a larger software product.
+The AI Act also creates a special category of AI systems, called **general purpose AI systems**, where a general purpose AI model is integrated into a larger software product.
 These are a special category of AI systems, for which the rules for high-risk systems continue to apply.
 If you are building a general-purpose AI system, you will still find the engineering resources useful, since they mirror good software engineering practices.
 
@@ -139,7 +138,7 @@ For guidance on how to comply with Chapter V of the AI Act, you might find the f
 
 ### Relationship to Privacy and Data Protection
 
-The project does not cover the relationship between the AI Act and the General Data Protection Regulation (GDPR), or the question of privacy in Machine Learning more broadly.
+The project does not address the relationship between the AI Act and the General Data Protection Regulation (GDPR), or the question of privacy in Machine Learning more broadly.
 
 The AI Act and the GDPR are separate legal frameworks, and while they may overlap in some areas, they have different objectives and requirements.
 Although some of the engineering practices on this website also help you comply with the GDPR, we do not explicitly consider these privacy and data protection aspects.
