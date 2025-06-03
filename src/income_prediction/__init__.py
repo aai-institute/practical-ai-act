@@ -1,60 +1,39 @@
-import os
-from typing import Literal
+import warnings
 
 import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
-from optuna.distributions import FloatDistribution, IntDistribution
 from upath import UPath
 
 import income_prediction.assets
+from income_prediction.constants import (
+    experiment_config,
+    nanny_ml_config,
+    optuna_cv_config,
+    optuna_xgb_param_distribution,
+)
 from income_prediction.io_managers.lakefs import LakeFSParquetIOManager
+from income_prediction.jobs import e2e_pipeline_job
 from income_prediction.resources.configuration import (
-    Config,
     LakeFsConfig,
     MinioConfig,
     MlFlowConfig,
-    NannyMLConfig,
-    OptunaXGBParamDistribution,
-    StratifiedShuffleCVConfig,
 )
 from income_prediction.resources.mlflow_session import MlflowSession
+from income_prediction.utils.dagster import get_current_env
 
-from .jobs import e2e_pipeline_job
-from .sensors import model_version_trigger
-
-RANDOM_STATE = 495
-experiment_config = Config(random_state=RANDOM_STATE, test_size=0.25)
-optuna_cv_config = StratifiedShuffleCVConfig(
-    n_trials=10,
-    verbose=2,
-    timeout=600,
-    n_jobs=-1,
-    n_splits=5,
-    validation_size=0.2,
-    random_state=experiment_config.random_state,
-    scoring="f1_macro",
-)
-optuna_xgb_param_distribution = OptunaXGBParamDistribution(
-    max_depth=IntDistribution(3, 10),
-    gamma=FloatDistribution(0, 9),
-    reg_lambda=FloatDistribution(0, 1),
-    colsample_bytree=FloatDistribution(0.25, 1),
-    min_child_weight=IntDistribution(1, 100),
-    classifier_prefix="classifier",
+# -- Warning control
+# Dagster source code references are a beta feature, got it
+warnings.filterwarnings(action="ignore", category=dg.BetaWarning)
+# UPath works with lakefs-spec, warning is safe to ignore
+warnings.filterwarnings(
+    action="ignore", category=UserWarning, message=".*UPath 'lakefs'.*"
 )
 
 
-def get_current_env() -> Literal["development", "production"]:
-    """Determine the current Dagster environment."""
-    in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
-    env = "development" if in_dagster_dev else "production"
-    return env
+dagster_env = get_current_env()
+print("Current environment:", dagster_env)
 
-
-env = get_current_env()
-print("Current environment:", env)
-
-if env == "production":
+if dagster_env == "production":
     lakefs_cfg = LakeFsConfig(
         lakefs_host="http://lakefs:8000",
     )
@@ -78,12 +57,10 @@ print("LakeFS config: ", lakefs_cfg)
 print("MinIO config: ", minio_cfg)
 print("MLflow config: ", mlflow_cfg)
 
-nanny_ml_config = NannyMLConfig(chunk_size=250)
 definitions = dg.Definitions(
     assets=dg.with_source_code_references(
         dg.load_assets_from_modules(modules=[income_prediction.assets])
     ),
-    sensors=[model_version_trigger],
     jobs=[e2e_pipeline_job],
     resources={
         "experiment_config": experiment_config,
