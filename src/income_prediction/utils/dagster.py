@@ -1,3 +1,4 @@
+import os
 from typing import Literal
 
 import dagster as dg
@@ -59,3 +60,11 @@ def canonical_lakefs_uri_for_input(
     if protocol == "s3":
         uri = uri.replace("lakefs://", "s3://")
     return uri
+
+
+def get_current_env() -> Literal["development", "production"]:
+    """Determine the current Dagster environment."""
+
+    in_dagster_dev = os.environ.get("DAGSTER_IS_DEV_CLI") == "1"
+    env = "development" if in_dagster_dev else "production"
+    return env

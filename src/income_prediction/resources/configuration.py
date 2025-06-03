@@ -2,7 +2,7 @@ from typing import Any
 
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
-from pydantic import BaseModel
+from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
 
@@ -13,15 +13,17 @@ class MlFlowConfig(BaseModel):
 
 class LakeFsConfig(BaseModel):
     lakefs_host: str = "http://localhost:8000"
-    lakefs_access_key_id: str = "AKIAIOSFOLKFSSAMPLES"
-    lakefs_secret_access_key: str = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    lakefs_access_key_id: SecretStr = SecretStr("AKIAIOSFOLKFSSAMPLES")
+    lakefs_secret_access_key: SecretStr = SecretStr(
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    )
     lakefs_verify_ssl: bool = False
 
 
 class MinioConfig(BaseModel):
     minio_host: str = "http://localhost:9000"
     minio_access_key_id: str = "minio_user"
-    minio_secret_access_key: str = "minio_password"
+    minio_secret_access_key: SecretStr = SecretStr("minio_password")
 
 
 class Config(ConfigurableResource):
