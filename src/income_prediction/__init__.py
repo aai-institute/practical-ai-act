@@ -66,7 +66,7 @@ if env == "production":
         "s3://dagster/",
         endpoint_url=minio_cfg.minio_host,
         key=minio_cfg.minio_access_key_id,
-        secret=minio_cfg.minio_secret_access_key,
+        secret=minio_cfg.minio_secret_access_key.get_secret_value(),
     )
 else:
     default_io_manager = dg.FilesystemIOManager()
@@ -96,8 +96,8 @@ definitions = dg.Definitions(
             base_path=UPath(
                 "lakefs://twai-pipeline/main/data/",
                 host=lakefs_cfg.lakefs_host,
-                username=lakefs_cfg.lakefs_access_key_id,
-                password=lakefs_cfg.lakefs_secret_access_key,
+                username=lakefs_cfg.lakefs_access_key_id.get_secret_value(),
+                password=lakefs_cfg.lakefs_secret_access_key.get_secret_value(),
                 verify_ssl=lakefs_cfg.lakefs_verify_ssl,
             ),
         ),
