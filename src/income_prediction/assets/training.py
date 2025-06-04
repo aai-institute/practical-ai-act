@@ -12,7 +12,7 @@ from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
 from ..utils.dagster import canonical_lakefs_uri_for_input
 from ..utils.mlflow import log_fairness_metrics
-from .fairness import evaluate_fairness
+from .fairness import classification_metrics
 
 GROUP_NAME = "training"
 
@@ -103,7 +103,7 @@ def optuna_search_xgb(
             context.log.info(test_data.columns)
             y_pred = best_model.predict(X_test)
 
-            fairness_metrics = evaluate_fairness(test_data, y_pred)
+            fairness_metrics = classification_metrics(test_data, y_pred)
             log_fairness_metrics(fairness_metrics)
 
             model_info = mlflow.sklearn.log_model(
