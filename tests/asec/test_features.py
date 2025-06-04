@@ -50,3 +50,30 @@ def test_collect_features():
 
     transformed = feature_union.fit_transform(df)
     assert transformed.shape[0] == df.shape[0]
+
+
+@pytest.mark.parametrize(
+    "annual_incomes,salary_bands,expected_bands",
+    [
+        ([10000, 25000, 40000, 60000], [20000, 50000], [0, 1, 1, 2]),
+        ([0, 19999, 20000, 50000, 50001], [20000, 50000], [0, 0, 1, 2, 2]),
+        ([15000, 35000, 55000], [20000, 40000, 60000], [0, 1, 2]),
+        ([70000], [20000, 40000, 60000], [3]),
+        ([0], [], [0]),
+        ([0], [100], [0]),
+    ],
+)
+def test_assign_salary_bands(monkeypatch, annual_incomes, salary_bands, expected_bands):
+    import asec.features as features_mod
+
+    class DummyFields:
+        ANNUAL_INCOME = "annual_income"
+        SALARY_BAND = "salary_band"
+
+    # Set up dummy CensusASECMetadata.Fields
+    monkeypatch.setattr(features_mod.CensusASECMetadata, "Fields", DummyFields)
+
+    df = pd.DataFrame({DummyFields.ANNUAL_INCOME: annual_incomes})
+    result = features_mod.assign_salary_bands(df, salary_bands)
+    assert DummyFields.SALARY_BAND in result.columns
+    assert result[DummyFields.SALARY_BAND].tolist() == expected_bands
