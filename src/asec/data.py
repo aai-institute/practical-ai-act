@@ -103,7 +103,7 @@ class CensusASECMetadata:
 
         # Demographics
         AGE_YEARS = "A_AGE"
-        GENDER = "A_SEX"
+        SEX = "A_SEX"
         EDUCATION_LEVEL = "A_HGA"
         ENROLLMENT_STATUS = "A_ENRLW"
         ENROLLMENT_TYPE = "A_FTPT"
@@ -163,7 +163,7 @@ class CensusASECMetadata:
 
     # Feature categories
     CATEGORICAL_FEATURES = [
-        Fields.GENDER,
+        Fields.SEX,
         Fields.ENROLLMENT_STATUS,
         Fields.ENROLLMENT_TYPE,
         Fields.SCHOOL_ENROLLMENT,

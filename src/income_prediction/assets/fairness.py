@@ -5,7 +5,7 @@ from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 from asec.data import CensusASECMetadata
 
 TARGET = CensusASECMetadata.TARGET
-SEX_FEATURE = CensusASECMetadata.Fields.GENDER
+SEX_FEATURE = CensusASECMetadata.Fields.SEX
 
 SEX_MALE = 1
 SEX_FEMALE = 2
