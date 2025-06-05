@@ -8,7 +8,12 @@ version = "0.1.0"
 description = "An ML assistant for HR professionals."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["more-itertools>=10.5.0", "numpy>2", "pandas>=2.2.3"]
+dependencies = [
+  "fastparquet>=2024.11.0",
+  "more-itertools>=10.5.0",
+  "numpy>2",
+  "pandas>=2.2.3",
+]
 
 [dependency-groups]
 docs = [

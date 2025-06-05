@@ -6,6 +6,12 @@ from upath import UPath
 
 
 class LakeFSParquetIOManager(dg.UPathIOManager):
+    """IO Manager for reading and writing Parquet files in a LakeFS repository.
+
+    Note that the `fastparquet` engine is used for reading and writing Parquet files
+    in order to preserve Pandas dtypes like `category`.
+    """
+
     extension = ".parquet"
 
     @staticmethod
@@ -40,7 +46,9 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
         # which could lead to inconsistent data if the branch has been updated since
         # the asset was materialized.
         # See also the implementation of `_get_path`.
-        return pd.read_parquet(path, storage_options=dict(path.storage_options))
+        return pd.read_parquet(
+            path, engine="fastparquet", storage_options=dict(path.storage_options)
+        )
 
     def dump_to_path(
         self, context: OutputContext, obj: pd.DataFrame, path: "UPath"
@@ -54,7 +62,11 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
 
             # Need to add the file to the transaction branch, which gets then merged into the target branch
             ephemeral_path = f"lakefs://{repo}/{tx.branch.id}/{resource}"
-            obj.to_parquet(ephemeral_path, storage_options=dict(path.storage_options))
+            obj.to_parquet(
+                ephemeral_path,
+                engine="fastparquet",
+                storage_options=dict(path.storage_options),
+            )
 
             asset_id_str = "/".join(context.get_asset_identifier())
             commit_ref = tx.commit(
