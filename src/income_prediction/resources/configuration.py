@@ -5,6 +5,8 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
+from asec.data import CensusASECMetadata
+
 
 class MlFlowConfig(BaseModel):
     mlflow_tracking_url: str = "http://localhost:50000"
@@ -46,6 +48,11 @@ class Config(ConfigurableResource):
     random_state: int = 42
 
     log_model_explainability: bool = True
+
+    sensitive_feature_names: list[str] = [
+        CensusASECMetadata.Fields.MARITAL_STATUS,
+        CensusASECMetadata.Fields.SEX,
+    ]
 
     test_size: float = 0.25
 

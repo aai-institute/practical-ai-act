@@ -1,4 +1,10 @@
+from functools import partial
+
+import fairlearn
+import fairlearn.metrics
 import pandas as pd
+import sklearn
+import sklearn.metrics
 from aif360.datasets import StandardDataset
 from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 
@@ -24,13 +30,10 @@ HIGH_INCOME_CLASS = 4
 def _make_dataset(data: pd.DataFrame) -> StandardDataset:
     df: pd.DataFrame = data.copy()
 
-    # Convert categorical features to
+    # Convert categorical features back to int64, as required by AIF360
     categorical_cols = df.select_dtypes(include=["category"]).columns
-    print("Converting categorical columns to values:", categorical_cols.tolist())
     dtype_dict = dict.fromkeys(categorical_cols, "int64")
     df = df.astype(dtype_dict)
-
-    print(df.dtypes.to_string())
 
     return StandardDataset(
         df,
@@ -67,4 +70,23 @@ def classification_metrics(
         predictions_data,
         unprivileged_groups=UNPRIVILEGED_GROUPS,
         privileged_groups=PRIVILEGED_GROUPS,
+    )
+
+
+def make_metricframe(
+    ground_truth: pd.DataFrame,
+    predictions: pd.Series,
+    sensitive_features: pd.Series | pd.DataFrame,
+) -> fairlearn.metrics.MetricFrame:
+    return fairlearn.metrics.MetricFrame(
+        metrics={
+            "accuracy": sklearn.metrics.accuracy_score,
+            "selection_rate": partial(
+                fairlearn.metrics.selection_rate, pos_label=HIGH_INCOME_CLASS
+            ),
+            "count": fairlearn.metrics.count,
+        },
+        y_true=ground_truth[[TARGET]],
+        y_pred=predictions,
+        sensitive_features=sensitive_features,
     )

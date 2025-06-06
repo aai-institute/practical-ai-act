@@ -790,6 +790,21 @@ wheels = [
 ]
 
 [[package]]
+name = "fairlearn"
+version = "0.12.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e9/b3/22fc076d5123aaf7774193ec65fb6e968709bc1e30d572244aa55b915274/fairlearn-0.12.0.tar.gz", hash = "sha256:bd3d79a3c0e4b35a9732278e20b6be80cbd6c47cf560326ffe9aaf0b8077e76f", size = 173495, upload-time = "2024-12-11T11:29:35.947Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/83/c2991646a3a24532567e24c2f4e7ae3ddac0d8d322f4f9b84c6c26a15890/fairlearn-0.12.0-py3-none-any.whl", hash = "sha256:bcebeec54a7c35bc2ff0ce6e5cb123b959ad46ff8f9032d9cea9906f604dfaf4", size = 240017, upload-time = "2024-12-11T11:29:34.541Z" },
+]
+
+[[package]]
 name = "fastapi"
 version = "0.115.12"
 source = { registry = "https://pypi.org/simple" }
@@ -1376,6 +1391,7 @@ train = [
     { name = "dagster-obstore" },
     { name = "dagster-postgres" },
     { name = "dagster-webserver" },
+    { name = "fairlearn" },
     { name = "kaleido" },
     { name = "lakefs-spec" },
     { name = "lightgbm" },
@@ -1448,6 +1464,7 @@ train = [
     { name = "dagster-obstore", specifier = ">=0.2.0" },
     { name = "dagster-postgres", specifier = ">=0.26.2" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },
+    { name = "fairlearn", specifier = ">=0.12.0" },
     { name = "kaleido", specifier = "==0.2.1" },
     { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "lightgbm", specifier = ">=4.5.0" },
