@@ -22,8 +22,18 @@ HIGH_INCOME_CLASS = 4
 
 
 def _make_dataset(data: pd.DataFrame) -> StandardDataset:
+    df: pd.DataFrame = data.copy()
+
+    # Convert categorical features to
+    categorical_cols = df.select_dtypes(include=["category"]).columns
+    print("Converting categorical columns to values:", categorical_cols.tolist())
+    dtype_dict = dict.fromkeys(categorical_cols, "int64")
+    df = df.astype(dtype_dict)
+
+    print(df.dtypes.to_string())
+
     return StandardDataset(
-        data,
+        df,
         label_name=TARGET,
         favorable_classes=[HIGH_INCOME_CLASS],
         protected_attribute_names=[

@@ -296,10 +296,11 @@ def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFra
     pd.DataFrame
         Updated dataset with an additional column indicating the salary band.
     """
-    df[CensusASECMetadata.Fields.SALARY_BAND] = np.searchsorted(
+    target_col = CensusASECMetadata.Fields.SALARY_BAND
+    df[target_col] = np.searchsorted(
         salary_bands, df[CensusASECMetadata.Fields.ANNUAL_INCOME], side="right"
     )
-
+    df[target_col] = df[target_col].astype("category")
     return df
 
 
