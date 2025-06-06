@@ -19,7 +19,7 @@ def build_container_image(
     network: str | None = None,
     build_args: dict[str, str] | None = None,
     dockerfile_path: Path | None = None,
-) -> ContainerBuildResult | None:
+) -> ContainerBuildResult:
     """Builds a Docker container image using buildx from the given build context.
 
     Parameters
@@ -69,6 +69,7 @@ def build_container_image(
 
         try:
             subprocess.check_output(cmd, encoding="utf-8")
+            build_logs = None
             success = True
         except subprocess.CalledProcessError as e:
             success = False
