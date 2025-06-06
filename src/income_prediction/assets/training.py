@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 import dagster as dg
 import mlflow
 import optuna
@@ -6,15 +8,77 @@ from sklearn.model_selection import train_test_split
 
 from asec.data import CensusASECMetadata
 from asec.model_factory import ModelFactory
+from income_prediction.assets.fairness import classification_metrics, make_metricframe
 from income_prediction.types import ModelVersion
+from income_prediction.utils.dagster import canonical_lakefs_uri_for_input
+from income_prediction.utils.mlflow import (
+    log_fairness_metrics,
+    log_fairness_metrics_by_group,
+)
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
-from ..utils.dagster import canonical_lakefs_uri_for_input
-from ..utils.mlflow import log_fairness_metrics
-from .fairness import classification_metrics
+
+if TYPE_CHECKING:
+    import mlflow.data.pandas_dataset
+    import mlflow.models
+    import mlflow.sklearn
 
 GROUP_NAME = "training"
+
+
+def _log_datasets(
+    context: dg.AssetExecutionContext,
+    train_data: pd.DataFrame,
+    test_data: pd.DataFrame,
+):
+    train_ds = mlflow.data.pandas_dataset.from_pandas(
+        train_data,
+        name="train_data",
+        targets=CensusASECMetadata.TARGET,
+        source=canonical_lakefs_uri_for_input(context, "train_data", protocol="s3"),
+    )
+    mlflow.log_input(train_ds)
+
+    test_ds = mlflow.data.pandas_dataset.from_pandas(
+        test_data,
+        name="test_data",
+        targets=CensusASECMetadata.TARGET,
+        source=canonical_lakefs_uri_for_input(context, "test_data", protocol="s3"),
+    )
+    mlflow.log_input(test_ds)
+
+
+def _log_evaluation(
+    test_data: pd.DataFrame,
+    y_pred: pd.Series,
+    /,
+    config: Config,
+    evaluator_config: dict,
+):
+    eval_df = test_data
+    eval_df["predicted"] = y_pred
+
+    mlflow.evaluate(
+        data=eval_df,
+        model_type="classifier",
+        predictions="predicted",
+        targets=CensusASECMetadata.TARGET,
+        evaluator_config=evaluator_config,
+    )
+
+
+def _log_fairness_evaluation(
+    test_data: pd.DataFrame, y_pred: pd.Series, sensitive_feature_names: list[str]
+):
+    # -- AIF360
+    fairness_metrics = classification_metrics(test_data, y_pred)
+    log_fairness_metrics(fairness_metrics)
+
+    # -- Fairlearn
+    sensitive_features = test_data[sensitive_feature_names]
+    mf = make_metricframe(test_data, y_pred, sensitive_features=sensitive_features)
+    log_fairness_metrics_by_group(mf)
 
 
 @dg.multi_asset(
@@ -51,9 +115,6 @@ def optuna_search_xgb(
     model_name = "xgboost-classifier"
 
     X_train = train_data.drop(columns=CensusASECMetadata.TARGET)
-    # Encode categorical features for XGBoost
-    for col in CensusASECMetadata.CATEGORICAL_FEATURES:
-        X_train[col] = X_train[col].astype("category")
     y_train = train_data[CensusASECMetadata.TARGET]
 
     optuna_search = optuna.integration.OptunaSearchCV(
@@ -65,51 +126,42 @@ def optuna_search_xgb(
 
     with mlflow_session.start_run(context):
         with mlflow.start_run(nested=True, run_name=model_name):
+            # We log datasets and models explicitly below
             mlflow.autolog(log_datasets=False, log_models=False)
+
             best_model = optuna_search.best_estimator_
             best_model.fit(X_train, y_train)
 
-            train_ds = mlflow.data.pandas_dataset.from_pandas(
-                train_data,
-                name="train_data",
-                targets=CensusASECMetadata.TARGET,
-                source=canonical_lakefs_uri_for_input(
-                    context, "train_data", protocol="s3"
-                ),
-            )
-            mlflow.log_input(train_ds)
+            X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
+            y_pred = best_model.predict(X_test)
 
-            test_ds = mlflow.data.pandas_dataset.from_pandas(
+            _log_datasets(context, train_data, test_data)
+            _log_evaluation(
                 test_data,
-                name="test_data",
-                targets=CensusASECMetadata.TARGET,
-                source=canonical_lakefs_uri_for_input(
-                    context, "test_data", protocol="s3"
-                ),
-            )
-            mlflow.log_input(test_ds)
-
-            mlflow.evaluate(
-                model=best_model.predict,
-                data=test_ds,
-                model_type="classifier",
+                y_pred,
+                config=experiment_config,
                 evaluator_config={
                     "log_model_explainability": experiment_config.log_model_explainability,
                 },
             )
 
             # Fairness evaluation
-            X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
-            context.log.info(test_data.columns)
-            y_pred = best_model.predict(X_test)
+            _log_fairness_evaluation(
+                test_data,
+                y_pred,
+                sensitive_feature_names=experiment_config.sensitive_feature_names,
+            )
 
-            fairness_metrics = classification_metrics(test_data, y_pred)
-            log_fairness_metrics(fairness_metrics)
+            # Model registration
+            signature = mlflow.models.infer_signature(
+                X_train.head(5), best_model.predict(X_train.head(5))
+            )
 
             model_info = mlflow.sklearn.log_model(
                 best_model,
                 artifact_path="model",
                 registered_model_name=model_name,
+                signature=signature,
                 code_paths=["src/asec"],
                 input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
                     5
@@ -117,7 +169,7 @@ def optuna_search_xgb(
             )
 
             return ModelVersion(
-                version=model_info.registered_model_version,
+                version=str(model_info.registered_model_version),
                 name=model_name,
                 uri=model_info.model_uri,
             )
