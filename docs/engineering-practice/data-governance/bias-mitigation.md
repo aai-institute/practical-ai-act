@@ -25,10 +25,15 @@ As such, data governance activities should include practices to cover these requ
 
 ## Implementation Notes
 
+<figure markdown="span">
+    ![Taxonomy of common causes of bias](https://mitigatingbias.ml/02_EthicalDevelopment/figures/Fig_Taxonomy.png)
+    <figcaption>Taxonomy of common causes of bias in machine learning. Source: [Mitigating Bias in Machine Learning](https://mitigatingbias.ml/#fig:Taxonomy)</figcaption>
+</figure>
+
 ### Bias and Fairness Analysis Techniques
 
 -   **Conduct Exploratory Data Analysis (EDA)**: Analyze the dataset for imbalances or patterns that may suggest bias, such as over-representation or under-representation of certain groups.
--   **Fairness Metrics**: Calculate fairness metrics such as demographic parity, equalized odds or disparate impact to quantify bias in datasets and model outputs.
+-   **Fairness Metrics**: Calculate fairness metrics such as demographic parity/disparate impact, equal opportunity, or equalized odds to quantify bias in datasets and model outputs.
 -   See [fairlearn documentation](https://fairlearn.org/v0.12/user_guide/assessment/common_fairness_metrics.html) for an introduction to commonly used metrics
 
 -   **Diversity Analysis:** Evaluate the dataset's demographic diversity, ensuring it represents all relevant populations appropriately.
@@ -64,8 +69,10 @@ flowchart LR
 
 #### Preprocessing Techniques
 
--   Resampling Techniques: Use oversampling or undersampling to balance the representation of different demographic groups.
--   Synthetic Data Generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.
+The goal of preprocessing techniques is to adjust the dataset before training the model to ensure a fair representation of all demographic groups in the training data.
+
+-   Resampling: Use oversampling or undersampling to balance the representation of different demographic groups.
+-   Synthetic data generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.
 -   Reweighing: Adjust the weights of data instances to ensure fair representation across groups.
 
 #### Inprocessing Techniques / Model Training
@@ -89,7 +96,14 @@ Regularly audit data to ensure it is free from systemic errors or biases.
 
 ### Privacy Concerns
 
-TODO: Discuss requirements of |Art. 10(5)|.
+|Art. 10(5)| makes an exception that allow the use of special categories of personal data for bias detection and correction.
+
+When using this sensitive data, it is crucial to ensure that the data is handled in compliance with applicable data protection regulations, such as GDPR.
+The purpose for which the data is used and its scope must be clearly defined and documented.
+In particular, this includes deleting the sensitive data after the bias correction process is completed.
+
+Keep an audit trail of the data processing activities, including the use of sensitive data for bias detection and correction.
+A [workflow orchestration tool](../orchestration.md) can support this requirement by providing a clear record of the data processing steps.
 
 ## Key Technologies
 
@@ -103,3 +117,4 @@ TODO: Discuss requirements of |Art. 10(5)|.
 -   [European Parliamentary Research Service (2022) - Auditing the quality of datasets used in algorithmic decision-making systems, Study](<https://www.europarl.europa.eu/RegData/etudes/STUD/2022/729541/EPRS_STU(2022)729541_EN.pdf>)
 -   [Caton, Haas (2024) - Fairness in Machine Learning: A Survey](https://dl.acm.org/doi/full/10.1145/3616865)
 -   [Barocas, Hardt, Narayanan (2023) - Fairness and Machine Learning: Limitations and Opportunities](https://www.fairmlbook.org/)
+-   [Mitigating Bias in Machine Learning](https://mitigatingbias.ml/)

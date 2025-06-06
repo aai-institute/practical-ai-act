@@ -23,6 +23,7 @@ nav:
           - showcase/implementation-notes/explainability.md
           - showcase/implementation-notes/inference-logging.md
           - showcase/implementation-notes/model-monitoring.md
+          - showcase/implementation-notes/bias.md
   - Engineering Practices:
       - engineering-practice/index.md
       - engineering-practice/containerization.md
