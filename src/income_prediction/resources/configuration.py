@@ -49,8 +49,8 @@ class Config(ConfigurableResource):
 
     log_model_explainability: bool = True
 
+    # For fairness evaluation
     sensitive_feature_names: list[str] = [
-        CensusASECMetadata.Fields.MARITAL_STATUS,
         CensusASECMetadata.Fields.SEX,
     ]
 
