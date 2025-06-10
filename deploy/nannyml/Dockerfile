@@ -16,9 +16,6 @@ FROM python:3.12-slim
 WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 
-RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends libgomp1
-
 ARG NANNYML_ESTIMATOR
 COPY deploy/nannyml/main.py .
 COPY $NANNYML_ESTIMATOR ./nannyml_estimator.pkl

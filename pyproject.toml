@@ -33,7 +33,6 @@ train = [
   "dagster>=1.9.10",
   "dagster-webserver>=1.9.10",
   "dagster-obstore>=0.2.0",
-  "lightgbm>=4.5.0",
   "sensai-utils>=1.4.0",
   "scikit-learn>=1.5,<2",
   "ucimlrepo>=0.0.7",

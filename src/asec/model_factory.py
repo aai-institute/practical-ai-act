@@ -2,7 +2,6 @@ from typing import Any
 
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.compose import ColumnTransformer
-from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
     LabelEncoder,
@@ -90,29 +89,10 @@ class ModelFactory:
         **xgb_kwargs,
     ):
         classifier = XGBClassifier(enable_categorical=True, **xgb_kwargs)
-        return build_pipeline(
+        pipeline = build_pipeline(
             classifier, exclude=cls.exclude, encode_categoricals=False
         )
-
-    @classmethod
-    def create_lightgbm(
-        cls,
-        **lgbm_kwargs,
-    ):
-        from lightgbm import LGBMClassifier
-
-        classifier = LabelEncodedClassifier(
-            LGBMClassifier(**lgbm_kwargs), LabelEncoder()
-        )
-        return build_pipeline(classifier, exclude=cls.exclude)
-
-    @classmethod
-    def create_mlp(
-        cls,
-        **mlp_kwargs,
-    ):
-        classifier = LabelEncodedClassifier(MLPClassifier(**mlp_kwargs), LabelEncoder())
-        return build_pipeline(classifier, exclude=cls.exclude)
+        return pipeline
 
 
 def build_pipeline(classifier: Any, exclude=None, encode_categoricals=True) -> Pipeline:
