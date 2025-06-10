@@ -7,6 +7,8 @@ hide:
 
 <!-- List of practices is wrapped automatically through CSS, no need for manual formatting -->
 
+<!-- TODO: Remove the Automation Feasibility column, as it is highly subjective and not further elaborated -->
+
 /// html | div.conformity-table
 
 | Article                                                                        | Relevant Engineering Practices                                                                                                     | Automation Feasibility                                                                                           |

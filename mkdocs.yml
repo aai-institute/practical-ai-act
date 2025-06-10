@@ -17,6 +17,7 @@ nav:
   - Showcase:
       - showcase/index.md
       - showcase/risk-classification.md
+      - showcase/risk-assessment.md
       - showcase/system-overview.md
       - Implementation Notes:
           - showcase/implementation-notes/index.md
@@ -64,6 +65,7 @@ plugins:
           "Engineering Practices",
           "Data Governance",
           "Reader's Guide",
+          "Showcase",
           "Home",
         ]
   - mkdocstrings:
