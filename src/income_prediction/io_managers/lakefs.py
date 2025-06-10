@@ -47,7 +47,7 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
         # the asset was materialized.
         # See also the implementation of `_get_path`.
         return pd.read_parquet(
-            path, engine="fastparquet", storage_options=dict(path.storage_options)
+            path, storage_options=dict(path.storage_options)
         )
 
     def dump_to_path(
@@ -64,7 +64,6 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
             ephemeral_path = f"lakefs://{repo}/{tx.branch.id}/{resource}"
             obj.to_parquet(
                 ephemeral_path,
-                engine="fastparquet",
                 storage_options=dict(path.storage_options),
             )
 

@@ -20,18 +20,10 @@ GROUP_NAME = "data_processing"
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name=GROUP_NAME, kinds={"pandas"})
 def raw_asec_data(experiment_config: Config) -> pd.DataFrame:
-    df = download_census_data(
+    return download_census_data(
         experiment_config.census_asec_dataset_year,
         use_archive=experiment_config.census_asec_dataset_use_archive,
     )
-
-    # Set appropriate dtypes for categorical/ordinal features
-    for col in (
-        CensusASECMetadata.CATEGORICAL_FEATURES + CensusASECMetadata.ORDINAL_FEATURES
-    ):
-        df[col] = df[col].astype("category")
-
-    return df
 
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name=GROUP_NAME, kinds={"pandas"})

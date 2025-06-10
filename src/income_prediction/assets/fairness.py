@@ -28,13 +28,7 @@ HIGH_INCOME_CLASS = 4
 
 
 def _make_dataset(data: pd.DataFrame) -> StandardDataset:
-    df: pd.DataFrame = data.copy()
-
-    # Convert categorical features back to int64, as required by AIF360
-    categorical_cols = df.select_dtypes(include=["category"]).columns
-    dtype_dict = dict.fromkeys(categorical_cols, "int64")
-    df = df.astype(dtype_dict)
-
+    df = data.copy()
     return StandardDataset(
         df,
         label_name=TARGET,
