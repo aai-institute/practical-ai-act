@@ -52,8 +52,6 @@ nav:
       - conformity/instructions-for-use.md
       - conformity/human-oversight.md
       - conformity/accuracy-robustness-cybersecurity.md
-  - Tags:
-      - tags.md
 
 plugins:
   - callouts

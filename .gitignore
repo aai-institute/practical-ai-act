@@ -194,6 +194,7 @@ predictions.sqlite3
 # Dagster
 tmp*
 .tmp_dagster_*
+.dagster
 
 # mlfow
 mlartifacts
