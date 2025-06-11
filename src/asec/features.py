@@ -64,37 +64,3 @@ def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame
         selected_features = [feat for feat in selected_features if feat not in exclude]
 
     return df[selected_features]
-
-
-def get_income_prediction_features(
-    census_asec_dataset: pd.DataFrame,
-    salary_lower_bound: float,
-    salary_upper_bound: float,
-    exclude: list[str] = None,
-) -> pd.DataFrame:
-    """Preprocesses the Census ASEC dataset for income prediction by:
-        - Assigning salary bands based on income thresholds.
-        - Filtering relevant features needed for prediction.
-
-    Parameters
-    ----------
-    census_asec_dataset : pd.DataFrame
-        The raw Census ASEC supplementary dataset.
-    salary_lower_bound : float
-        Lower bound for the acceptable income
-    salary_upper_bound : float
-        Upper bound for the acceptable income
-    exclude : list[str], optional
-        Names of columns to be excluded
-
-    Returns
-    -------
-    pd.DataFrame
-        Preprocessed DataFrame containing selected features and salary band classifications.
-    """
-
-    return (
-        census_asec_dataset.pipe(assign_salary_bands, salary_lower_bound, salary_upper_bound)
-        .pipe(binarize_marital_status)
-        .pipe(partial(select_features, exclude=exclude))
-    )
