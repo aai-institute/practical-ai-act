@@ -29,27 +29,15 @@ Depending on your background, different entry points may make more sense.
 If you're from a technical or engineering background, you might start with [Engineering Practice](engineering-practice/index.md). If you're approaching from a legal, regulatory, or policy perspective, [AI Act Conformity](conformity/index.md) may be the best starting point.
 If you prefer to see things in context first, the [Showcase](showcase/index.md) offers a concrete example that ties the other sections together.
 
-## On the iterative nature of this document
+## Recommended Knowledge
 
-As the legislation and standardization around artificial intelligence in the European Union still evolve, this showcase is subject to changes based on different types of developments.
-These can include, but are not limited to:
+-   A basic understanding of machine learning and AI concepts
+-   An understanding of the terminology in |Art. 3| of the AI Act
+-   Familiarity with Python programming, if you want to follow along with the code examples
+-   Software engineering best practices for ML:
+    -   See the [Beyond Jupyter series](https://transferlab.ai/trainings/beyond-jupyter/) for an introduction
 
-1. Community feedback, like corrections and additions of missing content,
-2. Changes and updates to standards on artificial intelligence, such as through CEN-CENELEC (see below),
-3. Changes to the technology stack used in the example high-risk AI system.
-
-Providers of high-risk AI systems specifically may also consider the following note on the future availability of EU harmonized standards.
-
-!!! note
-
-    Providers of high-risk AI systems must build their systems according to the rules in Chapter III, Section 2 of the AI Act as discussed in the [AI Act Conformity](conformity/index.md) section of this website.
-
-    To benefit from a presumption of conformity with these rules, providers must apply harmonized standards in their design and implementation process.
-    These standards are due to be published by CEN-CENELEC between late 2025 and early 2026.
-
-    Please refer to the [CEN-CENELEC JTC 21 website](https://standards.cencenelec.eu/dyn/www/f?p=205:22:0::::FSP_ORG_ID,FSP_LANG_ID:2916257,25&cs=1827B89DA69577BF3631EE2B6070F207D) for up-to-date information.
-
-## Navigation
+## How to navigate this website?
 
 A key goal of this project is making connections between AI Act requirements and engineering best practices explicit.
 Since these relationships are often many-to-many rather than one-to-one, the website uses multiple navigation tools to help you explore these connections:
@@ -143,10 +131,22 @@ The project does not address the relationship between the AI Act and the General
 The AI Act and the GDPR are separate legal frameworks, and while they may overlap in some areas, they have different objectives and requirements.
 Although some of the engineering practices on this website also help you comply with the GDPR, we do not explicitly consider these privacy and data protection aspects.
 
-## Recommended Knowledge
+## On the iterative nature of this document
 
--   A basic understanding of machine learning and AI concepts
--   An understanding of the terminology in |Art. 3| of the AI Act
--   Familiarity with Python programming, if you want to follow along with the code examples
--   Software engineering best practices for ML:
-    -   See the [Beyond Jupyter series](https://transferlab.ai/trainings/beyond-jupyter/) for an introduction
+As the legislation and standardization around artificial intelligence in the European Union still evolve, this showcase is subject to changes based on different types of developments.
+These can include, but are not limited to:
+
+1. Community feedback, like corrections and additions of missing content,
+2. Changes and updates to standards on artificial intelligence, such as through CEN-CENELEC (see below),
+3. Changes to the technology stack used in the example high-risk AI system.
+
+Providers of high-risk AI systems specifically may also consider the following note on the future availability of EU harmonized standards.
+
+!!! note
+
+    Providers of high-risk AI systems must build their systems according to the rules in Chapter III, Section 2 of the AI Act as discussed in the [AI Act Conformity](conformity/index.md) section of this website.
+
+    To benefit from a presumption of conformity with these rules, providers must apply harmonized standards in their design and implementation process.
+    These standards are due to be published by CEN-CENELEC between late 2025 and early 2026.
+
+    Please refer to the [CEN-CENELEC JTC 21 website](https://standards.cencenelec.eu/dyn/www/f?p=205:22:0::::FSP_ORG_ID,FSP_LANG_ID:2916257,25&cs=1827B89DA69577BF3631EE2B6070F207D) for up-to-date information.

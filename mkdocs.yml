@@ -17,6 +17,7 @@ nav:
   - Showcase:
       - showcase/index.md
       - showcase/risk-classification.md
+      - showcase/risk-assessment.md
       - showcase/system-overview.md
       - Implementation Notes:
           - showcase/implementation-notes/index.md
@@ -52,8 +53,6 @@ nav:
       - conformity/instructions-for-use.md
       - conformity/human-oversight.md
       - conformity/accuracy-robustness-cybersecurity.md
-  - Tags:
-      - tags.md
 
 plugins:
   - callouts
@@ -65,6 +64,7 @@ plugins:
           "Engineering Practices",
           "Data Governance",
           "Reader's Guide",
+          "Showcase",
           "Home",
         ]
   - mkdocstrings:
