@@ -1,3 +1,5 @@
+from functools import partial
+
 import dagster as dg
 import pandas as pd
 
@@ -35,12 +37,12 @@ def filtered_asec_data(raw_asec_data: pd.DataFrame) -> pd.DataFrame:
 def transformed_target(
     filtered_asec_data: pd.DataFrame, experiment_config: Config
 ) -> pd.DataFrame:
-    return assign_salary_bands(filtered_asec_data, experiment_config.salary_bands)
+    return assign_salary_bands(filtered_asec_data, experiment_config.salary_lower_bound, experiment_config.salary_upper_bound)
 
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name=GROUP_NAME, kinds={"pandas"})
 def preprocessed_features(transformed_target: pd.DataFrame) -> pd.DataFrame:
-    return transformed_target.pipe(binarize_marital_status).pipe(select_features)
+    return transformed_target.pipe(binarize_marital_status).pipe(partial(select_features, exclude=list(map(str, CensusASECMetadata.TO_EXCLUDE))))
 
 
 @dg.asset(group_name=GROUP_NAME)

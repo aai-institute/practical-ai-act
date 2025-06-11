@@ -281,26 +281,28 @@ def collect_features(
     return make_union(*feature_list)
 
 
-def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFrame:
-    """Categorizes individuals into salary bands based on their total annual income.
+def assign_salary_bands(df: pd.DataFrame, lower_bound: float, upper_bound: float) -> pd.DataFrame:
+    """Matching individuals to a given salary range based on their total annual income.
 
     Parameters
     ----------
     df : pd.DataFrame
         Dataset containing individuals' annual income.
-    salary_bands : list[int]
-        Threshold values defining salary bands.
+    lower_bound : float
+        Lower bound for the acceptable income
+    upper_bound : float
+        Upper bound for the acceptable income
 
     Returns
     -------
     pd.DataFrame
         Updated dataset with an additional column indicating the salary band.
     """
-    target_col = CensusASECMetadata.Fields.SALARY_BAND
-    df[target_col] = np.searchsorted(
-        salary_bands, df[CensusASECMetadata.Fields.ANNUAL_INCOME], side="right"
-    )
-    df[target_col] = df[target_col].astype("category")
+
+    if lower_bound >= upper_bound:
+      raise ValueError(f"Salary bounds must be ordered, got: ({lower_bound}, {upper_bound})")
+
+    df[CensusASECMetadata.TARGET] = df[CensusASECMetadata.Fields.ANNUAL_INCOME].between(lower_bound, upper_bound).astype(int)
     return df
 
 
@@ -340,8 +342,9 @@ def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame
 
 
 def get_income_prediction_features(
-    salary_bands: list[int],
     census_asec_dataset: pd.DataFrame,
+    salary_lower_bound: float,
+    salary_upper_bound: float,
     exclude: list[str] = None,
 ) -> pd.DataFrame:
     """Preprocesses the Census ASEC dataset for income prediction by:
@@ -350,10 +353,14 @@ def get_income_prediction_features(
 
     Parameters
     ----------
-    salary_thresholds : list[int]
-        Threshold values defining salary bands.
     census_asec_dataset : pd.DataFrame
         The raw Census ASEC supplementary dataset.
+    salary_lower_bound : float
+        Lower bound for the acceptable income
+    salary_upper_bound : float
+        Upper bound for the acceptable income
+    exclude : list[str], optional
+        Names of columns to be excluded
 
     Returns
     -------
@@ -362,7 +369,7 @@ def get_income_prediction_features(
     """
 
     return (
-        census_asec_dataset.pipe(assign_salary_bands, salary_bands)
+        census_asec_dataset.pipe(assign_salary_bands, salary_lower_bound, salary_upper_bound)
         .pipe(binarize_marital_status)
         .pipe(partial(select_features, exclude=exclude))
     )

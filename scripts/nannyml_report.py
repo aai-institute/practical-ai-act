@@ -34,7 +34,7 @@ finally:
 # NannyML reporting
 
 data = pickle_cached(FILE_NAME_ASEC)(download_and_filter_census_data)(year=2024)
-data = get_income_prediction_features(Config().salary_bands, data)
+data = get_income_prediction_features(Config().salary_range, data)
 X, y = data.drop(columns=["SALARY_BAND"]), data["SALARY_BAND"]
 
 _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=31)
@@ -49,11 +49,11 @@ reference_df = build_reference_data(
 
 chunk_size = 250
 estimator = nml.CBPE(
-    problem_type="classification_multiclass",
+    problem_type="classification_binary",
     y_pred_proba={
         idx: f"prob_{idx}"
         for idx in range(
-            len(Config().salary_bands) + 1
+        len(Config().salary_range) + 1
         )  # Account for implicit highest band
     },
     y_pred="prediction",

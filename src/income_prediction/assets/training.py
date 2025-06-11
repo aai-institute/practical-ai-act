@@ -5,13 +5,16 @@ import mlflow
 import optuna
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from xgboost import XGBClassifier
+import matplotlib.pyplot as plt
+import shap
 
 from asec.data import CensusASECMetadata
-from asec.model_factory import ModelFactory
-from income_prediction.assets.fairness import classification_metrics, make_metricframe
-from income_prediction.types import ModelVersion
-from income_prediction.utils.dagster import canonical_lakefs_uri_for_input
-from income_prediction.utils.mlflow import (
+
+from .fairness import classification_metrics, make_metricframe
+from ..types import ModelVersion
+from ..utils.dagster import canonical_lakefs_uri_for_input
+from ..utils.mlflow import (
     log_fairness_metrics,
     log_fairness_metrics_by_group,
 )
@@ -50,19 +53,15 @@ def _log_datasets(
 
 
 def _log_evaluation(
+    model,
     test_data: pd.DataFrame,
-    y_pred: pd.Series,
     /,
-    config: Config,
     evaluator_config: dict,
 ):
-    eval_df = test_data
-    eval_df["predicted"] = y_pred
-
     mlflow.evaluate(
-        data=eval_df,
+        model=model.predict,
+        data=test_data,
         model_type="classifier",
-        predictions="predicted",
         targets=CensusASECMetadata.TARGET,
         evaluator_config=evaluator_config,
     )
@@ -79,6 +78,22 @@ def _log_fairness_evaluation(
     sensitive_features = test_data[sensitive_feature_names]
     mf = make_metricframe(test_data, y_pred, sensitive_features=sensitive_features)
     log_fairness_metrics_by_group(mf)
+
+
+def _log_explainability_plots(model, x_test: pd.DataFrame):
+    plt.close()
+    plt.clf()
+
+    explainer = shap.Explainer(model, x_test, algorithm="tree")
+    shap_values = explainer(x_test)
+
+    ax = shap.plots.bar(shap_values, show=False)
+    mlflow.log_figure(ax.figure, "shap_bar_plot.png")
+    plt.close()
+    plt.clf()
+
+    ax = shap.plots.violin(shap_values, show=False)
+    mlflow.log_figure(plt.gcf(), "shap_violin_plot.png")
 
 
 @dg.multi_asset(
@@ -118,7 +133,7 @@ def optuna_search_xgb(
     y_train = train_data[CensusASECMetadata.TARGET]
 
     optuna_search = optuna.integration.OptunaSearchCV(
-        ModelFactory.create_xgb(),
+        XGBClassifier(enable_categorical=True),
         param_distributions=optuna_xgb_param_distribution,
         **optuna_cv_config.as_dict(),
     )
@@ -137,11 +152,10 @@ def optuna_search_xgb(
 
             _log_datasets(context, train_data, test_data)
             _log_evaluation(
+                best_model,
                 test_data,
-                y_pred,
-                config=experiment_config,
                 evaluator_config={
-                    "log_model_explainability": experiment_config.log_model_explainability,
+                    "log_model_explainability": False
                 },
             )
 
@@ -151,6 +165,9 @@ def optuna_search_xgb(
                 y_pred,
                 sensitive_feature_names=experiment_config.sensitive_feature_names,
             )
+
+            # Explainability plots
+            _log_explainability_plots(best_model, X_test)
 
             # Model registration
             signature = mlflow.models.infer_signature(

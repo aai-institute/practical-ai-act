@@ -1,5 +1,3 @@
-from functools import partial
-
 import fairlearn
 import fairlearn.metrics
 import pandas as pd
@@ -31,8 +29,8 @@ def _make_dataset(data: pd.DataFrame) -> StandardDataset:
     df = data.copy()
     return StandardDataset(
         df,
-        label_name=TARGET,
-        favorable_classes=[HIGH_INCOME_CLASS],
+        label_name=CensusASECMetadata.TARGET,
+        favorable_classes=[1],
         protected_attribute_names=[
             SEX_FEATURE,
         ],
@@ -75,9 +73,7 @@ def make_metricframe(
     return fairlearn.metrics.MetricFrame(
         metrics={
             "accuracy": sklearn.metrics.accuracy_score,
-            "selection_rate": partial(
-                fairlearn.metrics.selection_rate, pos_label=HIGH_INCOME_CLASS
-            ),
+            "selection_rate": fairlearn.metrics.selection_rate,
             "count": fairlearn.metrics.count,
         },
         y_true=ground_truth[[TARGET]],

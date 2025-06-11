@@ -66,7 +66,7 @@ def log_fairness_metrics(fairness_metrics: ClassificationMetric, prefix: str = "
     )
 
 
-def log_fairness_metrics_by_group(mf: MetricFrame, prefix: str = "fair_"):
+def  log_fairness_metrics_by_group(mf: MetricFrame, prefix: str = "fair_"):
     """Logs Fairlearn fairness metrics by group to MLflow."""
 
     for metric_col in mf.by_group.columns:

@@ -148,7 +148,7 @@ class CensusASECMetadata:
         SELF_EMPLOYMENT_INCOME = "SEMP_VAL"
         SECOND_JOB_INCOME = "WAGEOTR"
         ANNUAL_INCOME = "PTOTVAL"
-        SALARY_BAND = "SALARY_BAND"
+        INCOME_IN_RANGE = "INCOME_IN_RANGE"
         ADJUSTED_GROSS_INCOME = "AGI"
 
         # Health & Insurance
@@ -159,7 +159,7 @@ class CensusASECMetadata:
         FINAL_WEIGHT = "A_FNLWGT"
 
     # Target variable
-    TARGET = Fields.SALARY_BAND
+    TARGET = Fields.INCOME_IN_RANGE
 
     # Feature categories
     CATEGORICAL_FEATURES = [
@@ -213,6 +213,19 @@ class CensusASECMetadata:
     ORDINAL_FEATURES = [
         Fields.EDUCATION_LEVEL,
     ]
+
+    TO_EXCLUDE = [Fields.WEEKLY_EARNINGS,
+          Fields.HOURLY_WAGE,
+          Fields.LONGEST_JOB_EARNINGS,
+          Fields.SECOND_JOB_INCOME,
+          Fields.ADJUSTED_GROSS_INCOME,
+          Fields.ANNUAL_INCOME,
+          Fields.FINAL_WEIGHT,
+          Fields.ANNUAL_EARNINGS,
+          Fields.SELF_EMPLOYMENT_INCOME,
+          Fields.SECOND_JOB_INCOME,
+        ]
+
 
 
 def download_file(url: str, destination: Path) -> None:
