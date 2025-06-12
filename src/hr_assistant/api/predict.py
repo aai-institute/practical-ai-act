@@ -51,12 +51,6 @@ class ModelInput(BaseModel):
     HRSWK: int
     A_HRS1: int
     NOEMP: int
-    A_GRSWK: int
-    A_HRSPAY: int
-    ERN_VAL: int
-    WAGEOTR: int
-    AGI: int
-    A_FNLWGT: int
     A_HGA: int
 
 
@@ -137,9 +131,7 @@ async def explain_prediction(
         predictions = NumpyCodec.decode_output(predictions).ravel()
         print(predictions.shape)
 
-        # Plot feature importance on the predicted class
-        predicted_class = predictions[0]
-        data = explanation[0, :, predicted_class]
+        data = explanation[0, :]
         num_features = 10
         ax = shap.plots.waterfall(
             data,
@@ -161,5 +153,5 @@ async def explain_prediction(
 
     buf = io.BytesIO()
     ax.get_figure().savefig(buf, format="png")
-    plt.clf()
+    plt.close()
     return Response(content=buf.getvalue(), media_type="image/png")

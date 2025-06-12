@@ -37,12 +37,6 @@ model_input = {
     "HRSWK": 1,
     "A_HRS1": 40,
     "NOEMP": 1,
-    "A_GRSWK": 0,
-    "A_HRSPAY": -1,
-    "ERN_VAL": -4500,
-    "WAGEOTR": 0,
-    "AGI": 0,
-    "A_FNLWGT": 151541,
     "A_HGA": 43,
 }
 

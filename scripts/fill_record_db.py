@@ -1,15 +1,11 @@
-from pathlib import Path
-
 import pandas as pd
 import requests
 import tqdm
 
-X = pd.read_csv(
-    Path(__file__).parents[1] / "data" / "test_data.csv",
-    index_col=[0, 1],
-)
+# Test data set from lakeFS repository
+X = pd.read_parquet("lakefs://twai-pipeline/main/data/test_data.parquet")
 
-batch_df = X.dropna().drop(columns=["SALARY_BAND"]).sample(n=100)
+batch_df = X.dropna().sample(n=100)
 batch = batch_df.to_dict(orient="records")
 
 predict_endpoint = "http://localhost:8001/model/predict"

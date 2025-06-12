@@ -1,9 +1,12 @@
 from typing import Any
 
+import numpy as np
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
+
+from asec.data import CensusASECMetadata
 
 
 class MlFlowConfig(BaseModel):
@@ -34,18 +37,19 @@ class Config(ConfigurableResource):
     # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
     census_asec_dataset_use_archive: bool = False
 
-    salary_bands: list[int] = [
-        35000,  # Entry level
-        55000,  # Lower mid-range
-        85000,  # Mid-range
-        120000,  # Upper mid-range
-    ]  # > 120000 High
+    salary_lower_bound: float = -np.inf
+    salary_upper_bound: float = 45_000
 
     data_dir: str = "data"
 
     random_state: int = 42
 
     log_model_explainability: bool = True
+
+    # For fairness evaluation
+    sensitive_feature_names: list[str] = [
+        CensusASECMetadata.Fields.SEX,
+    ]
 
     test_size: float = 0.25
 
@@ -159,8 +163,11 @@ class OptunaXGBParamDistribution(ResourceDefinition):
         max_depth: IntDistribution | None = None,
         gamma: FloatDistribution | None = None,
         reg_lambda: FloatDistribution | None = None,
+        reg_alpha: FloatDistribution | None = None,
         colsample_bytree: FloatDistribution | None = None,
         min_child_weight: IntDistribution | None = None,
+        learning_rate: FloatDistribution | None = None,
+        subsample: FloatDistribution | None = None,
         classifier_prefix: str | None = None,
         **kwargs: Any,
     ):
@@ -173,8 +180,11 @@ class OptunaXGBParamDistribution(ResourceDefinition):
             f"{classifier_prefix}max_depth": max_depth,
             f"{classifier_prefix}gamma": gamma,
             f"{classifier_prefix}reg_lambda": reg_lambda,
+            f"{classifier_prefix}reg_alpha": reg_alpha,
             f"{classifier_prefix}colsample_bytree": colsample_bytree,
             f"{classifier_prefix}min_child_weight": min_child_weight,
+            f"{classifier_prefix}learning_rate": learning_rate,
+            f"{classifier_prefix}subsample": subsample,
             **{f"{classifier_prefix}{k}": v for k, v in kwargs.items()},
         }
 

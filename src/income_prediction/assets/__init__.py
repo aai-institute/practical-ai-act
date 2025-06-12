@@ -1,3 +1,4 @@
+from .data_processing import dataset_fairness_metrics as dataset_fairness_metrics
 from .data_processing import filtered_asec_data as filtered_asec_data
 from .data_processing import preprocessed_features as preprocessed_features
 from .data_processing import raw_asec_data as raw_asec_data

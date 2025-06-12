@@ -7,9 +7,8 @@ import nannyml as nml
 import pandas as pd
 
 from asec.data import CensusASECMetadata
-from asec.model_factory import LabelEncodedClassifier
 from asec.nannyml import build_reference_data
-from income_prediction.resources.configuration import Config, NannyMLConfig
+from income_prediction.resources.configuration import NannyMLConfig
 from income_prediction.resources.mlflow_session import MlflowSession
 from income_prediction.types import ModelVersion
 from income_prediction.utils.docker import build_container_image
@@ -29,29 +28,18 @@ def reference_dataset(
     model = load_model(optuna_search_xgb)
     X_test = test_data.drop(columns=[CensusASECMetadata.TARGET])
     y_test = test_data[CensusASECMetadata.TARGET]
-
-    encoder = None
-    if isinstance(model.steps[-1][1], LabelEncodedClassifier):
-        encoder = model.steps[-1][1].encoder
-
-    df = build_reference_data(model, X_test, y_test, encoder=encoder)
+    df = build_reference_data(model, X_test, y_test)
     return df
 
 
 @dg.asset(group_name="deployment")
 def nannyml_estimator(
     reference_dataset: pd.DataFrame,
-    experiment_config: Config,
     nanny_ml_config: NannyMLConfig,
 ):
     estimator = nml.CBPE(
-        problem_type="classification_multiclass",
-        y_pred_proba={
-            idx: f"prob_{idx}"
-            for idx in range(
-                len(experiment_config.salary_bands) + 1
-            )  # Account for implicit highest band
-        },
+        problem_type="classification_binary",
+        y_pred_proba="prediction_probability",
         y_pred="prediction",
         y_true="target",
         metrics=nanny_ml_config.metrics,

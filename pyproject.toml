@@ -8,7 +8,11 @@ version = "0.1.0"
 description = "An ML assistant for HR professionals."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["more-itertools>=10.5.0", "numpy>2", "pandas>=2.2.3"]
+dependencies = [
+  "more-itertools>=10.5.0",
+  "numpy>2",
+  "pandas>=2.2.3",
+]
 
 [dependency-groups]
 docs = [
@@ -28,9 +32,8 @@ train = [
   "dagster>=1.9.10",
   "dagster-webserver>=1.9.10",
   "dagster-obstore>=0.2.0",
-  "lightgbm>=4.5.0",
   "sensai-utils>=1.4.0",
-  "scikit-learn>=1.5,<2",
+  "scikit-learn<1.7",
   "ucimlrepo>=0.0.7",
   "xgboost>=2,<3",
   "optuna>=4.2.1",
@@ -46,6 +49,7 @@ train = [
   "numba>=0.61.0",
   "requests",
   "dagster-graphql>=1.10.15",
+  "fairlearn>=0.12.0",
 ]
 deploy = [
   "fastapi>=0.110",

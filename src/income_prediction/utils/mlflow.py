@@ -1,6 +1,7 @@
 import mlflow
 import mlflow.sklearn
 from aif360.metrics import ClassificationMetric
+from fairlearn.metrics import MetricFrame
 
 from income_prediction.types import ModelVersion
 
@@ -63,6 +64,38 @@ def log_fairness_metrics(fairness_metrics: ClassificationMetric, prefix: str = "
         f"{prefix}tpr_unprivileged",
         fairness_metrics.true_positive_rate(privileged=False),
     )
+
+
+def log_fairness_metrics_by_group(mf: MetricFrame, prefix: str = "fair_"):
+    """Logs Fairlearn fairness metrics by group to MLflow."""
+
+    for metric_col in mf.by_group.columns:
+        if mf.by_group.index.nlevels > 1:
+            for group_index in mf.by_group[metric_col].index:
+                attribute_name = "_".join(mf.by_group.index.names)
+                group_name = "_".join(map(str, group_index))
+                metric_value = mf.by_group[metric_col][group_index]
+                mlflow.log_metric(
+                    f"{prefix}{metric_col}_{attribute_name}_{group_name}",
+                    metric_value,
+                )
+
+        else:
+            attribute_name = mf.by_group.index.names[0]
+            for group_name in mf.by_group[metric_col].index:
+                metric_value = mf.by_group[metric_col][group_name]
+                mlflow.log_metric(
+                    f"{prefix}{metric_col}_{attribute_name}_{group_name}", metric_value
+                )
+
+    plt = mf.by_group.plot(
+        kind="bar",
+        title="Fairness Metrics by Group",
+        subplots=True,
+        legend=False,
+        figsize=(12, 8),
+    )
+    mlflow.log_figure(plt[0].figure, "fairness_metrics_by_group.png")
 
 
 def load_model(version: ModelVersion):

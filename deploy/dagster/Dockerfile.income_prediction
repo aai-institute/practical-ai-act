@@ -32,12 +32,6 @@ RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
         apt-get install -yqq --no-install-recommends docker-ce-cli docker-buildx-plugin build-essential gcc git
 EOS
 
-# libgomp is a system dependency of lightgbm
-RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
-  --mount=target=/var/cache/apt,type=cache,sharing=locked \
-  apt-get update && \
-  apt-get install -yqq --no-install-recommends libgomp1
-
 RUN --mount=type=cache,target=/root/.cache/uv \
   --mount=type=bind,source=uv.lock,target=uv.lock \
   --mount=type=bind,source=pyproject.toml,target=pyproject.toml \

@@ -1,30 +1,38 @@
-from functools import partial
-
-import numpy as np
 import pandas as pd
 
 from .data import CensusASECMetadata
 
 
-def assign_salary_bands(df: pd.DataFrame, salary_bands: list[int]) -> pd.DataFrame:
-    """Categorizes individuals into salary bands based on their total annual income.
+def assign_salary_bands(
+    df: pd.DataFrame, lower_bound: float, upper_bound: float
+) -> pd.DataFrame:
+    """Matching individuals to a given salary range based on their total annual income.
 
     Parameters
     ----------
     df : pd.DataFrame
         Dataset containing individuals' annual income.
-    salary_bands : list[int]
-        Threshold values defining salary bands.
+    lower_bound : float
+        Lower bound for the acceptable income
+    upper_bound : float
+        Upper bound for the acceptable income
 
     Returns
     -------
     pd.DataFrame
         Updated dataset with an additional column indicating the salary band.
     """
-    df[CensusASECMetadata.Fields.SALARY_BAND] = np.searchsorted(
-        salary_bands, df[CensusASECMetadata.Fields.ANNUAL_INCOME], side="right"
-    )
 
+    if lower_bound >= upper_bound:
+        raise ValueError(
+            f"Salary bounds must be ordered, got: ({lower_bound}, {upper_bound})"
+        )
+
+    df[CensusASECMetadata.TARGET] = (
+        df[CensusASECMetadata.Fields.ANNUAL_INCOME]
+        .between(lower_bound, upper_bound)
+        .astype(int)
+    )
     return df
 
 
@@ -61,32 +69,3 @@ def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame
         selected_features = [feat for feat in selected_features if feat not in exclude]
 
     return df[selected_features]
-
-
-def get_income_prediction_features(
-    salary_bands: list[int],
-    census_asec_dataset: pd.DataFrame,
-    exclude: list[str] = None,
-) -> pd.DataFrame:
-    """Preprocesses the Census ASEC dataset for income prediction by:
-        - Assigning salary bands based on income thresholds.
-        - Filtering relevant features needed for prediction.
-
-    Parameters
-    ----------
-    salary_thresholds : list[int]
-        Threshold values defining salary bands.
-    census_asec_dataset : pd.DataFrame
-        The raw Census ASEC supplementary dataset.
-
-    Returns
-    -------
-    pd.DataFrame
-        Preprocessed DataFrame containing selected features and salary band classifications.
-    """
-
-    return (
-        census_asec_dataset.pipe(assign_salary_bands, salary_bands)
-        .pipe(binarize_marital_status)
-        .pipe(partial(select_features, exclude=exclude))
-    )
