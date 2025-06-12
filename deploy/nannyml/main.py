@@ -38,9 +38,8 @@ def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
 
         outputs = {o.name: NumpyCodec.decode_output(o) for o in resp.outputs}
         prediction = pd.Series(outputs["predict"].ravel(), name="prediction")
-        prediction_probability = pd.DataFrame(
-            outputs["predict_proba"].tolist(),
-            columns=[f"prob_{i}" for i in range(outputs["predict_proba"].shape[1])],
+        prediction_probability = pd.Series(
+            outputs["predict_proba"][:, 1], name="prediction_probability"
         )
 
         df = req_df.copy()

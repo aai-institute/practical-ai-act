@@ -7,12 +7,18 @@ ENV UV_LINK_MODE=copy
 WORKDIR /app
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --group monitoring
-
+  --mount=type=bind,source=uv.lock,target=uv.lock \
+  --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+  uv sync --frozen --no-install-project --group monitoring
 
 FROM python:3.12-slim
+
+# libgomp is a system dependency of NannyML
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+  --mount=target=/var/cache/apt,type=cache,sharing=locked \
+  apt-get update && \
+  apt-get install -yqq --no-install-recommends libgomp1
+
 WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 
