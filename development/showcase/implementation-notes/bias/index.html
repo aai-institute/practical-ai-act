@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/readers-guide/">
+        <link rel="canonical" href="https://aai-institute.github.io/twai-pipeline/latest/showcase/implementation-notes/bias/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../model-monitoring/">
       
       
-        <link rel="next" href="../showcase/">
+        <link rel="next" href="../../../engineering-practice/">
       
       
-      <link rel="icon" href="../_images/logos/baiaa-icon.svg">
+      <link rel="icon" href="../../../_images/logos/baiaa-icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>Reader's Guide - twai-pipeline</title>
+        <title>Bias Detection and Mitigation - twai-pipeline</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
   
@@ -54,18 +54,18 @@
         
         
         
-        <link rel="stylesheet" href="../assets/external/fonts.googleapis.com/css.c3479dc1.css">
+        <link rel="stylesheet" href="../../../assets/external/fonts.googleapis.com/css.c3479dc1.css">
         <style>:root{--md-text-font:"Source Sans Pro";--md-code-font:"Source Code Pro"}</style>
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../_styles/extra.css">
+      <link rel="stylesheet" href="../../../_styles/extra.css">
     
-      <link rel="stylesheet" href="../_styles/theme.css">
+      <link rel="stylesheet" href="../../../_styles/theme.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#who-is-this-website-for" class="md-skip">
+        <a href="#bias-detection-and-mitigation" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
 may contain features that have not yet been released. For the most accurate
 information, please
 
-<strong><a href="../..">access the latest release</a></strong>.
+<strong><a href="../../../..">access the latest release</a></strong>.
           </div>
           
         </aside>
@@ -154,14 +154,14 @@ information, please
 
     <!-- Link to home -->
     <a
-      href=".."
+      href="../../.."
       title="twai-pipeline"
       class="md-header__button md-logo"
       aria-label="twai-pipeline"
       data-md-component="logo"
     >
       
-  <img src="../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
 
@@ -182,7 +182,7 @@ information, please
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              twai-pipeline &mdash; <strong>Reader's Guide</strong>
+              twai-pipeline &mdash; <strong>Bias Detection and Mitigation</strong>
             
           </span>
         </div>
@@ -309,9 +309,9 @@ information, please
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
+    <a href="../../.." title="twai-pipeline" class="md-nav__button md-logo" aria-label="twai-pipeline" data-md-component="logo">
       
-  <img src="../_images/logos/baiaa-icon.svg" alt="logo">
+  <img src="../../../_images/logos/baiaa-icon.svg" alt="logo">
 
     </a>
     twai-pipeline
@@ -338,7 +338,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -357,30 +357,10 @@ information, please
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Reader's Guide
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../readers-guide/" class="md-nav__link">
         
   
   
@@ -391,153 +371,6 @@ information, please
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#who-is-this-website-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      Who is this website for?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#syllabus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Syllabus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommended-knowledge" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recommended Knowledge
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-navigate-this-website" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to navigate this website?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How to navigate this website?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-information-boxes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compliance Information Boxes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#engineering-information-boxes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Engineering Information Boxes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#page-backlinks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Page Backlinks
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-out-of-scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is out of scope?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="What is out of scope?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#assessing-your-use-cases-risk-category" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assessing your use case's risk category
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#systems-covered-under-european-union-harmonisation-legislation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Systems covered under European Union harmonisation legislation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-purpose-ai-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      General-purpose AI models
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#relationship-to-privacy-and-data-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Relationship to Privacy and Data Protection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#on-the-iterative-nature-of-this-document" class="md-nav__link">
-    <span class="md-ellipsis">
-      On the iterative nature of this document
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -546,22 +379,24 @@ information, please
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../showcase/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -580,7 +415,7 @@ information, please
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Showcase
@@ -594,7 +429,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/risk-classification/" class="md-nav__link">
+      <a href="../../risk-classification/" class="md-nav__link">
         
   
   
@@ -617,7 +452,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/risk-assessment/" class="md-nav__link">
+      <a href="../../risk-assessment/" class="md-nav__link">
         
   
   
@@ -640,7 +475,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/system-overview/" class="md-nav__link">
+      <a href="../../system-overview/" class="md-nav__link">
         
   
   
@@ -660,22 +495,24 @@ information, please
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../showcase/implementation-notes/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -694,7 +531,7 @@ information, please
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_4">
             <span class="md-nav__icon md-icon"></span>
             Implementation Notes
@@ -708,7 +545,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/implementation-notes/explainability/" class="md-nav__link">
+      <a href="../explainability/" class="md-nav__link">
         
   
   
@@ -731,7 +568,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/implementation-notes/inference-logging/" class="md-nav__link">
+      <a href="../inference-logging/" class="md-nav__link">
         
   
   
@@ -754,7 +591,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../showcase/implementation-notes/model-monitoring/" class="md-nav__link">
+      <a href="../model-monitoring/" class="md-nav__link">
         
   
   
@@ -774,10 +611,32 @@ information, please
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../showcase/implementation-notes/bias/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Bias Detection and Mitigation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -788,6 +647,44 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bias-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bias Detection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bias-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bias Mitigation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -827,7 +724,7 @@ information, please
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../engineering-practice/" class="md-nav__link ">
+            <a href="../../../engineering-practice/" class="md-nav__link ">
               
   
   
@@ -860,7 +757,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/containerization/" class="md-nav__link">
+      <a href="../../../engineering-practice/containerization/" class="md-nav__link">
         
   
   
@@ -883,7 +780,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/experiment-tracking/" class="md-nav__link">
+      <a href="../../../engineering-practice/experiment-tracking/" class="md-nav__link">
         
   
   
@@ -906,7 +803,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/explainability/" class="md-nav__link">
+      <a href="../../../engineering-practice/explainability/" class="md-nav__link">
         
   
   
@@ -929,7 +826,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/model-registry/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-registry/" class="md-nav__link">
         
   
   
@@ -952,7 +849,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/model-cards/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-cards/" class="md-nav__link">
         
   
   
@@ -975,7 +872,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/model-monitoring/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-monitoring/" class="md-nav__link">
         
   
   
@@ -998,7 +895,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/model-serving/" class="md-nav__link">
+      <a href="../../../engineering-practice/model-serving/" class="md-nav__link">
         
   
   
@@ -1021,7 +918,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/inference-log/" class="md-nav__link">
+      <a href="../../../engineering-practice/inference-log/" class="md-nav__link">
         
   
   
@@ -1044,7 +941,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/operational-monitoring/" class="md-nav__link">
+      <a href="../../../engineering-practice/operational-monitoring/" class="md-nav__link">
         
   
   
@@ -1067,7 +964,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/accuracy/" class="md-nav__link">
+      <a href="../../../engineering-practice/accuracy/" class="md-nav__link">
         
   
   
@@ -1090,7 +987,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/orchestration/" class="md-nav__link">
+      <a href="../../../engineering-practice/orchestration/" class="md-nav__link">
         
   
   
@@ -1125,7 +1022,7 @@ information, please
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../engineering-practice/data-governance/" class="md-nav__link ">
+            <a href="../../../engineering-practice/data-governance/" class="md-nav__link ">
               
   
   
@@ -1158,7 +1055,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/data-governance/data-quality/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/data-quality/" class="md-nav__link">
         
   
   
@@ -1181,7 +1078,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/data-governance/data-versioning/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/data-versioning/" class="md-nav__link">
         
   
   
@@ -1204,7 +1101,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/data-governance/documentation/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/documentation/" class="md-nav__link">
         
   
   
@@ -1227,7 +1124,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../engineering-practice/data-governance/bias-mitigation/" class="md-nav__link">
+      <a href="../../../engineering-practice/data-governance/bias-mitigation/" class="md-nav__link">
         
   
   
@@ -1277,7 +1174,7 @@ information, please
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../conformity/" class="md-nav__link ">
+            <a href="../../../conformity/" class="md-nav__link ">
               
   
   
@@ -1310,7 +1207,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/risk-management-system/" class="md-nav__link">
+      <a href="../../../conformity/risk-management-system/" class="md-nav__link">
         
   
   
@@ -1333,7 +1230,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/data-governance/" class="md-nav__link">
+      <a href="../../../conformity/data-governance/" class="md-nav__link">
         
   
   
@@ -1356,7 +1253,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/technical-documentation/" class="md-nav__link">
+      <a href="../../../conformity/technical-documentation/" class="md-nav__link">
         
   
   
@@ -1379,7 +1276,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/record-keeping/" class="md-nav__link">
+      <a href="../../../conformity/record-keeping/" class="md-nav__link">
         
   
   
@@ -1402,7 +1299,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/instructions-for-use/" class="md-nav__link">
+      <a href="../../../conformity/instructions-for-use/" class="md-nav__link">
         
   
   
@@ -1425,7 +1322,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/human-oversight/" class="md-nav__link">
+      <a href="../../../conformity/human-oversight/" class="md-nav__link">
         
   
   
@@ -1448,7 +1345,7 @@ information, please
   
   
     <li class="md-nav__item">
-      <a href="../conformity/accuracy-robustness-cybersecurity/" class="md-nav__link">
+      <a href="../../../conformity/accuracy-robustness-cybersecurity/" class="md-nav__link">
         
   
   
@@ -1488,6 +1385,8 @@ information, please
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1496,129 +1395,18 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#who-is-this-website-for" class="md-nav__link">
+  <a href="#bias-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      Who is this website for?
+      Bias Detection
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#syllabus" class="md-nav__link">
+  <a href="#bias-mitigation" class="md-nav__link">
     <span class="md-ellipsis">
-      Syllabus
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recommended-knowledge" class="md-nav__link">
-    <span class="md-ellipsis">
-      Recommended Knowledge
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-to-navigate-this-website" class="md-nav__link">
-    <span class="md-ellipsis">
-      How to navigate this website?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How to navigate this website?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-information-boxes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Compliance Information Boxes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#engineering-information-boxes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Engineering Information Boxes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#page-backlinks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Page Backlinks
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-out-of-scope" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is out of scope?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="What is out of scope?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#assessing-your-use-cases-risk-category" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assessing your use case's risk category
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#systems-covered-under-european-union-harmonisation-legislation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Systems covered under European Union harmonisation legislation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-purpose-ai-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      General-purpose AI models
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#relationship-to-privacy-and-data-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Relationship to Privacy and Data Protection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#on-the-iterative-nature-of-this-document" class="md-nav__link">
-    <span class="md-ellipsis">
-      On the iterative nature of this document
+      Bias Mitigation
     </span>
   </a>
   
@@ -1637,6 +1425,17 @@ information, please
               <article class="md-content__inner md-typeset">
                 
 
+<ul class="backlinks">
+  
+  <li>
+    <a href="../">
+          Showcase  &nbsp;&raquo;&nbsp;  Implementation Notes
+      
+    </a>
+  </li>
+  
+</ul>
+
 
                   
 
@@ -1645,139 +1444,27 @@ information, please
   
 
 
-  <h1>Reader's Guide</h1>
-
-<div class="admonition warning">
-<p class="admonition-title">Legal Disclaimer</p>
-<p>The information provided on this website is for informational purposes only and does not constitute legal advice.
-The tools, practices, and mappings presented here reflect our interpretation of the EU AI Act and are intended to support understanding and implementation of trustworthy AI principles.
-Following this guidance does not guarantee compliance with the EU AI Act or any other legal or regulatory framework.</p>
-<p>We are not affiliated with, nor do we endorse, any of the tools listed on this website.</p>
-</div>
-<h2 id="who-is-this-website-for">Who is this website for?<a class="headerlink" href="#who-is-this-website-for" title="Permanent link">&para;</a></h2>
-<p>This project is intended for AI practitioners, data scientists, and engineers who are interested in implementing trustworthy AI systems under the European AI Act.</p>
-<p>The information is applicable to both low- and high-risk AI systems, since it establishes a sound engineering foundation for developing trustworthy AI systems in general.</p>
-<p>Most content is written from the perspective of providers of AI systems under the AI Act.
-Deployers of such AI systems may also find the information useful, as it provides a solid foundation for understanding the requirements and best practices for compliance.</p>
-<h2 id="syllabus">Syllabus<a class="headerlink" href="#syllabus" title="Permanent link">&para;</a></h2>
-<p>This project is structured around three interconnected areas, each addressing a key aspect of AI system development in the context of EU AI Act compliance. The content is modular and designed for flexible navigation—readers are encouraged to explore the connections between legal requirements, engineering practices, and implementation choices.</p>
-<p>A central aim of this work is to bridge the gap between regulatory obligations and technical execution. By making the relationships between legal texts, software engineering practice, and actual implementations explicit, we hope to support teams in building AI systems that are not only effective, but also aligned with compliance goals from the ground up.</p>
-<ul>
-<li><a href="../showcase/"><strong>Showcase</strong></a>: Presents a practical use case that runs throughout the project. It illustrates the application of compliance concepts in context and includes a risk classification based on the EU AI Act.</li>
-<li><a href="../engineering-practice/"><strong>Engineering Practice</strong></a>: Provides a set of software engineering best practices that form the technical foundation for compliance. Each practice is mapped to relevant AI Act provisions to guide implementation.</li>
-<li><a href="../conformity/"><strong>AI Act Conformity</strong></a>: Breaks down the legal requirements of the EU AI Act and connects them to concrete engineering actions, helping translate regulatory language into actionable guidance.</li>
-</ul>
-<p>Depending on your background, different entry points may make more sense.
-If you're from a technical or engineering background, you might start with <a href="../engineering-practice/">Engineering Practice</a>. If you're approaching from a legal, regulatory, or policy perspective, <a href="../conformity/">AI Act Conformity</a> may be the best starting point.
-If you prefer to see things in context first, the <a href="../showcase/">Showcase</a> offers a concrete example that ties the other sections together.</p>
-<h2 id="recommended-knowledge">Recommended Knowledge<a class="headerlink" href="#recommended-knowledge" title="Permanent link">&para;</a></h2>
-<ul>
-<li>A basic understanding of machine learning and AI concepts</li>
-<li>An understanding of the terminology in <a class="aia-ref" href="https://artificialintelligenceact.eu/article/3" rel="noopener noreferrer" target="_blank">Art. 3</a> of the AI Act</li>
-<li>Familiarity with Python programming, if you want to follow along with the code examples</li>
-<li>Software engineering best practices for ML:<ul>
-<li>See the <a href="https://transferlab.ai/trainings/beyond-jupyter/">Beyond Jupyter series</a> for an introduction</li>
-</ul>
-</li>
-</ul>
-<h2 id="how-to-navigate-this-website">How to navigate this website?<a class="headerlink" href="#how-to-navigate-this-website" title="Permanent link">&para;</a></h2>
-<p>A key goal of this project is making connections between AI Act requirements and engineering best practices explicit.
-Since these relationships are often many-to-many rather than one-to-one, the website uses multiple navigation tools to help you explore these connections:</p>
-<ul>
-<li>
-<p><em>Overview Tables</em>: Both the <a href="../engineering-practice/">Engineering practice</a> and <a href="../conformity/">AI Act Conformity</a> sections contain summary tables showing the relationships between practices and requirements.</p>
-</li>
-<li>
-<p><em>Information Boxes</em>: Each page in these sections includes specialized information boxes:</p>
-<ul>
-<li>Pages in <a href="../engineering-practice/">Engineering practice</a> include <a href="#compliance-information-boxes">Compliance Information Boxes</a> linking to <em>relevant AI Act requirements</em></li>
-<li>Pages in <a href="../conformity/">AI Act Conformity</a> include <a href="#engineering-information-boxes">Engineering Information Boxes</a> linking to <em>relevant engineering practices</em></li>
-</ul>
-</li>
-</ul>
-<p>These tools help you navigate the complexity of implementing AI Act requirements through sound engineering practices, allowing you to move seamlessly between legal requirements and their technical implementations.</p>
-<h3 id="compliance-information-boxes">Compliance Information Boxes<a class="headerlink" href="#compliance-information-boxes" title="Permanent link">&para;</a></h3>
-<p>The pages on engineering practices include information boxes that reference applicable parts of the AI Act.
-For an example, see the box at the bottom of this section.
-These references are intended to help you understand how the engineering practices relate to the legal requirements of the AI Act.</p>
-<p>Please note that these references do not imply that following a given engineering practice will guarantee compliance with the referenced parts of the AI Act.</p>
-<div class="admonition success">
-<p class="admonition-title">Compliance Info</p>
-<p>This is an example for the Compliance Info box.</p>
-<ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14</a></strong> (Human Oversight), in particular:<ul>
-<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14(4)(e)</a>, continuous monitoring the operation of the systems helps
-    to detect conditions requiring potential intervention</li>
-</ul>
-</li>
-</ul>
-</div>
-<h3 id="engineering-information-boxes">Engineering Information Boxes<a class="headerlink" href="#engineering-information-boxes" title="Permanent link">&para;</a></h3>
-<p>Given the requirements of the AI Act, it is interesting to link certain requirements to the corresponding engineering practices.
-These connections are represented by information boxes, like the one at the bottom of this section.
-You can think of them as the reverse direction of the connections collected in <a href="#compliance-information-boxes">Compliance Information Boxes</a>.</p>
-<p>Following these practices does not guarantee compliance, as there may be parts of a requirement that are not amenable to automation.</p>
-<div class="admonition info">
-<p class="admonition-title">Engineering Info</p>
-<p>This is an example for the Compliance Info box.</p>
-<ul>
-<li><a href="../engineering-practice/operational-monitoring/"><strong>Operational Monitoring</strong></a>:<ul>
-<li><a class="aia-ref" href="https://artificialintelligenceact.eu/article/14" rel="noopener noreferrer" target="_blank">Art. 14(4)(e)</a>, continuous monitoring the operation of the systems helps
-    to detect conditions requiring potential intervention</li>
-</ul>
-</li>
-</ul>
-</div>
-<h3 id="page-backlinks">Page Backlinks<a class="headerlink" href="#page-backlinks" title="Permanent link">&para;</a></h3>
-<p>You might notice that some pages contain hyperlinks to other pages marked with an <em>↙</em> arrow at the top of the page:</p>
-<figure>
-<img align="center" alt="Backlinks" src="../_images/backlinks.png" />
-</figure>
-<p>These links point to other pages on this website that contain links to the current page.
-They help you easily discover and navigate related content, even if it is not mentioned in the info box of the page.</p>
-<h2 id="what-is-out-of-scope">What is out of scope?<a class="headerlink" href="#what-is-out-of-scope" title="Permanent link">&para;</a></h2>
-<h3 id="assessing-your-use-cases-risk-category">Assessing your use case's risk category<a class="headerlink" href="#assessing-your-use-cases-risk-category" title="Permanent link">&para;</a></h3>
-<p>If you are unsure how the AI Act applies to your use case, you should first try to determine the appropriate risk classification for your use case.</p>
-<p>The following resources can help you with that:</p>
-<ul>
-<li>The appliedAI Institute <a href="https://www.appliedai-institute.de/en/risk-classification-database">Risk Classification Database</a>, a comprehensive list of practical examples of high-risk and non high-risk use cases on AI systems under the EU AI Act</li>
-<li>The <a href="https://artificialintelligenceact.eu/assessment/eu-ai-act-compliance-checker/">EU Act Compliance Checker</a>, an interactive tool that helps you assess the risk category of your AI system and applicable requirements from the AI Act</li>
-</ul>
-<h3 id="systems-covered-under-european-union-harmonisation-legislation">Systems covered under European Union harmonisation legislation<a class="headerlink" href="#systems-covered-under-european-union-harmonisation-legislation" title="Permanent link">&para;</a></h3>
-<p>If your system is covered under European Union harmonisation legislation (see <a class="aia-ref" href="https://artificialintelligenceact.eu/annex/1" rel="noopener noreferrer" target="_blank">Annex I</a>), both the AI Act and the rules in those laws apply.
-We do not cover these additional requirements in this showcase.</p>
-<h3 id="general-purpose-ai-models">General-purpose AI models<a class="headerlink" href="#general-purpose-ai-models" title="Permanent link">&para;</a></h3>
-<p>The AI Act also creates a special category of AI systems, called <strong>general purpose AI systems</strong>, where a general purpose AI model is integrated into a larger software product.
-These are a special category of AI systems, for which the rules for high-risk systems continue to apply.
-If you are building a general-purpose AI system, you will still find the engineering resources useful, since they mirror good software engineering practices.</p>
-<p>The AI Act also creates separate rules for general purpose AI models (e.g. foundation models like LLMs) and AI systems.
-However, this resource is specifically tailored to the requirements for high-risk AI systems.</p>
-<p>The rules for general purpose AI models are contained in <a href="https://artificialintelligenceact.eu/chapter/5/">Chapter V</a> of the AI Act.
-For guidance on how to comply with Chapter V of the AI Act, you might find the following resources helpful:</p>
-<ul>
-<li>The <a href="https://digital-strategy.ec.europa.eu/en/policies/ai-office">European AI Office</a>, which oversees the implementation of the AI Act, while ensuring compliance, fostering innovation, and coordinating AI governance across EU Member States.</li>
-<li>The <a href="https://digital-strategy.ec.europa.eu/en/policies/ai-code-practice">General-Purpose AI Code of Practice</a>, and an <a href="https://code-of-practice.ai">explorer for the draft Code of Practice</a>.</li>
-</ul>
-<h3 id="relationship-to-privacy-and-data-protection">Relationship to Privacy and Data Protection<a class="headerlink" href="#relationship-to-privacy-and-data-protection" title="Permanent link">&para;</a></h3>
-<p>The project does not address the relationship between the AI Act and the General Data Protection Regulation (GDPR), or the question of privacy in Machine Learning more broadly.</p>
-<p>The AI Act and the GDPR are separate legal frameworks, and while they may overlap in some areas, they have different objectives and requirements.
-Although some of the engineering practices on this website also help you comply with the GDPR, we do not explicitly consider these privacy and data protection aspects.</p>
-<h2 id="on-the-iterative-nature-of-this-document">On the iterative nature of this document<a class="headerlink" href="#on-the-iterative-nature-of-this-document" title="Permanent link">&para;</a></h2>
-<p>As the legislation and standardization around artificial intelligence in the European Union still evolve, this showcase is subject to changes based on different types of developments.
-These can include, but are not limited to:</p>
-<ol>
-<li>Community feedback, like corrections and additions of missing content,</li>
-<li>Changes and updates to standards on artificial intelligence, such as through CEN-CENELEC (see below),</li>
-<li>Changes to the technology stack used in the example high-risk AI system.</li>
-</ol>
-<p>Providers of high-risk AI systems specifically may also consider the following note on the future availability of EU harmonized standards.</p>
+<h1 id="bias-detection-and-mitigation">Bias Detection and Mitigation<a class="headerlink" href="#bias-detection-and-mitigation" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Providers of high-risk AI systems must build their systems according to the rules in Chapter III, Section 2 of the AI Act as discussed in the <a href="../conformity/">AI Act Conformity</a> section of this website.</p>
-<p>To benefit from a presumption of conformity with these rules, providers must apply harmonized standards in their design and implementation process.
-These standards are due to be published by CEN-CENELEC between late 2025 and early 2026.</p>
-<p>Please refer to the <a href="https://standards.cencenelec.eu/dyn/www/f?p=205:22:0::::FSP_ORG_ID,FSP_LANG_ID:2916257,25&amp;cs=1827B89DA69577BF3631EE2B6070F207D">CEN-CENELEC JTC 21 website</a> for up-to-date information.</p>
+<p>While the dataset used in the showcase system contains multiple protected characteristics in the context of employment access (e.g., race, sex, age, disability status, ...), the implementation focuses on detecting and mitigating bias related to sex for demonstration purposes.</p>
+<p>Setting appropriate thresholds and metrics for detection of unacceptable bias is a complex task that requires careful consideration of the specific context and the potential impact of the model's predictions.</p>
 </div>
+<h2 id="bias-detection">Bias Detection<a class="headerlink" href="#bias-detection" title="Permanent link">&para;</a></h2>
+<p>Two main types of bias are considered in the showcase system:</p>
+<ul>
+<li>bias inherent to the dataset, which refers to the potential biases present in the training data that can lead to unfair predictions;</li>
+<li>bias stemming from the ML model, which refers to the potential biases introduced by the model itself during training or inference.</li>
+</ul>
+<p>Various metrics are calculated to assess the fairness of the model's predictions.
+These metrics are logged to the MLflow experiment log during training, in order to be able to assess the model's fairness across different versions.</p>
+<p>Two Python packages are used to calculate the relevant metrics:</p>
+<ul>
+<li><a href="https://fairlearn.org/">Fairlearn</a>: a toolkit for assessing and mitigating unfairness in machine learning models.</li>
+<li><a href="https://aif360.res.ibm.com/">AIF360</a>: a comprehensive toolkit for detecting and mitigating bias in AI systems.</li>
+</ul>
+<h2 id="bias-mitigation">Bias Mitigation<a class="headerlink" href="#bias-mitigation" title="Permanent link">&para;</a></h2>
+<p>TODO</p>
 
 
 
@@ -1915,14 +1602,14 @@ These standards are due to be published by CEN-CENELEC between late 2025 and ear
     <a href="https://www.stmd.bayern.de/" target="_blank" rel="noopener">
       <img
         class="logo"
-        src="../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
+        src="../../../_images/logos/StMD_RGB_Verbundlogo_Farbig_oS_weiss_Foerder.png"
         title="Bayerisches Staatsministerium für Digitales"
       />
     </a>
     <a href="https://appliedai-institute.de" target="_blank">
       <img
         class="logo aai-logo"
-        src="../_images/logos/aai-logo-cropped.png"
+        src="../../../_images/logos/aai-logo-cropped.png"
         title="appliedAI Institute for Europe gGmbH"
       />
     </a>
@@ -1968,12 +1655,12 @@ These standards are due to be published by CEN-CENELEC between late 2025 and ear
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "development", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "development", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
-        <script src="../assets/external/unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+        <script src="../../../assets/external/unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
       
     
   </body>

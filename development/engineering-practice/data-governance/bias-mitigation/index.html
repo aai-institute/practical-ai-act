@@ -605,6 +605,29 @@ information, please
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../showcase/implementation-notes/bias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bias Detection and Mitigation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1583,10 +1606,14 @@ use.</p>
 <p><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a> mandates the examination, detection, prevention, and mitigation of biases present in the data that could result in a harmful impact to health, safety, or fundamental rights.</p>
 <p>As such, data governance activities should include practices to cover these requirements and map them to activities in the machine learning lifecycle.</p>
 <h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<figure>
+    <img alt="Taxonomy of common causes of bias" src="../../../assets/external/mitigatingbias.ml/02_EthicalDevelopment/figures/Fig_Taxonomy.png">
+    <figcaption>Taxonomy of common causes of bias in machine learning. Source: <a href="https://mitigatingbias.ml/#fig:Taxonomy">Mitigating Bias in Machine Learning</a></figcaption>
+</figure>
 <h3 id="bias-and-fairness-analysis-techniques">Bias and Fairness Analysis Techniques<a class="headerlink" href="#bias-and-fairness-analysis-techniques" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Conduct Exploratory Data Analysis (EDA)</strong>: Analyze the dataset for imbalances or patterns that may suggest bias, such as over-representation or under-representation of certain groups.</li>
-<li><strong>Fairness Metrics</strong>: Calculate fairness metrics such as demographic parity, equalized odds or disparate impact to quantify bias in datasets and model outputs.</li>
+<li><strong>Fairness Metrics</strong>: Calculate fairness metrics such as demographic parity/disparate impact, equal opportunity, or equalized odds to quantify bias in datasets and model outputs.</li>
 <li>
 <p>See <a href="https://fairlearn.org/v0.12/user_guide/assessment/common_fairness_metrics.html">fairlearn documentation</a> for an introduction to commonly used metrics</p>
 </li>
@@ -1620,9 +1647,10 @@ use.</p>
     assessment --&gt; mitigation
     mitigation --&gt; audit</code></pre>
 <h4 id="preprocessing-techniques">Preprocessing Techniques<a class="headerlink" href="#preprocessing-techniques" title="Permanent link">&para;</a></h4>
+<p>The goal of preprocessing techniques is to adjust the dataset before training the model to ensure a fair representation of all demographic groups in the training data.</p>
 <ul>
-<li>Resampling Techniques: Use oversampling or undersampling to balance the representation of different demographic groups.</li>
-<li>Synthetic Data Generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.</li>
+<li>Resampling: Use oversampling or undersampling to balance the representation of different demographic groups.</li>
+<li>Synthetic data generation: Generate synthetic examples for under-represented groups to ensure better balance in the dataset.</li>
 <li>Reweighing: Adjust the weights of data instances to ensure fair representation across groups.</li>
 </ul>
 <h4 id="inprocessing-techniques-model-training">Inprocessing Techniques / Model Training<a class="headerlink" href="#inprocessing-techniques-model-training" title="Permanent link">&para;</a></h4>
@@ -1646,7 +1674,12 @@ use.</p>
 <li>Drift Detection: Use tools to detect data or model drift that may reintroduce bias over time.</li>
 </ul>
 <h3 id="privacy-concerns">Privacy Concerns<a class="headerlink" href="#privacy-concerns" title="Permanent link">&para;</a></h3>
-<p>TODO: Discuss requirements of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(5)</a>.</p>
+<p><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(5)</a> makes an exception that allow the use of special categories of personal data for bias detection and correction.</p>
+<p>When using this sensitive data, it is crucial to ensure that the data is handled in compliance with applicable data protection regulations, such as GDPR.
+The purpose for which the data is used and its scope must be clearly defined and documented.
+In particular, this includes deleting the sensitive data after the bias correction process is completed.</p>
+<p>Keep an audit trail of the data processing activities, including the use of sensitive data for bias detection and correction.
+A <a href="../../orchestration/">workflow orchestration tool</a> can support this requirement by providing a clear record of the data processing steps.</p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://aif360.readthedocs.io/en/stable/">AI Fairness 360 (<code>aif360</code>)</a> by IBM</li>
@@ -1659,6 +1692,7 @@ use.</p>
 <li><a href="https://www.europarl.europa.eu/RegData/etudes/STUD/2022/729541/EPRS_STU(2022)729541_EN.pdf">European Parliamentary Research Service (2022) - Auditing the quality of datasets used in algorithmic decision-making systems, Study</a></li>
 <li><a href="https://dl.acm.org/doi/full/10.1145/3616865">Caton, Haas (2024) - Fairness in Machine Learning: A Survey</a></li>
 <li><a href="https://www.fairmlbook.org/">Barocas, Hardt, Narayanan (2023) - Fairness and Machine Learning: Limitations and Opportunities</a></li>
+<li><a href="https://mitigatingbias.ml/">Mitigating Bias in Machine Learning</a></li>
 </ul>
 
 
