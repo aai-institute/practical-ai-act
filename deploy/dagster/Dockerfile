@@ -1,8 +1,8 @@
 FROM python:3.13-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-ARG DAGSTER_CORE_VERSION=1.10.15
-ARG DAGSTER_LIB_VERSION=0.26.15
+ARG DAGSTER_CORE_VERSION=1.10.19
+ARG DAGSTER_LIB_VERSION=0.26.19
 
 # Cannot symlink into the cache mount directory, need to copy installed files instead
 ENV UV_LINK_MODE=copy
