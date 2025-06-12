@@ -295,6 +295,7 @@ services:
       dockerfile: deploy/app/Dockerfile
     networks:
       - web
+      - monitoring
     ports:
       - "8001:8000"
     depends_on:
