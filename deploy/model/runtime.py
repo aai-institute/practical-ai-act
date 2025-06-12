@@ -18,15 +18,10 @@ from mlserver_sklearn.sklearn import (
 )
 from mlserver_sklearn.sklearn import VALID_OUTPUTS as SKLEARN_OUTPUTS
 from scipy.sparse import csr_matrix
-from sklearn.pipeline import Pipeline
+from xgboost import XGBClassifier
 
 EXPLAIN_OUTPUT = "explain"
 VALID_OUTPUTS = SKLEARN_OUTPUTS + [EXPLAIN_OUTPUT]
-
-
-def _strip_prefix(s: str) -> str:
-    """Remove the pipeline step prefix from a feature name."""
-    return s.split("__")[-1]
 
 
 def _serialize_explanation(expl: shap.Explanation) -> str:
@@ -53,8 +48,8 @@ def _serialize_explanation(expl: shap.Explanation) -> str:
     return json.dumps(result)
 
 
-class ExplainableSKLearnModel(SKLearnModel):
-    """MLModel implementation for scikit-learn models with explainability support.
+class ExplainableXGBClassifierModel(SKLearnModel):
+    """MLModel implementation for XGBoost classifier models with explainability support.
 
     It extends ``SKLearnModel`` to provide SHAP-based explainability data in JSON format
     for the ``explain`` output type. The model must be a scikit-learn pipeline with a
@@ -65,31 +60,18 @@ class ExplainableSKLearnModel(SKLearnModel):
     async def load(self):
         await super().load()
 
-        if not isinstance(self._model, Pipeline):
+        if not isinstance(self._model, XGBClassifier):
             raise InferenceError(
-                "ExplainableSKLearnModel only supports scikit-learn pipelines"
+                f"{self.__class__.__name__} only supports XGBClassifier models"
             )
 
-        # Split the pipeline into a feature transformer and the model
-        self.feature_pipeline = self._model[:-1]
-        self.predictor = self._model[-1]
-
-        # Construct SHAP explainer for the underlying XGboost model, using the transformed
-        # feature names.This allows us to use a TreeExplainer for the SKlearn pipeline,
-        # which otherwise can only use the slower PermutationExplainer.
-
-        # Remove the pipeline step prefix from feature names for readability
-        feature_names = [
-            _strip_prefix(s) for s in self.feature_pipeline.get_feature_names_out()
-        ]
-        self.explainer = shap.TreeExplainer(self.predictor, feature_names=feature_names)
+        self.explainer = shap.TreeExplainer(self._model)
 
         return True
 
     def _explain(self, payload: InferenceRequest) -> ResponseOutput:
         decoded_request = self.decode_request(payload, default_codec=PandasCodec)
-        transformed_request = self.feature_pipeline.transform(decoded_request)
-        explanation = self.explainer(transformed_request)
+        explanation = self.explainer(decoded_request)
         data = _serialize_explanation(explanation)
         return StringCodec.encode_output(EXPLAIN_OUTPUT, [data])
 
@@ -128,7 +110,7 @@ class ExplainableSKLearnModel(SKLearnModel):
             for request_output in payload.outputs:
                 if request_output.name not in VALID_OUTPUTS:
                     raise InferenceError(
-                        f"ExplainableSKLearnModel only supports '{PREDICT_OUTPUT}', "
+                        f"{self.__class__.__name__} only supports '{PREDICT_OUTPUT}', "
                         f"'{PREDICT_PROBA_OUTPUT}', "
                         f"'{EXPLAIN_OUTPUT}', and "
                         f"'{PREDICT_TRANSFORM}' as outputs "
@@ -140,9 +122,6 @@ class ExplainableSKLearnModel(SKLearnModel):
         if PREDICT_PROBA_OUTPUT in output_names:
             # Ensure model supports it
             maybe_regressor = self._model
-            if isinstance(self._model, Pipeline):
-                maybe_regressor = maybe_regressor.steps[-1][-1]
-
             if not hasattr(maybe_regressor, PREDICT_PROBA_OUTPUT):
                 raise InferenceError(
                     f"{type(maybe_regressor)} models do not support "

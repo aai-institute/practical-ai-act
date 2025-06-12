@@ -15,4 +15,4 @@ if version == "latest":
     print(f"Resolved 'latest' to version {version}")
 
 download_uri = client.get_model_version_download_uri(model_name, version)
-mlflow.artifacts.download_artifacts(artifact_uri=download_uri, dst_path="/")
+mlflow.artifacts.download_artifacts(artifact_uri=download_uri, dst_path="/model")
