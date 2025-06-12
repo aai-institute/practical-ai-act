@@ -73,7 +73,6 @@ def build_container_image(
             success = True
         except subprocess.CalledProcessError as e:
             success = False
-            print(f"Error building container image: {e}")
             build_logs = e.stdout
 
         # Extract image digest from metadata file

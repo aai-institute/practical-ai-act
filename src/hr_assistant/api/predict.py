@@ -131,7 +131,6 @@ async def explain_prediction(
         predictions = NumpyCodec.decode_output(predictions).ravel()
         print(predictions.shape)
 
-        # Plot feature importance on the predicted class
         data = explanation[0, :]
         num_features = 10
         ax = shap.plots.waterfall(
