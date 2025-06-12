@@ -68,12 +68,13 @@ def build_container_image(
             ])
 
         try:
-            subprocess.check_output(cmd, encoding="utf-8")
+            subprocess.check_output(cmd, stderr=subprocess.STDOUT, encoding="utf-8")
             build_logs = None
             success = True
         except subprocess.CalledProcessError as e:
             success = False
-            build_logs = e.output
+            print(f"Error building container image: {e}")
+            build_logs = e.stdout
 
         # Extract image digest from metadata file
         metadata = {}
@@ -95,7 +96,7 @@ def build_container_image(
                     cmd, stderr=subprocess.STDOUT, encoding="utf-8"
                 )
             except subprocess.CalledProcessError as e:
-                build_logs = e.output
+                build_logs = e.stdout
 
         return ContainerBuildResult(
             success=success,
