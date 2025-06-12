@@ -81,7 +81,6 @@ def _log_fairness_evaluation(
 
 def _log_explainability_plots(model, x_test: pd.DataFrame):
     plt.close()
-    plt.clf()
 
     explainer = shap.Explainer(model, x_test, algorithm="tree")
     shap_values = explainer(x_test)
@@ -89,10 +88,10 @@ def _log_explainability_plots(model, x_test: pd.DataFrame):
     ax = shap.plots.bar(shap_values, show=False)
     mlflow.log_figure(ax.figure, "shap_bar_plot.png")
     plt.close()
-    plt.clf()
 
     ax = shap.plots.violin(shap_values, show=False)
     mlflow.log_figure(plt.gcf(), "shap_violin_plot.png")
+    plt.close()
 
 
 @dg.multi_asset(
