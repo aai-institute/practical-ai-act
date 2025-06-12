@@ -1,0 +1,46 @@
+---
+hide:
+    - toc
+---
+
+# Cross-Reference: AI Act Articles to Engineering Practices and System Components
+
+<!-- List of practices is wrapped automatically through CSS, no need for manual formatting -->
+
+<!-- TODO: Remove the Automation Feasibility column, as it is highly subjective and not further elaborated -->
+
+/// html | div.conformity-table
+
+| Article                                                                        | Relevant Engineering Practices                                                                                                     | Automation Feasibility                                                                                           |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Art. 9**:<br>[Risk Management System][]                                      |                                                                                                                                    | 🔴 Low<br>_Requires human judgment for risk assessment, but frameworks can partially automate the process._      |
+| **Art. 10**:<br>[Data and Data Governance][]                                   | [Data Quality][] [Data Versioning][] [Bias Mitigation][]                                                                           | 🟢 High<br>_Data governance processes can be highly automated with validation pipelines and quality checks._     |
+| **Art. 11**:<br>[Technical Documentation][]                                    | [Model Registry][] [Experiment Tracking][] [Explainability][]                                                                      | 🔴 Low<br>_Documentation generation can be partially automated, but requires human input for context._           |
+| **Art. 12**:<br>[Record-Keeping][]                                             | [Inference Log][] [Data Versioning][] [Experiment Tracking][] [Orchestration][]                                                    | 🟢 High<br>_Logging and record-keeping are highly automatable through dedicated services._                       |
+| **Art. 13**:<br>[Transparency and Provision of Information to the Deployers][] | [Explainability][] [Experiment Tracking][] [Model Registry][] [Operational Monitoring][]                                           | 🟠 Medium<br>_Automated generation of model cards and explanations is feasible, but requires validation._        |
+| **Art. 14**:<br>[Human Oversight][]                                            | [Experiment Tracking][] [Explainability][] [Model Monitoring][] [Operational Monitoring][]                                         | 🔴 Low<br>_Human oversight is, by definition, human-centered, though tools can support the process._             |
+| **Art. 15**:<br>[Accuracy, Robustness and Cybersecurity][]                     | [Experiment Tracking][] [Containerization][] [Bias Mitigation][] [Model Monitoring][] [Operational Monitoring][] [Model Serving][] | 🟢 High<br>_Testing for accuracy and robustness can be largely automated, but security requires human analysis._ |
+
+///
+
+<!-- Reference Links -->
+
+[Inference Log]: ../engineering-practice/inference-log.md
+[Model Monitoring]: ../engineering-practice/model-monitoring.md
+[Model Registry]: ../engineering-practice/model-registry.md
+[Model Serving]: ../engineering-practice/model-serving.md
+[Explainability]: ../engineering-practice/explainability.md
+[Experiment Tracking]: ../engineering-practice/experiment-tracking.md
+[Containerization]: ../engineering-practice/containerization.md
+[Bias Mitigation]: ../engineering-practice/data-governance/bias-mitigation.md
+[Data Quality]: ../engineering-practice/data-governance/data-quality.md
+[Data Versioning]: ../engineering-practice/data-governance/data-versioning.md
+[Operational Monitoring]: ../engineering-practice/operational-monitoring.md
+[Orchestration]: ../engineering-practice/orchestration.md
+[Technical Documentation]: technical-documentation.md
+[Transparency and Provision of Information to the Deployers]: instructions-for-use.md
+[Human Oversight]: human-oversight.md
+[Data and Data Governance]: data-governance.md
+[Record-Keeping]: record-keeping.md
+[Accuracy, Robustness and Cybersecurity]: accuracy-robustness-cybersecurity.md
+[Risk Management System]: risk-management-system.md

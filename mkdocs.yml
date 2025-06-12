@@ -2,6 +2,7 @@ site_name: twai-pipeline
 site_dir: public/docs
 repo_url: https://github.com/aai-institute/twai-pipeline
 edit_uri: edit/main/docs/
+site_url: https://aai-institute.github.io/twai-pipeline/
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
@@ -13,31 +14,59 @@ validation:
 nav:
   - Home: index.md
   - Reader's Guide: readers-guide.md
-  - Engineering Practice:
-      - engineering-practice/reference-architecture.md
-      - engineering-practice/bias-mitigation.md
+  - Showcase:
+      - showcase/index.md
+      - showcase/risk-classification.md
+      - showcase/risk-assessment.md
+      - showcase/system-overview.md
+      - Implementation Notes:
+          - showcase/implementation-notes/index.md
+          - showcase/implementation-notes/explainability.md
+          - showcase/implementation-notes/inference-logging.md
+          - showcase/implementation-notes/model-monitoring.md
+          - showcase/implementation-notes/bias.md
+  - Engineering Practices:
+      - engineering-practice/index.md
       - engineering-practice/containerization.md
-      - engineering-practice/data-versioning.md
       - engineering-practice/experiment-tracking.md
       - engineering-practice/explainability.md
       - engineering-practice/model-registry.md
+      - engineering-practice/model-cards.md
       - engineering-practice/model-monitoring.md
+      - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
-      - engineering-practice/data-governance.md
+      - engineering-practice/operational-monitoring.md
       - engineering-practice/accuracy.md
-  - Showcase:
-      - showcase/index.md
+      - engineering-practice/orchestration.md
+      - Data Governance:
+          - engineering-practice/data-governance/index.md
+          - engineering-practice/data-governance/data-quality.md
+          - engineering-practice/data-governance/data-versioning.md
+          - engineering-practice/data-governance/documentation.md
+          - engineering-practice/data-governance/bias-mitigation.md
   - AI Act Conformity:
       - conformity/index.md
-      - Documents:
-          - conformity/documents/index.md
-          - conformity/documents/technical-documentation.md
-          - conformity/documents/instructions-for-use.md
-  - acknowledgments.md
+      - conformity/risk-management-system.md
+      - conformity/data-governance.md
+      - conformity/technical-documentation.md
+      - conformity/record-keeping.md
+      - conformity/instructions-for-use.md
+      - conformity/human-oversight.md
+      - conformity/accuracy-robustness-cybersecurity.md
 
 plugins:
   - callouts
   - section-index
+  - mkdocs-backlinks:
+      ignored_pages:
+        [
+          "AI Act Conformity",
+          "Engineering Practices",
+          "Data Governance",
+          "Reader's Guide",
+          "Showcase",
+          "Home",
+        ]
   - mkdocstrings:
       handlers:
         python:
@@ -55,11 +84,10 @@ plugins:
             filters: ["!^_{1,2}"]
   - mike:
       canonical_version: latest
+  - meta
   - privacy
   - search:
   - tags
-  - include_dir_to_nav:
-      file_pattern: '.*\.(md|ipynb)$'
 
 markdown_extensions:
   # Render textual references to AI Act as links
@@ -73,6 +101,7 @@ markdown_extensions:
       permalink: true
       toc_depth: 3
   # pymdown-extensions: https://facelessuser.github.io/pymdown-extensions/
+  - pymdownx.blocks.html
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
@@ -105,6 +134,7 @@ theme:
     repo: fontawesome/brands/github
     admonition:
       success: octicons/law-24
+      info: octicons/tools-24
   features:
     - content.tabs.link
     - content.code.copy
@@ -128,16 +158,18 @@ extra:
   pre_release: !ENV [DOCS_PRERELEASE, false]
   version:
     provider: mike
-    default: latest
+    # TODO: Change to `latest` when we release the first tagged version
+    default: development
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/aai-institute/twai-pipeline
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/appliedai-institute-for-europe-ggmbh/
-    - icon: fontawesome/solid/section
-      link: https://appliedai-institute.de/impressum
-      name: Impressum / Imprint
 
 extra_css:
   - _styles/extra.css
   - _styles/theme.css
+
+extra_javascript:
+  # Fix for problems with privacy plugin and site_url set (see https://github.com/squidfunk/mkdocs-material/issues/3742)
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js

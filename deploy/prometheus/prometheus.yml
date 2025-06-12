@@ -10,7 +10,12 @@ scrape_configs:
     docker_sd_configs:
       - host: "tcp://docker-proxy:2375"
         refresh_interval: 5s
+        match_first_network: false
     relabel_configs:
+      # Filter by network name containing `monitoring`.
+      - source_labels: [__meta_docker_network_name]
+        regex: ".*monitoring.*"
+        action: keep
       # Only keep containers that have a `prometheus-job` label.
       - source_labels: [__meta_docker_container_label_prometheus_job]
         regex: .+

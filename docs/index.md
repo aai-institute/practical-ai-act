@@ -46,7 +46,7 @@ Your feedback and discussions are highly encouraged, as they will help us refine
 
     A worked end-to-end ML pipeline for a (hypothetical) high-risk AI system
 
--   :material-hammer-wrench:{ .lg .middle } [**Engineering Practice**](engineering-practice/reference-architecture.md)
+-   :material-hammer-wrench:{ .lg .middle } [**Engineering Practice**](engineering-practice/index.md)
 
     ***
 
@@ -56,6 +56,7 @@ Your feedback and discussions are highly encouraged, as they will help us refine
 
     ***
 
-    Background information regarding the EU AI Act from a technical view point
+    Requirements originating from the AI Act and connections to engineering
+    practice
 
 </div>

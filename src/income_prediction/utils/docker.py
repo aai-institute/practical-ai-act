@@ -16,9 +16,10 @@ class ContainerBuildResult:
 def build_container_image(
     build_context: Path,
     tags: list[str],
+    network: str | None = None,
     build_args: dict[str, str] | None = None,
-    docker_file: Path | None = None,
-) -> ContainerBuildResult | None:
+    dockerfile_path: Path | None = None,
+) -> ContainerBuildResult:
     """Builds a Docker container image using buildx from the given build context.
 
     Parameters
@@ -27,6 +28,12 @@ def build_container_image(
         Path to the directory containing the Dockerfile.
     tags : list[str]
         List of tags to apply to the built image.
+    network : str, optional
+        Network mode to use for the build. Defaults to None (i.e., no explicit network mode).
+    build_args : dict[str, str], optional
+        Dictionary of build arguments to pass to the Docker build process. Defaults to None.
+    dockerfile_path : Path, optional
+        Path to the Dockerfile to use for the build. Defaults to None (i.e., `Dockerfile`).
 
     Returns
     -------
@@ -48,8 +55,12 @@ def build_container_image(
             metadata_file.name,
             str(build_context),
         ]
-        if docker_file is not None:
-            cmd.extend(["--file", str(docker_file.relative_to(build_context))])
+
+        if dockerfile_path is not None:
+            cmd.extend(["--file", str(dockerfile_path.relative_to(build_context))])
+
+        if network:
+            cmd.extend(["--network", network])
 
         if build_args:
             cmd.extend([
@@ -57,11 +68,12 @@ def build_container_image(
             ])
 
         try:
-            subprocess.check_output(cmd, encoding="utf-8")
+            subprocess.check_output(cmd, stderr=subprocess.STDOUT, encoding="utf-8")
+            build_logs = None
             success = True
         except subprocess.CalledProcessError as e:
             success = False
-            build_logs = e.output
+            build_logs = e.stdout
 
         # Extract image digest from metadata file
         metadata = {}
@@ -83,7 +95,7 @@ def build_container_image(
                     cmd, stderr=subprocess.STDOUT, encoding="utf-8"
                 )
             except subprocess.CalledProcessError as e:
-                build_logs = e.output
+                build_logs = e.stdout
 
         return ContainerBuildResult(
             success=success,

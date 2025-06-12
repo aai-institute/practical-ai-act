@@ -14,6 +14,10 @@
 
   --card-bg-color: var(--md-primary-bg-color);
   --bg-gradient-color: rgba(255, 255, 255, 70%);
+
+  --md-mermaid-node-fg-color: var(--md-primary-fg-color--dark);
+  --md-mermaid-node-bg-color: #abcbff; /* derived from --md-primary-fg-color */
+  --md-mermaid-edge-color: var(--md-primary-fg-color--dark);
 }
 
 /* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
@@ -22,8 +26,8 @@
   --md-primary-fg-color--light: #06b8ff;
   --md-primary-fg-color--dark: #0044bb;
 
-  --card-bg-color: hsla(var(--md-hue),15%, 14%, 1);
-  --bg-gradient-color: hsla(var(--md-hue),15%, 14%, 70%);
+  --card-bg-color: hsla(var(--md-hue), 15%, 14%, 1);
+  --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
 }
 
 /* ----- Individual elements ----- */
@@ -37,12 +41,11 @@
 /* Hexagon pattern in the background, behind a semi-transparent color overlay */
 .md-container {
   background: linear-gradient(
-    var(--bg-gradient-color),
-    var(--bg-gradient-color)
-  ),
-  url("/_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
+      var(--bg-gradient-color),
+      var(--bg-gradient-color)
+    ),
+    url("../_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
 }
-
 
 .md-header {
   background: linear-gradient(120deg, #01192b, 75%, #0044bb);

@@ -1,99 +1,91 @@
-The aim of the section is to give an overview about the (fictitious) use-case,
-we employ for demonstration. This AI system is designed to assist recruiters and hiring
-managers in the recruitment process by automatically predicting salary bands
-for job candidates, so helping to streamline candidate filtering and matching.
+# AI-Powered HR Assistant
 
+!!! warning "Disclaimer"
 
+    This is a **fictional use case** created solely for demonstration and educational purposes. It is not a real deployment and should not be interpreted as a commercial or operational system. It does not represent any real recruitment system or policy and should not be used for making real-world hiring decisions.
 
-# Data
-- [Census data](https://www2.census.gov/programs-surveys/cps/datasets/)
+## Use Case: Salary Band Prediction for Recruitment
 
-## Risk Classification Under the EU AI Act
+### Business Context
 
-- **Determine if the system is considered AI under the EU AI Act (see Article 2)**
-    - **Reasoning**: The system uses machine learning methods (a classification model) to estimate candidates’ likely income. Machine learning is explicitly covered by the definition of AI in the EU AI Act.
-    - **Outcome**: Yes, this system is within scope because it qualifies as an AI system.
-- **Check whether the AI system falls under any excluded or exempted categories**
-    - **Reasoning**: Some AI systems, such as research prototypes, are excluded from the regulatory requirements. This recruitment system is a commercial application used by recruiters and hiring managers, so it does not qualify for exemption.
-    - **Outcome**: The system is not exempt; it is still in scope.
-- **Determine if the AI system poses an ‘unacceptable risk’**
-    - **Reasoning**: Under Article 5 of the EU AI Act, ‘unacceptable risk’ systems typically involve manipulative or exploitative practices, social scoring, or contraventions of fundamental rights. A recruitment filter based on estimated salary ranges does not constitute a form of social scoring or manipulative practice aimed at harming individuals.
-    - **Outcome**: The system is not considered ‘unacceptable risk.’
-- **Assess whether the AI system is considered ‘high risk’**
-    - **Reasoning**: The EU AI Act (in Annex III, point 4) lists AI systems used in the employment and management of workers (e.g., for recruitment or selection) as high risk. This system directly assists with filtering and selecting candidates for roles, thereby influencing employment opportunities.
-    - **Outcome**: The system falls under the ‘high risk’ category.
-- **If not high risk, classify as ‘limited’ or ‘minimal risk’**
-    - **Reasoning**: Since we have already determined it is high risk due to its recruitment use case, there is no need to downgrade to ‘limited’ or ‘minimal risk.’
-    - **Outcome**: Classification remains ‘high risk.’
+HR professionals in large organizations often face the challenge of managing a high volume of applications for a single job opening.
+Many of these applicants are not considered suitable candidates for the role.
+Clearly, an efficient screening process is needed to identify the most suitable candidates quickly.
 
-**Final Outcome**
+This showcase presents a fictional HR Assistant system that demonstrates how AI can support this process while ensuring fairness, transparency, and compliance with regulations.
+The system we describe uses a machine learning model to screen and filter candidates.
+It predicts an applicant's expected (current) salary based on demographic and other attributes and matches them to predefined salary bands for a given job position.
 
-Based on the criteria outlined in the EU AI Act, the proposed recruitment AI system qualifies as a high-risk system. Although it does not engage in manipulative practices or social scoring that would render it unacceptable, it does fall squarely under the employment-related use cases the EU AI Act classifies as high risk. Consequently, the system will be subject to additional legal and compliance obligations (once the EU AI Act is in force), including risk management, data governance, documentation and traceability, transparency requirements, and human oversight.
+The underlying assumption is that candidates whose expected current income is far above or below the range for a given position are unlikely to be a good fit.
+Essentially, the system treats expected current income as a proxy for a candidate's suitability for a given position.
+However, note that this assumption is highly simplified and does not account for many real-world factors, such as career changes, relocation, or personal circumstances.
+Therefore, it should not be used as the sole criterion for hiring decisions.
 
+Recruiters can use this categorization to quickly identify candidates who meet the salary expectations for a position, enabling them to focus on the most relevant applications.
 
-## Risk Assessment
+Keep in mind that this approach is not suitable for actual use in hiring processes, as it may introduce biases and ethical concerns.
+The system is intended for educational purposes only, by demonstrating how to develop a high-risk AI system under the EU AI Act by adhering to engineering best practices, including fairness, transparency, and explainability.
 
-### **Risk of Bias and Discrimination**
+### Intended Purpose
 
-- **Reasoning**: A classification model that predicts salary bands can inadvertently learn biased patterns from historical or non-representative data. If the training dataset underrepresents certain groups or if it carries historical inequalities, the model might systematically discriminate. This could result in unfair exclusion of qualified candidates from certain demographic or socioeconomic backgrounds.
-- **Mitigation Strategies**:
-    1. **Data Quality and Diversity**: Ensure the dataset is representative of different demographic groups. Perform data audits to identify and remove or mitigate biases.
-    2. **Bias Detection and Monitoring**: Use fairness metrics (e.g., disparate impact ratio, equalized odds) to assess and continually monitor the model’s outputs across different groups.
-    3. **Fairness-Aware Algorithms**: Employ techniques such as reweighing or adversarial debiasing to reduce or eliminate learned biases.
-    4. **Human Review**: Maintain a human-in-the-loop for critical decisions, ensuring that final filtering choices are not made solely by the AI.
+The AI system is designed to:
 
-### 2. **Transparency and Explainability**
+-   **Predict (current) income** for job candidates based on their demographic and professional attributes
+-   **Assist recruiters** by providing data-driven salary band recommendations
+-   **Streamline applicant screening** by matching applicants to predefined salary bands for a job position
 
-- **Reasoning**: Users (recruiters, hiring managers) and candidates may not understand why certain salary band predictions are made, raising concerns about opaque or “black-box” decision-making. Under the AI Act, high-risk systems are required to provide clear information about how decisions are reached.
-- **Mitigation Strategies**:
-    1. **Explainable AI Techniques**: Implement model-agnostic explainability tools such as LIME or SHAP to show which features significantly influenced the classification.
-    2. **User-Friendly Explanations**: Provide recruiters with straightforward explanations or scoring breakdowns to facilitate oversight and accountability.
-    3. **Documentation and Transparency**: Maintain proper documentation on data sources, model training methodologies, and known limitations, and make this documentation available to relevant stakeholders.
+The [risk classification](risk-classification.md) shows that a system like this is classified as a high-risk system under the EU AI Act.
 
-### 3. **Accuracy and Reliability**
+The page on [risk assessment](risk-assessment.md) provides an abridged analysis of the potential risks posed by the system, and outlines mitigation strategies to address them.
 
-- **Reasoning**: Inaccurate classification could prevent qualified candidates from advancing, or it might lead to oversights in filtering out those misaligned with salary expectations. Ensuring the system’s reliability is crucial to protect both the employer’s interests and the candidate’s opportunities.
-- **Mitigation Strategies**:
-    1. **Robust Model Validation**: Use cross-validation, hold-out tests, and performance benchmarking to ensure the model is consistently accurate across various subpopulations and roles.
-    2. **Continuous Learning and Updates**: Periodically retrain and update the model to reflect market changes, salary trends, and evolving job roles.
-    3. **Fallback Procedures**: If the system’s confidence in a candidate’s classification is below a certain threshold, trigger a human review rather than an automatic rejection.
+### Core Capabilities
 
-### 4. **Overreliance on Automation**
+1. **Income Class Prediction**
 
-- **Reasoning**: There is a risk that recruiters might rely too heavily on automated filters and fail to exercise human judgment or contextual understanding. This could further marginalize candidates who do not fit the typical patterns learned by the AI.
-- **Mitigation Strategies**:
-    1. **Human-in-the-Loop**: Ensure the final decision is made or reviewed by a human, with the AI acting as a supportive tool.
-    2. **Defined Escalation Paths**: Create processes that allow candidates to challenge or appeal decisions, or for recruiters to spot-check questionable outcomes.
-    3. **Training for Recruiters**: Provide guidance and training so that hiring managers understand the AI’s limitations and know when to override its recommendations.
+    - Predicts a candidate's likely current income
+    - Uses multiple income band categories
+    - Provides confidence scores for predictions
 
-### 5. **Data Privacy and Governance**
+2. **Explainable Predictions**
 
-- **Reasoning**: Because the model uses personal data (e.g., job history, educational background) to infer salary bands, it must comply with GDPR and the EU AI Act’s provisions on data governance.
-- **Mitigation Strategies**:
-    1. **Data Minimization and Purpose Limitation**: Collect and process only the data necessary for salary classification, and clearly define the scope.
-    2. **Consent and Transparency**: Inform candidates about how their data will be used and processed, ensuring clear consent where appropriate.
-    3. **Secure Infrastructure and Protocols**: Implement strong data encryption, secure data storage, and controlled data access.
-    4. **Regular Audits**: Conduct data protection impact assessments (DPIAs) and AI audits to ensure ongoing compliance.
+    - SHAP-based explanations for individual predictions
+    - Feature importance visualization
+    - Transparency into which factors most influence the prediction
 
-### 6. **Risk of Exclusion and Reduced Opportunities**
+3. **API-Based Integration**
 
-- **Reasoning**: Automated filtering could inadvertently exclude individuals who might be excellent fits despite having atypical backgrounds or career trajectories. This risk combines elements of bias and overreliance on automation.
-- **Mitigation Strategies**:
-    1. **Holistic Profiling**: Use multiple factors beyond just historical average salaries or titles—consider special projects, alternative educational backgrounds, or unique skills.
-    2. **Conservative Threshold Setting**: When filtering, apply conservative decision thresholds to reduce false negatives, then have humans review borderline cases.
-    3. **Feedback Mechanisms**: Enable candidates to provide additional information or context if they believe the AI misclassified them.
+    - RESTful API for easy integration with existing HR systems
+    - Batch prediction capabilities for processing multiple candidates
 
-### Implementation Feasibility and Harm Prevention
+4. **Monitoring**
+    - Continuous monitoring of model performance
+    - Continuous monitoring of system operation
 
-Given the high-risk nature of AI systems in recruitment, strict compliance with the EU AI Act is essential. However, with appropriate bias mitigation, transparency, data governance, and human oversight mechanisms in place, the potential harm to individuals—especially those filtered out of the recruitment pipeline—can be significantly reduced. By designing the system to encourage regular audits, explainability, and opportunities for appeal, candidates and recruiters alike can retain trust in the process and minimize the adverse effects of automation.
+There is a detailed [overview](system-overview.md) of the system's architecture.
 
-### **Final Recommendations**
+## Dataset: US Census Current Population Survey (CPS)
 
-Implementing this AI-based recruitment filter is viable if the above mitigation strategies are rigorously followed. In line with the EU AI Act’s requirements for high-risk AI systems, organizations should adopt robust data governance, regular bias and performance audits, and ensure clear documentation on model decision-making. Maintaining a human-in-the-loop at critical decision points—supported by transparency measures and candidate feedback channels—will help safeguard against discriminatory outcomes and maintain fairness. If these steps are properly executed and continuously monitored, the recruitment AI system can enhance efficiency without causing undue harm to individuals.
+The model is trained on data from the **US Census Bureau's Current Population Survey**, specifically the 2024 version of the [Annual Social and Economic Supplement (ASEC)](https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html) data.
 
+### Key Data Characteristics
 
-**Reading**:
-- [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884)
+-   **Source**: Official US government census data (publicly available)
+-   **Time Period**: Recent annual data (updated yearly)
+-   **Sample Size**: Approximately 50,000 households
+
+### Target Variable: Salary Bands
+
+The model predicts configurable **salary bands** (e.g., <30K, 30-50K, 50-75K, 75-100K, >100K)
+rather than exact salaries.
+
+## Explore Further
+
+-   [Risk Classification](risk-classification.md) - EU AI Act compliance analysis
+-   [Risk Assessment](risk-assessment.md) - Detailed risk assessment report
+-   [System Overview](system-overview.md) - High-level overview of the system architecture
+-   [Code README](https://github.com/aai-institute/twai-pipeline/blob/main/README.md) - Setup and running instructions
 
 **Resources**:
-- [folktables](https://github.com/socialfoundations/folktables)
+
+-   [CPS ASEC Documentation](https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html) - Official census documentation
+-   [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884) - Discusses limitations of older datasets and introduces better alternatives

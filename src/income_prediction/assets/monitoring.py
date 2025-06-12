@@ -5,55 +5,41 @@ from tempfile import NamedTemporaryFile
 import dagster as dg
 import nannyml as nml
 import pandas as pd
-import sklearn.pipeline
 
 from asec.data import CensusASECMetadata
-from asec.model_factory import LabelEncodedClassifier
 from asec.nannyml import build_reference_data
-from income_prediction.assets.model import ModelVersion
-from income_prediction.resources.configuration import Config, NannyMLConfig
+from income_prediction.resources.configuration import NannyMLConfig
+from income_prediction.resources.mlflow_session import MlflowSession
+from income_prediction.types import ModelVersion
 from income_prediction.utils.docker import build_container_image
+from income_prediction.utils.mlflow import load_model
 
 
-@dg.asset(
-    io_manager_key="lakefs_io_manager",
-    group_name="deployment",
-    deps=["optuna_search_xgb", "test_data"],
-)
+@dg.asset(io_manager_key="lakefs_io_manager", group_name="deployment", kinds={"pandas"})
 def reference_dataset(
-    optuna_search_xgb: sklearn.pipeline.Pipeline,
+    mlflow_session: MlflowSession,
+    optuna_search_xgb: ModelVersion,
     test_data: pd.DataFrame,
 ) -> pd.DataFrame:
     """Reference dataset for post-deployment performance monitoring
 
     Based on predictions of the model on the test dataset"""
 
-    model = optuna_search_xgb
+    model = load_model(optuna_search_xgb)
     X_test = test_data.drop(columns=[CensusASECMetadata.TARGET])
     y_test = test_data[CensusASECMetadata.TARGET]
-
-    encoder = None
-    if isinstance(model.steps[-1][1], LabelEncodedClassifier):
-        encoder = model.steps[-1][1].encoder
-
-    df = build_reference_data(model, X_test, y_test, encoder=encoder)
+    df = build_reference_data(model, X_test, y_test)
     return df
 
 
-@dg.asset(group_name="deployment", deps=["reference_dataset"])
+@dg.asset(group_name="deployment")
 def nannyml_estimator(
     reference_dataset: pd.DataFrame,
-    experiment_config: Config,
     nanny_ml_config: NannyMLConfig,
 ):
     estimator = nml.CBPE(
-        problem_type="classification_multiclass",
-        y_pred_proba={
-            idx: f"prob_{idx}"
-            for idx in range(
-                len(experiment_config.salary_bands) + 1
-            )  # Account for implicit highest band
-        },
+        problem_type="classification_binary",
+        y_pred_proba="prediction_probability",
         y_pred="prediction",
         y_true="target",
         metrics=nanny_ml_config.metrics,
@@ -63,12 +49,13 @@ def nannyml_estimator(
     return estimator
 
 
-@dg.asset(kinds={"docker"}, group_name="deployment", deps=["nannyml_estimator"])
+@dg.asset(kinds={"docker"}, group_name="deployment")
 def nannyml_container(
     context: dg.AssetExecutionContext,
-    model_version: ModelVersion,
+    optuna_search_xgb: ModelVersion,
     nannyml_estimator: nml.CBPE,
 ) -> dg.Output:
+    model_version = optuna_search_xgb
     build_context = Path(__file__).parents[3]
     image_tags = [f"nannyml:{suffix}" for suffix in [model_version.version, "latest"]]
     context.log.info(f"{image_tags=}")
@@ -88,7 +75,7 @@ def nannyml_container(
             build_context,
             image_tags,
             build_args={"NANNYML_ESTIMATOR": str(pkl_path.name)},
-            docker_file=build_context / "deploy" / "nannyml" / "Dockerfile",
+            dockerfile_path=build_context / "deploy" / "nannyml" / "Dockerfile",
         )
 
     if not build_result.success:
