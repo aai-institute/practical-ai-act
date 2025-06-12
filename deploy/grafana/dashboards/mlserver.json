@@ -73,7 +73,9 @@
           "editorMode": "code",
           "expr": "model_infer_request_success_total + model_infer_request_failure_total",
           "legendFormat": "__auto",
-          "range": true,
+          "format": "time_series",
+          "instant": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -269,7 +271,7 @@
         {
           "datasource": "Prometheus",
           "editorMode": "code",
-          "expr": "sum by(le) (rate(rest_server_request_duration_seconds_bucket{service='ml-model'}[$__rate_interval]))",
+          "expr": "sum by(le) (rate(rest_server_request_duration_seconds_bucket{job='ml-model'}[$__rate_interval]))",
           "format": "heatmap",
           "legendFormat": "__auto",
           "range": true,

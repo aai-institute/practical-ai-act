@@ -103,7 +103,7 @@
               },
               {
                 "color": "green",
-                "value": 0.95
+                "value": 0.9
               }
             ]
           },
@@ -136,10 +136,11 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "sum(rate(mlflow_http_request_total{status=\"200\"}[5m])) / (sum(rate(mlflow_http_request_total[5m])))",
+          "expr": "sum(increase(mlflow_http_request_total{status=\"200\"}[$__rate_interval])) / (sum(increase(mlflow_http_request_total[$__rate_interval])))",
           "format": "time_series",
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
+          "instant": true,
           "refId": "A"
         }
       ],
