@@ -1,6 +1,9 @@
+import functools
 from typing import TYPE_CHECKING
 
 import dagster as dg
+import fairlearn
+import fairlearn.postprocessing
 import matplotlib.pyplot as plt
 import mlflow
 import optuna
@@ -55,10 +58,14 @@ def _log_evaluation(
     model,
     test_data: pd.DataFrame,
     /,
+    experiment_config: Config,
     evaluator_config: dict,
 ):
     mlflow.evaluate(
-        model=model.predict,
+        model=functools.partial(
+            model.predict,
+            sensitive_features=test_data[experiment_config.sensitive_feature_names],
+        ),
         data=test_data,
         model_type="classifier",
         targets=CensusASECMetadata.TARGET,
@@ -67,16 +74,19 @@ def _log_evaluation(
 
 
 def _log_fairness_evaluation(
-    test_data: pd.DataFrame, y_pred: pd.Series, sensitive_feature_names: list[str]
+    test_data: pd.DataFrame,
+    y_pred: pd.Series,
+    sensitive_feature_names: list[str],
+    prefix: str = "fair_",
 ):
     # -- AIF360
     fairness_metrics = classification_metrics(test_data, y_pred)
-    log_fairness_metrics(fairness_metrics)
+    log_fairness_metrics(fairness_metrics, prefix=prefix)
 
     # -- Fairlearn
     sensitive_features = test_data[sensitive_feature_names]
     mf = make_metricframe(test_data, y_pred, sensitive_features=sensitive_features)
-    log_fairness_metrics_by_group(mf)
+    log_fairness_metrics_by_group(mf, prefix=prefix)
 
 
 def _log_explainability_plots(model, x_test: pd.DataFrame):
@@ -142,32 +152,61 @@ def optuna_search_xgb(
             # We log datasets and models explicitly below
             mlflow.autolog(log_datasets=False, log_models=False)
 
-            best_model = optuna_search.best_estimator_
-            best_model.fit(X_train, y_train)
+            optuna_search.best_estimator_.fit(X_train, y_train)
+
+            best_model = fairlearn.postprocessing.ThresholdOptimizer(
+                estimator=optuna_search.best_estimator_,
+                constraints="demographic_parity",
+                objective="accuracy_score",
+                prefit=True,
+            )
+            best_model.fit(
+                X_train,
+                y_train,
+                sensitive_features=X_train[experiment_config.sensitive_feature_names],
+            )
 
             X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
-            y_pred = best_model.predict(X_test)
+            y_pred = best_model.predict(
+                X_test,
+                sensitive_features=X_test[experiment_config.sensitive_feature_names],
+            )
 
             _log_datasets(context, train_data, test_data)
             _log_evaluation(
                 best_model,
                 test_data,
+                experiment_config=experiment_config,
                 evaluator_config={"log_model_explainability": False},
             )
 
             # Fairness evaluation
             _log_fairness_evaluation(
                 test_data,
+                optuna_search.best_estimator_.predict(X_test),
+                sensitive_feature_names=experiment_config.sensitive_feature_names,
+                prefix="fairness_unmitigated_",
+            )
+
+            _log_fairness_evaluation(
+                test_data,
                 y_pred,
                 sensitive_feature_names=experiment_config.sensitive_feature_names,
+                prefix="fairness_mitigated_",
             )
 
             # Explainability plots
-            _log_explainability_plots(best_model, X_test)
+            # _log_explainability_plots(best_model, X_test)
 
             # Model registration
             signature = mlflow.models.infer_signature(
-                X_train.head(5), best_model.predict(X_train.head(5))
+                X_train.head(),
+                best_model.predict(
+                    X_train.head(),
+                    sensitive_features=X_train[
+                        experiment_config.sensitive_feature_names
+                    ].head(),
+                ),
             )
 
             model_info = mlflow.sklearn.log_model(
@@ -176,9 +215,7 @@ def optuna_search_xgb(
                 registered_model_name=model_name,
                 signature=signature,
                 code_paths=["src/asec"],
-                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(
-                    5
-                ),
+                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(),
             )
 
             return ModelVersion(
