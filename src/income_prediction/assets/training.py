@@ -1,26 +1,25 @@
 from typing import TYPE_CHECKING
 
 import dagster as dg
+import matplotlib.pyplot as plt
 import mlflow
 import optuna
 import pandas as pd
+import shap
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
-import matplotlib.pyplot as plt
-import shap
 
 from asec.data import CensusASECMetadata
 
-from .fairness import classification_metrics, make_metricframe
+from ..resources.configuration import Config, OptunaCVConfig
+from ..resources.mlflow_session import MlflowSession
 from ..types import ModelVersion
 from ..utils.dagster import canonical_lakefs_uri_for_input
 from ..utils.mlflow import (
     log_fairness_metrics,
     log_fairness_metrics_by_group,
 )
-
-from ..resources.configuration import Config, OptunaCVConfig
-from ..resources.mlflow_session import MlflowSession
+from .fairness import classification_metrics, make_metricframe
 
 if TYPE_CHECKING:
     import mlflow.data.pandas_dataset
@@ -154,9 +153,7 @@ def optuna_search_xgb(
             _log_evaluation(
                 best_model,
                 test_data,
-                evaluator_config={
-                    "log_model_explainability": False
-                },
+                evaluator_config={"log_model_explainability": False},
             )
 
             # Fairness evaluation

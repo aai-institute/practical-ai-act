@@ -132,18 +132,18 @@ class CensusASECMetadata:
         Fields.EDUCATION_LEVEL,
     ]
 
-    TO_EXCLUDE = [Fields.WEEKLY_EARNINGS,
-          Fields.HOURLY_WAGE,
-          Fields.LONGEST_JOB_EARNINGS,
-          Fields.SECOND_JOB_INCOME,
-          Fields.ADJUSTED_GROSS_INCOME,
-          Fields.ANNUAL_INCOME,
-          Fields.FINAL_WEIGHT,
-          Fields.ANNUAL_EARNINGS,
-          Fields.SELF_EMPLOYMENT_INCOME,
-          Fields.SECOND_JOB_INCOME,
-        ]
-
+    TO_EXCLUDE = [
+        Fields.WEEKLY_EARNINGS,
+        Fields.HOURLY_WAGE,
+        Fields.LONGEST_JOB_EARNINGS,
+        Fields.SECOND_JOB_INCOME,
+        Fields.ADJUSTED_GROSS_INCOME,
+        Fields.ANNUAL_INCOME,
+        Fields.FINAL_WEIGHT,
+        Fields.ANNUAL_EARNINGS,
+        Fields.SELF_EMPLOYMENT_INCOME,
+        Fields.SECOND_JOB_INCOME,
+    ]
 
 
 def download_file(url: str, destination: Path) -> None:

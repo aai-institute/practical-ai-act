@@ -2,6 +2,7 @@ from typing import Protocol
 
 import pandas as pd
 
+
 class ProbabilisticPredictor(Protocol):
     def predict(self, X, **params) -> pd.Series: ...
     def predict_proba(self, X, **params) -> pd.Series: ...

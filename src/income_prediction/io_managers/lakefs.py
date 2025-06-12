@@ -46,9 +46,7 @@ class LakeFSParquetIOManager(dg.UPathIOManager):
         # which could lead to inconsistent data if the branch has been updated since
         # the asset was materialized.
         # See also the implementation of `_get_path`.
-        return pd.read_parquet(
-            path, storage_options=dict(path.storage_options)
-        )
+        return pd.read_parquet(path, storage_options=dict(path.storage_options))
 
     def dump_to_path(
         self, context: OutputContext, obj: pd.DataFrame, path: "UPath"

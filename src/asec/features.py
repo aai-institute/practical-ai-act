@@ -1,12 +1,11 @@
-from functools import partial
-
-import numpy as np
 import pandas as pd
 
 from .data import CensusASECMetadata
 
 
-def assign_salary_bands(df: pd.DataFrame, lower_bound: float, upper_bound: float) -> pd.DataFrame:
+def assign_salary_bands(
+    df: pd.DataFrame, lower_bound: float, upper_bound: float
+) -> pd.DataFrame:
     """Matching individuals to a given salary range based on their total annual income.
 
     Parameters
@@ -25,9 +24,15 @@ def assign_salary_bands(df: pd.DataFrame, lower_bound: float, upper_bound: float
     """
 
     if lower_bound >= upper_bound:
-      raise ValueError(f"Salary bounds must be ordered, got: ({lower_bound}, {upper_bound})")
+        raise ValueError(
+            f"Salary bounds must be ordered, got: ({lower_bound}, {upper_bound})"
+        )
 
-    df[CensusASECMetadata.TARGET] = df[CensusASECMetadata.Fields.ANNUAL_INCOME].between(lower_bound, upper_bound).astype(int)
+    df[CensusASECMetadata.TARGET] = (
+        df[CensusASECMetadata.Fields.ANNUAL_INCOME]
+        .between(lower_bound, upper_bound)
+        .astype(int)
+    )
     return df
 
 
