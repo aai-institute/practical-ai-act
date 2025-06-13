@@ -11,7 +11,6 @@ from asec.data import (
 )
 from asec.features import (
     assign_salary_bands,
-    binarize_marital_status,
     select_features,
 )
 from income_prediction.assets.fairness import dataset_metrics
@@ -47,11 +46,9 @@ def transformed_target(
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name=GROUP_NAME, kinds={"pandas"})
 def preprocessed_features(transformed_target: pd.DataFrame) -> pd.DataFrame:
-    return (
-        transformed_target.pipe(binarize_marital_status)
-        .pipe(partial(select_features, exclude=[PUMSMetaData.ORIGINAL_TARGET]))
-        .pipe(transform_to_categorical)
-    )
+    return transformed_target.pipe(
+        partial(select_features, exclude=[PUMSMetaData.ORIGINAL_TARGET])
+    ).pipe(transform_to_categorical)
 
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name=GROUP_NAME, kinds={"pandas"})

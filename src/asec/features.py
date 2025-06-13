@@ -34,15 +34,6 @@ def assign_salary_bands(
     return df
 
 
-def binarize_marital_status(df: pd.DataFrame) -> pd.DataFrame:
-    """Binarize the marital status attribute by grouping all non-married statuses into a single category."""
-
-    df[PUMSMetaData.Fields.MARITAL_STATUS] = (
-        df[PUMSMetaData.Fields.MARITAL_STATUS].isin([1, 2, 3, 4]).astype(int)
-    )
-    return df
-
-
 def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame:
     """Filters and retains only the relevant categorical, numerical, ordinal features, and the target variable.
 
