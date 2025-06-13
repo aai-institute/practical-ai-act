@@ -6,7 +6,7 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from asec.data import CensusASECMetadata
+from asec.data import PUMSMetaData
 
 
 class MlFlowConfig(BaseModel):
@@ -32,8 +32,8 @@ class MinioConfig(BaseModel):
 class Config(ConfigurableResource):
     """Pipeline configuration."""
 
-    census_asec_dataset_year: int = 2023
-
+    pums_dataset_year: int = 2022
+    sample_fraction: float | None = None
     # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
     census_asec_dataset_use_archive: bool = False
 
@@ -48,7 +48,7 @@ class Config(ConfigurableResource):
 
     # For fairness evaluation
     sensitive_feature_names: list[str] = [
-        CensusASECMetadata.Fields.SEX,
+        PUMSMetaData.Fields.SEX,
     ]
 
     test_size: float = 0.25

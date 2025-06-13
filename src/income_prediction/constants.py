@@ -8,7 +8,12 @@ from .resources.configuration import (
 )
 
 RANDOM_STATE = 495
-experiment_config = Config(random_state=RANDOM_STATE, test_size=0.25)
+experiment_config = Config(
+    random_state=RANDOM_STATE,
+    test_size=0.25,
+    salary_upper_bound=45_000,
+    sample_fraction=0.2,
+)
 optuna_cv_config = StratifiedShuffleCVConfig(
     n_trials=50,
     verbose=2,

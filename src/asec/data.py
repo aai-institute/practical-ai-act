@@ -305,7 +305,6 @@ def download_pums_data(year: int, base_dir: str | PathLike = "data"):
         horizon="1-Year",
         survey="person",
         root_dir=base_dir,
-        use_archive=True,
     )
     return data_source.get_data(download=True)
 
@@ -328,7 +327,7 @@ def binning_targets(target_df: pd.DataFrame, target_bins: list[int]) -> pd.DataF
     values = np.searchsorted(
         target_bins, target_df[PUMSMetaData.Fields.ANNUAL_INCOME], side="right"
     )
-    return pd.DataFrame(data=values, columns=[PUMSMetaData.SALARY_BAND])
+    return pd.DataFrame(data=values, columns=[PUMSMetaData.INCOME_IN_RANGE])
 
 
 def transform_to_categorical(feature_df: pd.DataFrame) -> pd.DataFrame:
@@ -350,7 +349,7 @@ class PUMSMetaData:
 
         # Demographics
         AGE_YEARS = "AGEP"
-        GENDER = "SEX"
+        SEX = "SEX"
         MARITAL_STATUS = "MAR"
         HOUSEHOLD_RELATIONSHIP = "RELSHIPP"
         HISPANIC_ETHNICITY = "HISP"
@@ -359,24 +358,18 @@ class PUMSMetaData:
         COUNTRY_OF_BIRTH = "POBP"
         CITIZENSHIP_STATUS = "CIT"
         DISABILITY_STATUS = "DIS"
-        STATE = "STATE"
 
         # Education
         EDUCATION_LEVEL = "SCHL"
         ENROLLMENT_STATUS = "SCH"
-        ENROLLMENT_TYPE = "SCHG"
-        FIELD_OF_DEGREE = "FOD1P"
-        HAS_SCIENCE_DEGREE = "SCIENGP"
 
         # Employment & Work
         EMPLOYMENT_STATUS = "ESR"
         EMPLOYMENT_CLASS = "COW"
         INDUSTRY = "INDP"
-        PLACE_OF_WORK = "POWSP"
         HOURS_PER_WEEK = "WKHP"
         WORK_WEEKS = "WKWN"
         LAST_WORKED = "WKL"
-        MAJOR_INDUSTRY = "NAICSP"
         MAJOR_OCCUPATION = "OCCP"
 
         # Income & Earnings
@@ -387,14 +380,13 @@ class PUMSMetaData:
 
     # Target variable
     ORIGINAL_TARGET = Fields.ANNUAL_INCOME
-    SALARY_BAND = "SALARY_BAND"
-    TARGET = SALARY_BAND
+    INCOME_IN_RANGE = "INCOME_IN_RANGE"
+    TARGET = INCOME_IN_RANGE
 
     # Feature categories
     CATEGORICAL_FEATURES = [
-        Fields.GENDER,
+        Fields.SEX,
         Fields.ENROLLMENT_STATUS,
-        Fields.ENROLLMENT_TYPE,
         Fields.MARITAL_STATUS,
         Fields.HOUSEHOLD_RELATIONSHIP,
         Fields.HISPANIC_ETHNICITY,
@@ -403,14 +395,9 @@ class PUMSMetaData:
         Fields.COUNTRY_OF_BIRTH,
         Fields.CITIZENSHIP_STATUS,
         Fields.DISABILITY_STATUS,
-        Fields.STATE,
-        Fields.FIELD_OF_DEGREE,
-        Fields.HAS_SCIENCE_DEGREE,
         Fields.EMPLOYMENT_CLASS,
         Fields.INDUSTRY,
-        Fields.PLACE_OF_WORK,
         Fields.LAST_WORKED,
-        Fields.MAJOR_INDUSTRY,
         Fields.MAJOR_OCCUPATION,
         Fields.HAS_HEALTH_INSURANCE,
     ]
@@ -424,17 +411,3 @@ class PUMSMetaData:
     ORDINAL_FEATURES = [Fields.EDUCATION_LEVEL]
 
     FEATURES = CATEGORICAL_FEATURES + NUMERIC_FEATURES + ORDINAL_FEATURES
-    REASSEMBLED_ADULT_FEATURES = [
-        Fields.AGE_YEARS,
-        Fields.EMPLOYMENT_CLASS,
-        Fields.EDUCATION_LEVEL,
-        Fields.MARITAL_STATUS,
-        Fields.MAJOR_OCCUPATION,
-        Fields.COUNTRY_OF_BIRTH,
-        Fields.HOUSEHOLD_RELATIONSHIP,
-        Fields.HOURS_PER_WEEK,
-        Fields.GENDER,
-        Fields.RACE,
-        Fields.FIELD_OF_DEGREE,
-        Fields.HAS_SCIENCE_DEGREE,
-    ]

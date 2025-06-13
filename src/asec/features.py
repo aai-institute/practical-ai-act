@@ -1,6 +1,6 @@
 import pandas as pd
 
-from .data import CensusASECMetadata
+from .data import PUMSMetaData
 
 
 def assign_salary_bands(
@@ -28,10 +28,8 @@ def assign_salary_bands(
             f"Salary bounds must be ordered, got: ({lower_bound}, {upper_bound})"
         )
 
-    df[CensusASECMetadata.TARGET] = (
-        df[CensusASECMetadata.Fields.ANNUAL_INCOME]
-        .between(lower_bound, upper_bound)
-        .astype(int)
+    df[PUMSMetaData.TARGET] = (
+        df[PUMSMetaData.ORIGINAL_TARGET].between(lower_bound, upper_bound).astype(int)
     )
     return df
 
@@ -39,8 +37,8 @@ def assign_salary_bands(
 def binarize_marital_status(df: pd.DataFrame) -> pd.DataFrame:
     """Binarize the marital status attribute by grouping all non-married statuses into a single category."""
 
-    df[CensusASECMetadata.Fields.MARITAL_STATUS] = (
-        df[CensusASECMetadata.Fields.MARITAL_STATUS].isin([1, 2, 3, 4]).astype(int)
+    df[PUMSMetaData.Fields.MARITAL_STATUS] = (
+        df[PUMSMetaData.Fields.MARITAL_STATUS].isin([1, 2, 3, 4]).astype(int)
     )
     return df
 
@@ -59,10 +57,10 @@ def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame
         DataFrame containing only selected relevant features and the target value.
     """
     selected_features = (
-        CensusASECMetadata.CATEGORICAL_FEATURES
-        + CensusASECMetadata.NUMERIC_FEATURES
-        + CensusASECMetadata.ORDINAL_FEATURES
-        + [CensusASECMetadata.TARGET]
+        PUMSMetaData.CATEGORICAL_FEATURES
+        + PUMSMetaData.NUMERIC_FEATURES
+        + PUMSMetaData.ORDINAL_FEATURES
+        + [PUMSMetaData.TARGET]
     )
 
     if exclude is not None:
