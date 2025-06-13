@@ -72,9 +72,7 @@ def dataset_fairness_metrics(sub_sampled_data: pd.DataFrame):
     metric_fns = [
         BinaryLabelDatasetMetric.disparate_impact,
         BinaryLabelDatasetMetric.statistical_parity_difference,
-        BinaryLabelDatasetMetric.consistency,
         BinaryLabelDatasetMetric.mean_difference,
-        BinaryLabelDatasetMetric.smoothed_empirical_differential_fairness,
     ]
     dm = dataset_metrics(sub_sampled_data)
     metrics = {}
