@@ -1286,7 +1286,6 @@ name = "hr-assistant"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "folktables" },
     { name = "more-itertools" },
     { name = "numpy" },
     { name = "pandas" },
@@ -1304,6 +1303,7 @@ deploy = [
     { name = "prometheus-fastapi-instrumentator" },
     { name = "psycopg2-binary" },
     { name = "pydantic-settings" },
+    { name = "shap" },
 ]
 dev = [
     { name = "ipython" },
@@ -1338,6 +1338,7 @@ train = [
     { name = "dagster-postgres" },
     { name = "dagster-webserver" },
     { name = "fairlearn" },
+    { name = "folktables" },
     { name = "kaleido" },
     { name = "lakefs-spec" },
     { name = "mlflow" },
@@ -1358,7 +1359,6 @@ train = [
 
 [package.metadata]
 requires-dist = [
-    { name = "folktables", specifier = ">=0.0.12" },
     { name = "more-itertools", specifier = ">=10.5.0" },
     { name = "numpy", specifier = ">2" },
     { name = "pandas", specifier = ">=2.2.3" },
@@ -1376,6 +1376,7 @@ deploy = [
     { name = "prometheus-fastapi-instrumentator", specifier = ">=7.0.2" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
     { name = "pydantic-settings", specifier = ">=2.8.0" },
+    { name = "shap", specifier = ">=0.47.0" },
 ]
 dev = [
     { name = "ipython", specifier = ">=8.32.0" },
@@ -1410,6 +1411,7 @@ train = [
     { name = "dagster-postgres", specifier = ">=0.26.2" },
     { name = "dagster-webserver", specifier = ">=1.9.10" },
     { name = "fairlearn", specifier = ">=0.12.0" },
+    { name = "folktables", specifier = ">=0.0.12" },
     { name = "kaleido", specifier = "==0.2.1" },
     { name = "lakefs-spec", specifier = ">=0.11.2" },
     { name = "mlflow", specifier = ">=2.22.0" },
