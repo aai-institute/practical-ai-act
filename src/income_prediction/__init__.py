@@ -4,7 +4,6 @@ import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
 from upath import UPath
 
-import income_prediction.assets
 from income_prediction.constants import (
     experiment_config,
     nanny_ml_config,
@@ -59,7 +58,7 @@ print("MLflow config: ", mlflow_cfg)
 
 definitions = dg.Definitions(
     assets=dg.with_source_code_references(
-        dg.load_assets_from_modules(modules=[income_prediction.assets])
+        dg.load_assets_from_package_name("income_prediction.assets")
     ),
     jobs=[e2e_pipeline_job],
     resources={
