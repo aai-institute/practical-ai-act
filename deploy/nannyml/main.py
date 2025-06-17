@@ -23,7 +23,7 @@ with open(estimator_path, "rb") as f:
 
 
 postgres_config = {
-    "host": "localhost",
+    "host": "postgres",
     "user": "postgres_user",
     "password": "postgres_password",
     "dbname": "hr_assistant",
