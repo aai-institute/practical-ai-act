@@ -37,6 +37,22 @@ def _make_dataset(data: pd.DataFrame) -> StandardDataset:
     )
 
 
+def extract_metrics(dm: BinaryLabelDatasetMetric) -> dict:
+    """Extracts fairness metrics of interest from a BinaryLabelDatasetMetric instance."""
+    metric_fns = [
+        BinaryLabelDatasetMetric.disparate_impact,
+        BinaryLabelDatasetMetric.statistical_parity_difference,
+        BinaryLabelDatasetMetric.mean_difference,
+    ]
+    metrics = {}
+    for metric_fn in metric_fns:
+        metric_name = metric_fn.__name__
+        metric_value = metric_fn(dm)
+        metrics[metric_name] = metric_value
+
+    return metrics
+
+
 def dataset_metrics(data: pd.DataFrame) -> BinaryLabelDatasetMetric:
     ground_truth = _make_dataset(data)
     return BinaryLabelDatasetMetric(

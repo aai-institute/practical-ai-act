@@ -13,7 +13,7 @@ from asec.features import (
     assign_salary_bands,
     select_features,
 )
-from income_prediction.assets.fairness import dataset_metrics
+from income_prediction.assets.fairness import dataset_metrics, extract_metrics
 
 from ..resources.configuration import Config
 
@@ -67,22 +67,8 @@ def dataset_fairness_metrics(sub_sampled_data: pd.DataFrame):
     """
     Evaluates fairness metrics for the processed dataset.
     """
-    from aif360.metrics import BinaryLabelDatasetMetric
-
-    metric_fns = [
-        BinaryLabelDatasetMetric.disparate_impact,
-        BinaryLabelDatasetMetric.statistical_parity_difference,
-        BinaryLabelDatasetMetric.mean_difference,
-    ]
     dm = dataset_metrics(sub_sampled_data)
-    metrics = {}
-    for metric_fn in metric_fns:
-        metric_name = metric_fn.__name__
-        metric_value = metric_fn(dm)
-        metrics[metric_name] = metric_value
-
+    metrics = extract_metrics(dm)
     print("Dataset Fairness Metrics:")
     for metric_name, metric_value in metrics.items():
         print(f"  - {metric_name}: {metric_value}")
-
-    return metrics
