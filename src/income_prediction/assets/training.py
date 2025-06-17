@@ -12,7 +12,7 @@ import shap
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 
-from asec.data import CensusASECMetadata
+from asec.data import PUMSMetaData
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
@@ -40,7 +40,7 @@ def _log_datasets(
     train_ds = mlflow.data.pandas_dataset.from_pandas(
         train_data,
         name="train_data",
-        targets=CensusASECMetadata.TARGET,
+        targets=PUMSMetaData.TARGET,
         source=canonical_lakefs_uri_for_input(context, "train_data", protocol="s3"),
     )
     mlflow.log_input(train_ds)
@@ -48,7 +48,7 @@ def _log_datasets(
     test_ds = mlflow.data.pandas_dataset.from_pandas(
         test_data,
         name="test_data",
-        targets=CensusASECMetadata.TARGET,
+        targets=PUMSMetaData.TARGET,
         source=canonical_lakefs_uri_for_input(context, "test_data", protocol="s3"),
     )
     mlflow.log_input(test_ds)
@@ -68,7 +68,7 @@ def _log_evaluation(
         ),
         data=test_data,
         model_type="classifier",
-        targets=CensusASECMetadata.TARGET,
+        targets=PUMSMetaData.TARGET,
         evaluator_config=evaluator_config,
     )
 
@@ -112,11 +112,11 @@ def _log_explainability_plots(model, x_test: pd.DataFrame):
     group_name=GROUP_NAME,
 )
 def train_test_data(
-    experiment_config: Config, preprocessed_features: pd.DataFrame
+    experiment_config: Config, sub_sampled_data: pd.DataFrame
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Splits the dataset for income prediction into training and test sets."""
     train_data, test_data = train_test_split(
-        preprocessed_features,
+        sub_sampled_data,
         random_state=experiment_config.random_state,
         test_size=experiment_config.test_size,
     )
@@ -137,8 +137,8 @@ def optuna_search_xgb(
 ) -> ModelVersion:
     model_name = "xgboost-classifier"
 
-    X_train = train_data.drop(columns=CensusASECMetadata.TARGET)
-    y_train = train_data[CensusASECMetadata.TARGET]
+    X_train = train_data.drop(columns=PUMSMetaData.TARGET)
+    y_train = train_data[PUMSMetaData.TARGET]
 
     optuna_search = optuna.integration.OptunaSearchCV(
         XGBClassifier(enable_categorical=True),
@@ -166,7 +166,7 @@ def optuna_search_xgb(
                 sensitive_features=X_train[experiment_config.sensitive_feature_names],
             )
 
-            X_test = test_data.drop(columns=CensusASECMetadata.TARGET)
+            X_test = test_data.drop(columns=PUMSMetaData.TARGET)
             y_pred = best_model.predict(
                 X_test,
                 sensitive_features=X_test[experiment_config.sensitive_feature_names],
@@ -214,8 +214,7 @@ def optuna_search_xgb(
                 artifact_path="model",
                 registered_model_name=model_name,
                 signature=signature,
-                code_paths=["src/asec"],
-                input_example=train_data.drop(columns=CensusASECMetadata.TARGET).head(),
+                input_example=X_train.head(5),
             )
 
             return ModelVersion(

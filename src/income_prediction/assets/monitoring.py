@@ -6,7 +6,7 @@ import dagster as dg
 import nannyml as nml
 import pandas as pd
 
-from asec.data import CensusASECMetadata
+from asec.data import PUMSMetaData
 from asec.nannyml import build_reference_data
 from income_prediction.resources.configuration import NannyMLConfig
 from income_prediction.resources.mlflow_session import MlflowSession
@@ -26,8 +26,8 @@ def reference_dataset(
     Based on predictions of the model on the test dataset"""
 
     model = load_model(optuna_search_xgb)
-    X_test = test_data.drop(columns=[CensusASECMetadata.TARGET])
-    y_test = test_data[CensusASECMetadata.TARGET]
+    X_test = test_data.drop(columns=[PUMSMetaData.TARGET])
+    y_test = test_data[PUMSMetaData.TARGET]
     df = build_reference_data(model, X_test, y_test)
     return df
 

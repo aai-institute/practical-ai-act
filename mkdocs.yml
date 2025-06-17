@@ -36,7 +36,6 @@ nav:
       - engineering-practice/model-serving.md
       - engineering-practice/inference-log.md
       - engineering-practice/operational-monitoring.md
-      - engineering-practice/accuracy.md
       - engineering-practice/orchestration.md
       - Data Governance:
           - engineering-practice/data-governance/index.md

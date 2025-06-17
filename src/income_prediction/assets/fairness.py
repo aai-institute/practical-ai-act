@@ -6,10 +6,10 @@ import sklearn.metrics
 from aif360.datasets import StandardDataset
 from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 
-from asec.data import CensusASECMetadata
+from asec.data import PUMSMetaData
 
-TARGET = CensusASECMetadata.TARGET
-SEX_FEATURE = CensusASECMetadata.Fields.SEX
+TARGET = PUMSMetaData.TARGET
+SEX_FEATURE = PUMSMetaData.Fields.SEX
 
 SEX_MALE = 1
 SEX_FEMALE = 2
@@ -26,7 +26,7 @@ def _make_dataset(data: pd.DataFrame) -> StandardDataset:
     df = data.copy()
     return StandardDataset(
         df,
-        label_name=CensusASECMetadata.TARGET,
+        label_name=PUMSMetaData.TARGET,
         favorable_classes=[1],
         protected_attribute_names=[
             SEX_FEATURE,
