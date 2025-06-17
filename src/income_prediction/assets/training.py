@@ -175,8 +175,7 @@ def optuna_search_xgb(
                 artifact_path="model",
                 registered_model_name=model_name,
                 signature=signature,
-                code_paths=["src/asec"],
-                input_example=train_data.drop(columns=PUMSMetaData.TARGET).head(5),
+                input_example=X_train.head(5),
             )
 
             return ModelVersion(
