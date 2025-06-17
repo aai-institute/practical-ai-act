@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import requests
 import tqdm
@@ -5,7 +7,9 @@ import tqdm
 # Test data set from lakeFS repository
 X = pd.read_parquet("lakefs://twai-pipeline/main/data/test_data.parquet")
 
-batch_df = X.dropna().sample(n=100)
+n = int(os.getenv("BATCH_SIZE", "100"))
+
+batch_df = X.dropna().sample(n=n)
 batch = batch_df.to_dict(orient="records")
 
 predict_endpoint = "http://localhost:8001/model/predict"

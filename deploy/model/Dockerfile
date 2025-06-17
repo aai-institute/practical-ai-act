@@ -40,10 +40,7 @@ ENV MLSERVER_MODEL_NAME=$MODEL_NAME
 
 ARG MODEL_VERSION=latest
 ENV MLSERVER_MODEL_VERSION=$MODEL_VERSION
-
 ENV MLSERVER_MODEL_URI="file:///model/artifacts/model.pkl"
-# FIXME: Extract code paths from model metadata
-ENV PYTHONPATH=/model/artifacts/code
 
 EXPOSE 8080 8081 8082
 

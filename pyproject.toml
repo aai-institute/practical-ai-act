@@ -8,11 +8,7 @@ version = "0.1.0"
 description = "An ML assistant for HR professionals."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-  "more-itertools>=10.5.0",
-  "numpy>2",
-  "pandas>=2.2.3",
-]
+dependencies = ["more-itertools>=10.5.0", "numpy>2", "pandas>=2.2.3"]
 
 [dependency-groups]
 docs = [
@@ -27,6 +23,7 @@ docs = [
   "mkdocs-backlinks>=0.9.1",
 ]
 train = [
+  "folktables>=0.0.12",
   "mlflow>=2.22.0",
   "kaleido==0.2.1",
   "dagster>=1.9.10",
@@ -62,6 +59,7 @@ deploy = [
   "nannyml>=0.13.0",
   "mlserver-sklearn>=1.7.0",
   "matplotlib>=3.10.0",
+  "shap>=0.47.0",
 ]
 monitoring = [
   "fastapi>=0.115.8",

@@ -15,43 +15,21 @@ from hr_assistant.dependencies.models import InferenceClientDependency
 
 
 class ModelInput(BaseModel):
-    A_SEX: int
-    A_ENRLW: int
-    A_FTPT: int
-    A_HSCOL: int
-    A_MARITL: int
-    P_STAT: int
-    PECERT1: int
-    PEHSPNON: int
-    PRDTHSP: int
-    PRDASIAN: int
-    PRDTRACE: int
-    PENATVTY: int
-    PRCITSHP: int
-    PRDISFLG: int
-    A_LFSR: int
-    A_CLSWKR: int
-    A_FTLF: int
-    A_UNMEM: int
-    A_UNTYPE: int
-    PRUNTYPE: int
-    A_WKSTAT: int
-    INDUSTRY: int
-    CLWK: int
-    A_MJIND: int
-    A_MJOCC: int
-    PEMLR: int
-    ERN_SRCE: int
-    COV: int
-    HEA: int
-    A_AGE: int
-    A_WKSLK: int
-    WKSWORK: int
-    A_USLHRS: int
-    HRSWK: int
-    A_HRS1: int
-    NOEMP: int
-    A_HGA: int
+    SEX: int
+    SCH: int
+    MAR: int
+    RAC1P: int
+    CIT: int
+    DIS: int
+    COW: int
+    INDP: int
+    WKL: int
+    OCCP: int
+    HICOV: int
+    WKWN: int
+    WKHP: int
+    AGEP: int
+    SCHL: int
 
 
 router = APIRouter(tags=["model"])
