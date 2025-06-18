@@ -31,7 +31,7 @@ In line with the [risk assessment](../risk-assessment.md) for the showcase, the 
 The mitigation is applied to the training data before training the model, and the model is then trained on the mitigated dataset.
 This helps to ensure that the model does not learn biased patterns from the training data, leading to fairer predictions, at the expense of slightly worse model accuracy.
 
-The following plots compare the feature importance of the `SEX` feature for models that have been trained on the original dataset and on the mitigated dataset (see the page on [explainability](../../engineering-practice/explainability.md) for more details on the the SHAP approach).
+The following plots compare the feature importance of the `SEX` feature for models that have been trained on the original dataset and on the mitigated dataset (see the page on [explainability](../../engineering-practice/explainability.md) for more details on the SHAP approach).
 The plots on the left show the feature importance for the unmitigated dataset, while the plots on the right show the feature importance for the mitigated dataset.
 
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 2em" markdown="span">
@@ -47,5 +47,5 @@ The plots on the left show the feature importance for the unmitigated dataset, w
     </figure>
 </div>
 
-Note that the mitigation successfully reduced the importance of the `SEX` feature, which can be seen in the decreased range of the SHAP values in the violin plot for this feature in the mitigated dataset.
-The bar plot shows that the overall feature importance of the `SEX` feature is also reduced so far that it is no longer among the top 10 most important features in the model.
+We can see that the mitigation reduced the importance of the `SEX` feature, which can be seen in the smaller range of the SHAP values in the violin plot for this feature.
+The bar plot shows that the overall importance of the `SEX` feature is also reduced so far that it is no longer among the top 10 most important features in the model.
