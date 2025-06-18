@@ -1441,7 +1441,27 @@ These metrics are logged to the MLflow experiment log during training, in order 
 <li><a href="https://aif360.res.ibm.com/">AIF360</a>: a comprehensive toolkit for detecting and mitigating bias in AI systems.</li>
 </ul>
 <h2 id="bias-mitigation">Bias Mitigation<a class="headerlink" href="#bias-mitigation" title="Permanent link">&para;</a></h2>
-<p>TODO</p>
+<p>As an example for a bias mitigation technique, the showcase system implements a correlation removal pre-processing step.
+This pre-processing transformation is implemented using the <a href="https://fairlearn.org/v0.12/user_guide/mitigation/preprocessing.html#correlation-remover">Fairlearn</a> library.</p>
+<p>In line with the <a href="../../risk-assessment/">risk assessment</a> for the showcase, the <code>SEX</code> feature is identified as a sensitive attribute that should be considered for bias mitigation.</p>
+<p>The mitigation is applied to the training data before training the model, and the model is then trained on the mitigated dataset.
+This helps to ensure that the model does not learn biased patterns from the training data, leading to fairer predictions, at the expense of slightly worse model accuracy.</p>
+<p>The following plots compare the feature importance of the <code>SEX</code> feature for models that have been trained on the original dataset and on the mitigated dataset (see the page on <a href="../../../engineering-practice/explainability/">explainability</a> for more details on the SHAP approach).
+The plots on the left show the feature importance for the unmitigated dataset, while the plots on the right show the feature importance for the mitigated dataset.</p>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 2em">
+    <figure markdown="span">
+        <img alt="SHAP bar plot for unmitigated dataset" src="../../../_images/showcase/shap-bar-unmitigated.png" />
+        <img alt="SHAP violin plot for unmitigated dataset" src="../../../_images/showcase/shap-violin-unmitigated.png" />
+        <figcaption>Unmitigated dataset</figcaption>
+    </figure>
+    <figure markdown="span">
+        <img alt="SHAP bar plot for mitigated dataset" src="../../../_images/showcase/shap-bar-mitigated.png" />
+        <img alt="SHAP violin plot for mitigated dataset" src="../../../_images/showcase/shap-violin-mitigated.png" />
+        <figcaption>Mitigated dataset</figcaption>
+    </figure>
+</div>
+<p>We can see that the mitigation reduced the importance of the <code>SEX</code> feature, which can be seen in the smaller range of the SHAP values in the violin plot for this feature.
+The bar plot shows that the overall importance of the <code>SEX</code> feature is also reduced so far that it is no longer among the top 10 most important features in the model.</p>
 
 
 
