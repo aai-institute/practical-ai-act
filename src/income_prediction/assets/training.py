@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
 
 import dagster as dg
+import fairlearn
+import fairlearn.preprocessing
 import matplotlib.pyplot as plt
 import mlflow
 import optuna
@@ -19,7 +21,12 @@ from ..utils.mlflow import (
     log_fairness_metrics,
     log_fairness_metrics_by_group,
 )
-from .fairness import classification_metrics, make_metricframe
+from .fairness import (
+    classification_metrics,
+    dataset_metrics,
+    extract_metrics,
+    make_metricframe,
+)
 
 if TYPE_CHECKING:
     import mlflow.data.pandas_dataset
@@ -36,9 +43,11 @@ def _log_datasets(
 ):
     train_ds = mlflow.data.pandas_dataset.from_pandas(
         train_data,
-        name="train_data",
+        name="fair_train_data",
         targets=PUMSMetaData.TARGET,
-        source=canonical_lakefs_uri_for_input(context, "train_data", protocol="s3"),
+        source=canonical_lakefs_uri_for_input(
+            context, "fair_train_data", protocol="s3"
+        ),
     )
     mlflow.log_input(train_ds)
 
@@ -67,16 +76,19 @@ def _log_evaluation(
 
 
 def _log_fairness_evaluation(
-    test_data: pd.DataFrame, y_pred: pd.Series, sensitive_feature_names: list[str]
+    test_data: pd.DataFrame,
+    y_pred: pd.Series,
+    sensitive_feature_names: list[str],
+    prefix: str = "fair_",
 ):
     # -- AIF360
     fairness_metrics = classification_metrics(test_data, y_pred)
-    log_fairness_metrics(fairness_metrics)
+    log_fairness_metrics(fairness_metrics, prefix=prefix)
 
     # -- Fairlearn
     sensitive_features = test_data[sensitive_feature_names]
     mf = make_metricframe(test_data, y_pred, sensitive_features=sensitive_features)
-    log_fairness_metrics_by_group(mf)
+    log_fairness_metrics_by_group(mf, prefix=prefix)
 
 
 def _log_explainability_plots(model, x_test: pd.DataFrame):
@@ -113,22 +125,80 @@ def train_test_data(
     return train_data, test_data
 
 
+@dg.asset(group_name=GROUP_NAME, io_manager_key="lakefs_io_manager", kinds={"pandas"})
+def fair_train_data(
+    train_data: pd.DataFrame,
+    experiment_config: Config,
+) -> pd.DataFrame:
+    """Applies sensitive correlation removal preprocessing to the training data set.
+
+    Returns
+    -------
+    tuple[pd.DataFrame, pd.DataFrame]
+        The preprocessed training and test data as pandas DataFrames `(train_data, test_data)`.
+    """
+
+    X_train, y_train = (
+        train_data.drop(columns=PUMSMetaData.TARGET),
+        train_data[PUMSMetaData.TARGET],
+    )
+    corr_remover = fairlearn.preprocessing.CorrelationRemover(
+        sensitive_feature_ids=experiment_config.sensitive_feature_names
+    )
+    Xf_train_array = corr_remover.fit_transform(X_train)
+
+    # Columns after transformation (without sensitive features)
+    non_sensitive_cols = [
+        col
+        for col in X_train.columns
+        if col not in experiment_config.sensitive_feature_names
+    ]
+
+    Xf_train = pd.DataFrame(
+        Xf_train_array,
+        columns=non_sensitive_cols,
+        index=X_train.index,
+    )
+
+    # Add sensitive columns back
+    for col in experiment_config.sensitive_feature_names:
+        Xf_train[col] = X_train[col]
+
+    # Reorder columns to match X_train
+    Xf_train = Xf_train[X_train.columns]
+
+    return pd.concat([Xf_train, y_train], axis=1)
+
+
+@dg.asset(group_name=GROUP_NAME)
+def train_data_fairness_metrics(fair_train_data: pd.DataFrame) -> dict[str, float]:
+    """
+    Evaluates fairness metrics for the fairness-mitigated training data.
+    """
+    dm = dataset_metrics(fair_train_data)
+    metrics = extract_metrics(dm)
+    print("Training Dataset Fairness Metrics:")
+    for metric_name, metric_value in metrics.items():
+        print(f"  - {metric_name}: {metric_value}")
+    return metrics
+
+
 @dg.asset(group_name=GROUP_NAME, kinds={"xgboost"})
 def optuna_search_xgb(
     context: dg.AssetExecutionContext,
     mlflow_session: MlflowSession,
-    train_data: pd.DataFrame,
-    test_data: pd.DataFrame,
     optuna_cv_config: OptunaCVConfig,
     optuna_xgb_param_distribution: dg.ResourceParam[
         dict[str, optuna.distributions.BaseDistribution]
     ],
+    fair_train_data: pd.DataFrame,
+    test_data: pd.DataFrame,
     experiment_config: Config,
 ) -> ModelVersion:
     model_name = "xgboost-classifier"
 
-    X_train = train_data.drop(columns=PUMSMetaData.TARGET)
-    y_train = train_data[PUMSMetaData.TARGET]
+    X_train = fair_train_data.drop(columns=PUMSMetaData.TARGET)
+    y_train = fair_train_data[PUMSMetaData.TARGET]
 
     optuna_search = optuna.integration.OptunaSearchCV(
         XGBClassifier(enable_categorical=True),
@@ -143,12 +213,11 @@ def optuna_search_xgb(
             mlflow.autolog(log_datasets=False, log_models=False)
 
             best_model = optuna_search.best_estimator_
-            best_model.fit(X_train, y_train)
 
             X_test = test_data.drop(columns=PUMSMetaData.TARGET)
             y_pred = best_model.predict(X_test)
 
-            _log_datasets(context, train_data, test_data)
+            _log_datasets(context, fair_train_data, test_data)
             _log_evaluation(
                 best_model,
                 test_data,
@@ -167,7 +236,8 @@ def optuna_search_xgb(
 
             # Model registration
             signature = mlflow.models.infer_signature(
-                X_train.head(5), best_model.predict(X_train.head(5))
+                X_train.head(),
+                best_model.predict(X_train.head()),
             )
 
             model_info = mlflow.sklearn.log_model(

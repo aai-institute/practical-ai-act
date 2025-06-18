@@ -23,4 +23,29 @@ Two Python packages are used to calculate the relevant metrics:
 
 ## Bias Mitigation
 
-TODO
+As an example for a bias mitigation technique, the showcase system implements a correlation removal pre-processing step.
+This pre-processing transformation is implemented using the [Fairlearn](https://fairlearn.org/v0.12/user_guide/mitigation/preprocessing.html#correlation-remover) library.
+
+In line with the [risk assessment](../risk-assessment.md) for the showcase, the `SEX` feature is identified as a sensitive attribute that should be considered for bias mitigation.
+
+The mitigation is applied to the training data before training the model, and the model is then trained on the mitigated dataset.
+This helps to ensure that the model does not learn biased patterns from the training data, leading to fairer predictions, at the expense of slightly worse model accuracy.
+
+The following plots compare the feature importance of the `SEX` feature for models that have been trained on the original dataset and on the mitigated dataset (see the page on [explainability](../../engineering-practice/explainability.md) for more details on the SHAP approach).
+The plots on the left show the feature importance for the unmitigated dataset, while the plots on the right show the feature importance for the mitigated dataset.
+
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 2em" markdown="span">
+    <figure markdown="span">
+        ![SHAP bar plot for unmitigated dataset](../../_images/showcase/shap-bar-unmitigated.png)
+        ![SHAP violin plot for unmitigated dataset](../../_images/showcase/shap-violin-unmitigated.png)
+        <figcaption>Unmitigated dataset</figcaption>
+    </figure>
+    <figure markdown="span">
+        ![SHAP bar plot for mitigated dataset](../../_images/showcase/shap-bar-mitigated.png)
+        ![SHAP violin plot for mitigated dataset](../../_images/showcase/shap-violin-mitigated.png)
+        <figcaption>Mitigated dataset</figcaption>
+    </figure>
+</div>
+
+We can see that the mitigation reduced the importance of the `SEX` feature, which can be seen in the smaller range of the SHAP values in the violin plot for this feature.
+The bar plot shows that the overall importance of the `SEX` feature is also reduced so far that it is no longer among the top 10 most important features in the model.
