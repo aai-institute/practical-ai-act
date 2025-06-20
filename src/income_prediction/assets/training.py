@@ -93,12 +93,16 @@ def _log_explainability_plots(model, X_test: pd.DataFrame, experiment_config: Co
     plt.close()
 
     explainer = shap.PermutationExplainer(
-        model, X_test, seed=experiment_config.random_state
+        model,
+        X_test,
+        max_evals="auto",
+        seed=experiment_config.random_state,
     )
 
     # Calculate feature importance on a sample of the test set
     n_rows = min(2000, len(X_test))
-    shap_values = explainer(X_test.sample(n_rows))
+    expl_df = X_test.sample(n_rows, random_state=experiment_config.random_state)
+    shap_values = explainer(expl_df)
 
     ax = shap.plots.bar(shap_values, show=False)
     mlflow.log_figure(ax.figure, "shap_bar_plot.png")
@@ -194,9 +198,7 @@ def optuna_search_xgb(
 
             # Explainability plots
             if experiment_config.log_model_explainability:
-                _log_explainability_plots(
-                    best_model.predict_proba, X_test, experiment_config
-                )
+                _log_explainability_plots(best_model.predict, X_test, experiment_config)
 
             # Model registration
             signature = mlflow.models.infer_signature(
