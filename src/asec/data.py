@@ -389,14 +389,10 @@ class PUMSMetaData:
     # Feature categories
     CATEGORICAL_FEATURES = [
         Fields.SEX,
-        Fields.ENROLLMENT_STATUS,
-        Fields.MARITAL_STATUS,
         Fields.RACE,
         Fields.CITIZENSHIP_STATUS,
-        Fields.DISABILITY_STATUS,
         Fields.EMPLOYMENT_CLASS,
         Fields.INDUSTRY,
-        Fields.LAST_WORKED,
         Fields.MAJOR_OCCUPATION,
         Fields.HAS_HEALTH_INSURANCE,
     ]
