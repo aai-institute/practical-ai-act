@@ -37,7 +37,7 @@ def _make_dataset(data: pd.DataFrame) -> StandardDataset:
     )
 
 
-def extract_metrics(dm: BinaryLabelDatasetMetric) -> dict:
+def extract_metrics(dm: BinaryLabelDatasetMetric) -> dict[str, float]:
     """Extracts fairness metrics of interest from a BinaryLabelDatasetMetric instance."""
     metric_fns = [
         BinaryLabelDatasetMetric.disparate_impact,
@@ -48,7 +48,9 @@ def extract_metrics(dm: BinaryLabelDatasetMetric) -> dict:
     for metric_fn in metric_fns:
         metric_name = metric_fn.__name__
         metric_value = metric_fn(dm)
-        metrics[metric_name] = metric_value
+
+        # Convert numpy floats to native Python floats to avoid serialization issues in Dagster
+        metrics[metric_name] = float(metric_value)
 
     return metrics
 

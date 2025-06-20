@@ -1,6 +1,5 @@
 from typing import Any
 
-import numpy as np
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
@@ -34,10 +33,11 @@ class Config(ConfigurableResource):
 
     pums_dataset_year: int = 2022
     sample_fraction: float | None = None
+
     # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
     census_asec_dataset_use_archive: bool = False
 
-    salary_lower_bound: float = -np.inf
+    salary_lower_bound: float = 0
     salary_upper_bound: float = 45_000
 
     data_dir: str = "data"

@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
 
 import dagster as dg
-import fairlearn
-import fairlearn.preprocessing
 import matplotlib.pyplot as plt
 import mlflow
 import optuna
 import pandas as pd
 import shap
+import sklearn
+from aif360.sklearn.preprocessing import Reweighing, ReweighingMeta
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 
@@ -33,7 +33,7 @@ if TYPE_CHECKING:
     import mlflow.models
     import mlflow.sklearn
 
-GROUP_NAME = "training"
+GROUP_NAME = "model"
 
 
 def _log_datasets(
@@ -43,11 +43,9 @@ def _log_datasets(
 ):
     train_ds = mlflow.data.pandas_dataset.from_pandas(
         train_data,
-        name="fair_train_data",
+        name="train_data",
         targets=PUMSMetaData.TARGET,
-        source=canonical_lakefs_uri_for_input(
-            context, "fair_train_data", protocol="s3"
-        ),
+        source=canonical_lakefs_uri_for_input(context, "train_data", protocol="s3"),
     )
     mlflow.log_input(train_ds)
 
@@ -91,11 +89,13 @@ def _log_fairness_evaluation(
     log_fairness_metrics_by_group(mf, prefix=prefix)
 
 
-def _log_explainability_plots(model, x_test: pd.DataFrame):
+def _log_explainability_plots(model, X_test: pd.DataFrame, experiment_config: Config):
     plt.close()
 
-    explainer = shap.Explainer(model, x_test, algorithm="tree")
-    shap_values = explainer(x_test)
+    explainer = shap.PermutationExplainer(
+        model, X_test, seed=experiment_config.random_state
+    )
+    shap_values = explainer(X_test)
 
     ax = shap.plots.bar(shap_values, show=False)
     mlflow.log_figure(ax.figure, "shap_bar_plot.png")
@@ -114,7 +114,9 @@ def _log_explainability_plots(model, x_test: pd.DataFrame):
     group_name=GROUP_NAME,
 )
 def train_test_data(
-    experiment_config: Config, sub_sampled_data: pd.DataFrame
+    context: dg.AssetExecutionContext,
+    experiment_config: Config,
+    sub_sampled_data: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Splits the dataset for income prediction into training and test sets."""
     train_data, test_data = train_test_split(
@@ -122,65 +124,14 @@ def train_test_data(
         random_state=experiment_config.random_state,
         test_size=experiment_config.test_size,
     )
+
+    # Fairness metrics
+    for asset_key in ["train_data", "test_data"]:
+        dm = dataset_metrics(locals()[asset_key])
+        metrics = extract_metrics(dm)
+        context.add_asset_metadata(asset_key=asset_key, metadata=metrics)
+
     return train_data, test_data
-
-
-@dg.asset(group_name=GROUP_NAME, io_manager_key="lakefs_io_manager", kinds={"pandas"})
-def fair_train_data(
-    train_data: pd.DataFrame,
-    experiment_config: Config,
-) -> pd.DataFrame:
-    """Applies sensitive correlation removal preprocessing to the training data set.
-
-    Returns
-    -------
-    tuple[pd.DataFrame, pd.DataFrame]
-        The preprocessed training and test data as pandas DataFrames `(train_data, test_data)`.
-    """
-
-    X_train, y_train = (
-        train_data.drop(columns=PUMSMetaData.TARGET),
-        train_data[PUMSMetaData.TARGET],
-    )
-    corr_remover = fairlearn.preprocessing.CorrelationRemover(
-        sensitive_feature_ids=experiment_config.sensitive_feature_names
-    )
-    Xf_train_array = corr_remover.fit_transform(X_train)
-
-    # Columns after transformation (without sensitive features)
-    non_sensitive_cols = [
-        col
-        for col in X_train.columns
-        if col not in experiment_config.sensitive_feature_names
-    ]
-
-    Xf_train = pd.DataFrame(
-        Xf_train_array,
-        columns=non_sensitive_cols,
-        index=X_train.index,
-    )
-
-    # Add sensitive columns back
-    for col in experiment_config.sensitive_feature_names:
-        Xf_train[col] = X_train[col]
-
-    # Reorder columns to match X_train
-    Xf_train = Xf_train[X_train.columns]
-
-    return pd.concat([Xf_train, y_train], axis=1)
-
-
-@dg.asset(group_name=GROUP_NAME)
-def train_data_fairness_metrics(fair_train_data: pd.DataFrame) -> dict[str, float]:
-    """
-    Evaluates fairness metrics for the fairness-mitigated training data.
-    """
-    dm = dataset_metrics(fair_train_data)
-    metrics = extract_metrics(dm)
-    print("Training Dataset Fairness Metrics:")
-    for metric_name, metric_value in metrics.items():
-        print(f"  - {metric_name}: {metric_value}")
-    return metrics
 
 
 @dg.asset(group_name=GROUP_NAME, kinds={"xgboost"})
@@ -191,17 +142,24 @@ def optuna_search_xgb(
     optuna_xgb_param_distribution: dg.ResourceParam[
         dict[str, optuna.distributions.BaseDistribution]
     ],
-    fair_train_data: pd.DataFrame,
+    train_data: pd.DataFrame,
     test_data: pd.DataFrame,
     experiment_config: Config,
 ) -> ModelVersion:
     model_name = "xgboost-classifier"
 
-    X_train = fair_train_data.drop(columns=PUMSMetaData.TARGET)
-    y_train = fair_train_data[PUMSMetaData.TARGET]
+    sklearn.set_config(enable_metadata_routing=True)
+
+    X_train = train_data.drop(columns=PUMSMetaData.TARGET)
+    y_train = train_data[PUMSMetaData.TARGET]
+
+    clf = XGBClassifier(enable_categorical=True)
+    reweighing = ReweighingMeta(
+        estimator=clf, reweigher=Reweighing(experiment_config.sensitive_feature_names)
+    )
 
     optuna_search = optuna.integration.OptunaSearchCV(
-        XGBClassifier(enable_categorical=True),
+        reweighing,
         param_distributions=optuna_xgb_param_distribution,
         **optuna_cv_config.as_dict(),
     )
@@ -217,7 +175,7 @@ def optuna_search_xgb(
             X_test = test_data.drop(columns=PUMSMetaData.TARGET)
             y_pred = best_model.predict(X_test)
 
-            _log_datasets(context, fair_train_data, test_data)
+            _log_datasets(context, train_data, test_data)
             _log_evaluation(
                 best_model,
                 test_data,
@@ -232,7 +190,10 @@ def optuna_search_xgb(
             )
 
             # Explainability plots
-            _log_explainability_plots(best_model, X_test)
+            if experiment_config.log_model_explainability:
+                _log_explainability_plots(
+                    best_model.predict_proba, X_test, experiment_config
+                )
 
             # Model registration
             signature = mlflow.models.infer_signature(

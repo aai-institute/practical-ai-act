@@ -27,6 +27,12 @@ warnings.filterwarnings(action="ignore", category=dg.BetaWarning)
 warnings.filterwarnings(
     action="ignore", category=UserWarning, message=".*UPath 'lakefs'.*"
 )
+# AIF360 calls Pandas in a way that emits a warning about assigning incompatible dtypes
+warnings.filterwarnings(
+    action="ignore",
+    category=FutureWarning,
+    module="aif360.sklearn.postprocessing.calibrated_equalized_odds",
+)
 
 
 dagster_env = get_current_env()
@@ -60,6 +66,7 @@ definitions = dg.Definitions(
     assets=dg.with_source_code_references(
         dg.load_assets_from_package_name("income_prediction.assets")
     ),
+    asset_checks=dg.load_asset_checks_from_package_name("income_prediction.assets"),
     jobs=[e2e_pipeline_job],
     resources={
         "experiment_config": experiment_config,
