@@ -95,7 +95,10 @@ def _log_explainability_plots(model, X_test: pd.DataFrame, experiment_config: Co
     explainer = shap.PermutationExplainer(
         model, X_test, seed=experiment_config.random_state
     )
-    shap_values = explainer(X_test)
+
+    # Calculate feature importance on a sample of the test set
+    n_rows = min(2000, len(X_test))
+    shap_values = explainer(X_test.sample(n_rows))
 
     ax = shap.plots.bar(shap_values, show=False)
     mlflow.log_figure(ax.figure, "shap_bar_plot.png")
