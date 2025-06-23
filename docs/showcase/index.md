@@ -4,7 +4,7 @@
 
     This is a **fictional use case** created solely for demonstration and educational purposes. It is not a real deployment and should not be interpreted as a commercial or operational system. It does not represent any real recruitment system or policy and should not be used for making real-world hiring decisions.
 
-## Use Case: Salary Compatability Prediction for Recruitment
+## Use Case: Salary Compatibility Prediction for Recruitment
 
 ### Business Context
 
@@ -17,7 +17,7 @@ The system we describe uses a machine learning model to screen and filter candid
 It predicts whether an applicant's expected (current) salary falls within a predefined salary range for a given job position.
 
 The underlying assumption is that candidates whose expected current income falls outside the acceptable range for a given position are unlikely to be a good fit.
-Essentially, the system treats expected current income compatibility as a proxy for a candidate's suitability for a given position.
+Essentially, the system treats expected current income as a proxy for a candidate's suitability for a given position.
 However, note that this assumption is highly simplified and does not account for many real-world factors, such as career changes, relocation, or personal circumstances.
 Therefore, it should not be used as the sole criterion for hiring decisions.
 
@@ -32,7 +32,7 @@ The AI system is designed to:
 
 -   **Predict salary compatibility** for job candidates based on their demographic and professional attributes
 -   **Assist recruiters** by providing binary predictions on whether candidates' expected salaries align with position requirements
--   **Streamline applicant screening** by identifying applicants whose expected income falls within the acceptable range for a job position
+-   **Streamline applicant screening** by filtering applicants whose expected income falls within the acceptable range for a job position
 
 The [risk classification](risk-classification.md) shows that a system like this is classified as a high-risk system under the EU AI Act.
 
@@ -63,9 +63,9 @@ The page on [risk assessment](risk-assessment.md) provides an abridged analysis 
 
 There is a detailed [overview](system-overview.md) of the system's architecture.
 
-## Dataset: Public Use Microdata Sample (PUMS)
+## Dataset: American Community Survey Public Use Microdata Sample (ACS PUMS)
 
-The model is trained on data from the **US Census Bureau**, specifically the 2022 version of the [Public Use Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/microdata/access.html) data. The data is accessed via
+The model is trained on data from the **US Census Bureau**, specifically the 2022 version of the American Community Survey (ACS) [Public Use Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/microdata/access.html) data. The data is accessed via
 the software package [folktables](https://github.com/socialfoundations/folktables).
 
 ### Key Data Characteristics
@@ -88,5 +88,9 @@ This represents whether a candidate's expected salary is compatible with the pos
 
 **Resources**:
 
--   [PUMS Documentation](https://www.census.gov/programs-surveys/acs/microdata/access.html) - Official census documentation
+-   [PUMS Data](https://www.census.gov/programs-surveys/acs/microdata/access.html) - Official US Census Bureau documentation
+-   [Understanding and Using the American
+Community Survey Public Use Microdata
+Sample Files](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf)
+-   [PUMS Documentation, 2022](https://www.census.gov/programs-surveys/acs/microdata/documentation.2022.html#list-tab-1370939201), includes a detailed data dictionary
 -   [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884) - Discusses limitations of older datasets and introduces better alternatives (The research publication underlying the folktables package)
