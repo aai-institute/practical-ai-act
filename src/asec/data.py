@@ -383,7 +383,7 @@ class PUMSMetaData:
 
     # Target variable
     ORIGINAL_TARGET = Fields.ANNUAL_WAGE
-    INCOME_IN_RANGE = "INCOME_IN_RANGE"
+    INCOME_IN_RANGE = "SALARY_IN_RANGE"
     TARGET = INCOME_IN_RANGE
 
     # Feature categories
