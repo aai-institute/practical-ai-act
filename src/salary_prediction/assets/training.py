@@ -110,8 +110,8 @@ def _create_explainer(
         serialize_model_using_mlflow=False,
     )
 
-    # Calculate feature importance on a sample of the test set
-    n_rows = min(20, len(X_test))
+    # Calculate feature importance on a subsample of the test set
+    n_rows = min(2000, len(X_test))
     expl_df = X_test.sample(n_rows, random_state=experiment_config.random_state)
     shap_values = explainer(expl_df)
 
