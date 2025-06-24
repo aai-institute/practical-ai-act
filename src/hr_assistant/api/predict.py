@@ -16,14 +16,10 @@ from hr_assistant.dependencies.models import InferenceClientDependency
 
 class ModelInput(BaseModel):
     SEX: int
-    SCH: int
-    MAR: int
     RAC1P: int
     CIT: int
-    DIS: int
     COW: int
     INDP: int
-    WKL: int
     OCCP: int
     HICOV: int
     WKWN: int

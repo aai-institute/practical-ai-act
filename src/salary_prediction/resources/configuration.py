@@ -1,6 +1,5 @@
 from typing import Any
 
-import numpy as np
 from dagster import ConfigurableResource, ResourceDefinition
 from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
@@ -32,12 +31,15 @@ class MinioConfig(BaseModel):
 class Config(ConfigurableResource):
     """Pipeline configuration."""
 
+    model_name: str = "salary-predictor"
+
     pums_dataset_year: int = 2022
     sample_fraction: float | None = None
+
     # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
     census_asec_dataset_use_archive: bool = False
 
-    salary_lower_bound: float = -np.inf
+    salary_lower_bound: float = 0
     salary_upper_bound: float = 45_000
 
     data_dir: str = "data"
@@ -46,10 +48,11 @@ class Config(ConfigurableResource):
 
     log_model_explainability: bool = True
 
-    # For fairness evaluation
+    # For fairness evaluation / bias mitigation
     sensitive_feature_names: list[str] = [
         PUMSMetaData.Fields.SEX,
     ]
+    mitigate_bias: bool = True
 
     test_size: float = 0.25
 
@@ -67,7 +70,7 @@ class OptunaCVConfig(ConfigurableResource):
     [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV]
     for more details. If you want to use a stratified shuffle split with a custom
     validation size and number of splits, use
-    [income_prediction.resources.configuration.StratifiedShuffleCVConfig][income_prediction.resources.configuration.StratifiedShuffleCVConfig]
+    [salary_prediction.resources.configuration.StratifiedShuffleCVConfig][salary_prediction.resources.configuration.StratifiedShuffleCVConfig]
 
     Args:
         n_trials: Number of trials for the optimization.

@@ -33,7 +33,7 @@ class OpenInferenceProtocolClient:
         request: fastapi.Request,
         logger: PredictionLoggerDependency,
     ) -> None:
-        self._httpx = httpx.AsyncClient(base_url=base_url)
+        self._httpx = httpx.AsyncClient(base_url=base_url, timeout=15.0)
         self._model_name = model_name
         self._request = request
         self._logger = logger

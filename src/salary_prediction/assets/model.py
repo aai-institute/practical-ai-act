@@ -2,8 +2,8 @@ from pathlib import Path
 
 import dagster as dg
 
-from income_prediction.types import ModelVersion
-from income_prediction.utils.docker import build_container_image
+from salary_prediction.types import ModelVersion
+from salary_prediction.utils.docker import build_container_image
 
 
 @dg.asset(kinds={"docker"}, group_name="deployment")

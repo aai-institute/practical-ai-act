@@ -30,7 +30,7 @@ train = [
   "dagster-webserver>=1.9.10",
   "dagster-obstore>=0.2.0",
   "sensai-utils>=1.4.0",
-  "scikit-learn<1.7",
+  "scikit-learn<1.6",
   "ucimlrepo>=0.0.7",
   "xgboost>=2,<3",
   "optuna>=4.2.1",
@@ -47,6 +47,7 @@ train = [
   "requests",
   "dagster-graphql>=1.10.15",
   "fairlearn>=0.12.0",
+  "dagster-pandas>=0.26.19",
 ]
 deploy = [
   "fastapi>=0.110",
@@ -103,5 +104,5 @@ ignore = [
 ]
 
 [tool.dagster]
-module_name = "income_prediction"
-code_location_name = "income_prediction"
+module_name = "salary_prediction"
+code_location_name = "salary_prediction"

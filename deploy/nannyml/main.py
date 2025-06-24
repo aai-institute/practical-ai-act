@@ -85,6 +85,8 @@ def process_prediction_row(row: dict) -> pd.DataFrame:
 
 
 def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
+    global _predictions
+
     query = build_query()
     cursor.execute(query)
     rows = cursor.fetchall()
@@ -102,7 +104,6 @@ def load_predictions(cursor: psycopg2.extensions.cursor) -> pd.DataFrame:
     new_predictions = pd.concat(results, axis=0)
     logger.info(f"Loaded {len(new_predictions)} new predictions")
 
-    global _predictions
     if _predictions is not None:
         _predictions = pd.concat([_predictions, new_predictions], axis=0)
     else:

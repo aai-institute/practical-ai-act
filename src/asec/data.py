@@ -304,7 +304,7 @@ def download_pums_data(year: int, base_dir: str | PathLike = "data"):
         survey_year=year,
         horizon="1-Year",
         survey="person",
-        root_dir=base_dir,
+        root_dir=str(base_dir),
     )
     return data_source.get_data(download=True)
 
@@ -314,9 +314,8 @@ def filter_pums_data(
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     spec = BasicProblem(
         features=features,
-        target=PUMSMetaData.Fields.ANNUAL_INCOME,
+        target=PUMSMetaData.ORIGINAL_TARGET,
         preprocess=adult_filter,
-        # postprocess=lambda x: np.nan_to_num(x, -1),
     )
 
     feature_df, target_df, _ = spec.df_to_pandas(df)
@@ -325,16 +324,19 @@ def filter_pums_data(
 
 def binning_targets(target_df: pd.DataFrame, target_bins: list[int]) -> pd.DataFrame:
     values = np.searchsorted(
-        target_bins, target_df[PUMSMetaData.Fields.ANNUAL_INCOME], side="right"
+        target_bins, target_df[PUMSMetaData.ORIGINAL_TARGET], side="right"
     )
-    return pd.DataFrame(data=values, columns=[PUMSMetaData.INCOME_IN_RANGE])
+    return pd.DataFrame(data=values, columns=[PUMSMetaData.TARGET])
 
 
-def transform_to_categorical(feature_df: pd.DataFrame) -> pd.DataFrame:
-    cat_cols = set(PUMSMetaData.CATEGORICAL_FEATURES).intersection(
-        set(feature_df.columns)
+def transform_categorical_features(feature_df: pd.DataFrame) -> pd.DataFrame:
+    """Transforms categorical/ordinal features in the given DataFrame to the 'category' dtype."""
+
+    cat_cols = (
+        set(PUMSMetaData.CATEGORICAL_FEATURES)
+        .union(PUMSMetaData.ORDINAL_FEATURES)
+        .intersection(set(feature_df.columns))
     )
-
     for col in cat_cols:
         feature_df[col] = feature_df[col].astype("category")
 
@@ -371,6 +373,7 @@ class PUMSMetaData:
         WORK_WEEKS = "WKWN"
         LAST_WORKED = "WKL"
         MAJOR_OCCUPATION = "OCCP"
+        ANNUAL_WAGE = "WAGP"
 
         # Income & Earnings
         ANNUAL_INCOME = "PINCP"
@@ -379,21 +382,17 @@ class PUMSMetaData:
         HAS_HEALTH_INSURANCE = "HICOV"
 
     # Target variable
-    ORIGINAL_TARGET = Fields.ANNUAL_INCOME
-    INCOME_IN_RANGE = "INCOME_IN_RANGE"
+    ORIGINAL_TARGET = Fields.ANNUAL_WAGE
+    INCOME_IN_RANGE = "SALARY_IN_RANGE"
     TARGET = INCOME_IN_RANGE
 
     # Feature categories
     CATEGORICAL_FEATURES = [
         Fields.SEX,
-        Fields.ENROLLMENT_STATUS,
-        Fields.MARITAL_STATUS,
         Fields.RACE,
         Fields.CITIZENSHIP_STATUS,
-        Fields.DISABILITY_STATUS,
         Fields.EMPLOYMENT_CLASS,
         Fields.INDUSTRY,
-        Fields.LAST_WORKED,
         Fields.MAJOR_OCCUPATION,
         Fields.HAS_HEALTH_INSURANCE,
     ]

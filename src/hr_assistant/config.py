@@ -5,7 +5,7 @@ class Settings(pydantic_settings.BaseSettings):
     # Open Inference Protocol v2 REST server
     inference_base_url: str = "http://model:8080"
 
-    model_name: str = "xgboost-classifier"
+    model_name: str = "salary-predictor"
     model_version: str = "latest"
 
     db_user: str = "postgres_user"

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dagster dev",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "dagster",
+      "args": ["dev"],
+      "justMyCode": false
+    }
+  ]
+}

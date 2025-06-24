@@ -31,10 +31,13 @@ def assign_salary_bands(
     df[PUMSMetaData.TARGET] = (
         df[PUMSMetaData.ORIGINAL_TARGET].between(lower_bound, upper_bound).astype(int)
     )
+
+    df = df.drop(columns=[PUMSMetaData.ORIGINAL_TARGET])
+
     return df
 
 
-def select_features(df: pd.DataFrame, exclude: list[str] = None) -> pd.DataFrame:
+def select_features(df: pd.DataFrame, exclude: list[str] | None = None) -> pd.DataFrame:
     """Filters and retains only the relevant categorical, numerical, ordinal features, and the target variable.
 
     Parameters

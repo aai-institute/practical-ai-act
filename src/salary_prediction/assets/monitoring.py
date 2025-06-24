@@ -8,11 +8,11 @@ import pandas as pd
 
 from asec.data import PUMSMetaData
 from asec.nannyml import build_reference_data
-from income_prediction.resources.configuration import NannyMLConfig
-from income_prediction.resources.mlflow_session import MlflowSession
-from income_prediction.types import ModelVersion
-from income_prediction.utils.docker import build_container_image
-from income_prediction.utils.mlflow import load_model
+from salary_prediction.resources.configuration import NannyMLConfig
+from salary_prediction.resources.mlflow_session import MlflowSession
+from salary_prediction.types import ModelVersion
+from salary_prediction.utils.docker import build_container_image
+from salary_prediction.utils.mlflow import load_model
 
 
 @dg.asset(io_manager_key="lakefs_io_manager", group_name="deployment", kinds={"pandas"})

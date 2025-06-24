@@ -12,7 +12,8 @@ experiment_config = Config(
     random_state=RANDOM_STATE,
     test_size=0.25,
     salary_upper_bound=45_000,
-    sample_fraction=0.2,
+    sample_fraction=0.3,
+    mitigate_bias=True,
 )
 optuna_cv_config = StratifiedShuffleCVConfig(
     n_trials=50,
@@ -25,13 +26,11 @@ optuna_cv_config = StratifiedShuffleCVConfig(
     scoring="f1",
 )
 optuna_xgb_param_distribution = OptunaXGBParamDistribution(
+    classifier_prefix="estimator",
     max_depth=IntDistribution(3, 15),
     gamma=FloatDistribution(0.0, 5.0),
     reg_lambda=FloatDistribution(0.0, 10.0),
-    colsample_bytree=FloatDistribution(0.25, 1),
-    min_child_weight=IntDistribution(2, 20),
     learning_rate=FloatDistribution(0.01, 0.1),
-    subsample=FloatDistribution(0.5, 0.9),
     reg_alpha=FloatDistribution(0.0, 5.0),
 )
 

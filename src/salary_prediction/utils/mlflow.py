@@ -3,7 +3,7 @@ import mlflow.sklearn
 from aif360.metrics import ClassificationMetric
 from fairlearn.metrics import MetricFrame
 
-from income_prediction.types import ModelVersion
+from salary_prediction.types import ModelVersion
 
 
 def start_mlflow_run(
@@ -56,14 +56,18 @@ def log_fairness_metrics(fairness_metrics: ClassificationMetric, prefix: str = "
         metric_value = metric_fn(fairness_metrics)
         mlflow.log_metric(f"{prefix}{metric_name}", metric_value)
 
-    mlflow.log_metric(
-        f"{prefix}tpr_privileged",
-        fairness_metrics.true_positive_rate(privileged=True),
-    )
-    mlflow.log_metric(
-        f"{prefix}tpr_unprivileged",
-        fairness_metrics.true_positive_rate(privileged=False),
-    )
+    # Metrics that operate separately on privileged and unprivileged groups
+    for metric_name in [
+        "true_positive_rate",
+        "false_positive_rate",
+        "true_negative_rate",
+        "false_negative_rate",
+    ]:
+        metric_value = getattr(fairness_metrics, metric_name)(privileged=True)
+        mlflow.log_metric(f"{prefix}{metric_name}_privileged", metric_value)
+
+        metric_value = getattr(fairness_metrics, metric_name)(privileged=False)
+        mlflow.log_metric(f"{prefix}{metric_name}_unprivileged", metric_value)
 
 
 def log_fairness_metrics_by_group(mf: MetricFrame, prefix: str = "fair_"):

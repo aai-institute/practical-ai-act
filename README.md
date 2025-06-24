@@ -94,7 +94,7 @@ The `serve` profile of the Docker Compose stack deploys the ML model inference s
 The `dagster` profile contains the following:
 
 - **Dagster Daemon** and **Webserver**, based on a common base image (`deploy/dagster/Dockerfile`)
-- The **user code location** image, containing the assets, and used to launch executions (see `deploy/dagster/Dockerfile.income_prediction`)
+- The **user code location** image, containing the assets, and used to launch executions (see `deploy/dagster/Dockerfile.salary_prediction`)
 
 In order to train a model, start the basic stack using:
 
@@ -104,8 +104,8 @@ docker compose -f deploy/compose.local.yml up
 
 You can then log your MLflow experiments/models to MLflow (<http://localhost:50000>).
 
-The `model` service needs a registered version of the `xgboost-classifier` model in the MLflow registry to start.
-The model to be loaded can be customized through the `MLSERVER_MODEL_URI` environment variable (defaults to `models:/xgboost-classifier/latest`).
+The `model` service needs a registered version of the `salary-predictor` model in the MLflow registry to start.
+The model to be loaded can be customized through the `MLSERVER_MODEL_URI` environment variable (defaults to `models:/salary-predictor/latest`).
 
 The FastAPI application containing the demo for the use case is exposed at <http://localhost:8001>.
 

@@ -18,10 +18,18 @@ from mlserver_sklearn.sklearn import (
 )
 from mlserver_sklearn.sklearn import VALID_OUTPUTS as SKLEARN_OUTPUTS
 from scipy.sparse import csr_matrix
-from xgboost import XGBClassifier
+from sklearn.base import BaseEstimator
 
 EXPLAIN_OUTPUT = "explain"
 VALID_OUTPUTS = SKLEARN_OUTPUTS + [EXPLAIN_OUTPUT]
+
+
+def _load_explainer(path: str):
+    """Load a SHAP explainer instance."""
+
+    with open(path, "rb") as f:
+        explainer = shap.Explainer.load(f)
+        return explainer
 
 
 def _serialize_explanation(expl: shap.Explanation) -> str:
@@ -48,24 +56,35 @@ def _serialize_explanation(expl: shap.Explanation) -> str:
     return json.dumps(result)
 
 
-class ExplainableXGBClassifierModel(SKLearnModel):
-    """MLModel implementation for XGBoost classifier models with explainability support.
+class ExplainableSKLearnModel(SKLearnModel):
+    """MLModel implementation for SKLearn estimators with explainability support.
 
     It extends ``SKLearnModel`` to provide SHAP-based explainability data in JSON format
-    for the ``explain`` output type. The model must be a scikit-learn pipeline with a
-    classifier as the final step."""
+    for the ``explain`` output type. The model must be a scikit-learn ``BaseEstimator`` instance."""
 
     explainer: shap.Explainer
 
     async def load(self):
         await super().load()
 
-        if not isinstance(self._model, XGBClassifier):
+        if not isinstance(self._model, BaseEstimator):
             raise InferenceError(
-                f"{self.__class__.__name__} only supports XGBClassifier models"
+                f"{self.__class__.__name__} only supports SKLearn estimators, got a {type(self._model)}"
             )
 
-        self.explainer = shap.TreeExplainer(self._model)
+        print(self._settings)
+        print(self._settings.parameters)
+
+        explainer_path = (
+            self._settings.parameters.extra.get("explainer_path")
+            if self._settings.parameters and self._settings.parameters.extra
+            else None
+        )
+        if not explainer_path:
+            raise InferenceError(
+                f"{self.__class__.__name__} requires an 'explainer_path' parameter in the model parameters"
+            )
+        self.explainer = _load_explainer(explainer_path)
 
         return True
 
