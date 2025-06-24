@@ -6,7 +6,6 @@ import mlflow
 import optuna
 import pandas as pd
 import shap
-import sklearn
 from aif360.sklearn.preprocessing import Reweighing, ReweighingMeta
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
@@ -30,7 +29,8 @@ from .fairness import (
 
 if TYPE_CHECKING:
     import mlflow.data.pandas_dataset
-    import mlflow.models
+    import mlflow.models.model
+    import mlflow.shap
     import mlflow.sklearn
 
 GROUP_NAME = "model"
@@ -40,7 +40,10 @@ def _log_datasets(
     context: dg.AssetExecutionContext,
     train_data: pd.DataFrame,
     test_data: pd.DataFrame,
-):
+) -> tuple[
+    mlflow.data.pandas_dataset.PandasDataset,
+    mlflow.data.pandas_dataset.PandasDataset,
+]:
     train_ds = mlflow.data.pandas_dataset.from_pandas(
         train_data,
         name="train_data",
@@ -57,18 +60,19 @@ def _log_datasets(
     )
     mlflow.log_input(test_ds)
 
+    return train_ds, test_ds
+
 
 def _log_evaluation(
-    model,
-    test_data: pd.DataFrame,
+    model_uri,
+    test_data: mlflow.data.pandas_dataset.PandasDataset,
     /,
     evaluator_config: dict,
 ):
     mlflow.evaluate(
-        model=model.predict,
+        model=model_uri,
         data=test_data,
         model_type="classifier",
-        targets=PUMSMetaData.TARGET,
         evaluator_config=evaluator_config,
     )
 
@@ -89,14 +93,22 @@ def _log_fairness_evaluation(
     log_fairness_metrics_by_group(mf, prefix=prefix)
 
 
-def _log_explainability_plots(model, X_test: pd.DataFrame, experiment_config: Config):
+def _create_explainer(
+    model, X_test: pd.DataFrame, experiment_config: Config
+) -> shap.Explainer:
     plt.close()
 
-    explainer = shap.PermutationExplainer(
+    explainer = shap.Explainer(
         model,
         X_test,
-        max_evals="auto",
+        algorithm="permutation",  # TreeExplainer cannot be serialized correctly, see https://github.com/shap/shap/issues/2122
         seed=experiment_config.random_state,
+    )
+
+    mlflow.shap.log_explainer(
+        explainer,
+        name="explainer",
+        serialize_model_using_mlflow=False,
     )
 
     # Calculate feature importance on a sample of the test set
@@ -111,6 +123,35 @@ def _log_explainability_plots(model, X_test: pd.DataFrame, experiment_config: Co
     ax = shap.plots.violin(shap_values, show=False)
     mlflow.log_figure(plt.gcf(), "shap_violin_plot.png")
     plt.close()
+
+    return explainer
+
+
+def _register_model(
+    model,
+    model_name: str,
+    X_train: pd.DataFrame,
+) -> mlflow.models.model.ModelInfo:
+    """
+    Register the model in MLflow.
+    """
+    signature = mlflow.models.infer_signature(
+        X_train.head(),
+        model.predict(X_train.head()),
+    )
+
+    model_info = mlflow.sklearn.log_model(
+        model,
+        name=model_name,
+        registered_model_name=model_name,
+        signature=signature,
+        params=model.get_params(),
+    )
+
+    # Also include parameters in the run metadata (MLflow >3 only logs them with the model)
+    mlflow.log_params(model.get_params())
+
+    return model_info
 
 
 @dg.multi_asset(
@@ -155,8 +196,6 @@ def optuna_search_xgb(
 ) -> ModelVersion:
     model_name = "xgboost-classifier"
 
-    sklearn.set_config(enable_metadata_routing=True)
-
     X_train = train_data.drop(columns=PUMSMetaData.TARGET)
     y_train = train_data[PUMSMetaData.TARGET]
 
@@ -173,49 +212,36 @@ def optuna_search_xgb(
     optuna_search.fit(X_train, y_train)
 
     with mlflow_session.start_run(context):
-        with mlflow.start_run(nested=True, run_name=model_name):
-            # We log datasets and models explicitly below
-            mlflow.autolog(log_datasets=False, log_models=False)
+        best_model = optuna_search.best_estimator_
 
-            best_model = optuna_search.best_estimator_
+        X_test = test_data.drop(columns=PUMSMetaData.TARGET)
+        y_pred = best_model.predict(X_test)
 
-            X_test = test_data.drop(columns=PUMSMetaData.TARGET)
-            y_pred = best_model.predict(X_test)
+        # Model registration
+        model_info = _register_model(best_model, model_name, X_train)
 
-            _log_datasets(context, train_data, test_data)
-            _log_evaluation(
-                best_model,
-                test_data,
-                evaluator_config={"log_model_explainability": False},
-            )
+        _, test_ds = _log_datasets(context, train_data, test_data)
 
-            # Fairness evaluation
-            _log_fairness_evaluation(
-                test_data,
-                y_pred,
-                sensitive_feature_names=experiment_config.sensitive_feature_names,
-            )
+        # Model performance evaluation
+        _log_evaluation(
+            model_info.model_uri,
+            test_ds,
+            evaluator_config={"log_model_explainability": False},
+        )
 
-            # Explainability plots
-            if experiment_config.log_model_explainability:
-                _log_explainability_plots(best_model.predict, X_test, experiment_config)
+        # Fairness evaluation
+        _log_fairness_evaluation(
+            test_data,
+            y_pred,
+            sensitive_feature_names=experiment_config.sensitive_feature_names,
+        )
 
-            # Model registration
-            signature = mlflow.models.infer_signature(
-                X_train.head(),
-                best_model.predict(X_train.head()),
-            )
+        # Explainability plots
+        if experiment_config.log_model_explainability:
+            _create_explainer(best_model.predict, X_test, experiment_config)
 
-            model_info = mlflow.sklearn.log_model(
-                best_model,
-                artifact_path="model",
-                registered_model_name=model_name,
-                signature=signature,
-                input_example=X_train.head(5),
-            )
-
-            return ModelVersion(
-                version=str(model_info.registered_model_version),
-                name=model_name,
-                uri=model_info.model_uri,
-            )
+        return ModelVersion(
+            version=str(model_info.registered_model_version),
+            name=model_name,
+            uri=model_info.model_uri,
+        )
