@@ -76,6 +76,12 @@ class MlflowSession(ConfigurableResource):
 
         tags["dagster.run_id"] = run_id
 
+        context.add_output_metadata({
+            "mlflow_run_id": run_id,
+            "mlflow_run_name": run_name,
+            "mlflow_experiment": self.experiment,
+        })
+
         return start_mlflow_run(run_name, tags=tags)
 
     def get_latest_model_version(self, model_name: str) -> tuple[str, str]:
