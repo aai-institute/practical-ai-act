@@ -109,10 +109,10 @@ def check_transformed_target(transformed_target: pd.DataFrame) -> dg.AssetCheckR
     )
 
 
-def handle_sensitive_attributes(
+def reindex_by_sensitive_attributes(
     df: pd.DataFrame, sensitive_attributes: list[str]
 ) -> pd.DataFrame:
-    """Handles sensitive attributes by removing them from the DataFrame."""
+    """Index the dataset by sensitive attributes, as expected by the bias mitigation algorithms in AIF360."""
     return df.set_index(sensitive_attributes, drop=False)
 
 
@@ -127,7 +127,7 @@ def preprocessed_features(
         .pipe(transform_categorical_features)
         .pipe(
             partial(
-                handle_sensitive_attributes,
+                reindex_by_sensitive_attributes,
                 sensitive_attributes=experiment_config.sensitive_feature_names,
             )
         )
