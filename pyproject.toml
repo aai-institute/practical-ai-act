@@ -104,5 +104,5 @@ ignore = [
 ]
 
 [tool.dagster]
-module_name = "income_prediction"
-code_location_name = "income_prediction"
+module_name = "salary_prediction"
+code_location_name = "salary_prediction"

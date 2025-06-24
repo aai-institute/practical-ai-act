@@ -70,7 +70,7 @@ class OptunaCVConfig(ConfigurableResource):
     [optuna.integration.OptunaSearchCV][optuna.integration.OptunaSearchCV]
     for more details. If you want to use a stratified shuffle split with a custom
     validation size and number of splits, use
-    [income_prediction.resources.configuration.StratifiedShuffleCVConfig][income_prediction.resources.configuration.StratifiedShuffleCVConfig]
+    [salary_prediction.resources.configuration.StratifiedShuffleCVConfig][salary_prediction.resources.configuration.StratifiedShuffleCVConfig]
 
     Args:
         n_trials: Number of trials for the optimization.

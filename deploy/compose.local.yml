@@ -154,7 +154,7 @@ services:
     profiles: [dagster]
     build:
       context: ..
-      dockerfile: deploy/dagster/Dockerfile.income_prediction
+      dockerfile: deploy/dagster/Dockerfile.salary_prediction
     image: dagster_user_code_image
     networks:
       - dagster

@@ -3,7 +3,7 @@ import mlflow.sklearn
 from aif360.metrics import ClassificationMetric
 from fairlearn.metrics import MetricFrame
 
-from income_prediction.types import ModelVersion
+from salary_prediction.types import ModelVersion
 
 
 def start_mlflow_run(

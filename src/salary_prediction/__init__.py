@@ -4,21 +4,21 @@ import dagster as dg
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
 from upath import UPath
 
-from income_prediction.constants import (
+from salary_prediction.constants import (
     experiment_config,
     nanny_ml_config,
     optuna_cv_config,
     optuna_xgb_param_distribution,
 )
-from income_prediction.io_managers.lakefs import LakeFSParquetIOManager
-from income_prediction.jobs import e2e_pipeline_job
-from income_prediction.resources.configuration import (
+from salary_prediction.io_managers.lakefs import LakeFSParquetIOManager
+from salary_prediction.jobs import e2e_pipeline_job
+from salary_prediction.resources.configuration import (
     LakeFsConfig,
     MinioConfig,
     MlFlowConfig,
 )
-from income_prediction.resources.mlflow_session import MlflowSession
-from income_prediction.utils.dagster import get_current_env
+from salary_prediction.resources.mlflow_session import MlflowSession
+from salary_prediction.utils.dagster import get_current_env
 
 # -- Warning control
 # Dagster source code references are a beta feature, got it
@@ -64,9 +64,9 @@ print("MLflow config: ", mlflow_cfg)
 
 definitions = dg.Definitions(
     assets=dg.with_source_code_references(
-        dg.load_assets_from_package_name("income_prediction.assets")
+        dg.load_assets_from_package_name("salary_prediction.assets")
     ),
-    asset_checks=dg.load_asset_checks_from_package_name("income_prediction.assets"),
+    asset_checks=dg.load_asset_checks_from_package_name("salary_prediction.assets"),
     jobs=[e2e_pipeline_job],
     resources={
         "experiment_config": experiment_config,

@@ -3,8 +3,8 @@ import os
 import mlflow
 from dagster import AssetExecutionContext, ConfigurableResource, InitResourceContext
 
-from income_prediction.utils.dagster import extract_run_id
-from income_prediction.utils.mlflow import start_mlflow_run
+from salary_prediction.utils.dagster import extract_run_id
+from salary_prediction.utils.mlflow import start_mlflow_run
 
 
 class MlflowSession(ConfigurableResource):

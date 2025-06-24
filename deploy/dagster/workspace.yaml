@@ -3,4 +3,4 @@ load_from:
   - grpc_server:
       host: dagster-user-code
       port: 4000
-      location_name: "income_prediction"
+      location_name: "salary_prediction"
