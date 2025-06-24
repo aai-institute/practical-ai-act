@@ -275,7 +275,7 @@ services:
 
   model:
     profiles: [serve]
-    image: xgboost-classifier:latest
+    image: salary-predictor:latest
     networks:
       - monitoring
       - web
