@@ -31,6 +31,8 @@ class MinioConfig(BaseModel):
 class Config(ConfigurableResource):
     """Pipeline configuration."""
 
+    model_name: str = "salary-predictor"
+
     pums_dataset_year: int = 2022
     sample_fraction: float | None = None
 
@@ -46,10 +48,11 @@ class Config(ConfigurableResource):
 
     log_model_explainability: bool = True
 
-    # For fairness evaluation
+    # For fairness evaluation / bias mitigation
     sensitive_feature_names: list[str] = [
         PUMSMetaData.Fields.SEX,
     ]
+    mitigate_bias: bool = True
 
     test_size: float = 0.25
 

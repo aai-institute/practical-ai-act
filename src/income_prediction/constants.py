@@ -12,7 +12,8 @@ experiment_config = Config(
     random_state=RANDOM_STATE,
     test_size=0.25,
     salary_upper_bound=45_000,
-    sample_fraction=0.2,
+    sample_fraction=0.3,
+    mitigate_bias=True,
 )
 optuna_cv_config = StratifiedShuffleCVConfig(
     n_trials=50,

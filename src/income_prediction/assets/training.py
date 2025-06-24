@@ -6,11 +6,10 @@ import mlflow
 import optuna
 import pandas as pd
 import shap
-from aif360.sklearn.preprocessing import Reweighing, ReweighingMeta
 from sklearn.model_selection import train_test_split
-from xgboost import XGBClassifier
 
 from asec.data import PUMSMetaData
+from asec.model_factory import ModelFactory
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
@@ -112,7 +111,7 @@ def _create_explainer(
     )
 
     # Calculate feature importance on a sample of the test set
-    n_rows = min(2000, len(X_test))
+    n_rows = min(20, len(X_test))
     expl_df = X_test.sample(n_rows, random_state=experiment_config.random_state)
     shap_values = explainer(expl_df)
 
@@ -131,6 +130,7 @@ def _register_model(
     model,
     model_name: str,
     X_train: pd.DataFrame,
+    tags: dict[str, str] | None = None,
 ) -> mlflow.models.model.ModelInfo:
     """
     Register the model in MLflow.
@@ -146,6 +146,7 @@ def _register_model(
         registered_model_name=model_name,
         signature=signature,
         params=model.get_params(),
+        tags=tags,
     )
 
     # Also include parameters in the run metadata (MLflow >3 only logs them with the model)
@@ -194,18 +195,17 @@ def optuna_search_xgb(
     test_data: pd.DataFrame,
     experiment_config: Config,
 ) -> ModelVersion:
-    model_name = "xgboost-classifier"
-
     X_train = train_data.drop(columns=PUMSMetaData.TARGET)
     y_train = train_data[PUMSMetaData.TARGET]
 
-    clf = XGBClassifier(enable_categorical=True)
-    reweighing = ReweighingMeta(
-        estimator=clf, reweigher=Reweighing(experiment_config.sensitive_feature_names)
+    clf = ModelFactory.create_xgb(
+        experiment_config.random_state,
+        experiment_config.mitigate_bias,
+        experiment_config.sensitive_feature_names,
     )
 
     optuna_search = optuna.integration.OptunaSearchCV(
-        reweighing,
+        clf,
         param_distributions=optuna_xgb_param_distribution,
         **optuna_cv_config.as_dict(),
     )
@@ -214,11 +214,18 @@ def optuna_search_xgb(
     with mlflow_session.start_run(context):
         best_model = optuna_search.best_estimator_
 
+        mlflow.log_params(experiment_config.model_dump())
+
         X_test = test_data.drop(columns=PUMSMetaData.TARGET)
         y_pred = best_model.predict(X_test)
 
         # Model registration
-        model_info = _register_model(best_model, model_name, X_train)
+        tags = {
+            "bias_mitigation": str(experiment_config.mitigate_bias),
+        }
+        model_info = _register_model(
+            best_model, experiment_config.model_name, X_train, tags
+        )
 
         _, test_ds = _log_datasets(context, train_data, test_data)
 
@@ -242,6 +249,6 @@ def optuna_search_xgb(
 
         return ModelVersion(
             version=str(model_info.registered_model_version),
-            name=model_name,
+            name=experiment_config.model_name,
             uri=model_info.model_uri,
         )
