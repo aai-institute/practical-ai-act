@@ -1310,13 +1310,13 @@ information, please
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#use-case-salary-band-prediction-for-recruitment" class="md-nav__link">
+  <a href="#use-case-salary-compatibility-prediction-for-recruitment" class="md-nav__link">
     <span class="md-ellipsis">
-      Use Case: Salary Band Prediction for Recruitment
+      Use Case: Salary Compatibility Prediction for Recruitment
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Use Case: Salary Band Prediction for Recruitment">
+    <nav class="md-nav" aria-label="Use Case: Salary Compatibility Prediction for Recruitment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1352,13 +1352,13 @@ information, please
 </li>
       
         <li class="md-nav__item">
-  <a href="#dataset-us-census-current-population-survey-cps" class="md-nav__link">
+  <a href="#dataset-american-community-survey-public-use-microdata-sample-acs-pums" class="md-nav__link">
     <span class="md-ellipsis">
-      Dataset: US Census Current Population Survey (CPS)
+      Dataset: American Community Survey Public Use Microdata Sample (ACS PUMS)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Dataset: US Census Current Population Survey (CPS)">
+    <nav class="md-nav" aria-label="Dataset: American Community Survey Public Use Microdata Sample (ACS PUMS)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1371,9 +1371,18 @@ information, please
 </li>
         
           <li class="md-nav__item">
-  <a href="#target-variable-salary-bands" class="md-nav__link">
+  <a href="#target-variable-salary-range-compatibility" class="md-nav__link">
     <span class="md-ellipsis">
-      Target Variable: Salary Bands
+      Target Variable: Salary Range Compatibility
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datasheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Datasheet
     </span>
   </a>
   
@@ -1430,27 +1439,27 @@ information, please
 <p class="admonition-title">Disclaimer</p>
 <p>This is a <strong>fictional use case</strong> created solely for demonstration and educational purposes. It is not a real deployment and should not be interpreted as a commercial or operational system. It does not represent any real recruitment system or policy and should not be used for making real-world hiring decisions.</p>
 </div>
-<h2 id="use-case-salary-band-prediction-for-recruitment">Use Case: Salary Band Prediction for Recruitment<a class="headerlink" href="#use-case-salary-band-prediction-for-recruitment" title="Permanent link">&para;</a></h2>
+<h2 id="use-case-salary-compatibility-prediction-for-recruitment">Use Case: Salary Compatibility Prediction for Recruitment<a class="headerlink" href="#use-case-salary-compatibility-prediction-for-recruitment" title="Permanent link">&para;</a></h2>
 <h3 id="business-context">Business Context<a class="headerlink" href="#business-context" title="Permanent link">&para;</a></h3>
 <p>HR professionals in large organizations often face the challenge of managing a high volume of applications for a single job opening.
 Many of these applicants are not considered suitable candidates for the role.
 Clearly, an efficient screening process is needed to identify the most suitable candidates quickly.</p>
 <p>This showcase presents a fictional HR Assistant system that demonstrates how AI can support this process while ensuring fairness, transparency, and compliance with regulations.
 The system we describe uses a machine learning model to screen and filter candidates.
-It predicts an applicant's expected (current) salary based on demographic and other attributes and matches them to predefined salary bands for a given job position.</p>
-<p>The underlying assumption is that candidates whose expected current income is far above or below the range for a given position are unlikely to be a good fit.
+It predicts whether an applicant's expected (current) salary falls within a predefined salary range for a given job position.</p>
+<p>The underlying assumption is that candidates whose expected current income falls outside the acceptable range for a given position are unlikely to be a good fit.
 Essentially, the system treats expected current income as a proxy for a candidate's suitability for a given position.
 However, note that this assumption is highly simplified and does not account for many real-world factors, such as career changes, relocation, or personal circumstances.
 Therefore, it should not be used as the sole criterion for hiring decisions.</p>
-<p>Recruiters can use this categorization to quickly identify candidates who meet the salary expectations for a position, enabling them to focus on the most relevant applications.</p>
+<p>Recruiters can use this binary classification to quickly identify candidates who meet the salary expectations for a position, enabling them to focus on the most relevant applications.</p>
 <p>Keep in mind that this approach is not suitable for actual use in hiring processes, as it may introduce biases and ethical concerns.
 The system is intended for educational purposes only, by demonstrating how to develop a high-risk AI system under the EU AI Act by adhering to engineering best practices, including fairness, transparency, and explainability.</p>
 <h3 id="intended-purpose">Intended Purpose<a class="headerlink" href="#intended-purpose" title="Permanent link">&para;</a></h3>
 <p>The AI system is designed to:</p>
 <ul>
-<li><strong>Predict (current) income</strong> for job candidates based on their demographic and professional attributes</li>
-<li><strong>Assist recruiters</strong> by providing data-driven salary band recommendations</li>
-<li><strong>Streamline applicant screening</strong> by matching applicants to predefined salary bands for a job position</li>
+<li><strong>Predict salary compatibility</strong> for job candidates based on their demographic and professional attributes</li>
+<li><strong>Assist recruiters</strong> by providing binary predictions on whether candidates' expected salaries align with position requirements</li>
+<li><strong>Streamline applicant screening</strong> by filtering applicants whose expected income falls within the acceptable range for a job position</li>
 </ul>
 <p>The <a href="risk-classification/">risk classification</a> shows that a system like this is classified as a high-risk system under the EU AI Act.</p>
 <p>The page on <a href="risk-assessment/">risk assessment</a> provides an abridged analysis of the potential risks posed by the system, and outlines mitigation strategies to address them.</p>
@@ -1459,7 +1468,7 @@ The system is intended for educational purposes only, by demonstrating how to de
 <li>
 <p><strong>Income Class Prediction</strong></p>
 <ul>
-<li>Predicts a candidate's likely current income</li>
+<li>Predicts whether a candidate's likely current income falls within a specified range</li>
 <li>Uses multiple income band categories</li>
 <li>Provides confidence scores for predictions</li>
 </ul>
@@ -1488,17 +1497,21 @@ The system is intended for educational purposes only, by demonstrating how to de
 </li>
 </ol>
 <p>There is a detailed <a href="system-overview/">overview</a> of the system's architecture.</p>
-<h2 id="dataset-us-census-current-population-survey-cps">Dataset: US Census Current Population Survey (CPS)<a class="headerlink" href="#dataset-us-census-current-population-survey-cps" title="Permanent link">&para;</a></h2>
-<p>The model is trained on data from the <strong>US Census Bureau's Current Population Survey</strong>, specifically the 2024 version of the <a href="https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html">Annual Social and Economic Supplement (ASEC)</a> data.</p>
+<h2 id="dataset-american-community-survey-public-use-microdata-sample-acs-pums">Dataset: American Community Survey Public Use Microdata Sample (ACS PUMS)<a class="headerlink" href="#dataset-american-community-survey-public-use-microdata-sample-acs-pums" title="Permanent link">&para;</a></h2>
+<p>The model is trained on data from the <strong>US Census Bureau</strong>, specifically the 2022 version of the American Community Survey (ACS) <a href="https://www.census.gov/programs-surveys/acs/microdata/access.html">Public Use Microdata Sample (PUMS)</a> data. The data is accessed via
+the software package <a href="https://github.com/socialfoundations/folktables">folktables</a>.</p>
 <h3 id="key-data-characteristics">Key Data Characteristics<a class="headerlink" href="#key-data-characteristics" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Source</strong>: Official US government census data (publicly available)</li>
 <li><strong>Time Period</strong>: Recent annual data (updated yearly)</li>
-<li><strong>Sample Size</strong>: Approximately 50,000 households</li>
+<li><strong>Sample Size</strong>: Approximately 1% of the US population</li>
 </ul>
-<h3 id="target-variable-salary-bands">Target Variable: Salary Bands<a class="headerlink" href="#target-variable-salary-bands" title="Permanent link">&para;</a></h3>
-<p>The model predicts configurable <strong>salary bands</strong> (e.g., &lt;30K, 30-50K, 50-75K, 75-100K, &gt;100K)
-rather than exact salaries.</p>
+<h3 id="target-variable-salary-range-compatibility">Target Variable: Salary Range Compatibility<a class="headerlink" href="#target-variable-salary-range-compatibility" title="Permanent link">&para;</a></h3>
+<p>The model performs <strong>binary classification</strong> to predict whether an individual's income falls within a configurable salary range (e.g., &lt;= $45,000).
+This represents whether a candidate's expected salary is compatible with the position's salary band.</p>
+<h3 id="datasheet">Datasheet<a class="headerlink" href="#datasheet" title="Permanent link">&para;</a></h3>
+<p>For comprehensive information about the dataset's characteristics, intended use, composition, collection process, and known limitations, please refer to the <a href="https://github.com/socialfoundations/folktables/blob/main/datasheet.md">folktables datasheet</a>.
+The datasheet follows best practices for dataset documentation as outlined in <a href="https://arxiv.org/abs/1803.09010"><em>Datasheets for Datasets</em></a>.</p>
 <h2 id="explore-further">Explore Further<a class="headerlink" href="#explore-further" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="risk-classification/">Risk Classification</a> - EU AI Act compliance analysis</li>
@@ -1508,8 +1521,13 @@ rather than exact salaries.</p>
 </ul>
 <p><strong>Resources</strong>:</p>
 <ul>
-<li><a href="https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html">CPS ASEC Documentation</a> - Official census documentation</li>
-<li><a href="https://arxiv.org/pdf/2108.04884">Retiring Adult: New Datasets for Fair Machine Learning</a> - Discusses limitations of older datasets and introduces better alternatives</li>
+<li><a href="https://www.census.gov/programs-surveys/acs/microdata/access.html">PUMS Data</a> - Official US Census Bureau documentation</li>
+<li><a href="https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf">Understanding and Using the American
+Community Survey Public Use Microdata
+Sample Files</a></li>
+<li><a href="https://www.census.gov/programs-surveys/acs/microdata/documentation.2022.html#list-tab-1370939201">PUMS Documentation, 2022</a>, includes a detailed data dictionary</li>
+<li><a href="https://github.com/socialfoundations/folktables/blob/main/datasheet.md">Folktables Datasheet</a> - Comprehensive dataset documentation including composition, collection process, and limitations</li>
+<li><a href="https://arxiv.org/pdf/2108.04884">Retiring Adult: New Datasets for Fair Machine Learning</a> - Discusses limitations of older datasets and introduces better alternatives (The research publication underlying the folktables package)</li>
 </ul>
 
 
