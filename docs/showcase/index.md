@@ -4,7 +4,7 @@
 
     This is a **fictional use case** created solely for demonstration and educational purposes. It is not a real deployment and should not be interpreted as a commercial or operational system. It does not represent any real recruitment system or policy and should not be used for making real-world hiring decisions.
 
-## Use Case: Salary Band Prediction for Recruitment
+## Use Case: Salary Compatibility Prediction for Recruitment
 
 ### Business Context
 
@@ -14,14 +14,14 @@ Clearly, an efficient screening process is needed to identify the most suitable 
 
 This showcase presents a fictional HR Assistant system that demonstrates how AI can support this process while ensuring fairness, transparency, and compliance with regulations.
 The system we describe uses a machine learning model to screen and filter candidates.
-It predicts an applicant's expected (current) salary based on demographic and other attributes and matches them to predefined salary bands for a given job position.
+It predicts whether an applicant's expected (current) salary falls within a predefined salary range for a given job position.
 
-The underlying assumption is that candidates whose expected current income is far above or below the range for a given position are unlikely to be a good fit.
+The underlying assumption is that candidates whose expected current income falls outside the acceptable range for a given position are unlikely to be a good fit.
 Essentially, the system treats expected current income as a proxy for a candidate's suitability for a given position.
 However, note that this assumption is highly simplified and does not account for many real-world factors, such as career changes, relocation, or personal circumstances.
 Therefore, it should not be used as the sole criterion for hiring decisions.
 
-Recruiters can use this categorization to quickly identify candidates who meet the salary expectations for a position, enabling them to focus on the most relevant applications.
+Recruiters can use this binary classification to quickly identify candidates who meet the salary expectations for a position, enabling them to focus on the most relevant applications.
 
 Keep in mind that this approach is not suitable for actual use in hiring processes, as it may introduce biases and ethical concerns.
 The system is intended for educational purposes only, by demonstrating how to develop a high-risk AI system under the EU AI Act by adhering to engineering best practices, including fairness, transparency, and explainability.
@@ -30,9 +30,9 @@ The system is intended for educational purposes only, by demonstrating how to de
 
 The AI system is designed to:
 
--   **Predict (current) income** for job candidates based on their demographic and professional attributes
--   **Assist recruiters** by providing data-driven salary band recommendations
--   **Streamline applicant screening** by matching applicants to predefined salary bands for a job position
+-   **Predict salary compatibility** for job candidates based on their demographic and professional attributes
+-   **Assist recruiters** by providing binary predictions on whether candidates' expected salaries align with position requirements
+-   **Streamline applicant screening** by filtering applicants whose expected income falls within the acceptable range for a job position
 
 The [risk classification](risk-classification.md) shows that a system like this is classified as a high-risk system under the EU AI Act.
 
@@ -42,7 +42,7 @@ The page on [risk assessment](risk-assessment.md) provides an abridged analysis 
 
 1. **Income Class Prediction**
 
-    - Predicts a candidate's likely current income
+    - Predicts whether a candidate's likely current income falls within a specified range
     - Uses multiple income band categories
     - Provides confidence scores for predictions
 
@@ -63,20 +63,26 @@ The page on [risk assessment](risk-assessment.md) provides an abridged analysis 
 
 There is a detailed [overview](system-overview.md) of the system's architecture.
 
-## Dataset: US Census Current Population Survey (CPS)
+## Dataset: American Community Survey Public Use Microdata Sample (ACS PUMS)
 
-The model is trained on data from the **US Census Bureau's Current Population Survey**, specifically the 2024 version of the [Annual Social and Economic Supplement (ASEC)](https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html) data.
+The model is trained on data from the **US Census Bureau**, specifically the 2022 version of the American Community Survey (ACS) [Public Use Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/microdata/access.html) data. The data is accessed via
+the software package [folktables](https://github.com/socialfoundations/folktables).
 
 ### Key Data Characteristics
 
 -   **Source**: Official US government census data (publicly available)
 -   **Time Period**: Recent annual data (updated yearly)
--   **Sample Size**: Approximately 50,000 households
+-   **Sample Size**: Approximately 1% of the US population
 
-### Target Variable: Salary Bands
+### Target Variable: Salary Range Compatibility
 
-The model predicts configurable **salary bands** (e.g., <30K, 30-50K, 50-75K, 75-100K, >100K)
-rather than exact salaries.
+The model performs **binary classification** to predict whether an individual's income falls within a configurable salary range (e.g., <= $45,000).
+This represents whether a candidate's expected salary is compatible with the position's salary band.
+
+### Datasheet
+
+For comprehensive information about the dataset's characteristics, intended use, composition, collection process, and known limitations, please refer to the [folktables datasheet](https://github.com/socialfoundations/folktables/blob/main/datasheet.md).
+The datasheet follows best practices for dataset documentation as outlined in [_Datasheets for Datasets_](https://arxiv.org/abs/1803.09010).
 
 ## Explore Further
 
@@ -87,5 +93,10 @@ rather than exact salaries.
 
 **Resources**:
 
--   [CPS ASEC Documentation](https://www.census.gov/data/datasets/2024/demo/cps/cps-asec-2024.html) - Official census documentation
--   [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884) - Discusses limitations of older datasets and introduces better alternatives
+-   [PUMS Data](https://www.census.gov/programs-surveys/acs/microdata/access.html) - Official US Census Bureau documentation
+-   [Understanding and Using the American
+Community Survey Public Use Microdata
+Sample Files](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf)
+-   [PUMS Documentation, 2022](https://www.census.gov/programs-surveys/acs/microdata/documentation.2022.html#list-tab-1370939201), includes a detailed data dictionary
+-   [Folktables Datasheet](https://github.com/socialfoundations/folktables/blob/main/datasheet.md) - Comprehensive dataset documentation including composition, collection process, and limitations
+-   [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884) - Discusses limitations of older datasets and introduces better alternatives (The research publication underlying the folktables package)
