@@ -78,6 +78,9 @@ def transform_categorical_features(feature_df: pd.DataFrame) -> pd.DataFrame:
 
 
 class PUMSMetaData:
+    SEX_MALE = 1
+    SEX_FEMALE = 2
+
     class Fields:
         """
         Mapping of original column names to human-readable names for PUMS data.
