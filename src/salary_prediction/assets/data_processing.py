@@ -25,7 +25,10 @@ GROUP_NAME = "data_processing"
 def raw_pums_data(
     context: dg.AssetExecutionContext, experiment_config: Config
 ) -> pd.DataFrame:
-    df = download_pums_data(experiment_config.pums_dataset_year)
+    df = download_pums_data(
+        experiment_config.pums_dataset_year,
+        random_seed=experiment_config.random_state,
+    )
     context.add_output_metadata({
         "num_rows": dg.MetadataValue.int(len(df)),
         "schema": create_table_schema_metadata_from_dataframe(df),
