@@ -232,5 +232,33 @@ class OptunaXGBParamDistribution(ResourceDefinition):
 
 
 class NannyMLConfig(ConfigurableResource):
+    """Configuration for NannyML Confidence-Based Performance Estimation (CBPE).
+
+    NannyML is used to estimate model performance in production when ground truth
+    is not yet available. This configuration controls how NannyML analyzes
+    prediction data using CBPE.
+
+    For more information, see:
+    https://nannyml.readthedocs.io/en/stable/nannyml/nannyml.performance_estimation.confidence_based.cbpe.html
+
+    Attributes:
+        chunk_size: Number of observations per chunk for analysis. NannyML
+            divides data into chunks to track performance over time. The chunk
+            size should be large enough to provide reliable estimates but small
+            enough to detect changes quickly.
+
+        metrics: List of metrics to estimate using CBPE. For binary classification,
+            supported metrics include:
+            - "roc_auc": ROC AUC score
+            - "f1": F1 score
+            - "precision": Precision
+            - "recall": Recall (Sensitivity)
+            - "specificity": Specificity
+            - "accuracy": Accuracy
+
+            Note: CBPE estimates these metrics without requiring ground truth labels
+            by using the model's predicted probabilities and calibration assumptions.
+    """
+
     chunk_size: int
     metrics: list[str]
