@@ -79,6 +79,11 @@ the software package [folktables](https://github.com/socialfoundations/folktable
 The model performs **binary classification** to predict whether an individual's income falls within a configurable salary range (e.g., <= $45,000).
 This represents whether a candidate's expected salary is compatible with the position's salary band.
 
+### Datasheet
+
+For comprehensive information about the dataset's characteristics, intended use, composition, collection process, and known limitations, please refer to the [folktables datasheet](https://github.com/socialfoundations/folktables/blob/main/datasheet.md).
+The datasheet follows best practices for dataset documentation as outlined in [_Datasheets for Datasets_](https://arxiv.org/abs/1803.09010).
+
 ## Explore Further
 
 -   [Risk Classification](risk-classification.md) - EU AI Act compliance analysis
@@ -93,4 +98,5 @@ This represents whether a candidate's expected salary is compatible with the pos
 Community Survey Public Use Microdata
 Sample Files](https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf)
 -   [PUMS Documentation, 2022](https://www.census.gov/programs-surveys/acs/microdata/documentation.2022.html#list-tab-1370939201), includes a detailed data dictionary
+-   [Folktables Datasheet](https://github.com/socialfoundations/folktables/blob/main/datasheet.md) - Comprehensive dataset documentation including composition, collection process, and limitations
 -   [Retiring Adult: New Datasets for Fair Machine Learning](https://arxiv.org/pdf/2108.04884) - Discusses limitations of older datasets and introduces better alternatives (The research publication underlying the folktables package)
