@@ -1,6 +1,7 @@
 import warnings
 
 import dagster as dg
+import optuna
 from dagster._core.storage.fs_io_manager import PickledObjectFilesystemIOManager
 from upath import UPath
 
@@ -32,6 +33,12 @@ warnings.filterwarnings(
     action="ignore",
     category=FutureWarning,
     module="aif360.sklearn.postprocessing.calibrated_equalized_odds",
+)
+# OptunaSearchCV is experimental, duly acknowledged
+warnings.filterwarnings(
+    action="ignore",
+    category=optuna.exceptions.ExperimentalWarning,
+    module="optuna.integration",
 )
 
 

@@ -201,7 +201,7 @@ class OptunaXGBParamDistribution(ResourceDefinition):
         reg_lambda: FloatDistribution | None = None,
         reg_alpha: FloatDistribution | None = None,
         colsample_bytree: FloatDistribution | None = None,
-        min_child_weight: IntDistribution | None = None,
+        min_child_weight: FloatDistribution | None = None,
         learning_rate: FloatDistribution | None = None,
         subsample: FloatDistribution | None = None,
         classifier_prefix: str | None = None,
