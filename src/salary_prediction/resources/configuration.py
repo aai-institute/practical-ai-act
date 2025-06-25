@@ -27,11 +27,53 @@ class MinioConfig(BaseModel):
 
 
 class Config(ConfigurableResource):
-    """Pipeline configuration."""
+    """Pipeline configuration for the salary prediction model.
+
+    This configuration class defines all parameters needed for training and evaluating
+    the salary prediction model, including data processing, model training, fairness
+    evaluation, and bias mitigation settings.
+
+    Attributes:
+        model_name: Name identifier for the trained model. This is used for tracking
+            experiments in MLflow and identifying the model in the registry.
+
+        sample_fraction: Fraction of the dataset to use for training (0.0 to 1.0).
+            Useful for quick experiments with smaller data samples. A value of 1.0
+            uses the entire dataset.
+
+        test_size: Fraction of data to reserve for testing (0.0 to 1.0).
+            The remaining data is used for training. Common values are 0.2 or 0.3.
+
+        pums_dataset_year: Year of the PUMS (Public Use Microdata Sample) dataset
+            to use. Different years may have different features or data distributions.
+
+        salary_lower_bound: Minimum salary threshold for binary classification.
+
+        salary_upper_bound: Maximum salary threshold for binary classification.
+            Together with salary_lower_bound, defines the income classification boundaries.
+
+        data_dir: Directory path where data files are stored. Defaults to "data".
+            This is used to store the PUMS dataset files.
+
+        random_state: Random seed for reproducibility. Used for train/test splitting,
+            model initialization, and any other random operations to ensure
+            consistent results across runs.
+
+        log_model_explainability: Whether to generate and log model explainability
+            artifacts (SHAP values) during training. Defaults to True.
+            Disable for faster training when interpretability is not needed.
+
+        sensitive_feature_names: List of feature names considered sensitive for
+            fairness evaluation (e.g., ["sex", "race", "age"]). These features
+            are analyzed for potential bias in model predictions.
+
+        mitigate_bias: Whether to apply bias mitigation techniques during training.
+            When True, the pipeline will attempt to reduce bias with respect to
+            the sensitive features while maintaining model performance.
+    """
 
     model_name: str
     sample_fraction: float
-    """Subsample fraction of the dataset to use for training."""
 
     test_size: float
 
