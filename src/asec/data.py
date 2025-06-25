@@ -4,10 +4,12 @@ from os import PathLike
 
 import numpy as np
 import pandas as pd
-from folktables import ACSDataSource, BasicProblem, adult_filter
+from folktables import ACSDataSource, BasicProblem, adult_filter, state_list
 
 
-def download_pums_data(year: int, base_dir: str | PathLike = "data"):
+def download_pums_data(
+    year: int, base_dir: str | PathLike = "data", random_seed: int = 0
+) -> pd.DataFrame:
     """
     This function uses the `folktables` library to download
     the Public Use Microdata Sample (PUMS) data from the US Census Bureau.
@@ -26,7 +28,19 @@ def download_pums_data(year: int, base_dir: str | PathLike = "data"):
         survey="person",
         root_dir=str(base_dir),
     )
-    return data_source.get_data(download=True)
+
+    # Load each state individually to prevent memory issues due to the naive implementation of `get_data`
+    return pd.concat(
+        [
+            data_source.get_data(
+                download=True,
+                states=[state],
+                random_seed=random_seed,
+            )
+            for state in state_list
+        ],
+        axis=0,
+    )
 
 
 def filter_pums_data(

@@ -5,8 +5,6 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from asec.data import PUMSMetaData
-
 
 class MlFlowConfig(BaseModel):
     mlflow_tracking_url: str = "http://localhost:50000"
@@ -29,32 +27,67 @@ class MinioConfig(BaseModel):
 
 
 class Config(ConfigurableResource):
-    """Pipeline configuration."""
+    """Pipeline configuration for the salary prediction model.
 
-    model_name: str = "salary-predictor"
+    This configuration class defines all parameters needed for training and evaluating
+    the salary prediction model, including data processing, model training, fairness
+    evaluation, and bias mitigation settings.
 
-    pums_dataset_year: int = 2022
-    sample_fraction: float | None = None
+    Attributes:
+        model_name: Name identifier for the trained model. This is used for tracking
+            experiments in MLflow and identifying the model in the registry.
 
-    # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
-    census_asec_dataset_use_archive: bool = False
+        sample_fraction: Fraction of the dataset to use for training (0.0 to 1.0).
+            Useful for quick experiments with smaller data samples. A value of 1.0
+            uses the entire dataset.
 
-    salary_lower_bound: float = 0
-    salary_upper_bound: float = 45_000
+        test_size: Fraction of data to reserve for testing (0.0 to 1.0).
+            The remaining data is used for training. Common values are 0.2 or 0.3.
 
+        pums_dataset_year: Year of the PUMS (Public Use Microdata Sample) dataset
+            to use. Different years may have different features or data distributions.
+
+        salary_lower_bound: Minimum salary threshold for binary classification.
+
+        salary_upper_bound: Maximum salary threshold for binary classification.
+            Together with salary_lower_bound, defines the income classification boundaries.
+
+        data_dir: Directory path where data files are stored. Defaults to "data".
+            This is used to store the PUMS dataset files.
+
+        random_state: Random seed for reproducibility. Used for train/test splitting,
+            model initialization, and any other random operations to ensure
+            consistent results across runs.
+
+        log_model_explainability: Whether to generate and log model explainability
+            artifacts (SHAP values) during training. Defaults to True.
+            Disable for faster training when interpretability is not needed.
+
+        sensitive_feature_names: List of feature names considered sensitive for
+            fairness evaluation (e.g., ["sex", "race", "age"]). These features
+            are analyzed for potential bias in model predictions.
+
+        mitigate_bias: Whether to apply bias mitigation techniques during training.
+            When True, the pipeline will attempt to reduce bias with respect to
+            the sensitive features while maintaining model performance.
+    """
+
+    model_name: str
+    sample_fraction: float
+
+    test_size: float
+
+    pums_dataset_year: int
+
+    salary_lower_bound: float
+    salary_upper_bound: float
     data_dir: str = "data"
-
-    random_state: int = 42
-
+    random_state: int
     log_model_explainability: bool = True
 
     # For fairness evaluation / bias mitigation
-    sensitive_feature_names: list[str] = [
-        PUMSMetaData.Fields.SEX,
-    ]
-    mitigate_bias: bool = True
-
-    test_size: float = 0.25
+    sensitive_feature_names: list[str]
+    mitigate_bias: bool
 
 
 class OptunaCVConfig(ConfigurableResource):
@@ -85,13 +118,13 @@ class OptunaCVConfig(ConfigurableResource):
         kwargs: Additional keyword arguments to pass to the OptunaSearchCV class.
     """
 
-    n_trials: int = 100
-    timeout: int = 600
-    verbose: int = 2
-    n_jobs: int = -1
+    n_trials: int
+    timeout: int
+    verbose: int
+    n_jobs: int
     random_state: int
     refit: bool = True
-    scoring: str = "accuracy"
+    scoring: str
     kwargs: dict[str, Any] | None = None
 
     def as_dict(self) -> dict[str, Any]:
@@ -130,8 +163,8 @@ class StratifiedShuffleCVConfig(OptunaCVConfig):
 
     """
 
-    validation_size: float = 0.2
-    n_splits: int = 5
+    validation_size: float
+    n_splits: int
 
     def as_dict(self) -> dict[str, Any]:
         config_dict = super().as_dict()
@@ -199,5 +232,33 @@ class OptunaXGBParamDistribution(ResourceDefinition):
 
 
 class NannyMLConfig(ConfigurableResource):
-    chunk_size: int = 200
-    metrics: list[str] = ["roc_auc"]
+    """Configuration for NannyML Confidence-Based Performance Estimation (CBPE).
+
+    NannyML is used to estimate model performance in production when ground truth
+    is not yet available. This configuration controls how NannyML analyzes
+    prediction data using CBPE.
+
+    For more information, see:
+    https://nannyml.readthedocs.io/en/stable/nannyml/nannyml.performance_estimation.confidence_based.cbpe.html
+
+    Attributes:
+        chunk_size: Number of observations per chunk for analysis. NannyML
+            divides data into chunks to track performance over time. The chunk
+            size should be large enough to provide reliable estimates but small
+            enough to detect changes quickly.
+
+        metrics: List of metrics to estimate using CBPE. For binary classification,
+            supported metrics include:
+            - "roc_auc": ROC AUC score
+            - "f1": F1 score
+            - "precision": Precision
+            - "recall": Recall (Sensitivity)
+            - "specificity": Specificity
+            - "accuracy": Accuracy
+
+            Note: CBPE estimates these metrics without requiring ground truth labels
+            by using the model's predicted probabilities and calibration assumptions.
+    """
+
+    chunk_size: int
+    metrics: list[str]
