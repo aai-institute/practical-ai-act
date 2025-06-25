@@ -5,8 +5,6 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
-from asec.data import PUMSMetaData
-
 
 class MlFlowConfig(BaseModel):
     mlflow_tracking_url: str = "http://localhost:50000"
@@ -31,30 +29,23 @@ class MinioConfig(BaseModel):
 class Config(ConfigurableResource):
     """Pipeline configuration."""
 
-    model_name: str = "salary-predictor"
+    model_name: str
+    sample_fraction: float
+    """Subsample fraction of the dataset to use for training."""
 
-    pums_dataset_year: int = 2022
-    sample_fraction: float | None = None
+    test_size: float
 
-    # Optionally use the Internet Archive snapshot of the dataset (if upstream Census Bureau source becomes unavailable again)
-    census_asec_dataset_use_archive: bool = False
+    pums_dataset_year: int
 
-    salary_lower_bound: float = 0
-    salary_upper_bound: float = 45_000
-
+    salary_lower_bound: float
+    salary_upper_bound: float
     data_dir: str = "data"
-
-    random_state: int = 42
-
+    random_state: int
     log_model_explainability: bool = True
 
     # For fairness evaluation / bias mitigation
-    sensitive_feature_names: list[str] = [
-        PUMSMetaData.Fields.SEX,
-    ]
-    mitigate_bias: bool = True
-
-    test_size: float = 0.25
+    sensitive_feature_names: list[str]
+    mitigate_bias: bool
 
 
 class OptunaCVConfig(ConfigurableResource):
@@ -85,13 +76,13 @@ class OptunaCVConfig(ConfigurableResource):
         kwargs: Additional keyword arguments to pass to the OptunaSearchCV class.
     """
 
-    n_trials: int = 100
-    timeout: int = 600
-    verbose: int = 2
-    n_jobs: int = -1
+    n_trials: int
+    timeout: int
+    verbose: int
+    n_jobs: int
     random_state: int
     refit: bool = True
-    scoring: str = "accuracy"
+    scoring: str
     kwargs: dict[str, Any] | None = None
 
     def as_dict(self) -> dict[str, Any]:
@@ -130,8 +121,8 @@ class StratifiedShuffleCVConfig(OptunaCVConfig):
 
     """
 
-    validation_size: float = 0.2
-    n_splits: int = 5
+    validation_size: float
+    n_splits: int
 
     def as_dict(self) -> dict[str, Any]:
         config_dict = super().as_dict()
@@ -199,5 +190,5 @@ class OptunaXGBParamDistribution(ResourceDefinition):
 
 
 class NannyMLConfig(ConfigurableResource):
-    chunk_size: int = 200
-    metrics: list[str] = ["roc_auc"]
+    chunk_size: int
+    metrics: list[str]
