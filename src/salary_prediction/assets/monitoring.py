@@ -3,6 +3,7 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import dagster as dg
+import mlflow
 import nannyml as nml
 import pandas as pd
 
@@ -11,7 +12,6 @@ from salary_prediction.resources.configuration import NannyMLConfig
 from salary_prediction.resources.mlflow_session import MlflowSession
 from salary_prediction.types import ModelVersion
 from salary_prediction.utils.docker import build_container_image
-from salary_prediction.utils.mlflow import load_model
 from salary_prediction.utils.nannyml import build_reference_data
 
 
@@ -25,7 +25,7 @@ def reference_dataset(
 
     Based on predictions of the model on the test dataset"""
 
-    model = load_model(optuna_search_xgb)
+    model = mlflow.sklearn.load_model(optuna_search_xgb.version)
     X_test = test_data.drop(columns=[PUMSMetaData.TARGET])
     y_test = test_data[PUMSMetaData.TARGET]
     df = build_reference_data(model, X_test, y_test)
