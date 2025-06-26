@@ -5,6 +5,8 @@ from optuna.distributions import FloatDistribution, IntDistribution
 from pydantic import BaseModel, SecretStr
 from sklearn.model_selection import StratifiedShuffleSplit
 
+from asec.fairness import ProtectedAttributes
+
 
 class MlFlowConfig(BaseModel):
     mlflow_tracking_url: str = "http://localhost:50000"
@@ -86,7 +88,7 @@ class Config(ConfigurableResource):
     log_model_explainability: bool = True
 
     # For fairness evaluation / bias mitigation
-    sensitive_feature_names: list[str]
+    protected_attributes: ProtectedAttributes
     mitigate_bias: bool
 
 

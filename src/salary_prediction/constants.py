@@ -1,6 +1,7 @@
 from optuna.distributions import FloatDistribution, IntDistribution
 
 from asec.data import PUMSMetaData
+from asec.fairness import ProtectedAttributes
 
 from .resources.configuration import (
     Config,
@@ -21,7 +22,12 @@ experiment_config = Config(
     salary_lower_bound=0,
     salary_upper_bound=45_000,
     # Fairness
-    sensitive_feature_names=[PUMSMetaData.Fields.SEX],
+    protected_attributes=ProtectedAttributes(
+        privileged_classes={
+            PUMSMetaData.Fields.SEX: PUMSMetaData.SEX_MALE,
+            # PUMSMetaData.Fields.RACE: PUMSMetaData.RACE_WHITE,
+        },
+    ),
     mitigate_bias=True,
 )
 

@@ -9,22 +9,16 @@ import shap
 from sklearn.model_selection import train_test_split
 
 from asec.data import PUMSMetaData
+from asec.fairness import (
+    ProtectedAttributes,
+    fairness_metrics,
+)
 from asec.model_factory import ModelFactory
 
 from ..resources.configuration import Config, OptunaCVConfig
 from ..resources.mlflow_session import MlflowSession
 from ..types import ModelVersion
 from ..utils.dagster import canonical_lakefs_uri_for_input
-from ..utils.mlflow import (
-    log_fairness_metrics,
-    log_fairness_metrics_by_group,
-)
-from .fairness import (
-    classification_metrics,
-    dataset_metrics,
-    extract_metrics,
-    make_metricframe,
-)
 
 if TYPE_CHECKING:
     import mlflow.data.pandas_dataset
@@ -79,17 +73,16 @@ def _log_evaluation(
 def _log_fairness_evaluation(
     test_data: pd.DataFrame,
     y_pred: pd.Series,
-    sensitive_feature_names: list[str],
+    protected_attributes: ProtectedAttributes,
     prefix: str = "fair_",
 ):
-    # -- AIF360
-    fairness_metrics = classification_metrics(test_data, y_pred)
-    log_fairness_metrics(fairness_metrics, prefix=prefix)
-
-    # -- Fairlearn
-    sensitive_features = test_data[sensitive_feature_names]
-    mf = make_metricframe(test_data, y_pred, sensitive_features=sensitive_features)
-    log_fairness_metrics_by_group(mf, prefix=prefix)
+    metrics = fairness_metrics(
+        y_true=test_data[PUMSMetaData.TARGET],
+        y_pred=y_pred,
+        prot_attr=protected_attributes,
+    )
+    for name, val in metrics.items():
+        mlflow.log_metric(f"{prefix}{name}", val)
 
 
 def _create_explainer(
@@ -176,8 +169,11 @@ def train_test_data(
 
     # Fairness metrics
     for asset_key in ["train_data", "test_data"]:
-        dm = dataset_metrics(locals()[asset_key])
-        metrics = extract_metrics(dm)
+        df = locals()[asset_key]
+        metrics = fairness_metrics(
+            y_true=df[PUMSMetaData.TARGET],
+            prot_attr=experiment_config.protected_attributes,
+        )
         context.add_asset_metadata(asset_key=asset_key, metadata=metrics)
 
     return train_data, test_data
@@ -201,7 +197,7 @@ def optuna_search_xgb(
     clf = ModelFactory.create_xgb(
         experiment_config.random_state,
         experiment_config.mitigate_bias,
-        experiment_config.sensitive_feature_names,
+        experiment_config.protected_attributes.attribute_names,
     )
 
     optuna_search = optuna.integration.OptunaSearchCV(
@@ -240,7 +236,7 @@ def optuna_search_xgb(
         _log_fairness_evaluation(
             test_data,
             y_pred,
-            sensitive_feature_names=experiment_config.sensitive_feature_names,
+            protected_attributes=experiment_config.protected_attributes,
         )
 
         # Explainability plots
