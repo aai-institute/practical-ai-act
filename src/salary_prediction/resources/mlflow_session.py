@@ -25,11 +25,12 @@ class MlflowSession(ConfigurableResource):
     """
 
     tracking_url: str
-    username: str | None
-    password: str | None
 
     experiment: str
     run_name_prefix: str = ""
+
+    username: str | None = None
+    password: str | None = None
 
     def setup_for_execution(self, context: InitResourceContext) -> None:
         """Configures MLflow tracking settings, including authentication credentials and the tracking server URI.
