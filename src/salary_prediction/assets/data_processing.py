@@ -10,7 +10,7 @@ from asec.data import (
     filter_pums_data,
     transform_categorical_features,
 )
-from asec.fairness import extract_metrics
+from asec.fairness import fairness_metrics
 from asec.features import (
     assign_salary_bands,
     select_features,
@@ -131,7 +131,7 @@ def preprocessed_features(
         .pipe(
             partial(
                 reindex_by_sensitive_attributes,
-                sensitive_attributes=experiment_config.protected_attributes.protected_attribute_names,
+                sensitive_attributes=experiment_config.protected_attributes.attribute_names,
             )
         )
     )
@@ -168,10 +168,9 @@ def sub_sampled_data(
     context.add_output_metadata({"num_rows": dg.MetadataValue.int(len(df))})
 
     # Fairness metrics
-    # dm = dataset_metrics(df, experiment_config.protected_attributes)
-    metrics = extract_metrics(
+    metrics = fairness_metrics(
         y_true=preprocessed_features[PUMSMetaData.TARGET],
-        protected_attributes=experiment_config.protected_attributes,
+        prot_attr=experiment_config.protected_attributes,
     )
     context.add_asset_metadata(
         metadata={k: dg.MetadataValue.float(v) for k, v in metrics.items()},

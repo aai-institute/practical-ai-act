@@ -23,8 +23,10 @@ experiment_config = Config(
     salary_upper_bound=45_000,
     # Fairness
     protected_attributes=ProtectedAttributes(
-        privileged_groups=[{PUMSMetaData.Fields.SEX: PUMSMetaData.SEX_MALE}],
-        unprivileged_groups=[{PUMSMetaData.Fields.SEX: PUMSMetaData.SEX_FEMALE}],
+        privileged_classes={
+            PUMSMetaData.Fields.SEX: PUMSMetaData.SEX_MALE,
+            # PUMSMetaData.Fields.RACE: PUMSMetaData.RACE_WHITE,
+        },
     ),
     mitigate_bias=True,
 )

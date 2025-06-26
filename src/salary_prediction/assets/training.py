@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from asec.data import PUMSMetaData
 from asec.fairness import (
     ProtectedAttributes,
-    extract_metrics,
+    fairness_metrics,
 )
 from asec.model_factory import ModelFactory
 
@@ -76,12 +76,12 @@ def _log_fairness_evaluation(
     protected_attributes: ProtectedAttributes,
     prefix: str = "fair_",
 ):
-    fairness_metrics = extract_metrics(
+    metrics = fairness_metrics(
         y_true=test_data[PUMSMetaData.TARGET],
         y_pred=y_pred,
-        protected_attributes=protected_attributes,
+        prot_attr=protected_attributes,
     )
-    for name, val in fairness_metrics.items():
+    for name, val in metrics.items():
         mlflow.log_metric(f"{prefix}{name}", val)
 
 
@@ -170,9 +170,9 @@ def train_test_data(
     # Fairness metrics
     for asset_key in ["train_data", "test_data"]:
         df = locals()[asset_key]
-        metrics = extract_metrics(
+        metrics = fairness_metrics(
             y_true=df[PUMSMetaData.TARGET],
-            protected_attributes=experiment_config.protected_attributes,
+            prot_attr=experiment_config.protected_attributes,
         )
         context.add_asset_metadata(asset_key=asset_key, metadata=metrics)
 
@@ -197,7 +197,7 @@ def optuna_search_xgb(
     clf = ModelFactory.create_xgb(
         experiment_config.random_state,
         experiment_config.mitigate_bias,
-        experiment_config.protected_attributes.protected_attribute_names,
+        experiment_config.protected_attributes.attribute_names,
     )
 
     optuna_search = optuna.integration.OptunaSearchCV(

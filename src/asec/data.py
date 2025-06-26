@@ -81,6 +81,8 @@ class PUMSMetaData:
     SEX_MALE = 1
     SEX_FEMALE = 2
 
+    RACE_WHITE = 1
+
     class Fields:
         """
         Mapping of original column names to human-readable names for PUMS data.
