@@ -8,7 +8,13 @@ POSITIVE_OUTCOME = 1
 
 
 class ProtectedAttributes(dg.Config):
-    """Configuration for protected attributes and privileged classes"""
+    """Configuration for protected attributes and privileged classes.
+
+    Protected attributes are defined as a dictionary where keys are attribute names
+    and values are the privileged classes for those attributes.
+
+    This class can be to pass protected attributes and privileged groups to metrics
+    functions in the AIF360 sklearn metrics API."""
 
     privileged_classes: dict[str, Any]
 
@@ -47,6 +53,7 @@ def fairness_metrics(
         statistical_parity_difference,
     )
 
+    # Generally applicable metrics (i.e., do not require predictions)
     metric_fns = [
         disparate_impact_ratio,
         statistical_parity_difference,
