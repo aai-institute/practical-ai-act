@@ -23,6 +23,18 @@ use.
 
 As such, data governance activities should include practices to cover these requirements and map them to activities in the machine learning lifecycle.
 
+!!! note "Interdisciplinary Nature of Bias and Fairness"
+
+    Bias and fairness are complex, multifaceted issues that encompass social, legal, and ethical dimensions that extend far beyond mere technical considerations.
+
+    While this document focuses on technical approaches for bias detection and mitigation, it is vital to recognize that technological solutions alone are insufficient to address these challenges comprehensively.
+    Effective bias mitigation requires interdisciplinary collaboration involving domain experts, ethicists, legal professionals, and affected communities.
+
+    Legal notions of bias and fairness may vary across jurisdictions and contexts (such as access to employment, healthcare, or financial services).
+    Understanding the context in which a system operates is crucial for ensuring compliance with relevant laws and regulations and identifying appropriate fairness measures and bias mitigation strategies.
+
+    The techniques outlined on this page should be considered as part of a broader strategy that includes organizational policies, diverse team composition, stakeholder engagement, and ongoing monitoring and evaluation.
+
 ## Implementation Notes
 
 <figure markdown="span">
