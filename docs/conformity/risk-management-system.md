@@ -24,4 +24,6 @@ While these concepts may seem vague at first, it is expected that harmonized tec
 Since the sources and types of risks of each system are different, it is in general not feasible to automate these risk assessments.
 For an example for an analysis and a mitigation strategy, please have a look at a specific risk in our [showcase](../showcase/risk-assessment.md).
 
+We highlight that the risk management system as presented in |Art. 9| is not directly tied to, but in fact a requirement for a lot of the engineering practices showcased in this repository, since they require prior knowledge about the relevant risks of the project.
+
 <!-- Link to aAI Institute resources on Rsi-->
