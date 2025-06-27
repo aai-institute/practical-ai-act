@@ -60,3 +60,4 @@ They need to be accompanied by organizational and governance measures to become 
     -   Other dataframe libraries with similar features exist, e.g., [Polars](https://docs.pola.rs/), [Spark `DataFrame`s](https://spark.apache.org/docs/latest/sql-programming-guide.html)
 -   [Pandera](https://pandera.readthedocs.io/en/stable/), for data quality validation
 -   [Great Expectations / GX Core](https://docs.greatexpectations.io/docs/core/introduction/), for data quality validation
+-   [Giskard](https://www.giskard.ai/products/open-source), an evaluation and testing framework for AI systems
