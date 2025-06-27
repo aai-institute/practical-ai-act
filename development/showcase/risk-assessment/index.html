@@ -461,6 +461,19 @@ information, please
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Risk Assessment
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -472,6 +485,67 @@ information, please
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#risk-assessment-for-bias-and-discrimination" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Assessment for Bias and Discrimination
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Assessment for Bias and Discrimination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risk-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identification-of-sensitive-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identification of Sensitive Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appropriate-fairness-metrics-and-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appropriate Fairness Metrics and Thresholds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1313,6 +1387,56 @@ information, please
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#risk-assessment-for-bias-and-discrimination" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Assessment for Bias and Discrimination
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Risk Assessment for Bias and Discrimination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risk-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Description
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identification-of-sensitive-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identification of Sensitive Attributes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appropriate-fairness-metrics-and-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appropriate Fairness Metrics and Thresholds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1359,8 +1483,8 @@ information, please
 
 <h1 id="risk-assessment">Risk Assessment<a class="headerlink" href="#risk-assessment" title="Permanent link">&para;</a></h1>
 <p>This example of bias and discrimination risk is provided to give a first impression of what a risk analysis under <a class="aia-ref" href="https://artificialintelligenceact.eu/article/9" rel="noopener noreferrer" target="_blank">Article 9</a> might entail. It is <strong>not</strong> an exhaustive analysis in the sense of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/9" rel="noopener noreferrer" target="_blank">Article 9</a>, which would require a comprehensive, systematic identification and assessment of all risks to health, safety, and fundamental rights throughout the AI system's lifecycle.</p>
-<div class="admonition note">
-<p class="admonition-title"><strong>Risk of Bias and Discrimination</strong></p>
+<h2 id="risk-assessment-for-bias-and-discrimination">Risk Assessment for Bias and Discrimination<a class="headerlink" href="#risk-assessment-for-bias-and-discrimination" title="Permanent link">&para;</a></h2>
+<h3 id="risk-description">Risk Description<a class="headerlink" href="#risk-description" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Reasoning</strong>: A classification model that predicts salary bands can inadvertently learn biased patterns from historical or non-representative data. If the training dataset underrepresents certain groups or if it carries historical inequalities, the model might systematically discriminate. This could result in unfair exclusion of qualified candidates from certain demographic or socioeconomic backgrounds.</li>
 <li><strong>Mitigation Strategies</strong>:<ol>
@@ -1371,9 +1495,36 @@ information, please
 </ol>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Disclaimer</p>
+<p>The following fairness metrics and thresholds are provided as examples and should be adapted to the specific context of the AI system and its intended use. The choice of metrics and thresholds should be based on a thorough understanding of the potential risks and impacts of the AI system, as well as the legal and ethical requirements applicable to the system.</p>
 </div>
-<p>In this sense, the risk management system must be a living process that extends beyond initial risk identification. In particular, high-risk AI systems must undergo continuous testing throughout their lifecycle, with mandatory testing before productization and release to end users (see Sections (6) to (8)).</p>
-<p>We highlight that the risk management system as presented in <a class="aia-ref" href="https://artificialintelligenceact.eu/article/9" rel="noopener noreferrer" target="_blank">Article 9</a> is not directly tied to, but in fact a requirement for a lot of the engineering practices showcased in this repository, since they require prior knowledge about the relevant risks of the project.</p>
+<h3 id="identification-of-sensitive-attributes">Identification of Sensitive Attributes<a class="headerlink" href="#identification-of-sensitive-attributes" title="Permanent link">&para;</a></h3>
+<p>As the showcase system deals with employment and recruitment, it is crucial to identify sensitive attributes that could lead to bias or discrimination in this context.</p>
+<p>These attributes may include, but are not limited to:</p>
+<ul>
+<li>Sex</li>
+<li>Gender</li>
+<li>Age</li>
+<li>Race and/or ethnicity</li>
+<li>Disability status</li>
+</ul>
+<p>For the purpose of demonstration, the showcase will focus on <strong>sex</strong> as the sole sensitive attribute for the risk assessment.</p>
+<h3 id="appropriate-fairness-metrics-and-thresholds">Appropriate Fairness Metrics and Thresholds<a class="headerlink" href="#appropriate-fairness-metrics-and-thresholds" title="Permanent link">&para;</a></h3>
+<p>No single fairness metric can capture all aspects of fairness, and the choice of metrics should be context-specific. For this showcase, we will use the following metrics:</p>
+<ul>
+<li><strong>Demographic Parity</strong>/<strong>Disparate Impact</strong> ratio: This metric compares the selection rates of different groups. Assuming sex as the sensitive attribute, it measures whether the proportion of female and mal candidates selected for a job is similar.</li>
+<li><strong>Equalized Odds</strong>: This metric ensures that the true positive and false positive rates are equal across groups.</li>
+</ul>
+<p>In the United States, the <em>Uniform Guidelines for Employee Selection Procedures</em> (UGESP) provide a legal framework for evaluating fairness in federal employment practices.
+Under UGESP, a selection rate for any group that is less than 80% of the rate for the group with the highest selection rate is considered <em>prima facie</em> evidence of adverse impact (see <a href="https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XIV/part-1607">29 CFR Part 1607.4</a>).
+This test is often referred to as the <em>80% rule</em> or <em>four-fifths rule.</em></p>
+<p>Although the use of this threshold is debated, it is a common practice in the United States and serves as a useful benchmark for assessing fairness in employment-related AI systems.
+Therefore, the showcase will use the <strong>80% rule as a threshold for demographic parity</strong>:</p>
+<figure>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>0.8 &lt;= demographic_parity_ratio &lt;= 1.25
+</span></code></pre></div>
+</figure>
 
 
 
