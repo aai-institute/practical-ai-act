@@ -7,12 +7,10 @@ hide:
 
 <!-- List of practices is wrapped automatically through CSS, no need for manual formatting -->
 
-<!-- TODO: Remove the Automation Feasibility column, as it is highly subjective and not further elaborated -->
-
 /// html | div.conformity-table
 
 | Article                                                                        | Relevant Engineering Practices                                                                                                     |
-|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
 | **Art. 9**:<br>[Risk Management System][]                                      |                                                                                                                                    |
 | **Art. 10**:<br>[Data and Data Governance][]                                   | [Data Quality][] [Data Versioning][] [Bias Mitigation][]                                                                           |
 | **Art. 11**:<br>[Technical Documentation][]                                    | [Model Registry][] [Experiment Tracking][] [Explainability][]                                                                      |
