@@ -650,15 +650,6 @@ information, please
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-drift-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Data Drift Detection
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#reporting" class="md-nav__link">
     <span class="md-ellipsis">
       Reporting
@@ -1390,15 +1381,6 @@ information, please
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-drift-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Data Drift Detection
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#reporting" class="md-nav__link">
     <span class="md-ellipsis">
       Reporting
@@ -1454,9 +1436,14 @@ information, please
 <li><em>Direct Loss Estimation</em> (DLE) for <a href="https://nannyml.readthedocs.io/en/stable/tutorials/performance_estimation/regression_performance_estimation.html">regression</a> tasks</li>
 </ul>
 <p>Since the ML problem for the showcase is a classification task, the CBPE approach is applied.</p>
-<h2 id="data-drift-detection">Data Drift Detection<a class="headerlink" href="#data-drift-detection" title="Permanent link">&para;</a></h2>
-<p>NannyML implements a variety of data drift detection algorithms for <a href="https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/univariate_drift_detection.html">univariate</a> and <a href="https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/multivariate_drift_detection.html">multivariate</a> data.</p>
-<p>TODO: How do we use the data drift detection algorithms in the showcase?</p>
+<!--
+TODO: Bring back this section when the data drift detection is fully implemented in the showcase
+
+## Data Drift Detection
+
+NannyML implements a variety of data drift detection algorithms for [univariate](https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/univariate_drift_detection.html) and [multivariate](https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/multivariate_drift_detection.html) data.
+ -->
+
 <h2 id="reporting">Reporting<a class="headerlink" href="#reporting" title="Permanent link">&para;</a></h2>
 <p>Both model performance estimation and data drift detection algorithm in NannyML operate on <em>chunks</em> of model predictions.
 Therefore, it is straightforward to generate periodic reports on the model's performance as part of a monitoring workflow.</p>
