@@ -9,11 +9,13 @@ The NannyML library implements two approaches to model performance estimation:
 
 Since the ML problem for the showcase is a classification task, the CBPE approach is applied.
 
+<!--
+TODO: Bring back this section when the data drift detection is fully implemented in the showcase
+
 ## Data Drift Detection
 
 NannyML implements a variety of data drift detection algorithms for [univariate](https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/univariate_drift_detection.html) and [multivariate](https://nannyml.readthedocs.io/en/stable/tutorials/detecting_data_drift/multivariate_drift_detection.html) data.
-
-TODO: How do we use the data drift detection algorithms in the showcase?
+ -->
 
 ## Reporting
 
