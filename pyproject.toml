@@ -80,7 +80,6 @@ nannyml = { git = "https://github.com/NannyML/nannyml?ref=main" }
 
 [tool.ruff]
 preview = true
-exclude = ["openapi_client"]
 line-length = 88
 
 [tool.ruff.lint]
