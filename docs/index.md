@@ -18,16 +18,21 @@ hide:
 ![](_images/logos/ai-compliance-guide-simple-dark.svg#only-dark){ class="hero-logo" }
 
 
-The introduction of the EU AI Act adds a new dimension of requirements to the implementation of high-risk artificial intelligence systems.
-At first glance, the legal text may not clearly outline how these compliance requirements affect the practical aspects of AI system development.
+**This guide brings together EU AI Act requirements with practical engineering solutions.**
 
-This project aims to bridge that gap by offering valuable insights and practical examples to help accelerate the integration of compliance requirements into real-world projects.
-It is designed as an entry point for professionals approaching the AI Act from a technical perspective. A key message we want to convey is that adhering to software engineering best practices already provides a strong foundation for achieving compliance.
+New to the AI Act? Start with our [comprehensive introduction](https://www.appliedai-institute.de/ai-act) to understand the regulatory landscape.
 
-To support this goal, the project will present an exemplary system architecture for a trustworthy AI system, offer concrete implementations of essential software components, and establish clear connections between engineering best practices and the specific requirements for high-risk systems under the AI Act.
 
-This is a living document and will be continuously updated as more legal and technical information becomes available.
-Your feedback and discussions are highly encouraged, as they will help us refine the content and ensure its relevance to the community.
+**What you'll find here:**
+
+ - AI Act requirements decoded for technical teams
+ - Working code examples demonstrating compliance in practice
+ - Engineering practices that build trustworthy AI systems
+ - Clear connections between legal obligations and technical implementation
+
+*To ensure compliance, trust must be built into the engineering process of AI systems.* This guide demonstrates how modern MLOps practices provide a strong foundation for meeting regulatory requirements while building robust, trustworthy AI solutions.
+
+This is a living resource that will be continuously updated as more legal and technical information becomes available. Your feedback and discussions are highly encouraged to help us refine the content and ensure its relevance to the community.
 
 ---
 
