@@ -1,4 +1,4 @@
-site_name: twai-pipeline
+site_name: "Guide"
 site_dir: public/docs
 repo_url: https://github.com/aai-institute/twai-pipeline
 edit_uri: edit/main/docs/
@@ -123,13 +123,12 @@ markdown_extensions:
 theme:
   name: "material"
   custom_dir: docs/_theme_overrides
-  logo: _images/logos/baiaa-icon.svg
-  favicon: _images/logos/baiaa-icon.svg
+  logo: _images/logos/aai-logo-cropped.png
+  favicon: _images/logos/favicon.ico
   font:
-    text: Source Sans Pro # Arial replacement
+    text: Work Sans # Arial replacement
     code: Source Code Pro
   icon:
-    logo: _images/logos/baiaa-icon.svg
     repo: fontawesome/brands/github
     admonition:
       success: octicons/law-24

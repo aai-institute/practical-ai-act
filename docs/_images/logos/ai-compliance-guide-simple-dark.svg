@@ -1,0 +1,33 @@
+<svg id="dark-mode" viewBox="0 0 260 90" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon: gear + document -->
+  <g transform="translate(5,20)" stroke="#18a5a7" fill="none" stroke-width="2">
+    <!-- Document -->
+    <rect x="0" y="0" width="24" height="36" rx="3" ry="3" fill="#b7c6cf"/>
+    <line x1="6" y1="8" x2="18" y2="8" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="6" y1="14" x2="18" y2="14" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="6" y1="20" x2="14" y2="20" stroke="#18a5a7" stroke-width="2"/>
+    <!-- Gear center circle -->
+    <circle cx="42" cy="18" r="12" stroke="#18a5a7" stroke-width="2" fill="#b7c6cf"/>
+    <!-- Gear teeth -->
+    <line x1="42" y1="4" x2="42" y2="0" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="42" y1="32" x2="42" y2="36" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="28" y1="18" x2="24" y2="18" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="56" y1="18" x2="60" y2="18" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="33" y1="9" x2="30" y2="6" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="51" y1="27" x2="54" y2="30" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="33" y1="27" x2="30" y2="30" stroke="#18a5a7" stroke-width="2"/>
+    <line x1="51" y1="9" x2="54" y2="6" stroke="#18a5a7" stroke-width="2"/>
+  </g>
+
+  <!-- Title split in two lines -->
+  <text x="70" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="#f9fafb">
+    <tspan x="70" dy="0">A guide to the AI Act</tspan>
+    <tspan x="70" dy="18">for engineers</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="70" y="65" font-family="Arial, sans-serif" font-size="10" fill="#b7c6cf">
+    <tspan x="70" dy="0">From engineering practices</tspan>
+    <tspan x="70" dy="13">to a foundation for compliance</tspan>
+  </text>
+</svg>
