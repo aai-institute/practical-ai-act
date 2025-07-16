@@ -20,7 +20,7 @@ hide:
 
 **This guide brings together EU AI Act requirements with practical engineering solutions.**
 
-New to the AI Act? Start with our [comprehensive introduction](https://www.appliedai-institute.de/ai-act) to understand the regulatory landscape.
+New to the AI Act? Start with our [comprehensive introduction](https://www.appliedai-institute.de/en/ai-act) to understand the regulatory landscape.
 
 
 **What you'll find here:**
