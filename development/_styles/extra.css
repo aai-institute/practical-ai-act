@@ -3,6 +3,52 @@ h1#_1 {
   display: none;
 }
 
+/* Increase logo size in header */
+.md-header__button.md-logo {
+  width: auto;
+  height: 2.5rem; /* Increase from default ~1.6rem to make it more prominent */
+  display: flex;
+  align-items: center;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 100%;
+  width: auto;
+  max-height: 2.5rem;
+}
+
+/* Floating image with text wrap - reusable class */
+.float-container .float-left-image {
+  float: left;
+  margin: -2px 0.4rem 0 0;
+  max-width: 32px;
+  width: 32px;
+  height: auto;
+}
+
+/* Container for floating content */
+.float-container {
+  overflow: hidden; /* Clears floats */
+}
+
+/* Custom acknowledgment admonition */
+.md-typeset .admonition.bai,
+.md-typeset details.bai {
+  border-color: #18a5a7;
+}
+
+.md-typeset .bai > .admonition-title,
+.md-typeset .bai > summary {
+  background-color: rgba(24, 165, 167, 0.1);
+  border-color: #18a5a7;
+}
+
+.md-typeset .bai > .admonition-title::before,
+.md-typeset .bai > summary::before {
+  background-color: #18a5a7;
+}
+
 .hero-logo {
   /* No wider than the screen on smaller screens */
   max-width: min(75%, 75vw) !important;
