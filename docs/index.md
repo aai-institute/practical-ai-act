@@ -59,3 +59,9 @@ Your feedback and discussions are highly encouraged, as they will help us refine
     practice
 
 </div>
+
+!!! bai "Acknowledgment"
+    <div class="float-container">
+        <img src="_images/logos/baiaa-icon.svg" alt="BAIAA Logo" class="float-left-image">
+        The <strong>Bavarian AI Innovation Accelerator</strong> is a two-year project funded by the Bavarian State Ministry for Digital Affairs to support SMEs, startups, and the public sector in Bavaria in complying with the EU AI Act. Led by the appliedAI Institute for Europe and in collaboration with Ludwig Maximilian University, Technical University of Munich, and Technical University of Nuremberg, the project offers training, resources, and events. The project goals include reducing compliance costs, shortening time to compliance, and strengthening AI innovation.
+    </div>
