@@ -126,7 +126,7 @@ theme:
   logo: _images/logos/aai-logo-cropped.svg
   favicon: _images/logos/favicon.ico
   font:
-    text: Source Sans Pro # Arial replacement
+    text: Work Sans # Arial replacement
     code: Source Code Pro
   icon:
     repo: fontawesome/brands/github
