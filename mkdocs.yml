@@ -123,7 +123,7 @@ markdown_extensions:
 theme:
   name: "material"
   custom_dir: docs/_theme_overrides
-  logo: _images/logos/aai-logo-cropped.svg
+  logo: _images/logos/aai-logo-cropped.png
   favicon: _images/logos/favicon.ico
   font:
     text: Work Sans # Arial replacement
