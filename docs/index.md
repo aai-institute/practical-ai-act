@@ -14,10 +14,9 @@ hide:
 
 #
 
-![](_images/logos/baiaa-logo-black.svg#only-light){ class="hero-logo" }
-![](_images/logos/baiaa-logo.svg#only-dark){ class="hero-logo" }
+![](_images/logos/ai-compliance-bridge-simple.svg#only-light){ class="hero-logo" }
+![](_images/logos/ai-compliance-bridge-simple-dark.svg#only-dark){ class="hero-logo" }
 
-Welcome to the **trustworthy-AI pipeline** (twai) project!
 
 The introduction of the EU AI Act adds a new dimension of requirements to the implementation of high-risk artificial intelligence systems.
 At first glance, the legal text may not clearly outline how these compliance requirements affect the practical aspects of AI system development.
