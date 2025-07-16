@@ -8,9 +8,9 @@
 
 /* Light mode theme */
 [data-md-color-scheme="aai-light"] {
-  --md-primary-fg-color: #146ef5;
-  --md-primary-fg-color--light: #06b8ff;
-  --md-primary-fg-color--dark: #01192b;
+  --md-primary-fg-color: #18a5a7;
+  --md-primary-fg-color--light: #46add5;
+  --md-primary-fg-color--dark: #084059;
 
   --card-bg-color: var(--md-primary-bg-color);
   --bg-gradient-color: rgba(255, 255, 255, 70%);
@@ -48,11 +48,11 @@
 }
 
 .md-header {
-  background: linear-gradient(120deg, #01192b, 75%, #0044bb);
+  background: linear-gradient(30deg, #46add5, 40%, #bfffc7);
 }
 
 .md-footer {
-  background: var(--md-primary-fg-color--dark);
+  background: linear-gradient(30deg, #46add5, 40%, #bfffc7);
 }
 
 .cards {
