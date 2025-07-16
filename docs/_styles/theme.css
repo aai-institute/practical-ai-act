@@ -22,12 +22,16 @@
 
 /* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #06b8ff;
-  --md-primary-fg-color--light: #06b8ff;
-  --md-primary-fg-color--dark: #0044bb;
+  --md-primary-fg-color: #46add5;
+  --md-primary-fg-color--light: #46add5;
+  --md-primary-fg-color--dark: #084059;
 
   --card-bg-color: hsla(var(--md-hue), 15%, 14%, 1);
   --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
+
+  --md-mermaid-node-fg-color: var(--md-primary-fg-color--light);
+  --md-mermaid-node-bg-color: #abcbff; /* derived from --md-primary-fg-color */
+  --md-mermaid-edge-color: var(--md-primary-fg-color--light);
 }
 
 /* ----- Individual elements ----- */
