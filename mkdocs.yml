@@ -123,13 +123,12 @@ markdown_extensions:
 theme:
   name: "material"
   custom_dir: docs/_theme_overrides
-  logo: _images/logos/baiaa-icon.svg
+  logo: _images/logos/aai-logo-cropped.svg
   favicon: _images/logos/favicon.ico
   font:
     text: Source Sans Pro # Arial replacement
     code: Source Code Pro
   icon:
-    logo: _images/logos/baiaa-icon.svg
     repo: fontawesome/brands/github
     admonition:
       success: octicons/law-24
