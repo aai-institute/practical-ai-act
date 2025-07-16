@@ -14,8 +14,8 @@ hide:
 
 #
 
-![](_images/logos/ai-compliance-bridge-simple.svg#only-light){ class="hero-logo" }
-![](_images/logos/ai-compliance-bridge-simple-dark.svg#only-dark){ class="hero-logo" }
+![](_images/logos/ai-compliance-guide-simple.svg#only-light){ class="hero-logo" }
+![](_images/logos/ai-compliance-guide-simple-dark.svg#only-dark){ class="hero-logo" }
 
 
 The introduction of the EU AI Act adds a new dimension of requirements to the implementation of high-risk artificial intelligence systems.
