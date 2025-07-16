@@ -16,7 +16,7 @@
   --bg-gradient-color: rgba(255, 255, 255, 70%);
 
   --md-mermaid-node-fg-color: var(--md-primary-fg-color--dark);
-  --md-mermaid-node-bg-color: #abcbff; /* derived from --md-primary-fg-color */
+  --md-mermaid-node-bg-color: #bfffc7; /* derived from --md-primary-fg-color */
   --md-mermaid-edge-color: var(--md-primary-fg-color--dark);
 }
 
@@ -30,7 +30,7 @@
   --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
 
   --md-mermaid-node-fg-color: var(--md-primary-fg-color--light);
-  --md-mermaid-node-bg-color: #bfffc7;
+  --md-mermaid-node-bg-color: #18a5a7;
   --md-mermaid-edge-color: var(--md-primary-fg-color--light);
 }
 
