@@ -3,6 +3,21 @@ h1#_1 {
   display: none;
 }
 
+/* Increase logo size in header */
+.md-header__button.md-logo {
+  width: auto;
+  height: 2.5rem; /* Increase from default ~1.6rem to make it more prominent */
+  display: flex;
+  align-items: center;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 100%;
+  width: auto;
+  max-height: 2.5rem;
+}
+
 .hero-logo {
   /* No wider than the screen on smaller screens */
   max-width: min(75%, 75vw) !important;
