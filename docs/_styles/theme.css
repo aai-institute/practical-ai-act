@@ -3,7 +3,7 @@
   --md-code-font-family: "Source Code Pro", monospace;
   --md-typeset-a-color: var(--md-primary-fg-color) !important;
 
-  --md-accent-fg-color: #ebba58;
+  --md-accent-fg-color: #ff611a;
 }
 
 /* Light mode theme */
@@ -22,7 +22,7 @@
 
 /* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #46add5;
+  --md-primary-fg-color: #18a5a7;
   --md-primary-fg-color--light: #46add5;
   --md-primary-fg-color--dark: #084059;
 
@@ -30,7 +30,7 @@
   --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
 
   --md-mermaid-node-fg-color: var(--md-primary-fg-color--light);
-  --md-mermaid-node-bg-color: #abcbff; /* derived from --md-primary-fg-color */
+  --md-mermaid-node-bg-color: #bfffc7;
   --md-mermaid-edge-color: var(--md-primary-fg-color--light);
 }
 
@@ -51,14 +51,30 @@
     url("../_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
 }
 
-.md-header {
-  background: linear-gradient(30deg, #46add5, 40%, #bfffc7);
+/* Light mode header/footer gradient - only fix the footer issue */
+[data-md-color-scheme="aai-light"] .md-header,
+[data-md-color-scheme="aai-light"] .md-footer {
+  background: linear-gradient(30deg, #46add5, 40%, #bfffc7) !important;
 }
 
-.md-footer {
-  background: linear-gradient(30deg, #46add5, 40%, #bfffc7);
+/* Dark mode header/footer gradient - only fix the footer issue */
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-footer {
+  background: linear-gradient(30deg, #084059, 40%, #18a5a7) !important;
+}
+
+/* Hide light images in dark mode */
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
+  display: none;
 }
 
 .cards {
   background-color: var(--card-bg-color);
+}
+
+/* Additional footer-specific overrides to ensure no overlays in dark mode*/
+[data-md-color-scheme="slate"] .md-footer-meta,
+[data-md-color-scheme="slate"] .md-footer-meta__inner {
+  background: transparent !important;
 }
