@@ -124,7 +124,7 @@ theme:
   name: "material"
   custom_dir: docs/_theme_overrides
   logo: _images/logos/baiaa-icon.svg
-  favicon: _images/logos/baiaa-icon.svg
+  favicon: _images/logos/favicon.ico
   font:
     text: Source Sans Pro # Arial replacement
     code: Source Code Pro
