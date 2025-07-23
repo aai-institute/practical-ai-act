@@ -150,3 +150,15 @@ Providers of high-risk AI systems specifically may also consider the following n
     These standards are due to be published by CEN-CENELEC between late 2025 and early 2026.
 
     Please refer to the [CEN-CENELEC JTC 21 website](https://standards.cencenelec.eu/dyn/www/f?p=205:22:0::::FSP_ORG_ID,FSP_LANG_ID:2916257,25&cs=1827B89DA69577BF3631EE2B6070F207D) for up-to-date information.
+
+## Contributing
+
+This living document evolves through community collaboration. We welcome contributions from AI practitioners, legal experts, and researchers working on trustworthy AI implementation.
+
+**Get involved**: Join our [GitHub Discussions](https://github.com/aai-institute/twai-pipeline/discussions) to ask questions, share experiences, and propose improvements.
+
+**Report issues**: Use [GitHub Issues](https://github.com/aai-institute/twai-pipeline/issues) to report problems or suggest enhancements.
+
+**Contribute directly**: Submit [pull requests](https://github.com/aai-institute/twai-pipeline/pulls) with code improvements or documentation updates. See our [Contributing Guidelines](https://github.com/aai-institute/twai-pipeline/blob/main/CONTRIBUTING.md) for technical details.
+
+Questions? Start a discussion—no question is too small.
