@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple.svg">
-  <img src="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
+  <img src="docs/_images/logos/ai-compliance-guide-simple.svg">
 </picture>
 
 This repository contains an implementation of a high-risk AI system as per Chapter III of the EU Artificial Intelligence Act.
