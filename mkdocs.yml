@@ -53,6 +53,8 @@ nav:
       - conformity/human-oversight.md
       - conformity/accuracy-robustness-cybersecurity.md
 
+not_in_nav: imprint.md
+
 plugins:
   - callouts
   - section-index
