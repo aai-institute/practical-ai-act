@@ -2,9 +2,9 @@
 
 ## In Übereinstimmung mit § 5 TMG
 
-appliedAI Institute for Europe gGmbH
-Freddie-Mercury-Straße 5
-D-80797 München
+appliedAI Institute for Europe gGmbH<br />
+Freddie-Mercury-Straße 5<br />
+D-80797 München<br />
 
 ## Vertreten durch
 
@@ -56,9 +56,9 @@ Egal für welchen Weg du dich entscheidest, wir versichern dir, dass jede Meldun
 
 Falls du Hinweise auf Compliance-Verstöße melden möchtest oder Fragen zum Thema Compliance hast, wende dich bitte an unseren Compliance-Beauftragten.
 
-appliedAI Institute for Europe gGmbH
-z.Hd. Herrn Rade Milinkovic (CFO, Compliance-Beauftragter)
-August-Everding-Straße 25
-81671 München
+appliedAI Institute for Europe gGmbH<br />
+z.Hd. Herrn Rade Milinkovic (CFO, Compliance-Beauftragter)<br />
+August-Everding-Straße 25<br />
+81671 München<br />
 
 [https://appliedai.personiowhistleblowing.com/](https://appliedai.personiowhistleblowing.com/)
