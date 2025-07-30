@@ -1,9 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/baiaa-logo.svg">
-  <img src="docs/_images/logos/baiaa-logo-black.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
+  <img src="docs/_images/logos/ai-compliance-guide-simple.svg">
 </picture>
-
-# An example of a high-risk AI system
 
 This repository contains an implementation of a high-risk AI system as per Chapter III of the EU Artificial Intelligence Act.
 It demonstrates how different personas, especially providers of AI systems, can design their systems to ensure compliance with the AI Act.
@@ -119,3 +117,10 @@ docker compose -f deploy/compose.local.yml --profile serve up -w
 
 Colima needs to be started with the `--network-address` switch to allow the model container to reach the MLflow server on the host.
 To do this, run `colima start <options> --network-address`.
+
+## Acknowledgment
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/baiaa-logo.svg">
+  <img src="docs/_images/logos/baiaa-logo-black.svg">
+</picture>
+The Bavarian AI Act Accelerator is a two-year project funded by the Bavarian State Ministry of Digital Affairs to support SMEs, start-ups, and the public sector in Bavaria in complying with the EU AI Act. Under the leadership of the appliedAI Institute for Europe and in collaboration with Ludwig Maximilian University, the Technical University of Munich, and the Technical University of Nuremberg, training, resources, and events are being offered. The project objectives include reducing compliance costs, shortening the time to compliance, and strengthening AI innovation. To achieve these objectives, the project is divided into five work packages: project management, research, education, tools and infrastructure, and community.
