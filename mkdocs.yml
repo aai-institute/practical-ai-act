@@ -55,6 +55,9 @@ nav:
 
 not_in_nav: imprint.md
 
+hooks:
+  - src/markdown_ex/nav_graph.py
+
 plugins:
   - callouts
   - section-index
