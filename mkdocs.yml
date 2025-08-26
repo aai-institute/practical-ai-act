@@ -155,7 +155,7 @@ theme:
 extra:
   copyright_link: https://appliedai-institute.de
   generator: false
-  pre_release: !ENV [DOCS_PRERELEASE, false]
+  pre_release: false
   version:
     provider: mike
     default: latest
