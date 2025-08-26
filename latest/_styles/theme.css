@@ -1,0 +1,80 @@
+/* Common styles for all themes */
+[data-md-color-scheme] {
+  --md-code-font-family: "Source Code Pro", monospace;
+  --md-typeset-a-color: var(--md-primary-fg-color) !important;
+
+  --md-accent-fg-color: #ff611a;
+}
+
+/* Light mode theme */
+[data-md-color-scheme="aai-light"] {
+  --md-primary-fg-color: #18a5a7;
+  --md-primary-fg-color--light: #46add5;
+  --md-primary-fg-color--dark: #084059;
+
+  --card-bg-color: var(--md-primary-bg-color);
+  --bg-gradient-color: rgba(255, 255, 255, 70%);
+
+  --md-mermaid-node-fg-color: var(--md-primary-fg-color--dark);
+  --md-mermaid-node-bg-color: #bfffc7; /* derived from --md-primary-fg-color */
+  --md-mermaid-edge-color: var(--md-primary-fg-color--dark);
+}
+
+/* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #18a5a7;
+  --md-primary-fg-color--light: #46add5;
+  --md-primary-fg-color--dark: #084059;
+
+  --card-bg-color: hsla(var(--md-hue), 15%, 14%, 1);
+  --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
+
+  --md-mermaid-node-fg-color: var(--md-primary-fg-color--light);
+  --md-mermaid-node-bg-color: #18a5a7;
+  --md-mermaid-edge-color: var(--md-primary-fg-color--light);
+}
+
+/* ----- Individual elements ----- */
+
+/* Hide dark images in light mode */
+[data-md-color-scheme="aai-light"] img[src$="#only-dark"],
+[data-md-color-scheme="aai-light"] img[src$="#gh-dark-mode-only"] {
+  display: none;
+}
+
+/* Hexagon pattern in the background, behind a semi-transparent color overlay */
+.md-container {
+  background: linear-gradient(
+      var(--bg-gradient-color),
+      var(--bg-gradient-color)
+    ),
+    url("../_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
+}
+
+/* Light mode header/footer gradient - only fix the footer issue */
+[data-md-color-scheme="aai-light"] .md-header,
+[data-md-color-scheme="aai-light"] .md-footer {
+  background: linear-gradient(30deg, #46add5, 40%, #bfffc7) !important;
+}
+
+/* Dark mode header/footer gradient - only fix the footer issue */
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-footer {
+  background: linear-gradient(30deg, #084059, 40%, #18a5a7) !important;
+}
+
+/* Hide light images in dark mode */
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
+  display: none;
+}
+
+.cards {
+  background-color: var(--card-bg-color);
+}
+
+/* Additional footer-specific overrides to ensure no overlays in dark mode*/
+[data-md-color-scheme="slate"] .md-footer-meta,
+[data-md-color-scheme="slate"] .md-footer-meta__inner {
+  background: transparent !important;
+}
