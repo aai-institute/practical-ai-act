@@ -158,8 +158,7 @@ extra:
   pre_release: !ENV [DOCS_PRERELEASE, false]
   version:
     provider: mike
-    # TODO: Change to `latest` when we release the first tagged version
-    default: development
+    default: latest
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/aai-institute/twai-pipeline
