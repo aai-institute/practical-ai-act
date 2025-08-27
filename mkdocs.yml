@@ -1,8 +1,8 @@
-site_name: "Guide"
+site_name: "Practical AI Act Guide"
 site_dir: public/docs
-repo_url: https://github.com/aai-institute/twai-pipeline
+repo_url: https://github.com/aai-institute/practical-ai-act
 edit_uri: edit/main/docs/
-site_url: https://aai-institute.github.io/twai-pipeline/
+site_url: https://practical-ai-act.eu
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
