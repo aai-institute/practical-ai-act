@@ -126,7 +126,7 @@ theme:
   name: "material"
   custom_dir: docs/_theme_overrides
   logo: _images/logos/aai-logo-cropped.png
-  favicon: _images/logos/favicon.ico
+  favicon: _images/logos/favicon.svg
   font:
     text: Work Sans # Arial replacement
     code: Source Code Pro
