@@ -1,0 +1,12 @@
+/* Hide dark logo by default (light scheme is called "default") */
+.site-logo--dark {
+  display: none !important;
+}
+
+/* Show the dark logo on the dark scheme ("slate" by default) */
+[data-md-color-scheme="slate"] .site-logo--dark {
+  display: inline !important;
+}
+[data-md-color-scheme="slate"] .site-logo--light {
+  display: none !important;
+}

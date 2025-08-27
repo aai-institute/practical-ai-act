@@ -4,33 +4,41 @@
   --md-typeset-a-color: var(--md-primary-fg-color) !important;
 
   --md-accent-fg-color: #ff611a;
+
+  --aai-dark-green: #18a5a7;
+  --aai-light-green: #bfffc7;
+  --aai-dark-blue: #084059;
+  --aai-light-blue: #46add5;
+  --aai-grey: #b7c6cf;
 }
 
 /* Light mode theme */
 [data-md-color-scheme="aai-light"] {
-  --md-primary-fg-color: #18a5a7;
-  --md-primary-fg-color--light: #46add5;
-  --md-primary-fg-color--dark: #084059;
+  --md-primary-fg-color: var(--aai-dark-green);
+  --md-primary-fg-color--light: var(--aai-light-blue);
+  --md-primary-fg-color--dark: var(--aai-dark-blue);
 
   --card-bg-color: var(--md-primary-bg-color);
   --bg-gradient-color: rgba(255, 255, 255, 70%);
 
+  --md-footer-fg-color: var(--md-primary-fg-color--dark);
+
   --md-mermaid-node-fg-color: var(--md-primary-fg-color--dark);
-  --md-mermaid-node-bg-color: #bfffc7; /* derived from --md-primary-fg-color */
+  --md-mermaid-node-bg-color: var(--aai-light-green);
   --md-mermaid-edge-color: var(--md-primary-fg-color--dark);
 }
 
 /* Dark mode theme, derived from the mkdocs-material default dark theme `slate` */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #18a5a7;
-  --md-primary-fg-color--light: #46add5;
-  --md-primary-fg-color--dark: #084059;
+  --md-primary-fg-color: var(--aai-dark-green);
+  --md-primary-fg-color--light: var(--aai-light-blue);
+  --md-primary-fg-color--dark: var(--aai-dark-blue);
 
   --card-bg-color: hsla(var(--md-hue), 15%, 14%, 1);
   --bg-gradient-color: hsla(var(--md-hue), 15%, 14%, 70%);
 
   --md-mermaid-node-fg-color: var(--md-primary-fg-color--light);
-  --md-mermaid-node-bg-color: #18a5a7;
+  --md-mermaid-node-bg-color: var(--aai-dark-green);
   --md-mermaid-edge-color: var(--md-primary-fg-color--light);
 }
 
@@ -39,6 +47,12 @@
 /* Hide dark images in light mode */
 [data-md-color-scheme="aai-light"] img[src$="#only-dark"],
 [data-md-color-scheme="aai-light"] img[src$="#gh-dark-mode-only"] {
+  display: none;
+}
+
+/* Hide light images in dark mode */
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
   display: none;
 }
 
@@ -51,30 +65,42 @@
     url("../_images/bg-pattern.svg") no-repeat right -580px bottom -450px fixed;
 }
 
-/* Light mode header/footer gradient - only fix the footer issue */
+/* Light mode header/footer gradient */
 [data-md-color-scheme="aai-light"] .md-header,
-[data-md-color-scheme="aai-light"] .md-footer {
-  background: linear-gradient(30deg, #46add5, 40%, #bfffc7) !important;
+[data-md-color-scheme="aai-light"] .md-footer-meta {
+  background: linear-gradient(
+    30deg,
+    var(--aai-light-blue),
+    40%,
+    var(--aai-light-green)
+  ) !important;
+  color: var(--md-primary-fg-color--dark) !important;
 }
 
-/* Dark mode header/footer gradient - only fix the footer issue */
+/* Dark mode header/footer gradient */
 [data-md-color-scheme="slate"] .md-header,
-[data-md-color-scheme="slate"] .md-footer {
-  background: linear-gradient(30deg, #084059, 40%, #18a5a7) !important;
+[data-md-color-scheme="slate"] .md-footer-meta {
+  background: linear-gradient(
+    30deg,
+    var(--aai-dark-blue),
+    40%,
+    var(--aai-dark-green)
+  ) !important;
 }
 
-/* Hide light images in dark mode */
-[data-md-color-scheme="slate"] img[src$="#only-light"],
-[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
-  display: none;
+.md-social__link {
+  color: var(--md-footor-color) !important;
+}
+
+.md-social__link:hover {
+  color: var(--md-primary-fg-color--light) !important;
+}
+
+[data-md-color-scheme="aai-light"] .md-search__input::placeholder,
+[data-md-color-scheme="aai-light"] .md-search__icon {
+  color: var(--md-primary-fg-color--dark) !important;
 }
 
 .cards {
   background-color: var(--card-bg-color);
-}
-
-/* Additional footer-specific overrides to ensure no overlays in dark mode*/
-[data-md-color-scheme="slate"] .md-footer-meta,
-[data-md-color-scheme="slate"] .md-footer-meta__inner {
-  background: transparent !important;
 }
