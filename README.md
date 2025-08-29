@@ -1,4 +1,4 @@
-<picture>
+<picture class="hero-logo">
   <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
   <img src="docs/_images/logos/ai-compliance-guide-simple.svg">
 </picture>
