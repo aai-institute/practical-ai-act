@@ -1,7 +1,7 @@
 <div style="text-align: center;">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
-    <img src="docs/_images/logos/ai-compliance-guide-simple.svg" width="400" alt="AI Compliance Guide Logo">
+    <img src="docs/_images/logos/ai-compliance-guide-simple.svg" width="600" alt="AI Compliance Guide Logo">
   </picture>
 </div>
 
