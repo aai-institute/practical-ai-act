@@ -1,7 +1,9 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
-  <img src="docs/_images/logos/ai-compliance-guide-simple.svg">
-</picture>
+<div style="text-align: center;">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/_images/logos/ai-compliance-guide-simple-dark.svg">
+    <img src="docs/_images/logos/ai-compliance-guide-simple.svg" width="600" alt="AI Compliance Guide Logo">
+  </picture>
+</div>
 
 This repository contains an implementation of a high-risk AI system as per Chapter III of the EU Artificial Intelligence Act.
 It demonstrates how different personas, especially providers of AI systems, can design their systems to ensure compliance with the AI Act.
