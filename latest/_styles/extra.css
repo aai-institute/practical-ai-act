@@ -50,9 +50,7 @@ h1#_1 {
 }
 
 .hero-logo {
-  /* No wider than the screen on smaller screens */
-  max-width: min(75%, 75vw) !important;
-  max-height: 196px;
+  width: 75%;
 
   /* Horizontally centered */
   display: block;
