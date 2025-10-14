@@ -70,6 +70,63 @@
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
+  
+
+
+  <!--
+  NOTE: Same-scheme URLs in this partial break local builds,
+  but are required to work around issues with the Privacy plugin.
+
+  Please don't replace them with `https:` URLs.
+-->
+
+<!-- Usercentrics -->
+<link rel="preconnect" href="//app.usercentrics.eu" />
+<link rel="preconnect" href="//api.usercentrics.eu" />
+<link
+  rel="preload"
+  href="//app.usercentrics.eu/browser-ui/latest/loader.js"
+  as="script"
+/>
+<script
+  id="usercentrics-cmp"
+  src="//app.usercentrics.eu/browser-ui/latest/loader.js"
+  data-settings-id="tKPkHjSNKKwpNH"
+  async
+></script>
+<!-- End Usercentrics -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript
+  ><iframe
+    src="https://www.googletagmanager.com/ns.html?id=GTM-PG5277D"
+    height="0"
+    width="0"
+    style="display: none; visibility: hidden"
+  ></iframe
+></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Google Tag Manager -->
+<script>
+  window["dataLayer"] = window["dataLayer"] || [];
+  window["dataLayer"].push({
+    js: new Date(),
+    config: "GTM-PG5277D",
+    "gtm.start": new Date().getTime(),
+    event: "gtm.js",
+  });
+</script>
+
+<!-- NOTE: Make sure to use same-scheme URL (no `https:`) to prevent issues with privacy plugin -->
+<script
+  async
+  src="//www.googletagmanager.com/gtm.js?id=GTM-PG5277D"
+></script>
+<!-- End Google Tag Manager -->
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
 
     
     
@@ -1512,7 +1569,59 @@ By further encapsulating the interface to the model itself in another dependency
 
 
 
+  
 
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this page helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="good">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 9v12H1V9zm4 12a2 2 0 0 1-2-2V9c0-.55.22-1.05.59-1.41L14.17 1l1.06 1.06c.27.27.44.64.44 1.05l-.03.32L14.69 8H21a2 2 0 0 1 2 2v2c0 .26-.05.5-.14.73l-3.02 7.05C19.54 20.5 18.83 21 18 21zm0-2h9.03L21 12v-2h-8.79l1.13-5.32L9 9.03z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="bad">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 15V3h4v12zM15 3a2 2 0 0 1 2 2v10c0 .55-.22 1.05-.59 1.41L9.83 23l-1.06-1.06c-.27-.27-.44-.64-.44-1.06l.03-.31.95-4.57H3a2 2 0 0 1-2-2v-2c0-.26.05-.5.14-.73l3.02-7.05C4.46 3.5 5.17 3 6 3zm0 2H5.97L3 12v2h8.78l-1.13 5.32L15 14.97z"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="good" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback!
+            </div>
+          
+            <div data-md-value="bad" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for your feedback! If you would like to help us improve this page, please consider creating a ticket in our <a href="https://github.com/aai-institute/practical-ai-act/issues" target="_blank" rel="noopener">issue tracker</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
 
 
                 
@@ -1628,10 +1737,12 @@ By further encapsulating the interface to the model itself in another dependency
     <a href="https://appliedai-institute.de" target="_blank" rel="noopener">appliedAI Institute for Europe gGmbH</a
     >, licensed under the
     <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0 license</a
-    >, <a href="../../../imprint/">Imprint</a>
+    >, <a href="../../../imprint/">Imprint</a>,
+    <a href="../../../privacy/">Privacy Policy</a>
   </p>
   <p>
-    The appliedAI Institute for Europe gGmbH is supported by the IPAI Foundation gGmbH.
+    The appliedAI Institute for Europe gGmbH is supported by the IPAI Foundation
+    gGmbH.
   </p>
 
   <div class="logo-container">
@@ -1707,6 +1818,8 @@ By further encapsulating the interface to the model itself in another dependency
       <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
         <script src="../../../assets/external/unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+      
+        <script src="../../../_scripts/feedback.js"></script>
       
     
   </body>
