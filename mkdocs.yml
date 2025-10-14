@@ -89,8 +89,6 @@ plugins:
       canonical_version: latest
   - meta
   - privacy:
-      # Only enable in CI/CD builds (GTM assets downloaded during build, which are blocked by local ad blockers)
-      assets: !ENV [CI, false]
   - search:
   - tags
 
