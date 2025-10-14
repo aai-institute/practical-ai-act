@@ -1,0 +1,51 @@
+<!--
+  NOTE: Same-scheme URLs in this partial break local builds,
+  but are required to work around issues with the Privacy plugin.
+
+  Please don't replace them with `https:` URLs.
+-->
+
+<!-- Usercentrics -->
+<link rel="preconnect" href="//app.usercentrics.eu" />
+<link rel="preconnect" href="//api.usercentrics.eu" />
+<link
+  rel="preload"
+  href="//app.usercentrics.eu/browser-ui/latest/loader.js"
+  as="script"
+/>
+<script
+  id="usercentrics-cmp"
+  src="//app.usercentrics.eu/browser-ui/latest/loader.js"
+  data-settings-id="{{ config.extra.analytics.usercentricsSettingsId }}"
+  async
+></script>
+<!-- End Usercentrics -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript
+  ><iframe
+    src="https://www.googletagmanager.com/ns.html?id={{ config.extra.analytics.gtmTagId }}"
+    height="0"
+    width="0"
+    style="display: none; visibility: hidden"
+  ></iframe
+></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Google Tag Manager -->
+<script>
+  window["dataLayer"] = window["dataLayer"] || [];
+  window["dataLayer"].push({
+    js: new Date(),
+    config: "{{ config.extra.analytics.gtmTagId }}",
+    "gtm.start": new Date().getTime(),
+    event: "gtm.js",
+  });
+</script>
+
+<!-- NOTE: Make sure to use same-scheme URL (no `https:`) to prevent issues with privacy plugin -->
+<script
+  async
+  src="//www.googletagmanager.com/gtm.js?id={{ config.extra.analytics.gtmTagId }}"
+></script>
+<!-- End Google Tag Manager -->
