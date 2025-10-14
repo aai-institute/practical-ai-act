@@ -218,7 +218,7 @@ table {
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Feedback title */
+/* Page feedback widget */
 .md-feedback__title {
   font-weight: normal;
   font-style: italic;
