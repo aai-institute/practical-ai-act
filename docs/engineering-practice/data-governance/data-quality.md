@@ -8,8 +8,8 @@ tags:
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     - **|Art. 10|** (Data and Data Governance), in particular:
-        - **|Art. 10(2)(c)|**: Data Preprocessing steps detail how missing values are handled, schemas enforced, and pipelines kept reproducible, documenting each preparation action.
-        - **|Art. 10(3)|**: Data Quality Validation measures (ground-truth checks, anomaly detection, drift monitoring) keep datasets complete, accurate, and representative for their intended use.
+        - **|Art. 10(2)(c)|**: Maintaining documented preprocessing routines for labelling, cleaning, imputation, and enrichment keeps every data preparation step traceable.
+        - **|Art. 10(3)|**: Routine validation, reporting, and drift monitoring ensures training, validation, and test datasets remain complete, accurate, and representative.
 
 ## Motivation
 
