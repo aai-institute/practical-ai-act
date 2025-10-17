@@ -11,8 +11,8 @@ tags:
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     - **|Art. 10|** (Data and Data Governance), in particular:
-        - **|Art. 10(2)(b)|**: tracking the origin of data,
-        - **|Art. 10(2)(e)|**: assessment of availability, quantity and suitability of the data sets, and
+        - **|Art. 10(2)(b)|**: Version-controlled datasets provide a continuous record of origin, lineage, and access.
+        - **|Art. 10(2)(e)|**: Branching, tagging, and metadata annotations support assessing the availability, quantity, and suitability of data sets over time.
 
 ## Motivation
 
