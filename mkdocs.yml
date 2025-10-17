@@ -169,7 +169,7 @@ extra:
   analytics:
     provider: custom
     # appliedAI Institute Google Tag Manager and UserCentrics
-    gtmTagId: GTM-PG5277D
+    gtmTagId: GTM-M2B5Q2XJ
     usercentricsSettingsId: tKPkHjSNKKwpNH
     feedback:
       title: "Was this page helpful?"
