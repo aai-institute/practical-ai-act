@@ -1,38 +1,12 @@
 # Data Governance
 
-In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, |Article 10| mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
-While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.
+In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, |Article 10| mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability. While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.
 
-To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centered on process and documentation,
-see [Technical Documentation](../../conformity/technical-documentation.md).
-This is not a simple mapping of paragraphs to either or, moreover each paragraph
-of |Art. 10| can include both types of tasks.
+To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centred on process and documentation, see [Technical Documentation](../../conformity/technical-documentation.md). This is not a strict partition: each paragraph of |Art. 10| can involve both kinds of tasks, so engineering and compliance teams need to collaborate closely.
 
+## Topics in This Section
 
-
-
-
-
-Specific to bias. Refer to the page on [bias mitigation](bias-mitigation.md) for more information.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- TODO formulate this without citation, or remove?-->
-> 6. For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2 to 5 apply only to the testing data sets.
-
-This paragraph addresses high-risk AI systems that are developed without using techniques involving the training of AI models. These systems might rely on alternative approaches, such as rule-based systems, hard-coded algorithms, or pre-existing models that do not require additional training or updates to their parameters.
-
-
-- [Data Versioning](data-versioning.md)
-- [Data Quality](data-quality.md)
+- [Data Versioning](data-versioning.md) — Maintain lineage, storage policies, and collaborative workflows so teams can trace the origin and suitability of every dataset revision.
+- [Data Quality](data-quality.md) — Structure preprocessing, validation, and drift monitoring activities so data stays clean, complete, and representative throughout the lifecycle.
+- [Documentation](documentation.md) — Produce and maintain datasheets, data cards, and other artefacts that capture purpose, sourcing, and limitations of the datasets in use.
+- [Bias Mitigation](bias-mitigation.md) — Detect, analyse, and mitigate unwanted bias in data to protect fundamental rights and meet fairness obligations across deployments.
