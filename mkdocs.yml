@@ -168,7 +168,7 @@ extra:
     default: latest
   analytics:
     provider: custom
-    # appliedAI Institute Google Tag Manager and UserCentrics
+    # appliedAI Institute Google Tag Manager and Usercentrics
     gtmTagId: GTM-M2B5Q2XJ
     usercentricsSettingsId: tKPkHjSNKKwpNH
     feedback:
