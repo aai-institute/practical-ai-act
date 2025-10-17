@@ -8,13 +8,13 @@ tags:
     --8<-- "docs/engineering-practice/_compliance-info-box.partial"
 
     - **|Art. 10|** (Data and Data Governance), in particular:
-        - **|Art. 10(2)(c)|**
-        - **|Art. 10(3)|**
+        - **|Art. 10(2)(c)|**: Data Preprocessing steps detail how missing values are handled, schemas enforced, and pipelines kept reproducible, documenting each preparation action.
+        - **|Art. 10(3)|**: Data Quality Validation measures (ground-truth checks, anomaly detection, drift monitoring) keep datasets complete, accurate, and representative for their intended use.
 
 ## Motivation
 
 |Art. 10(3)| of the AI Act demands a certain quality of data used for training and
-evaluating models, in particular these data sets should be:
+evaluating models, in particular, these data sets should be:
 
 -   relevant,
 -   sufficiently representative
