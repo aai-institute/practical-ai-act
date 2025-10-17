@@ -6,7 +6,7 @@ To enhance implementation clarity, we distinguish between components suitable fo
 
 ## Topics in This Section
 
-- [Data Versioning](data-versioning.md) — Maintain lineage, storage policies, and collaborative workflows so teams can trace the origin and suitability of every dataset revision.
-- [Data Quality](data-quality.md) — Structure preprocessing, validation, and drift monitoring activities so data stays clean, complete, and representative throughout the lifecycle.
-- [Documentation](documentation.md) — Produce and maintain datasheets, data cards, and other artefacts that capture purpose, sourcing, and limitations of the datasets in use.
-- [Bias Mitigation](bias-mitigation.md) — Detect, analyse, and mitigate unwanted bias in data to protect fundamental rights and meet fairness obligations across deployments.
+- [Data Versioning](data-versioning.md) — Track dataset lineage, record changes through branching or tagging, and control access so provenance and suitability remain transparent.
+- [Data Quality](data-quality.md) — Run structured preprocessing, validation, reporting, and drift monitoring to keep datasets complete, accurate, and representative over time.
+- [Documentation](documentation.md) — Maintain datasheets, data cards, and related records that describe sourcing, curation, and limitations for each dataset.
+- [Bias Mitigation](bias-mitigation.md) — Analyse datasets for existing bias and apply mitigation techniques so models uphold fairness obligations and fundamental rights.
