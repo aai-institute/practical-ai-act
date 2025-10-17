@@ -1,14 +1,5 @@
 # Data Governance
 
-!!! success "Compliance Info"
-
-    --8<-- "docs/engineering-practice/_compliance-info-box.partial"
-    - **|Article 10|**
-
-
-
-![](https://placehold.co/600x400?text=Data+Activities+in+the+ML+lifecycle)
-
 In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, |Article 10| mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
 While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.
 
