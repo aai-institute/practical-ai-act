@@ -30,29 +30,29 @@ They need to be accompanied by organizational and governance measures to become 
 
 ### Data Preprocessing
 
--   Detect and handle missing or incomplete data
-    -   Conduct data analysis to identify missing fields.
-    -   Use statistical methods to assess if missing data skews results.
-    -   Implement appropriate handling (e.g., interpolation, mean/mode imputation).
--   Perform data consistency checks
-    -   Enforce data schema for tabular data.
-    -   Identify and remove duplicate records.
-    -   Ensure data formats are consistent (e.g., all dates in correct format).
-    -   Check for missing values and determine handling strategies (imputation or removal).
--   Keep preprocessing consistent, versioned and reproducible
-    -   Avoid manual processing steps, rely on data pipelines in a [workflow orchestrator](../orchestration.md) instead
+Preparing data for training begins with making each transformation explicit, measurable, and reproducible. This enables auditors to understand how raw inputs were converted into model-ready datasets.
+
+#### Handle Missing or Incomplete Data
+Profile the dataset to surface null or placeholder values, then quantify whether the missingness introduces bias. Choose remediation techniques—such as interpolation, mean/mode imputation, or domain-specific defaults—and [document](documentation.md) them so the same logic applies across training and evaluation runs.
+
+#### Enforce Consistency and Schemas
+Apply schema validation to tabular data to guarantee types, ranges, and required fields stay aligned across ingestion sources. Deduplicate records, normalize formats (for example, timestamps), and ensure foreign keys or categorical labels stay within expected vocabularies before the data enters downstream pipelines.
+
+#### Keep Pipelines Reproducible
+Automate preprocessing in versioned workflows instead of manual notebooks. Use a [workflow orchestrator](../orchestration.md) or data pipeline tool that tracks parameters, input snapshots, and code revisions so the same preprocessing steps can be replayed during audits or incident investigations.
 
 ### Data Quality Validation
 
--   Validate data against ground truth
-    -   Cross-check a sample of the dataset against verified real-world sources or domain experts.
--   Ensure data accuracy through automated validation
-    -   Logical inconsistencies (e.g., negative age values).
-    -   Outliers and anomalies using statistical methods (e.g., z-score, IQR analysis).
--   Produce automated data quality reports for human review and inclusion in [technical documentation](../../conformity/technical-documentation.md).
--   [Monitor for data drift over time](../model-monitoring.md)
-    -   Set up periodic validation checks to see if the data distribution changes over time.
-    -   Retrain models if significant drift is detected.
+Once preprocessing is locked down, validate that the resulting datasets remain faithful to reality and behave as expected over time.
+
+#### Validate Against Ground Truth
+Regularly sample records and compare them with verified business systems or domain experts. This check confirms that labelling, enrichment, and cleaning steps did not introduce errors and that sensitive attributes stay accurate.
+
+#### Automate Accuracy Checks and Reporting
+Run automated validation suites to catch logical conflicts—such as negative ages or impossible category combinations—and flag statistical outliers via z-score, interquartile range, or model-based anomaly detection. Summaries should flow into the regular data quality reports that analysts review and attach to the [data governance documentation](documentation.md) to keep stakeholders informed.
+
+#### Monitor Drift and Trigger Remediation
+[Monitor the model over time](../model-monitoring.md) and schedule periodic validation runs that compare live data against historical baselines. When the reports show significant drift in the data distribution, trigger investigation or retraining workflows.
 
 ## Key Technologies
 
