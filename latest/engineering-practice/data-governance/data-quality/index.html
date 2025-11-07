@@ -1558,15 +1558,15 @@ See https://docs.usercentrics.com/#/direct-implementation-guide
 of the AI Act, which benefit from following the practice.</p>
 <ul>
 <li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a></strong> (Data and Data Governance), in particular:<ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(2)(c)</a></strong></li>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a></strong></li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(2)(c)</a></strong>: Maintaining documented preprocessing routines for labelling, cleaning, imputation, and enrichment keeps every data preparation step traceable.</li>
+<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a></strong>: Routine validation, reporting, and drift monitoring ensures training, validation, and test datasets remain complete, accurate, and representative.</li>
 </ul>
 </li>
 </ul>
 </div>
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
 <p><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10(3)</a> of the AI Act demands a certain quality of data used for training and
-evaluating models, in particular these data sets should be:</p>
+evaluating models, in particular, these data sets should be:</p>
 <ul>
 <li>relevant,</li>
 <li>sufficiently representative</li>
@@ -1578,43 +1578,21 @@ evaluating models, in particular these data sets should be:</p>
 <p>Note that the techniques discussed in the section focus on technical approaches for ensuring data quality.
 They need to be accompanied by organizational and governance measures to become fully effective.</p>
 <h3 id="data-preprocessing">Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Detect and handle missing or incomplete data<ul>
-<li>Conduct data analysis to identify missing fields.</li>
-<li>Use statistical methods to assess if missing data skews results.</li>
-<li>Implement appropriate handling (e.g., interpolation, mean/mode imputation).</li>
-</ul>
-</li>
-<li>Perform data consistency checks<ul>
-<li>Enforce data schema for tabular data.</li>
-<li>Identify and remove duplicate records.</li>
-<li>Ensure data formats are consistent (e.g., all dates in correct format).</li>
-<li>Check for missing values and determine handling strategies (imputation or removal).</li>
-</ul>
-</li>
-<li>Keep preprocessing consistent, versioned and reproducible<ul>
-<li>Avoid manual processing steps, rely on data pipelines in a <a href="../../orchestration/">workflow orchestrator</a> instead</li>
-</ul>
-</li>
-</ul>
+<p>Preparing data for training begins with making each transformation explicit, measurable, and reproducible. This enables auditors to understand how raw inputs were converted into model-ready datasets.</p>
+<h4 id="handle-missing-or-incomplete-data">Handle Missing or Incomplete Data<a class="headerlink" href="#handle-missing-or-incomplete-data" title="Permanent link">&para;</a></h4>
+<p>Profile the dataset to surface null or placeholder values, then quantify whether the missingness introduces bias. Choose remediation techniques—such as interpolation, mean/mode imputation, or domain-specific defaults—and <a href="../documentation/">document</a> them so the same logic applies across training and evaluation runs.</p>
+<h4 id="enforce-consistency-and-schemas">Enforce Consistency and Schemas<a class="headerlink" href="#enforce-consistency-and-schemas" title="Permanent link">&para;</a></h4>
+<p>Apply schema validation to tabular data to guarantee types, ranges, and required fields stay aligned across ingestion sources. Deduplicate records, normalize formats (for example, timestamps), and ensure foreign keys or categorical labels stay within expected vocabularies before the data enters downstream pipelines.</p>
+<h4 id="keep-pipelines-reproducible">Keep Pipelines Reproducible<a class="headerlink" href="#keep-pipelines-reproducible" title="Permanent link">&para;</a></h4>
+<p>Automate preprocessing in versioned workflows instead of manual notebooks. Use a <a href="../../orchestration/">workflow orchestrator</a> or data pipeline tool that tracks parameters, input snapshots, and code revisions so the same preprocessing steps can be replayed during audits or incident investigations.</p>
 <h3 id="data-quality-validation">Data Quality Validation<a class="headerlink" href="#data-quality-validation" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Validate data against ground truth<ul>
-<li>Cross-check a sample of the dataset against verified real-world sources or domain experts.</li>
-</ul>
-</li>
-<li>Ensure data accuracy through automated validation<ul>
-<li>Logical inconsistencies (e.g., negative age values).</li>
-<li>Outliers and anomalies using statistical methods (e.g., z-score, IQR analysis).</li>
-</ul>
-</li>
-<li>Produce automated data quality reports for human review and inclusion in <a href="../../../conformity/technical-documentation/">technical documentation</a>.</li>
-<li><a href="../../model-monitoring/">Monitor for data drift over time</a><ul>
-<li>Set up periodic validation checks to see if the data distribution changes over time.</li>
-<li>Retrain models if significant drift is detected.</li>
-</ul>
-</li>
-</ul>
+<p>Once preprocessing is locked down, validate that the resulting datasets remain faithful to reality and behave as expected over time.</p>
+<h4 id="validate-against-ground-truth">Validate Against Ground Truth<a class="headerlink" href="#validate-against-ground-truth" title="Permanent link">&para;</a></h4>
+<p>Regularly sample records and compare them with verified business systems or domain experts. This check confirms that labelling, enrichment, and cleaning steps did not introduce errors and that sensitive attributes stay accurate.</p>
+<h4 id="automate-accuracy-checks-and-reporting">Automate Accuracy Checks and Reporting<a class="headerlink" href="#automate-accuracy-checks-and-reporting" title="Permanent link">&para;</a></h4>
+<p>Run automated validation suites to catch logical conflicts—such as negative ages or impossible category combinations—and flag statistical outliers via z-score, interquartile range, or model-based anomaly detection. Summaries should flow into the regular data quality reports that analysts review and attach to the <a href="../documentation/">data governance documentation</a> to keep stakeholders informed.</p>
+<h4 id="monitor-drift-and-trigger-remediation">Monitor Drift and Trigger Remediation<a class="headerlink" href="#monitor-drift-and-trigger-remediation" title="Permanent link">&para;</a></h4>
+<p><a href="../../model-monitoring/">Monitor the model over time</a> and schedule periodic validation runs that compare live data against historical baselines. When the reports show significant drift in the data distribution, trigger investigation or retraining workflows.</p>
 <h2 id="key-technologies">Key Technologies<a class="headerlink" href="#key-technologies" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://pandas.pydata.org">Pandas</a><ul>

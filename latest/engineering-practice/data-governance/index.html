@@ -1355,6 +1355,23 @@ See https://docs.usercentrics.com/#/direct-implementation-guide
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topics-in-this-section" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topics in This Section
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1377,32 +1394,14 @@ See https://docs.usercentrics.com/#/direct-implementation-guide
 
 
 <h1 id="data-governance">Data Governance<a class="headerlink" href="#data-governance" title="Permanent link">&para;</a></h1>
-<div class="admonition success">
-<p class="admonition-title">Compliance Info</p>
-<p>Below we map the engineering practice to articles
-of the AI Act, which benefit from following the practice.</p>
+<p>In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Article 10</a> mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability. While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.</p>
+<p>To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centred on process and documentation, see <a href="../../conformity/technical-documentation/">Technical Documentation</a>. This is not a strict partition: each paragraph of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a> can involve both kinds of tasks, so engineering and compliance teams need to collaborate closely.</p>
+<h2 id="topics-in-this-section">Topics in This Section<a class="headerlink" href="#topics-in-this-section" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Article 10</a></strong></li>
-</ul>
-</div>
-<p><img alt="" src="../../assets/external/placehold.co/600x400.9a99bdb8.svg"></p>
-<p>In general, data governance encompasses all methodologies for managing data throughout its entire lifecycle. With respect to the AI Act, <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Article 10</a> mandates that datasets used in developing high-risk AI systems must be of high quality, relevant, representative, free from bias, and appropriately documented to ensure fairness, accuracy, and reliability.
-While the article outlines certain required practices, it lacks a comprehensive definition of data governance and data management.</p>
-<p>To enhance implementation clarity, we distinguish between components suitable for automation (engineering practices, described in this section) and those centered on process and documentation,
-see <a href="../../conformity/technical-documentation/">Technical Documentation</a>.
-This is not a simple mapping of paragraphs to either or, moreover each paragraph
-of <a class="aia-ref" href="https://artificialintelligenceact.eu/article/10" rel="noopener noreferrer" target="_blank">Art. 10</a> can include both types of tasks.</p>
-<p>Specific to bias. Refer to the page on <a href="bias-mitigation/">bias mitigation</a> for more information.</p>
-<!-- TODO formulate this without citation, or remove?-->
-<blockquote>
-<ol start="6">
-<li>For the development of high-risk AI systems not using techniques involving the training of AI models, paragraphs 2 to 5 apply only to the testing data sets.</li>
-</ol>
-</blockquote>
-<p>This paragraph addresses high-risk AI systems that are developed without using techniques involving the training of AI models. These systems might rely on alternative approaches, such as rule-based systems, hard-coded algorithms, or pre-existing models that do not require additional training or updates to their parameters.</p>
-<ul>
-<li><a href="data-versioning/">Data Versioning</a></li>
-<li><a href="data-quality/">Data Quality</a></li>
+<li><a href="data-versioning/">Data Versioning</a> — Track dataset lineage, record changes through branching or tagging, and control access so provenance and suitability remain transparent.</li>
+<li><a href="data-quality/">Data Quality</a> — Run structured preprocessing, validation, reporting, and drift monitoring to keep datasets complete, accurate, and representative over time.</li>
+<li><a href="documentation/">Documentation</a> — Maintain datasheets, data cards, and related records that describe sourcing, curation, and limitations for each dataset.</li>
+<li><a href="bias-mitigation/">Bias Mitigation</a> — Analyse datasets for existing bias and apply mitigation techniques so models uphold fairness obligations and fundamental rights.</li>
 </ul>
 
 
