@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  {{ super() }}
+  {% include "partials/breadcrumb-schema.html" %}
+{% endblock %}
+
 {% block announce %}
 {%- if config.extra.pre_release -%}
 You are currently viewing <strong>pre-release</strong> documentation. This
