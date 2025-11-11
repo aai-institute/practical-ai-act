@@ -1,8 +1,10 @@
 site_name: "Practical AI Act Guide"
+site_url: https://practical-ai-act.eu
+site_author: "appliedAI Institute for Europe"
+site_description: "A guide to implementing the EU AI Act with practical engineering solutions."
 site_dir: public/docs
 repo_url: https://github.com/aai-institute/practical-ai-act
 edit_uri: edit/main/docs/
-site_url: https://practical-ai-act.eu
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
@@ -89,6 +91,11 @@ plugins:
       canonical_version: latest
   - meta
   - privacy:
+      assets_exclude:
+        - googletagmanager.com/*
+        - app.usercentrics.eu/*
+        - api.usercentrics.eu/*
+  - optimize:
   - search:
   - tags
 
@@ -198,7 +205,5 @@ extra_css:
   - _styles/logo-swap.css
 
 extra_javascript:
-  # Fix for problems with privacy plugin and site_url set (see https://github.com/squidfunk/mkdocs-material/issues/3742)
-  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
   - _scripts/feedback.js
   - _scripts/search_analytics.js

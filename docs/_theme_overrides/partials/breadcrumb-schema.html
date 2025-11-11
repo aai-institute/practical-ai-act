@@ -1,0 +1,47 @@
+{# Breadcrumb Schema Markup (JSON-LD) This partial generates BreadcrumbList
+structured data for SEO purposes. It creates a breadcrumb trail based on the
+page's navigation path. References: - https://schema.org/BreadcrumbList -
+https://developers.google.com/search/docs/appearance/structured-data/breadcrumb
+#} {% if page and page.meta and nav %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Practical AI Act Guide",
+        "item": "{{ config.site_url }}"
+      }
+      {%- set ns = namespace(position=2) -%}
+      {%- set items = [] -%}
+
+      {#- Build breadcrumb trail from navigation path -#}
+      {%- if page.ancestors -%}
+        {%- for ancestor in page.ancestors -%}
+          {%- if ancestor.title and ancestor.url -%}
+            {%- set _ = items.append(ancestor) -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {#- Add current page if it's not the home page -#}
+      {%- if page.title and page.title != "Home" and page.url != "/" -%}
+        {%- set _ = items.append(page) -%}
+      {%- endif -%}
+
+      {#- Output breadcrumb items -#}
+      {%- for item in items -%}
+      ,{
+        "@type": "ListItem",
+        "position": {{ ns.position }},
+        "name": {{ item.title | tojson }},
+        "item": "{{ config.site_url | replace('/index.html', '/') }}{{ item.url | replace('index.html', '') }}"
+      }
+        {%- set ns.position = ns.position + 1 -%}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{% endif %}
