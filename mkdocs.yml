@@ -1,8 +1,10 @@
 site_name: "Practical AI Act Guide"
+site_url: https://practical-ai-act.eu
+site_author: "appliedAI Institute for Europe"
+site_description: "A guide to implementing the EU AI Act with practical engineering solutions."
 site_dir: public/docs
 repo_url: https://github.com/aai-institute/practical-ai-act
 edit_uri: edit/main/docs/
-site_url: https://practical-ai-act.eu
 
 # To validate all internal links exist. Does not work in ipynb files
 strict: true
