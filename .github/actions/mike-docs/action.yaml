@@ -16,23 +16,26 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - run: |
-      # https://github.com/jimporter/mike#deploying-via-ci
-      git fetch origin gh-pages --depth=1
+    - run: |
+        sudo apt-get update && sudo apt-get install -y pngquant
+      shell: bash
+    - run: |
+        # https://github.com/jimporter/mike#deploying-via-ci
+        git fetch origin gh-pages --depth=1
 
-      # For proper UI integration: https://github.com/actions/checkout/pull/1184
-      git config user.name "github-actions[bot]"
-      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    shell: bash
-  - env:
-      DOCS_PRERELEASE: ${{ inputs.pre_release }}
-      INPUTS_PUSH: ${{ inputs.push }}
-      INPUTS_VERSION: ${{ inputs.version }}
-      INPUTS_ALIAS: ${{ inputs.alias }}
-    run: |
-      MIKE_OPTIONS=( "--update-aliases" )
-      if [ "true" = "${INPUTS_PUSH}" ]; then
-        MIKE_OPTIONS+=( "--push" )
-      fi
-      uv run mike deploy "${INPUTS_VERSION}" ${INPUTS_ALIAS} "${MIKE_OPTIONS[@]}"
-    shell: bash
+        # For proper UI integration: https://github.com/actions/checkout/pull/1184
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      shell: bash
+    - env:
+        DOCS_PRERELEASE: ${{ inputs.pre_release }}
+        INPUTS_PUSH: ${{ inputs.push }}
+        INPUTS_VERSION: ${{ inputs.version }}
+        INPUTS_ALIAS: ${{ inputs.alias }}
+      run: |
+        MIKE_OPTIONS=( "--update-aliases" )
+        if [ "true" = "${INPUTS_PUSH}" ]; then
+          MIKE_OPTIONS+=( "--push" )
+        fi
+        uv run mike deploy "${INPUTS_VERSION}" ${INPUTS_ALIAS} "${MIKE_OPTIONS[@]}"
+      shell: bash
